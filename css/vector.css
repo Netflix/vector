@@ -1,0 +1,44 @@
+body {
+    margin: 15px;
+}
+
+.main-container {
+	padding-top: 46px;
+}
+
+.spacer {
+    margin-top: 12px;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #FFA500;
+    margin-top: -4px;
+    font-family: Museo Slab;
+    font-size: 2.2em;
+}
+
+.navbar .container-fluid .navbar-brand {
+    margin-left: -10px;
+}
+
+.navbar-logo {
+    max-width:42px;
+    margin-top: -7px;
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: transparent;
+}
+.jumbotron .btn {
+    padding: 14px 24px;
+    font-size: 21px;
+}
+
+@font-face {
+    font-family: 'Museo Slab';
+    src: url('../fonts/museo_slab_500-webfont.eot');
+    src: url('../fonts/museo_slab_500-webfont.woff') format('woff'), url('../fonts/museo_slab_500-webfont.ttf') format('truetype'), url('../fonts/museo_slab_500-webfont.svg') format('svg');
+    font-weight: 400;
+    font-style: normal;
+}

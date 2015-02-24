@@ -1,0 +1,3 @@
+/*global $, document*/
+
+/* Vector Functions */

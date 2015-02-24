@@ -1,0 +1,127 @@
+<div class="row">
+    <div class="col-md-7">
+        <form role="form" name="form">
+            <div class="input-group input-group-lg" ng-class="{'has-error': form.host.$invalid && form.host.$dirty}">
+                <span class="input-group-addon">Hostname</span>
+                <input type="text" class="form-control" id="hostnameInput" name="host" data-content="Please enter a fully qualified instance hostname." rel="popover" data-placement="bottom" data-original-title="Hostname" data-trigger="hover" ng-model="properties.host" ng-change="updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" ng-delay="500" required placeholder="Instance Name">
+            </div>
+            <span class="help-block" ng-show="form.host.$error.required">Required!</span>
+        </form>
+    </div>
+    <div class="col-md-1">
+        <form role="form">
+            <select class="form-control input-lg" name="window" id="windowInput" data-content="The duration window for all charts in this dashboard." rel="popover" data-placement="bottom" data-original-title="Window" data-trigger="hover" ng-model="properties.window" ng-change="updateWindow()">
+                <option value="2">2 minutes</option>
+                <option value="5">5 minutes</option>
+                <option value="10">10 minutes</option>
+            </select>
+        </form>
+    </div>
+    <div class="col-md-1">
+        <form role="form">
+            <select class="form-control input-lg" name="interval" id="intervalInput" data-content="The update interval used by all charts in this dashboard." rel="popover" data-placement="bottom" data-original-title="Interval" data-trigger="hover" ng-model="properties.interval" ng-change="updateInterval()">
+                <option value="1">1 second</option>
+                <option value="2">2 seconds</option>
+                <option value="3">3 seconds</option>
+                <option value="5">5 seconds</option>
+            </select>
+        </form>
+    </div>
+    <div class="btn-group col-md-1">
+        <button type="button" class="dropdown-toggle btn btn-lg btn-default btn-block" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> Widget <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-submenu" ng-repeat="group in widgetDefs | groupBy: 'group'">
+                <a ng-click="void(0)"  data-toggle="dropdown">{{group}}</a>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="widget in widgetDefs | groupFilter: group">
+                        <a href="#" ng-click="addWidgetInternal($event, widget);">{{widget.title}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-2">
+        <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+                <button class="btn btn-lg btn-default" ng-click="resetWidgetsToDefault();"><span class="glyphicon glyphicon-dashboard"></span> Default</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-lg btn-default" ng-click="clear();"><span class="glyphicon glyphicon-remove"></span> Clear</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row spacer">
+    <div class="col-md-12">
+        <div id="alert-dashboard-info" flash-alert="info" active-class="in alert" class="fade">
+            <span class="alert-message">{{flash.message}}</span>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div id="alert-dashboard-success" flash-alert="success" active-class="in alert" class="fade">
+            <strong class="alert-heading">Success!</strong>
+            <span class="alert-message">{{flash.message}}</span>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div id="alert-dashboard-error" flash-alert="error" active-class="in alert" class="fade">
+            <strong class="alert-heading">Error!</strong>
+            <span class="alert-message">{{flash.message}}</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-toolbar" ng-if="!options.hideToolbar">
+            <div class="btn-group" ng-if="!options.widgetButtons">
+                <button type="button" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">Add Widget <span
+                        class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat="widget in widgetDefs">
+                        <a href="#" ng-click="addWidgetInternal($event, widget);"><span class="label label-primary">{{widget.name}}</span></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="btn-group" ng-if="options.widgetButtons">
+                <button ng-repeat="widget in widgetDefs"
+                        ng-click="addWidgetInternal($event, widget);" type="button" class="btn btn-primary">
+                    {{widget.name}}
+                </button>
+            </div>
+
+            <button class="btn btn-warning" ng-click="resetWidgetsToDefault()">Default Widgets</button>
+
+            <button ng-if="options.storage && options.explicitSave" ng-click="options.saveDashboard()" class="btn btn-success" ng-disabled="!options.unsavedChangeCount">{{ !options.unsavedChangeCount ? "all saved" : "save changes (" + options.unsavedChangeCount + ")" }}</button>
+
+            <button ng-click="clear();" type="button" class="btn btn-info">Clear</button>
+        </div>
+
+        <div ui-sortable="sortableOptions" ng-model="widgets" class="dashboard-widget-area">
+            <div ng-repeat="widget in widgets" ng-style="widget.style" class="widget-container" widget>
+                <div class="widget panel panel-default">
+                    <div class="widget-header panel-heading">
+                        <h3 class="panel-title">
+                            <span class="widget-title" ng-dblclick="editTitle(widget)" ng-hide="widget.editingTitle">{{widget.title}}</span>
+                            <form action="" class="widget-title" ng-show="widget.editingTitle" ng-submit="saveTitleEdit(widget)">
+                                <input type="text" ng-model="widget.title" class="form-control">
+                            </form>
+                            <span class="label label-primary" ng-if="!options.hideWidgetName">{{widget.name}}</span>
+                            <span ng-click="removeWidget(widget);" class="glyphicon glyphicon-remove" ng-if="!options.hideWidgetClose"></span>
+                            <span ng-click="openWidgetDialog(widget);" class="glyphicon glyphicon-cog" ng-if="!options.hideWidgetOptions"></span>
+                        </h3>
+                    </div>
+                    <div class="panel-body widget-content"></div>
+                    <div class="widget-ew-resizer" ng-mousedown="grabResizer($event)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        $('#hostnameInput').popover();
+        $('#windowInput').popover();
+        $('#intervalInput').popover();
+    }());
+</script>

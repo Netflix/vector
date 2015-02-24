@@ -1,0 +1,51 @@
+<div class="row spacer">
+    <div class="col-md-8 col-md-offset-2">
+        <form role="form" name="form">
+            <div class="input-group input-group-lg spacer" ng-class="{'has-error': form.host.$invalid && form.host.$dirty}">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="pcpDemo()">Hostname</button>
+                </span>
+                <input type="text" class="form-control" id="hostnameInput" name="host" data-content="Please enter a fully qualified instance hostname. You can also click on the hostname button to point to a demo instance running Performance Co-Pilot." rel="popover" data-placement="bottom" data-original-title="Hostname" data-trigger="hover" ng-model="properties.host" ng-change="updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" ng-delay="500" required>
+            </div>
+            <span class="help-block" ng-show="form.host.$error.required">Required!</span>
+        </form>
+    </div>
+</div>
+<div class="row spacer">
+    <div class="col-md-8 col-md-offset-2">
+        <div id="alert-dashboard-info" flash-alert="info" active-class="in alert" class="fade">
+            <span class="alert-message">{{flash.message}}</span>
+        </div>
+    </div>
+    <div class="col-md-8 col-md-offset-2">
+        <div id="alert-dashboard-success" flash-alert="success" active-class="in alert" class="fade">
+            <strong class="alert-heading">Success!</strong>
+            <span class="alert-message">{{flash.message}}</span>
+        </div>
+    </div>
+    <div class="col-md-8 col-md-offset-2">
+        <div id="alert-dashboard-error" flash-alert="error" active-class="in alert" class="fade">
+            <strong class="alert-heading">Error!</strong>
+            <span class="alert-message">{{flash.message}}</span>
+        </div>
+    </div>
+</div>
+<div class="row spacer" ng-show="contextAvailable">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="col-lg-4">
+            <h2>Default</h2>
+            <p>System utilization metrics. Used to identify if your instance has resource pressure on CPU, Network, Disk, or Memory.</p>
+            <p><a class="btn btn-primary" href="#/default?host={{properties.host}}" role="button">View dashboard »</a></p>
+        </div>
+        <div class="col-lg-4">
+            <h2>Ad-Hoc</h2>
+            <p>Build your own dashboard from scratch using the available modules.</p>
+            <p><a class="btn btn-primary" href="#/clean?host={{properties.host}}" role="button">View dashboard »</a></p>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        $('#hostnameInput').popover();
+    }());
+</script>
