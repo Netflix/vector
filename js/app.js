@@ -14,6 +14,7 @@ var app = angular.module('app', [
     'app.services',
     'app.factories',
     'app.filters',
+    'vector.config',
     'nvd3ChartDirectives',
     'ui.dashboard',
     'angular-flash.service',

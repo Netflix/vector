@@ -232,7 +232,7 @@ services.factory('VectorService', function () {
     };
 });
 
-services.factory('DashboardService', function ($rootScope, $http, $interval, $log, $location, MetricListService, flash) {
+services.factory('DashboardService', function ($rootScope, $http, $interval, $log, $location, MetricListService, flash, vectorConfig) {
     var intervalPromise,
         updateContext,
         cancelInterval,
@@ -333,16 +333,16 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
         initializeProperties: function () {
             if ($rootScope.properties) {
                 if (!$rootScope.properties.interval) {
-                    $rootScope.properties.interval = 2;
+                    $rootScope.properties.interval = vectorConfig.interval;
                 }
                 if (!$rootScope.properties.window) {
-                    $rootScope.properties.window = 2;
+                    $rootScope.properties.window = vectorConfig.window;
                 }
                 if (!$rootScope.properties.host) {
                     $rootScope.properties.host = '';
                 }
                 if (!$rootScope.properties.port) {
-                    $rootScope.properties.port = 7402;
+                    $rootScope.properties.port = vectorConfig.port;
                 }
                 if (!$rootScope.properties.context || $rootScope.properties.context < 0) {
                     updateContext();
@@ -352,10 +352,10 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
             } else {
                 $rootScope.properties = {
                     host: '',
-                    port: 7402,
+                    port: vectorConfig.port,
                     context: -1,
-                    window: 2,
-                    interval: 2
+                    window: vectorConfig.window,
+                    interval: vectorConfig.interval
                 };
             }
         }
