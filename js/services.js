@@ -339,7 +339,7 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
                     $rootScope.properties.window = 2;
                 }
                 if (!$rootScope.properties.host) {
-                    $rootScope.properties.host = 'pcpdemo.test.netflix.net';
+                    $rootScope.properties.host = '';
                 }
                 if (!$rootScope.properties.port) {
                     $rootScope.properties.port = 7402;

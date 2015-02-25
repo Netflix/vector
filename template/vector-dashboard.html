@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-8">
         <form role="form" name="form">
             <div class="input-group input-group-lg" ng-class="{'has-error': form.host.$invalid && form.host.$dirty}">
                 <span class="input-group-addon">Hostname</span>
@@ -27,7 +27,7 @@
             </select>
         </form>
     </div>
-    <div class="btn-group col-md-1">
+    <div class="btn-group col-md-2">
         <button type="button" class="dropdown-toggle btn btn-lg btn-default btn-block" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> Widget <span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
             <li class="dropdown-submenu" ng-repeat="group in widgetDefs | groupBy: 'group'">
@@ -38,17 +38,10 @@
                     </li>
                 </ul>
             </li>
+            <li role="presentation" class="divider"></li>
+            <li><a href="javascript:void(0);" ng-click="resetWidgetsToDefault();">Default Dashboard</a></li>
+            <li><a href="javascript:void(0);" ng-click="clear();">Clear</a></li>
         </ul>
-    </div>
-    <div class="col-md-2">
-        <div class="btn-group btn-group-justified">
-            <div class="btn-group">
-                <button class="btn btn-lg btn-default" ng-click="resetWidgetsToDefault();"><span class="glyphicon glyphicon-dashboard"></span> Default</button>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-lg btn-default" ng-click="clear();"><span class="glyphicon glyphicon-remove"></span> Clear</button>
-            </div>
-        </div>
     </div>
 </div>
 <div class="row spacer">

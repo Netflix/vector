@@ -23,21 +23,11 @@ var app = angular.module('app', [
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'partials/index.html',
-            controller: 'IndexCtrl',
-            reloadOnSearch: false
-        })
-        .when('/default', {
             templateUrl: 'partials/dashboard.html',
             controller: 'DashboardCtrl',
             reloadOnSearch: false
         })
-        .when('/clean', {
-            templateUrl: 'partials/dashboard.html',
-            controller: 'DashboardCtrl',
-            reloadOnSearch: false
-        })
-        .when('/java', {
+        .when('/empty', {
             templateUrl: 'partials/dashboard.html',
             controller: 'DashboardCtrl',
             reloadOnSearch: false
