@@ -17,8 +17,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                                                MultipleCummulativeMetricTimeSeriesDataModel,
                                                DummyMetricDataModel,
                                                DiskLatencyTimeSeriesDataModel,
-                                               CummulativeUtilizationMetricTimeSeriesDataModel) {
-    return [
+                                               CummulativeUtilizationMetricTimeSeriesDataModel,
+                                               vectorConfig) {
+    var definitions = [
         {
             name: 'kernel.all.load',
             title: 'Load Average',
@@ -379,24 +380,6 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             },
             group: "Memory"
         }, {
-            name: 'graph.flame.cpu',
-            title: 'CPU Flame Graph',
-            directive: 'cpu-flame-graph',
-            dataModelType: DummyMetricDataModel,
-            style: {
-                width: '25%'
-            },
-            group: "CPU"
-        }, {
-            name: 'graph.heatmap.disk',
-            title: 'Disk Latency Heat Map',
-            directive: 'disk-latency-heat-map',
-            dataModelType: DummyMetricDataModel,
-            style: {
-                width: '25%'
-            },
-            group: "Disk"
-        }, {
             name: 'network.interface.packets',
             title: 'Network Packets',
             directive: 'line-integer-time-series',
@@ -448,7 +431,37 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             group: "Disk"
         }
     ];
+
+    if (vectorConfig.enableCpuFlameGraph) {
+      definitions.push({
+        name: 'graph.flame.cpu',
+        title: 'CPU Flame Graph',
+        directive: 'cpu-flame-graph',
+        dataModelType: DummyMetricDataModel,
+        style: {
+          width: '25%'
+        },
+        group: "CPU"
+      })
+    }
+
+    if (vectorConfig.enableDiskLatencyHeatMap) {
+      definitions.push({
+        name: 'graph.heatmap.disk',
+        title: 'Disk Latency Heat Map',
+        directive: 'disk-latency-heat-map',
+        dataModelType: DummyMetricDataModel,
+        style: {
+          width: '25%'
+        },
+        group: "Disk"
+      })
+    }
+
+    return definitions;
 });
+
+
 
 widgets.value('defaultWidgets', [
     {
