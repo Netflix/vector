@@ -28,7 +28,7 @@
         </form>
     </div>
     <div class="btn-group col-md-2">
-        <button type="button" class="dropdown-toggle btn btn-lg btn-default btn-block" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> Widget <span class="caret"></span></button>
+        <button id="widgetButton" type="button" class="dropdown-toggle btn btn-lg btn-default btn-block" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> Widget <span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
             <li class="dropdown-submenu" ng-repeat="group in widgetDefs | groupBy: 'group'">
                 <a ng-click="void(0)"  data-toggle="dropdown">{{group}}</a>

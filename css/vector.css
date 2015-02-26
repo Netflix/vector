@@ -16,47 +16,106 @@
  *
  */
 
-body {
-    margin: 15px;
-}
+ body {
+     margin: 15px;
+ }
 
-.main-container {
-	padding-top: 46px;
-}
+ .main-container {
+   padding-top: 46px;
+ }
 
-.spacer {
-    margin-top: 12px;
-}
+ .spacer {
+     margin-top: 12px;
+ }
 
-.navbar-inverse .navbar-brand {
-    color: #FFA500;
-    margin-top: -4px;
-    font-family: Museo Slab;
-    font-size: 2.2em;
-}
+ .navbar-inverse .navbar-brand {
+     text-transform: uppercase;
+     font-size: 23px;
+     letter-spacing: 1px;
+     font-weight: 300;
+ }
 
-.navbar .container-fluid .navbar-brand {
-    margin-left: -10px;
-}
+ .navbar-inverse {
 
-.navbar-logo {
-    max-width:42px;
-    margin-top: -7px;
-}
+     background: #5b5b5b;
+ }
 
-.jumbotron {
-    text-align: center;
-    background-color: transparent;
-}
-.jumbotron .btn {
-    padding: 14px 24px;
-    font-size: 21px;
-}
+ .navbar .container-fluid .navbar-brand {
+     margin-left: -10px;
+ }
 
-@font-face {
-    font-family: 'Museo Slab';
-    src: url('../fonts/museo_slab_500-webfont.eot');
-    src: url('../fonts/museo_slab_500-webfont.woff') format('woff'), url('../fonts/museo_slab_500-webfont.ttf') format('truetype'), url('../fonts/museo_slab_500-webfont.svg') format('svg');
-    font-weight: 400;
-    font-style: normal;
-}
+ .navbar-logo {
+     max-width:42px;
+     margin-top: -7px;
+ }
+
+ .jumbotron {
+     text-align: center;
+     background-color: transparent;
+ }
+ .jumbotron .btn {
+     padding: 14px 24px;
+     font-size: 21px;
+ }
+
+ #hostnameInput {
+     margin-left: -1px;
+     margin-top: 8px;
+ }
+
+ .input-group-lg > #hostnameInput {
+     margin-top: 0;
+ }
+
+ .input-group-lg {
+     margin-top: 8px;
+ }
+
+ .alert,
+ .btn {
+     background-image: none !important;
+     box-shadow: none;
+ }
+
+ .input-group-btn {
+     top: 2px;
+ }
+
+ .input-group-btn:hover {
+     z-index: 3;
+ }
+
+ .contextOptions {
+     margin-bottom: 50px;
+ }
+
+ .contextOptions p {
+     min-height: 40px;
+ }
+
+ .input-group-lg > .input-group-addon {
+     height: 40px;
+ }
+
+ #widgetButton {
+     margin-top: 7px;
+ }
+
+ #welcomeScreen #hostnameInput{
+     margin-top: 8px;
+ }
+
+ @-moz-document url-prefix() {
+     #welcomeScreen #hostnameInput{
+         margin-top: 5px;
+     }
+ }
+
+ #requiredHelper {
+     float: right;
+     z-index: 2;
+     position: relative;
+     top: -38px;
+     left: -11px;
+     opacity: 0.4;
+ }
