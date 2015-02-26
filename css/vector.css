@@ -119,3 +119,13 @@
      left: -11px;
      opacity: 0.4;
  }
+
+ .panel.widget {
+   border: 1px solid #c4c4c4;
+ }
+
+ .widget-header.panel-heading.ui-sortable-handle {
+   cursor: all-scroll;
+   background-color: #f1f1f1;
+   background-image: none !important;
+ }
