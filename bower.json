@@ -18,8 +18,8 @@
   ],
   "dependencies": {
     "angular-flash": "~0.1.14",
-    "d3": "~3.5.5",
-    "nvd3": "~1.7.1",
+    "d3": "~3.4.13",
+    "nvd3": "~v1.1.15-beta",
     "angularjs-nvd3-directives": "~0.0.7",
     "angular-ui-dashboard": "~0.8.2",
     "font-awesome": "~4.3.0",
@@ -28,8 +28,7 @@
     "angular-ui-bootstrap-bower": "~0.12.1"
   },
   "resolutions": {
-    "nvd3": "~1.7.1",
-    "d3": "~3.4.1",
+    "d3": "~3.4.13",
     "angular": "~1.3"
   }
 }
