@@ -4,9 +4,8 @@
   "authors": [
     "Martin Spier <spiermar@gmail.com>"
   ],
-  "description": "Real-time monitoring interface.",
   "main": "index.html",
-  "license": "Apache 2.0",
+  "license": "Apache License, v2.0",
   "homepage": "https://github.com/Netflix/Vector",
   "private": true,
   "ignore": [
