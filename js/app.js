@@ -25,6 +25,7 @@
 
 var app = angular.module('app', [
     'ngRoute',
+    'ui.dashboard',
     'app.controllers',
     'app.datamodels',
     'app.widgets',
@@ -34,7 +35,6 @@ var app = angular.module('app', [
     'app.filters',
     'vector.config',
     'nvd3ChartDirectives',
-    'ui.dashboard',
     'angular-flash.service',
     'angular-flash.flash-alert-directive'
 ]);
@@ -44,11 +44,13 @@ app.config(['$routeProvider', function ($routeProvider) {
         .when('/', {
             templateUrl: 'partials/dashboard.html',
             controller: 'DashboardCtrl',
+            title: 'Dashboard - Vector',
             reloadOnSearch: false
         })
         .when('/empty', {
             templateUrl: 'partials/dashboard.html',
             controller: 'DashboardCtrl',
+            title: 'Dashboard - Vector',
             reloadOnSearch: false
         })
         .otherwise({
