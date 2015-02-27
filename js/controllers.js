@@ -47,9 +47,8 @@ if (document.hidden !== undefined) { // Opera 12.10 and Firefox 18 and later sup
 
 var controllers = angular.module('app.controllers', []);
 
-controllers.controller('DashboardCtrl', function ($scope, $rootScope, $log, $route, $routeParams, widgetDefinitions, defaultWidgets, DashboardService) {
-    var widgets,
-        path = $route.current.$$route.originalPath;
+controllers.controller('DashboardCtrl', function ($scope, $rootScope, $log, $route, $routeParams, widgetDefinitions, defaultWidgets, emptyWidgets, DashboardService) {
+    var path = $route.current.$$route.originalPath;
 
     $log.info("Dashboard controller initialized with " + path + " view.");
 
@@ -58,17 +57,17 @@ controllers.controller('DashboardCtrl', function ($scope, $rootScope, $log, $rou
         widgetButtons: false,
         hideWidgetName: true,
         hideWidgetSettings: true,
-        widgetDefinitions: widgetDefinitions,
-        defaultWidgets: defaultWidgets
+        widgetDefinitions: widgetDefinitions
     };
 
     switch (path) {
     case '/empty':
-        $scope.loadWidgets([]);
-        $scope.saveDashboard();
+        $log.info("Loading empty dashboard.");
+        $scope.dashboardOptions.defaultWidgets = emptyWidgets;
         break;
     default:
-        $log.info("Loading default widgets.");
+        $log.info("Loading default dashboard.");
+        $scope.dashboardOptions.defaultWidgets = defaultWidgets;
     }
 
     $scope.updateInterval = DashboardService.updateInterval;
