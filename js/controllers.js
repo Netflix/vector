@@ -57,7 +57,7 @@ controllers.controller('DashboardCtrl', function ($scope, $rootScope, $log, $rou
         hideToolbar: true,
         widgetButtons: false,
         hideWidgetName: true,
-        hideWidgetOptions: true,
+        hideWidgetSettings: true,
         widgetDefinitions: widgetDefinitions,
         defaultWidgets: defaultWidgets
     };
