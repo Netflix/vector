@@ -1,0 +1,25 @@
+{
+  "name": "vector",
+  "version": "0.1.0",
+  "description": "Vector is an Instance-Level, On-Demand, High-Resolution Monitoring Framework. It's a web-base UI that leverages Performance Co-Pilot (PCP) in the backend.",
+  "main": "index.html",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "gulp": "^3.8.11"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-connect": "^2.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@stash.corp.netflix.com:7999/cldperf/vector-web.git"
+  },
+  "author": "Martin Spier",
+  "license": "Apache Licence, v2.0"
+}
