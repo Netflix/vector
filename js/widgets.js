@@ -47,9 +47,11 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.all.load'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
+            enableVerticalResize: true,
             group: "CPU"
         }, {
             name: 'kernel.all.runnable',
@@ -60,8 +62,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.all.runnable'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "CPU"
         }, {
@@ -73,8 +76,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.all.cpu.sys'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "CPU"
         }, {
@@ -86,8 +90,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.all.cpu.user'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "CPU"
         }, {
@@ -99,8 +104,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.all.cpu'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "CPU"
         }, {
@@ -112,8 +118,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.percpu.cpu.sys'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "CPU"
         }, {
@@ -125,8 +132,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.percpu.cpu.user'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "CPU"
         }, {
@@ -138,8 +146,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.percpu.cpu'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "CPU"
         }, {
@@ -151,8 +160,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'mem.freemem'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Memory"
         }, {
@@ -164,8 +174,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'mem.util.used'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Memory"
         }, {
@@ -177,8 +188,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'mem.util.cached'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Memory"
         }, {
@@ -190,8 +202,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'mem'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Memory"
         }, {
@@ -203,8 +216,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'network.interface.out.drops'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Network"
         }, {
@@ -216,8 +230,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'network.interface.in.drops'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Network"
         }, {
@@ -233,8 +248,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                     "{key} out": "network.interface.out.drops"
                 }
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Network"
         }, {
@@ -246,8 +262,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'network.tcp.retranssegs'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Network"
         }, {
@@ -259,8 +276,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'network.tcpconn.established'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Network"
         }, {
@@ -272,8 +290,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'network.tcpconn.time_wait'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Network"
         }, {
@@ -285,8 +304,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'network.tcpconn.close_wait'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Network"
         }, {
@@ -303,8 +323,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                     "close_wait": "network.tcpconn.close_wait"
                 }
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Network"
         }, {
@@ -316,8 +337,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'network.interface.bytes'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Network"
         }, {
@@ -333,8 +355,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                     "{key} write": "disk.dev.write"
                 }
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Disk"
         }, {
@@ -350,8 +373,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                     "{key} write": "disk.dev.write_bytes"
                 }
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Disk"
         }, {
@@ -363,8 +387,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'disk.dev.avactive'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Disk"
         }, {
@@ -376,8 +401,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.all.pswitch'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "CPU"
         }, {
@@ -393,8 +419,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                     "major page faults": "mem.vmstat.pgmajfault"
                 }
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Memory"
         }, {
@@ -410,8 +437,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                     "{key} out": "network.interface.out.packets"
                 }
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Network"
         }, {
@@ -430,8 +458,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                     "syncretrans": "network.tcp.syncretrans"
                 }
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Network"
         }, {
@@ -443,8 +472,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'disk.dev.latency'
             },
-            style: {
-                width: '25%'
+            size: {
+                width: '25%',
+                height: '250px'
             },
             group: "Disk"
         }
@@ -456,8 +486,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
         title: 'CPU Flame Graph',
         directive: 'cpu-flame-graph',
         dataModelType: DummyMetricDataModel,
-        style: {
-          width: '25%'
+        size: {
+          width: '25%',
+          height: '250px'
         },
         group: "CPU"
       })
@@ -469,8 +500,9 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
         title: 'Disk Latency Heat Map',
         directive: 'disk-latency-heat-map',
         dataModelType: DummyMetricDataModel,
-        style: {
-          width: '25%'
+        size: {
+          width: '25%',
+          height: '250px'
         },
         group: "Disk"
       })
@@ -484,81 +516,81 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
 widgets.value('defaultWidgets', [
     {
         name: 'kernel.all.cpu',
-        style: {
+        size: {
             width: '25%'
         }
     }, {
         name: 'kernel.percpu.cpu',
-        style: {
+        size: {
             width: '25%'
         }
     }, {
         name: 'kernel.all.runnable',
-        style: {
+        size: {
             width: '25%'
         }
     }, {
         name: 'kernel.all.load',
-        style: {
+        size: {
             width: '25%'
         }
     }, {
         name: 'network.interface.bytes',
-        style: {
+        size: {
             width: '25%'
         }
     }, {
         name: 'network.tcpconn',
-        style: {
+        size: {
             width: '25%'
         }
     }, {
         name: 'network.interface.packets',
-        style: {
+        size: {
             width: '25%'
         }
     }, {
         name: 'network.tcp.retranssegs',
-        style: {
+        size: {
             width: '25%'
         }
     }, {
         name: 'mem',
-        style: {
+        size: {
             width: '50%'
         }
     }, {
         name: 'mem.vmstat.pgfault',
-        style: {
+        size: {
             width: '25%'
         }
     }, {
         name: 'kernel.all.pswitch',
-        style: {
+        size: {
             width: '25%'
         }
     }, {
         name: 'disk.iops',
-        style: {
+        size: {
             width: '25%'
         }
     }, {
         name: 'disk.bytes',
-        style: {
+        size: {
             width: '25%'
         }
     }, {
         name: 'disk.dev.avactive',
-        style: {
+        size: {
             width: '25%'
         }
     }, {
         name: 'disk.dev.latency',
-        style: {
+        size: {
             width: '25%'
         }
     }
 ]);
 
-widgets.value('javaWidgets', [
+widgets.value('emptyWidgets', [
 ]);
