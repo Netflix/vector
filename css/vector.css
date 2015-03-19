@@ -120,12 +120,38 @@
      opacity: 0.4;
  }
 
- .panel.widget {
+.panel.widget {
    border: 1px solid #c4c4c4;
- }
+}
 
- .widget-header.panel-heading.ui-sortable-handle {
+.widget-header.panel-heading.ui-sortable-handle {
    cursor: all-scroll;
    background-color: #f1f1f1;
    background-image: none !important;
- }
+}
+
+.input-group-lg select {
+    margin: 0;
+    /*-webkit-appearance: none;*/
+}
+
+.input-group-lg .input-group-addon {
+    z-index: 3;
+    position: relative;
+    left: 4px;
+    border-right: 1px solid #ccc;
+}
+
+#alert-dashboard-error {
+    margin-top: 20px;
+}
+
+.form-control-feedback {
+    margin: 10px;
+}
+
+#hostnameInput {
+    border-radius: 6px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
