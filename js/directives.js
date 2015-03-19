@@ -40,6 +40,12 @@ directives.directive('lineTimeSeries', function (D3Service) {
             scope.yFunction = D3Service.yFunction;
             scope.xFunction = D3Service.xFunction;
             scope.id = D3Service.getId();
+            scope.height = 250;
+            scope.$on('widgetResized', function (event, size) {
+                scope.width = size.width || scope.width;
+                scope.height = size.height || scope.height;
+                d3.select('#' + scope.id + ' svg').style({'height': scope.height});
+            });
         }
     };
 });
@@ -58,6 +64,12 @@ directives.directive('lineIntegerTimeSeries', function (D3Service) {
             scope.yFunction = D3Service.yFunction;
             scope.xFunction = D3Service.xFunction;
             scope.id = D3Service.getId();
+            scope.height = 250;
+            scope.$on('widgetResized', function (event, size) {
+                scope.width = size.width || scope.width;
+                scope.height = size.height || scope.height;
+                d3.select('#' + scope.id + ' svg').style({'height': scope.height});
+            });
         }
     };
 });
@@ -76,6 +88,12 @@ directives.directive('linePercentageTimeSeries', function (D3Service) {
             scope.yFunction = D3Service.yFunction;
             scope.xFunction = D3Service.xFunction;
             scope.id = D3Service.getId();
+            scope.height = 250;
+            scope.$on('widgetResized', function (event, size) {
+                scope.width = size.width || scope.width;
+                scope.height = size.height || scope.height;
+                d3.select('#' + scope.id + ' svg').style({'height': scope.height});
+            });
         }
     };
 });
