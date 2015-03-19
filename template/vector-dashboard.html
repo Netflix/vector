@@ -1,33 +1,14 @@
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
         <form role="form" name="form">
             <div class="input-group input-group-lg" ng-class="{'has-error': form.host.$invalid && form.host.$dirty}">
                 <span class="input-group-addon">Hostname</span>
-                <input type="text" class="form-control" id="hostnameInput" name="host" data-content="Please enter a fully qualified instance hostname." rel="popover" data-placement="bottom" data-original-title="Hostname" data-trigger="hover" ng-model="properties.host" ng-change="updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" ng-delay="500" required placeholder="Instance Name">
+                <input type="text" class="form-control" id="hostnameInput" name="host" data-content="Please enter a fully qualified instance hostname." rel="popover" data-placement="bottom" data-trigger="hover" ng-model="properties.host" ng-change="updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" ng-delay="500" required placeholder="Instance Hostname">
             </div>
         </form>
     </div>
-    <div class="col-md-1">
-        <form role="form">
-            <select class="form-control input-lg" name="window" id="windowInput" data-content="The duration window for all charts in this dashboard." rel="popover" data-placement="bottom" data-original-title="Window" data-trigger="hover" ng-model="properties.window" ng-change="updateWindow()">
-                <option value="2">2 min</option>
-                <option value="5">5 min</option>
-                <option value="10">10 min</option>
-            </select>
-        </form>
-    </div>
-    <div class="col-md-1">
-        <form role="form">
-            <select class="form-control input-lg" name="interval" id="intervalInput" data-content="The update interval used by all charts in this dashboard." rel="popover" data-placement="bottom" data-original-title="Interval" data-trigger="hover" ng-model="properties.interval" ng-change="updateInterval()">
-                <option value="1">1 sec</option>
-                <option value="2">2 sec</option>
-                <option value="3">3 sec</option>
-                <option value="5">5 sec</option>
-            </select>
-        </form>
-    </div>
     <div class="btn-group col-md-2">
-        <button id="widgetButton" type="button" class="dropdown-toggle btn btn-lg btn-default btn-block" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> Widget <span class="caret"></span></button>
+        <button id="widgetButton" type="button" class="dropdown-toggle btn btn-lg btn-default btn-block" data-toggle="dropdown">Widget <span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
             <li class="dropdown-submenu" ng-repeat="group in widgetDefs | groupBy: 'group'">
                 <a ng-click="void(0)"  data-toggle="dropdown">{{group}}</a>
@@ -41,6 +22,31 @@
             <li><a href="javascript:void(0);" ng-click="loadWidgets(defaultWidgets);">Default Widgets</a></li>
             <li><a href="javascript:void(0);" ng-click="loadWidgets(emptyWidgets);">Clear</a></li>
         </ul>
+    </div>
+    <div class="col-md-2">
+        <form role="form">
+            <div class="input-group input-group-lg" ng-class="{'has-error': form.window.$invalid && form.window.$dirty}">
+                <span class="input-group-addon">Window</span>
+                <select class="form-control" name="window" id="windowInput" data-content="The duration window for all charts in this dashboard." rel="popover" data-placement="bottom" data-trigger="hover" ng-model="properties.window" ng-change="updateWindow()">
+                    <option value="2">2 min</option>
+                    <option value="5">5 min</option>
+                    <option value="10">10 min</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-2">
+        <form role="form">
+            <div class="input-group input-group-lg" ng-class="{'has-error': form.interval.$invalid && form.interval.$dirty}">
+                <span class="input-group-addon">Interval</span>
+                <select class="form-control" name="interval" id="intervalInput" data-content="The update interval used by all charts in this dashboard." rel="popover" data-placement="bottom" data-trigger="hover" ng-model="properties.interval" ng-change="updateInterval()">
+                    <option value="1">1 sec</option>
+                    <option value="2">2 sec</option>
+                    <option value="3">3 sec</option>
+                    <option value="5">5 sec</option>
+                </select>
+            </div>
+        </form>
     </div>
 </div>
 <div class="row spacer">

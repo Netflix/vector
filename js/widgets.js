@@ -51,7 +51,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "CPU"
         }, {
             name: 'kernel.all.runnable',
@@ -66,7 +66,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "CPU"
         }, {
             name: 'kernel.all.cpu.sys',
@@ -81,7 +81,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "CPU"
         }, {
             name: 'kernel.all.cpu.user',
@@ -96,7 +96,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "CPU"
         }, {
             name: 'kernel.all.cpu',
@@ -111,7 +111,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "CPU"
         }, {
             name: 'kernel.percpu.cpu.sys',
@@ -126,7 +126,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "CPU"
         }, {
             name: 'kernel.percpu.cpu.user',
@@ -141,7 +141,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "CPU"
         }, {
             name: 'kernel.percpu.cpu',
@@ -156,7 +156,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "CPU"
         }, {
             name: 'mem.freemem',
@@ -171,7 +171,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Memory"
         }, {
             name: 'mem.util.used',
@@ -186,7 +186,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Memory"
         }, {
             name: 'mem.util.cached',
@@ -201,7 +201,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Memory"
         }, {
             name: 'mem',
@@ -216,7 +216,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Memory"
         }, {
             name: 'network.interface.out.drops',
@@ -231,7 +231,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Network"
         }, {
             name: 'network.interface.in.drops',
@@ -246,7 +246,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Network"
         }, {
             name: 'network.interface.drops',
@@ -265,7 +265,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Network"
         }, {
             name: 'network.tcp.retranssegs',
@@ -280,7 +280,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Network"
         }, {
             name: 'network.tcpconn.established',
@@ -295,7 +295,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Network"
         }, {
             name: 'network.tcpconn.time_wait',
@@ -306,7 +306,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'network.tcpconn.time_wait'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             size: {
                 width: '25%',
                 height: '250px'
@@ -325,7 +325,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Network"
         }, {
             name: 'network.tcpconn',
@@ -345,7 +345,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Network"
         }, {
             name: 'network.interface.bytes',
@@ -360,7 +360,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Network"
         }, {
             name: 'disk.iops',
@@ -379,7 +379,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Disk"
         }, {
             name: 'disk.bytes',
@@ -398,7 +398,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Disk"
         }, {
             name: 'disk.dev.avactive',
@@ -413,7 +413,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Disk"
         }, {
             name: 'kernel.all.pswitch',
@@ -428,7 +428,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "CPU"
         }, {
             name: 'mem.vmstat.pgfault',
@@ -447,7 +447,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Memory"
         }, {
             name: 'network.interface.packets',
@@ -466,7 +466,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Network"
         }, {
             name: 'network.tcp.retrans',
@@ -488,7 +488,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Network"
         }, {
             name: 'disk.dev.latency',
@@ -503,7 +503,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
                 width: '25%',
                 height: '250px'
             },
-            enableVerticalResize: true,
+            enableVerticalResize: false,
             group: "Disk"
         }
     ];
@@ -518,7 +518,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
           width: '25%',
           height: '250px'
         },
-        enableVerticalResize: true,
+        enableVerticalResize: false,
         group: "CPU"
       })
     }
@@ -533,7 +533,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
           width: '25%',
           height: '250px'
         },
-        enableVerticalResize: true,
+        enableVerticalResize: false,
         group: "Disk"
       })
     }
