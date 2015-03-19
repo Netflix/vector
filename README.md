@@ -24,7 +24,7 @@ Since Vector depends on version 3.10 or higher, the packages currently available
 
 ```
 ftp.pcp.io
-````
+```
 
 Or building it from source. To do so, get the current version of the source code:
 
