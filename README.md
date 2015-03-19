@@ -26,7 +26,7 @@ Since Vector depends on version 3.10 or higher, the packages currently available
 ftp.pcp.io
 ```
 
-Or building it from source. To do so, get the current version of the source code:
+Or build it from source. To do so, get the current version of the source code:
 
 ```
 $ git clone git://git.pcp.io/pcp
@@ -52,7 +52,7 @@ Vector is a static web application that runs inside the client's browser. It can
 To run in locally, first clone the repo:
 
 ```
-$ git clone https://github.com/Netflix/Vector.git
+$ git clone https://github.com/Netflix/vector.git
 ```
 
 Make sure you have Bower installed on your system:
@@ -62,7 +62,7 @@ Make sure you have Bower installed on your system:
 And install all dependencies:
 
 ```
-$ cd Vector
+$ cd vector
 $ bower install
 ```
 
@@ -94,7 +94,7 @@ And enter the hostname from the instance you plan on monitoring. That's it!
 
 ## Issues
 
-For bugs, questions and discussions please use the Github Issues.
+For bugs, questions and discussions please use the [Github Issues](https://github.com/Netflix/vector/issues).
 
 ## License
 
