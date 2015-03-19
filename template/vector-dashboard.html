@@ -4,8 +4,11 @@
             <div class="input-group input-group-lg" ng-class="{'has-error': form.host.$invalid && form.host.$dirty}">
                 <span class="input-group-addon">Hostname</span>
                 <input type="text" class="form-control" id="hostnameInput" name="host" data-content="Please enter a fully qualified instance hostname." rel="popover" data-placement="bottom" data-trigger="hover" ng-model="properties.host" ng-change="updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" ng-delay="500" required placeholder="Instance Hostname">
+                <i class="fa fa-refresh fa-2x form-control-feedback" ng-if="contextUpdating"></i>
+                <i class="fa fa-check fa-2x form-control-feedback" ng-if="contextAvailable"></i>
             </div>
         </form>
+
     </div>
     <div class="btn-group col-md-2">
         <button id="widgetButton" type="button" class="dropdown-toggle btn btn-lg btn-default btn-block" data-toggle="dropdown">Widget <span class="caret"></span></button>
@@ -49,24 +52,9 @@
         </form>
     </div>
 </div>
-<div class="row spacer">
-    <div class="col-md-12">
-        <div id="alert-dashboard-info" flash-alert="info" active-class="in alert" class="fade">
-            <span class="alert-message">{{flash.message}}</span>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <div id="alert-dashboard-success" flash-alert="success" active-class="in alert" class="fade">
-            <strong class="alert-heading">Success!</strong>
-            <span class="alert-message">{{flash.message}}</span>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <div id="alert-dashboard-error" flash-alert="error" active-class="in alert" class="fade">
-            <strong class="alert-heading">Error!</strong>
-            <span class="alert-message">{{flash.message}}</span>
-        </div>
-    </div>
+<div id="alert-dashboard-error" flash-alert="error" active-class="in alert" class="fade">
+    <strong class="alert-heading">Error!</strong>
+    <span class="alert-message">{{flash.message}}</span>
 </div>
 <div class="row">
     <div class="col-md-12">

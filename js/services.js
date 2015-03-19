@@ -297,14 +297,15 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
             port = $rootScope.properties.port;
 
         if (host && host !== '') {
-            flash.to('alert-dashboard-info').info = 'Fetching new context...';
+          $rootScope.contextUpdating = true;
             $http.get('http://' + host + ':' + port + '/pmapi/context?hostspec=localhost&polltimeout=600')
                 .success(function (data) {
-                    flash.to('alert-dashboard-success').success = 'Context was fetched successfully.';
+                    $rootScope.contextUpdating = false;
                     updateContextSuccessCallback(data);
                 })
                 .error(function () {
                     flash.to('alert-dashboard-error').error = 'Failed fetching context from host. Try updating the hostname.';
+                    $rootScope.contextUpdating = false;
                     updateContextErrorCallback();
                 });
         }
