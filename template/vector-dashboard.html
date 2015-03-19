@@ -5,7 +5,6 @@
                 <span class="input-group-addon">Hostname</span>
                 <input type="text" class="form-control" id="hostnameInput" name="host" data-content="Please enter a fully qualified instance hostname." rel="popover" data-placement="bottom" data-original-title="Hostname" data-trigger="hover" ng-model="properties.host" ng-change="updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" ng-delay="500" required placeholder="Instance Name">
             </div>
-            <span class="help-block" ng-show="form.host.$error.required">Required!</span>
         </form>
     </div>
     <div class="col-md-1">
