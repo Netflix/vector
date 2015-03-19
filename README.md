@@ -1,32 +1,32 @@
-# Vector
+![Vector](vector.png)
 
-Vector is an Instance-Level, On-Demand, High-Resolution Monitoring Framework. It's a web-base UI that leverages Performance Co-Pilot (PCP) in the backend.
+Vector is an open source on-instance performance monitoring framework which exposes hand picked high resolution system and application metrics to every engineer’s browser. Having the right metrics available on-demand and at a high resolution is key to understand how a system behaves and correctly troubleshoot performance issues.
 
 ## Disclaimer
 
-This is the first release of Vector. As such, expect to find bugs and issues. We count on your support to find and document them! 
+This is the first release of Vector. As such, expect to find bugs and issues. We count on your support to find and report them!
 
-Vector is under constant development and new versions should be released often. 
+Vector is under constant development and new versions should be released often.
 
 ## Getting Started
 
-In order to get started, you should first install Performance Co-Pilot (PCP) on each instance you plan to monitor. PCP will collect the metrics and make them available via API for Vector.
+In order to get started, you should first install Performance Co-Pilot (PCP) on each instance you plan to monitor. PCP will collect the metrics and make them available for Vector.
 
 Optional monitoring agents can also be installed in order to collect specific metrics that are not supported by PCP's system agent.
 
-Once PCP is intalled, you should be able to run Vector and connect to the target instance.
+Once PCP is installed, you should be able to run Vector and connect to the target instance.
 
 ### Performance Co-Pilot (PCP)
 
-Vector depends on Peformance Co-Pilot (PCP) to collect metrics on each instance you plan to monitor. 
+Vector depends on Performance Co-Pilot (PCP) to collect metrics on each instance you plan to monitor.
 
-Since Vector depends on version 3.10 or higher, the current packages available on most Linux distro repositories would not suffice. Until newer versions are available in the repositories, you should be able to install PCP from binary packages made available by the PCP development team on:
+Since Vector depends on version 3.10 or higher, the packages currently available on most Linux distro repositories would not suffice. Until newer versions are available in the repositories, you should be able to install PCP from binary packages made available by the PCP development team on:
 
 ```
 ftp.pcp.io
 ````
 
-Or building it from source. To do so, get the current version of the source code: 
+Or building it from source. To do so, get the current version of the source code:
 
 ```
 $ git clone git://git.pcp.io/pcp
@@ -45,43 +45,56 @@ More information on how to install Performance Co-Pilot can be found at:
 
 [http://pcp.io/docs/installation.html#src](http://pcp.io/docs/installation.html#src)
 
-### Vector Web App
+### Vector
 
-Vector is a simple static web application that runs completely on the client side. It can run locally or deployed to any HTTP server available, like Apache or Nginx.
+Vector is a static web application that runs inside the client's browser. It can run locally or deployed to any HTTP server available, like Apache or Nginx.
 
-To run it locally via Python's SimpleHTTPServerm first clone the repo:
+To run in locally, first clone the repo:
 
 ```
 $ git clone https://github.com/Netflix/Vector.git
 ```
 
-Run the server:
+Make sure you have Bower installed on your system:
+
+[http://bower.io/#getting-started](http://bower.io/#getting-started)
+
+And install all dependencies:
 
 ```
 $ cd Vector
-$ python -m SimpleHTTPServer 8000
+$ bower install
 ```
 
-And open Vector on your browser:
+To run it with Gulp, first make sure you have Gulp installed on your system:
 
-[http://localhost:8000](http://localhost:8000)
+[https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
 
-### Configuration
+Then, install the dependencies and execute the default Gulp task:
 
-* PCP port
-* Default values
-	* Window
-	* Interval
-	* Hostname
-* Custom agents
+```
+$ npm install
+$ gulp
+```
+
+The default Gulp task has live reload enabled.
+
+To run it with Python's SimpleHTTPServer:
+
+```
+$ cd Vector
+$ python -m SimpleHTTPServer 8080
+```
+
+Then open Vector on your browser:
+
+[http://localhost:8080](http://localhost:8080)
+
+And enter the hostname from the instance you plan on monitoring. That's it!
 
 ## Issues
 
 For bugs, questions and discussions please use the Github Issues.
-
-## Documentation
-
-For full documentation, please refer to the docs page.
 
 ## License
 
