@@ -10,7 +10,7 @@ Vector is under constant development and new versions should be released often.
 
 ## Getting Started
 
-In order to get started, you should first install Performance Co-Pilot (PCP) on each instance you plan to monitor. PCP will collect the metrics and make them available for Vector.
+In order to get started, you should first install [Performance Co-Pilot (PCP)](http://pcp.io/) on each instance you plan to monitor. PCP will collect the metrics and make them available for Vector.
 
 Optional monitoring agents can also be installed in order to collect specific metrics that are not supported by PCP's system agent.
 
