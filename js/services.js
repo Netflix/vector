@@ -129,9 +129,9 @@ services.factory('MetricListService', function ($rootScope, $http, Metric, Cummu
             metric.subscribers--;
 
             if (metric.subscribers < 1) {
-                index = simpleMetrics.indexOf(metric);
+                index = derivedMetrics.indexOf(metric);
                 if (index > -1) {
-                    simpleMetrics.splice(index, 1);
+                    derivedMetrics.splice(index, 1);
                 }
             }
         },
