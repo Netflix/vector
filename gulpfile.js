@@ -3,6 +3,7 @@ var gulp = require('gulp'),
  
 gulp.task('webserver', function() {
 	connect.server({
+		root: 'app',
 		livereload: true
 	});
 });
