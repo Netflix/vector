@@ -82,7 +82,7 @@ The default Gulp task has live reload enabled.
 To run it with Python's SimpleHTTPServer:
 
 ```
-$ cd Vector
+$ cd vector/app
 $ python -m SimpleHTTPServer 8080
 ```
 
