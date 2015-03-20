@@ -155,3 +155,10 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+
+.widget-pause-icon {
+  display: inline-block;
+  width: 100%;
+  text-align:center;
+  margin-top: 78px;
+}

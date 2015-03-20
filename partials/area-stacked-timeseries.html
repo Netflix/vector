@@ -15,10 +15,12 @@
             tooltips="true"
             showControls="false"
             stacked="true"
-            noData="Data could not be loaded!"
+            noData="No available data."
             x="xFunction()"
             y="yFunction()"
-            objectEquality="true">
+            objectEquality="true"
+            ng-if="flags.contextAvailable">
         <svg></svg>
     </nvd3-stacked-area-chart>
+    <i class="fa fa-pause fa-5x widget-pause-icon" ng-if="!flags.contextAvailable"></i>
 </div>

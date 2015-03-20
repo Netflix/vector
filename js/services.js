@@ -280,13 +280,13 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
     };
 
     updateContextSuccessCallback = function (data) {
-        $rootScope.contextAvailable = true;
+        $rootScope.flags.contextAvailable = true;
         $rootScope.properties.context =  data.context;
         updateInterval();
     };
 
     updateContextErrorCallback = function () {
-        $rootScope.contextAvailable = false;
+        $rootScope.flags.contextAvailable = false;
         $log.error("Error fetching context.");
     };
 
@@ -297,15 +297,15 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
             port = $rootScope.properties.port;
 
         if (host && host !== '') {
-          $rootScope.contextUpdating = true;
+          $rootScope.flags.contextUpdating = true;
             $http.get('http://' + host + ':' + port + '/pmapi/context?hostspec=localhost&polltimeout=600')
                 .success(function (data) {
-                    $rootScope.contextUpdating = false;
+                    $rootScope.flags.contextUpdating = false;
                     updateContextSuccessCallback(data);
                 })
                 .error(function () {
                     flash.to('alert-dashboard-error').error = 'Failed fetching context from host. Try updating the hostname.';
-                    $rootScope.contextUpdating = false;
+                    $rootScope.flags.contextUpdating = false;
                     updateContextErrorCallback();
                 });
         }
@@ -377,6 +377,10 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
                     interval: vectorConfig.interval
                 };
             }
+            $rootScope.flags = {
+              contextAvailable: false,
+              contextUpdating: false
+            };
         }
     };
 });

@@ -26,7 +26,7 @@
 
 var directives = angular.module('app.directives', []);
 
-directives.directive('lineTimeSeries', function (D3Service) {
+directives.directive('lineTimeSeries', function ($rootScope, D3Service) {
     return {
         restrict: 'A',
         replace: true,
@@ -41,6 +41,7 @@ directives.directive('lineTimeSeries', function (D3Service) {
             scope.xFunction = D3Service.xFunction;
             scope.id = D3Service.getId();
             scope.height = 250;
+            scope.flags = $rootScope.flags;
             scope.$on('widgetResized', function (event, size) {
                 scope.width = size.width || scope.width;
                 scope.height = size.height || scope.height;
@@ -50,7 +51,7 @@ directives.directive('lineTimeSeries', function (D3Service) {
     };
 });
 
-directives.directive('lineIntegerTimeSeries', function (D3Service) {
+directives.directive('lineIntegerTimeSeries', function ($rootScope, D3Service) {
     return {
         restrict: 'A',
         replace: true,
@@ -65,6 +66,7 @@ directives.directive('lineIntegerTimeSeries', function (D3Service) {
             scope.xFunction = D3Service.xFunction;
             scope.id = D3Service.getId();
             scope.height = 250;
+            scope.flags = $rootScope.flags;
             scope.$on('widgetResized', function (event, size) {
                 scope.width = size.width || scope.width;
                 scope.height = size.height || scope.height;
@@ -74,7 +76,7 @@ directives.directive('lineIntegerTimeSeries', function (D3Service) {
     };
 });
 
-directives.directive('linePercentageTimeSeries', function (D3Service) {
+directives.directive('linePercentageTimeSeries', function ($rootScope, D3Service) {
     return {
         restrict: 'A',
         replace: true,
@@ -89,6 +91,7 @@ directives.directive('linePercentageTimeSeries', function (D3Service) {
             scope.xFunction = D3Service.xFunction;
             scope.id = D3Service.getId();
             scope.height = 250;
+            scope.flags = $rootScope.flags;
             scope.$on('widgetResized', function (event, size) {
                 scope.width = size.width || scope.width;
                 scope.height = size.height || scope.height;
@@ -98,7 +101,7 @@ directives.directive('linePercentageTimeSeries', function (D3Service) {
     };
 });
 
-directives.directive('linePercentageForceYTimeSeries', function (D3Service) {
+directives.directive('linePercentageForceYTimeSeries', function ($rootScope, D3Service) {
     return {
         restrict: 'A',
         replace: true,
@@ -112,11 +115,18 @@ directives.directive('linePercentageForceYTimeSeries', function (D3Service) {
             scope.yFunction = D3Service.yFunction;
             scope.xFunction = D3Service.xFunction;
             scope.id = D3Service.getId();
+            scope.height = 250;
+            scope.flags = $rootScope.flags;
+            scope.$on('widgetResized', function (event, size) {
+                scope.width = size.width || scope.width;
+                scope.height = size.height || scope.height;
+                d3.select('#' + scope.id + ' svg').style({'height': scope.height});
+            });
         }
     };
 });
 
-directives.directive('lineIntegerForceYTimeSeries', function (D3Service) {
+directives.directive('lineIntegerForceYTimeSeries', function ($rootScope, D3Service) {
     return {
         restrict: 'A',
         replace: true,
@@ -130,11 +140,18 @@ directives.directive('lineIntegerForceYTimeSeries', function (D3Service) {
             scope.yFunction = D3Service.yFunction;
             scope.xFunction = D3Service.xFunction;
             scope.id = D3Service.getId();
+            scope.height = 250;
+            scope.flags = $rootScope.flags;
+            scope.$on('widgetResized', function (event, size) {
+                scope.width = size.width || scope.width;
+                scope.height = size.height || scope.height;
+                d3.select('#' + scope.id + ' svg').style({'height': scope.height});
+            });
         }
     };
 });
 
-directives.directive('areaStackedTimeSeries', function (D3Service) {
+directives.directive('areaStackedTimeSeries', function ($rootScope, D3Service) {
     return {
         restrict: 'A',
         replace: true,
@@ -148,11 +165,18 @@ directives.directive('areaStackedTimeSeries', function (D3Service) {
             scope.yFunction = D3Service.yFunction;
             scope.xFunction = D3Service.xFunction;
             scope.id = D3Service.getId();
+            scope.height = 250;
+            scope.flags = $rootScope.flags;
+            scope.$on('widgetResized', function (event, size) {
+                scope.width = size.width || scope.width;
+                scope.height = size.height || scope.height;
+                d3.select('#' + scope.id + ' svg').style({'height': scope.height});
+            });
         }
     };
 });
 
-directives.directive('areaStackedIntegerTimeSeries', function (D3Service) {
+directives.directive('areaStackedIntegerTimeSeries', function ($rootScope, D3Service) {
     return {
         restrict: 'A',
         replace: true,
@@ -166,11 +190,18 @@ directives.directive('areaStackedIntegerTimeSeries', function (D3Service) {
             scope.yFunction = D3Service.yFunction;
             scope.xFunction = D3Service.xFunction;
             scope.id = D3Service.getId();
+            scope.height = 250;
+            scope.flags = $rootScope.flags;
+            scope.$on('widgetResized', function (event, size) {
+                scope.width = size.width || scope.width;
+                scope.height = size.height || scope.height;
+                d3.select('#' + scope.id + ' svg').style({'height': scope.height});
+            });
         }
     };
 });
 
-directives.directive('areaStackedPercentageTimeSeries', function (D3Service) {
+directives.directive('areaStackedPercentageTimeSeries', function ($rootScope, D3Service) {
     return {
         restrict: 'A',
         replace: true,
@@ -184,11 +215,18 @@ directives.directive('areaStackedPercentageTimeSeries', function (D3Service) {
             scope.yFunction = D3Service.yFunction;
             scope.xFunction = D3Service.xFunction;
             scope.id = D3Service.getId();
+            scope.height = 250;
+            scope.flags = $rootScope.flags;
+            scope.$on('widgetResized', function (event, size) {
+                scope.width = size.width || scope.width;
+                scope.height = size.height || scope.height;
+                d3.select('#' + scope.id + ' svg').style({'height': scope.height});
+            });
         }
     };
 });
 
-directives.directive('areaStackedPercentageForceYTimeSeries', function (D3Service) {
+directives.directive('areaStackedPercentageForceYTimeSeries', function ($rootScope, D3Service) {
     return {
         restrict: 'A',
         replace: true,
@@ -202,6 +240,13 @@ directives.directive('areaStackedPercentageForceYTimeSeries', function (D3Servic
             scope.yFunction = D3Service.yFunction;
             scope.xFunction = D3Service.xFunction;
             scope.id = D3Service.getId();
+            scope.height = 250;
+            scope.flags = $rootScope.flags;
+            scope.$on('widgetResized', function (event, size) {
+                scope.width = size.width || scope.width;
+                scope.height = size.height || scope.height;
+                d3.select('#' + scope.id + ' svg').style({'height': scope.height});
+            });
         }
     };
 });
