@@ -132,31 +132,19 @@
 
 .input-group-lg select {
     margin: 0;
-    /*-webkit-appearance: none;*/
-}
-
-.input-group-lg .input-group-addon {
-    z-index: 3;
-    position: relative;
-    left: 4px;
-    border-right: 1px solid #ccc;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 #alert-dashboard-error {
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .form-control-feedback {
     margin: 10px;
 }
 
-#hostnameInput {
-    border-radius: 6px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-.widget-pause-icon {
+.widget-icon {
   display: inline-block;
   width: 100%;
   text-align:center;
