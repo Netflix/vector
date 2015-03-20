@@ -349,7 +349,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             group: "Network"
         }, {
             name: 'network.interface.bytes',
-            title: 'Network kB',
+            title: 'Network Throughput (kB)',
             directive: 'line-integer-time-series',
             dataAttrName: 'data',
             dataModelType: NetworkBytesMetricTimeSeriesDataModel,
@@ -383,7 +383,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             group: "Disk"
         }, {
             name: 'disk.bytes',
-            title: 'Disk Bytes',
+            title: 'Disk Throughput (Bytes)',
             directive: 'line-time-series',
             dataAttrName: 'data',
             dataModelType: MultipleCummulativeMetricTimeSeriesDataModel,
