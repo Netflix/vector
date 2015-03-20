@@ -268,21 +268,6 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             enableVerticalResize: false,
             group: "Network"
         }, {
-            name: 'network.tcp.retranssegs',
-            title: 'TCP Retransmits',
-            directive: 'line-integer-force-y-time-series',
-            dataAttrName: 'data',
-            dataModelType: CummulativeMetricTimeSeriesDataModel,
-            dataModelOptions: {
-                name: 'network.tcp.retranssegs'
-            },
-            size: {
-                width: '25%',
-                height: '250px'
-            },
-            enableVerticalResize: false,
-            group: "Network"
-        }, {
             name: 'network.tcpconn.established',
             title: 'TCP Connections (Estabilished)',
             directive: 'line-integer-time-series',
@@ -477,6 +462,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'network.tcp.retrans',
                 metricDefinitions: {
+                    "retranssegs": "network.tcp.retranssegs",
                     "timeouts": "network.tcp.timeouts",
                     "listendrops": "network.tcp.listendrops",
                     "fastretrans": "network.tcp.fastretrans",
@@ -580,7 +566,7 @@ widgets.value('defaultWidgets', [
             width: '25%'
         }
     }, {
-        name: 'network.tcp.retranssegs',
+        name: 'network.tcp.retrans',
         size: {
             width: '25%'
         }
