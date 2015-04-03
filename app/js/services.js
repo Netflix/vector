@@ -36,7 +36,7 @@ services.factory('MetricService', function ($http, $rootScope) {
     };
 });
 
-services.factory('MetricListService', function ($rootScope, $http, Metric, CummulativeMetric, ConvertedMetric, CummulativeConvertedMetric, DerivedMetric, flash) {
+services.factory('MetricListService', function ($rootScope, $http, Metric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric, flash) {
     var simpleMetrics = [],
         derivedMetrics = [];
     return {
@@ -53,13 +53,13 @@ services.factory('MetricListService', function ($rootScope, $http, Metric, Cummu
             }
             return metric;
         },
-        getOrCreateCummulativeMetric: function (name) {
+        getOrCreateCumulativeMetric: function (name) {
             var metric = _.find(simpleMetrics, function (el) {
                 return el.name === name;
             });
 
             if (metric === undefined) {
-                metric = new CummulativeMetric(name);
+                metric = new CumulativeMetric(name);
                 simpleMetrics.push(metric);
             } else {
                 metric.subscribers++;
@@ -79,13 +79,13 @@ services.factory('MetricListService', function ($rootScope, $http, Metric, Cummu
             }
             return metric;
         },
-        getOrCreateCummulativeConvertedMetric: function (name, conversionFunction) {
+        getOrCreateCumulativeConvertedMetric: function (name, conversionFunction) {
             var metric = _.find(simpleMetrics, function (el) {
                 return el.name === name;
             });
 
             if (metric === undefined) {
-                metric = new CummulativeConvertedMetric(name, conversionFunction);
+                metric = new CumulativeConvertedMetric(name, conversionFunction);
                 simpleMetrics.push(metric);
             } else {
                 metric.subscribers++;

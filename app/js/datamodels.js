@@ -76,46 +76,46 @@ datamodels.factory('MetricTimeSeriesDataModel', function (WidgetDataModel, Metri
     return MetricTimeSeriesDataModel;
 });
 
-datamodels.factory('CummulativeMetricTimeSeriesDataModel', function (WidgetDataModel, MetricListService, VectorService) {
-    var CummulativeMetricTimeSeriesDataModel = function () {
+datamodels.factory('CumulativeMetricTimeSeriesDataModel', function (WidgetDataModel, MetricListService, VectorService) {
+    var CumulativeMetricTimeSeriesDataModel = function () {
         return this;
     };
 
-    CummulativeMetricTimeSeriesDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    CumulativeMetricTimeSeriesDataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-    CummulativeMetricTimeSeriesDataModel.prototype.init = function () {
+    CumulativeMetricTimeSeriesDataModel.prototype.init = function () {
         WidgetDataModel.prototype.init.call(this);
 
         this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
 
-        this.metric = MetricListService.getOrCreateCummulativeMetric(this.name);
+        this.metric = MetricListService.getOrCreateCumulativeMetric(this.name);
 
         this.updateScope(this.metric.data);
 
     };
 
-    CummulativeMetricTimeSeriesDataModel.prototype.destroy = function () {
+    CumulativeMetricTimeSeriesDataModel.prototype.destroy = function () {
         MetricListService.destroyMetric(this.name);
 
         WidgetDataModel.prototype.destroy.call(this);
     };
 
-    return CummulativeMetricTimeSeriesDataModel;
+    return CumulativeMetricTimeSeriesDataModel;
 });
 
-datamodels.factory('CummulativeUtilizationMetricTimeSeriesDataModel', function (WidgetDataModel, MetricListService, VectorService) {
-    var CummulativeUtilizationMetricTimeSeriesDataModel = function () {
+datamodels.factory('CumulativeUtilizationMetricTimeSeriesDataModel', function (WidgetDataModel, MetricListService, VectorService) {
+    var CumulativeUtilizationMetricTimeSeriesDataModel = function () {
         return this;
     };
 
-    CummulativeUtilizationMetricTimeSeriesDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    CumulativeUtilizationMetricTimeSeriesDataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-    CummulativeUtilizationMetricTimeSeriesDataModel.prototype.init = function () {
+    CumulativeUtilizationMetricTimeSeriesDataModel.prototype.init = function () {
         WidgetDataModel.prototype.init.call(this);
 
         this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
 
-        var rawMetric = MetricListService.getOrCreateCummulativeMetric(this.name),
+        var rawMetric = MetricListService.getOrCreateCumulativeMetric(this.name),
             derivedFunction;
 
         derivedFunction = function () {
@@ -145,7 +145,7 @@ datamodels.factory('CummulativeUtilizationMetricTimeSeriesDataModel', function (
 
     };
 
-    CummulativeUtilizationMetricTimeSeriesDataModel.prototype.destroy = function () {
+    CumulativeUtilizationMetricTimeSeriesDataModel.prototype.destroy = function () {
         // remove subscribers and delete derived metric
         MetricListService.destroyDerivedMetric(this.name);
 
@@ -155,7 +155,7 @@ datamodels.factory('CummulativeUtilizationMetricTimeSeriesDataModel', function (
         WidgetDataModel.prototype.destroy.call(this);
     };
 
-    return CummulativeUtilizationMetricTimeSeriesDataModel;
+    return CumulativeUtilizationMetricTimeSeriesDataModel;
 });
 
 datamodels.factory('MultipleMetricTimeSeriesDataModel', function (WidgetDataModel, MetricListService, VectorService) {
@@ -226,14 +226,14 @@ datamodels.factory('MultipleMetricTimeSeriesDataModel', function (WidgetDataMode
     return MultipleMetricTimeSeriesDataModel;
 });
 
-datamodels.factory('MultipleCummulativeMetricTimeSeriesDataModel', function (WidgetDataModel, MetricListService, VectorService) {
-    var MultipleCummulativeMetricTimeSeriesDataModel = function () {
+datamodels.factory('MultipleCumulativeMetricTimeSeriesDataModel', function (WidgetDataModel, MetricListService, VectorService) {
+    var MultipleCumulativeMetricTimeSeriesDataModel = function () {
         return this;
     };
 
-    MultipleCummulativeMetricTimeSeriesDataModel.prototype = Object.create(WidgetDataModel.prototype);
+    MultipleCumulativeMetricTimeSeriesDataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-    MultipleCummulativeMetricTimeSeriesDataModel.prototype.init = function () {
+    MultipleCumulativeMetricTimeSeriesDataModel.prototype.init = function () {
         WidgetDataModel.prototype.init.call(this);
 
         this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
@@ -245,7 +245,7 @@ datamodels.factory('MultipleCummulativeMetricTimeSeriesDataModel', function (Wid
 
         /*jslint unparam: true*/
         $.each(this.metricDefinitions, function (key, definition) {
-            metrics[key] = MetricListService.getOrCreateCummulativeMetric(definition);
+            metrics[key] = MetricListService.getOrCreateCumulativeMetric(definition);
         });
         /*jslint unparam: false*/
 
@@ -277,7 +277,7 @@ datamodels.factory('MultipleCummulativeMetricTimeSeriesDataModel', function (Wid
         this.updateScope(this.metric.data);
     };
 
-    MultipleCummulativeMetricTimeSeriesDataModel.prototype.destroy = function () {
+    MultipleCumulativeMetricTimeSeriesDataModel.prototype.destroy = function () {
         // remove subscribers and delete derived metric
         MetricListService.destroyDerivedMetric(this.name);
 
@@ -291,7 +291,7 @@ datamodels.factory('MultipleCummulativeMetricTimeSeriesDataModel', function (Wid
         WidgetDataModel.prototype.destroy.call(this);
     };
 
-    return MultipleCummulativeMetricTimeSeriesDataModel;
+    return MultipleCumulativeMetricTimeSeriesDataModel;
 });
 
 datamodels.factory('NetworkBytesMetricTimeSeriesDataModel', function (WidgetDataModel, MetricListService, VectorService) {
@@ -307,8 +307,8 @@ datamodels.factory('NetworkBytesMetricTimeSeriesDataModel', function (WidgetData
         this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
 
         // create create base metrics
-        var inMetric = MetricListService.getOrCreateCummulativeMetric('network.interface.in.bytes'),
-            outMetric = MetricListService.getOrCreateCummulativeMetric('network.interface.out.bytes'),
+        var inMetric = MetricListService.getOrCreateCumulativeMetric('network.interface.in.bytes'),
+            outMetric = MetricListService.getOrCreateCumulativeMetric('network.interface.out.bytes'),
             derivedFunction;
 
         // create derived function
@@ -378,8 +378,8 @@ datamodels.factory('CpuUtilizationMetricTimeSeriesDataModel', function (WidgetDa
         this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
 
         // create create base metrics
-        var cpuSysMetric = MetricListService.getOrCreateCummulativeMetric('kernel.all.cpu.sys'),
-            cpuUserMetric = MetricListService.getOrCreateCummulativeMetric('kernel.all.cpu.user'),
+        var cpuSysMetric = MetricListService.getOrCreateCumulativeMetric('kernel.all.cpu.sys'),
+            cpuUserMetric = MetricListService.getOrCreateCumulativeMetric('kernel.all.cpu.user'),
             ncpuMetric = MetricListService.getOrCreateMetric('hinv.ncpu'),
             derivedFunction;
 
@@ -458,8 +458,8 @@ datamodels.factory('PerCpuUtilizationMetricTimeSeriesDataModel', function (Widge
 
         this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
 
-        var cpuSysMetric = MetricListService.getOrCreateCummulativeMetric('kernel.percpu.cpu.sys'),
-            cpuUserMetric = MetricListService.getOrCreateCummulativeMetric('kernel.percpu.cpu.user'),
+        var cpuSysMetric = MetricListService.getOrCreateCumulativeMetric('kernel.percpu.cpu.sys'),
+            cpuUserMetric = MetricListService.getOrCreateCumulativeMetric('kernel.percpu.cpu.user'),
             derivedFunction;
 
         derivedFunction = function () {
@@ -639,10 +639,10 @@ datamodels.factory('DiskLatencyTimeSeriesDataModel', function (WidgetDataModel, 
 
         this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
 
-        var readActiveMetric = MetricListService.getOrCreateCummulativeMetric('disk.dev.read_rawactive'),
-            writeActiveMetric = MetricListService.getOrCreateCummulativeMetric('disk.dev.write_rawactive'),
-            readMetric = MetricListService.getOrCreateCummulativeMetric('disk.dev.read'),
-            writeMetric = MetricListService.getOrCreateCummulativeMetric('disk.dev.write'),
+        var readActiveMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.read_rawactive'),
+            writeActiveMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.write_rawactive'),
+            readMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.read'),
+            writeMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.write'),
             derivedFunction;
 
         derivedFunction = function () {

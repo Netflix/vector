@@ -26,16 +26,16 @@
 var widgets = angular.module('app.widgets', []);
 
 widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
-                                               CummulativeMetricTimeSeriesDataModel,
+                                               CumulativeMetricTimeSeriesDataModel,
                                                MemoryMetricTimeSeriesDataModel,
                                                NetworkBytesMetricTimeSeriesDataModel,
                                                CpuUtilizationMetricTimeSeriesDataModel,
                                                PerCpuUtilizationMetricTimeSeriesDataModel,
                                                MultipleMetricTimeSeriesDataModel,
-                                               MultipleCummulativeMetricTimeSeriesDataModel,
+                                               MultipleCumulativeMetricTimeSeriesDataModel,
                                                DummyMetricDataModel,
                                                DiskLatencyTimeSeriesDataModel,
-                                               CummulativeUtilizationMetricTimeSeriesDataModel,
+                                               CumulativeUtilizationMetricTimeSeriesDataModel,
                                                vectorConfig) {
     var definitions = [
         {
@@ -73,7 +73,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             title: 'CPU Utilization (System)',
             directive: 'line-percentage-force-y-time-series',
             dataAttrName: 'data',
-            dataModelType: CummulativeUtilizationMetricTimeSeriesDataModel,
+            dataModelType: CumulativeUtilizationMetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.all.cpu.sys'
             },
@@ -88,7 +88,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             title: 'CPU Utilization (User)',
             directive: 'line-percentage-force-y-time-series',
             dataAttrName: 'data',
-            dataModelType: CummulativeUtilizationMetricTimeSeriesDataModel,
+            dataModelType: CumulativeUtilizationMetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.all.cpu.user'
             },
@@ -118,7 +118,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             title: 'Per-CPU Utilization (System)',
             directive: 'line-percentage-force-y-time-series',
             dataAttrName: 'data',
-            dataModelType: CummulativeUtilizationMetricTimeSeriesDataModel,
+            dataModelType: CumulativeUtilizationMetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.percpu.cpu.sys'
             },
@@ -133,7 +133,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             title: 'Per-CPU Utilization (User)',
             directive: 'line-percentage-force-y-time-series',
             dataAttrName: 'data',
-            dataModelType: CummulativeUtilizationMetricTimeSeriesDataModel,
+            dataModelType: CumulativeUtilizationMetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.percpu.cpu.user'
             },
@@ -352,7 +352,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             title: 'Disk IOPS',
             directive: 'line-time-series',
             dataAttrName: 'data',
-            dataModelType: MultipleCummulativeMetricTimeSeriesDataModel,
+            dataModelType: MultipleCumulativeMetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'disk.iops',
                 metricDefinitions: {
@@ -371,7 +371,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             title: 'Disk Throughput (Bytes)',
             directive: 'line-time-series',
             dataAttrName: 'data',
-            dataModelType: MultipleCummulativeMetricTimeSeriesDataModel,
+            dataModelType: MultipleCumulativeMetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'disk.bytes',
                 metricDefinitions: {
@@ -390,7 +390,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             title: 'Disk Utilization',
             directive: 'line-percentage-force-y-time-series',
             dataAttrName: 'data',
-            dataModelType: CummulativeUtilizationMetricTimeSeriesDataModel,
+            dataModelType: CumulativeUtilizationMetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'disk.dev.avactive'
             },
@@ -405,7 +405,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             title: 'Context Switches',
             directive: 'line-integer-time-series',
             dataAttrName: 'data',
-            dataModelType: CummulativeMetricTimeSeriesDataModel,
+            dataModelType: CumulativeMetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'kernel.all.pswitch'
             },
@@ -420,7 +420,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             title: 'Page Faults',
             directive: 'area-stacked-integer-time-series',
             dataAttrName: 'data',
-            dataModelType: MultipleCummulativeMetricTimeSeriesDataModel,
+            dataModelType: MultipleCumulativeMetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'mem.vmstat.pgfault',
                 metricDefinitions: {
@@ -439,7 +439,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             title: 'Network Packets',
             directive: 'line-integer-time-series',
             dataAttrName: 'data',
-            dataModelType: MultipleCummulativeMetricTimeSeriesDataModel,
+            dataModelType: MultipleCumulativeMetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'network.interface.packets',
                 metricDefinitions: {
@@ -458,7 +458,7 @@ widgets.factory('widgetDefinitions', function (MetricTimeSeriesDataModel,
             title: 'Network Retransmits',
             directive: 'line-integer-force-y-time-series',
             dataAttrName: 'data',
-            dataModelType: MultipleCummulativeMetricTimeSeriesDataModel,
+            dataModelType: MultipleCumulativeMetricTimeSeriesDataModel,
             dataModelOptions: {
                 name: 'network.tcp.retrans',
                 metricDefinitions: {

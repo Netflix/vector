@@ -127,16 +127,16 @@ factories.factory('DerivedMetric', function ($rootScope, $log) {
     return DerivedMetric;
 });
 
-factories.factory('CummulativeMetric', function ($rootScope, $log, Metric, MetricService) {
+factories.factory('CumulativeMetric', function ($rootScope, $log, Metric, MetricService) {
 
-    var CummulativeMetric = function (name) {
+    var CumulativeMetric = function (name) {
         this.base = Metric;
         this.base(name);
     };
 
-    CummulativeMetric.prototype = new Metric();
+    CumulativeMetric.prototype = new Metric();
 
-    CummulativeMetric.prototype.pushValues = function (iid, timestamp, value) {
+    CumulativeMetric.prototype.pushValues = function (iid, timestamp, value) {
         var self = this,
             instance,
             overflow,
@@ -175,7 +175,7 @@ factories.factory('CummulativeMetric', function ($rootScope, $log, Metric, Metri
         }
     };
 
-    return CummulativeMetric;
+    return CumulativeMetric;
 });
 
 factories.factory('ConvertedMetric', function ($rootScope, $log, Metric, MetricService) {
@@ -226,17 +226,17 @@ factories.factory('ConvertedMetric', function ($rootScope, $log, Metric, MetricS
     return ConvertedMetric;
 });
 
-factories.factory('CummulativeConvertedMetric', function ($rootScope, $log, Metric, MetricService) {
+factories.factory('CumulativeConvertedMetric', function ($rootScope, $log, Metric, MetricService) {
 
-    var CummulativeConvertedMetric = function (name, conversionFunction) {
+    var CumulativeConvertedMetric = function (name, conversionFunction) {
         this.base = Metric;
         this.base(name);
         this.conversionFunction = conversionFunction;
     };
 
-    CummulativeConvertedMetric.prototype = new Metric();
+    CumulativeConvertedMetric.prototype = new Metric();
 
-    CummulativeConvertedMetric.prototype.pushValues = function (iid, timestamp, value) {
+    CumulativeConvertedMetric.prototype.pushValues = function (iid, timestamp, value) {
         var self = this,
             instance,
             overflow,
@@ -277,5 +277,5 @@ factories.factory('CummulativeConvertedMetric', function ($rootScope, $log, Metr
         }
     };
 
-    return CummulativeConvertedMetric;
+    return CumulativeConvertedMetric;
 });

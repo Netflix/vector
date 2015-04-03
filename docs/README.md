@@ -22,12 +22,12 @@ Generic data models were also created so they could be reused on new widgets wit
 
 * **DummyMetricDataModel**. Polls a dummy metric from Performance Co-Pilot in order to avoid losing the application context. It can be used with widgets that don't require a metric from PCP.
 * **MetricTimeSeriesDataModel**. Polls a single metric and stores the value in a D3 compatible time series data structure.
-* **CummulativeMetricTimeSeriesDataModel**. Same as MetricTimeSeriesDataModel, but applies a commulative function to the value.
-* **CummulativeUtilizationMetricTimeSeriesDataModel**. Same as CummulativeMetricTimeSeriesDataModel, but applies a normalization function to the value.
+* **CumulativeMetricTimeSeriesDataModel**. Same as MetricTimeSeriesDataModel, but applies a commulative function to the value.
+* **CumulativeUtilizationMetricTimeSeriesDataModel**. Same as CumulativeMetricTimeSeriesDataModel, but applies a normalization function to the value.
 * **MultipleMetricTimeSeriesDataModel**. Same as MetricTimeSeriesDataModel, but accepts multiple metrics and combines the values into a single data structure.
-* **MultipleCummulativeMetricTimeSeriesDataModel**. Same as CummulativeMetricTimeSeriesDataModel, but accepts multiple metrics and combines the values into a single data structure.
+* **MultipleCumulativeMetricTimeSeriesDataModel**. Same as CumulativeMetricTimeSeriesDataModel, but accepts multiple metrics and combines the values into a single data structure.
 
-Metrics are polled from Performance Co-Pilot's web daemon. They are named instances and values are returned along with a timestamp. Vector makes use of two data structures to store metrics and their values. The "raw" metric data structure holds the original metric values that came from PCP. The "derived" metric data structure holds metrics that were modified by a data model function, like a cummulative function or a normalization function.
+Metrics are polled from Performance Co-Pilot's web daemon. They are named instances and values are returned along with a timestamp. Vector makes use of two data structures to store metrics and their values. The "raw" metric data structure holds the original metric values that came from PCP. The "derived" metric data structure holds metrics that were modified by a data model function, like a Cumulative function or a normalization function.
 
 The metric poller is the component that goes over the list of "raw" metrics and polls them from PCP via HTTP, given the selected polling interval. It also executes all data model functions and consequently updates the "derived" metric data structure. Charts are automatically updated every time the data structure is updated.
 
