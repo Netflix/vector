@@ -271,12 +271,14 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
     updateInterval = function () {
         cancelInterval(intervalPromise);
 
-        if ($rootScope.properties.context && $rootScope.properties.context > 0) {
-            intervalPromise = $interval(intervalFunction, $rootScope.properties.interval * 1000);
-        } else {
-            flash.to('alert-dashboard-error').error = 'Invalid context. Please update host to resume operation.';
+        if ($rootScope.properties.hostname) {
+            if ($rootScope.properties.context && $rootScope.properties.context > 0) {
+                intervalPromise = $interval(intervalFunction, $rootScope.properties.interval * 1000);
+            } else {
+                flash.to('alert-dashboard-error').error = 'Invalid context. Please update host to resume operation.';
+            }
+            $log.info("Interval updated.");
         }
-        $log.info("Interval updated.");
     };
 
     updateContextSuccessCallback = function (data) {
