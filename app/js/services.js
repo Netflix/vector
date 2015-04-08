@@ -271,7 +271,7 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
     updateInterval = function () {
         cancelInterval(intervalPromise);
 
-        if ($rootScope.properties.hostname) {
+        if ($rootScope.properties.host) {
             if ($rootScope.properties.context && $rootScope.properties.context > 0) {
                 intervalPromise = $interval(intervalFunction, $rootScope.properties.interval * 1000);
             } else {
