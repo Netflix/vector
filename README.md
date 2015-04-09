@@ -32,7 +32,8 @@ Or build it from source. To do so, get the current version of the source code:
 $ git clone git://git.pcp.io/pcp
 ```
 
-Then build and install:
+Check that prerequisites such as libmicrohttpd headers/libraries and
+pkgconfig are installed.  Then build and install:
 
 ```
 $ cd pcp
