@@ -1,5 +1,13 @@
 # Vector
 
+## Table of Contents
+
+* [Overview](#overview)
+* [Architecture](#architecture)
+* [Creating Widgets](widgets.md)
+
+## Overview
+
 Vector is an open source host-level performance monitoring framework which exposes hand-picked, high-resolution system and application metrics to every engineer’s browser. Having the right metrics available on demand and at a high resolution is key to understanding how a system behaves and correctly troubleshooting performance issues. Logging onto a system and running a large number of commands from the shell is an option, but the complexity typically involved can be a barrier for engineers wishing to adopt it as a long-term solution. Also, traditional centralized system monitoring solutions are often complex to set up, especially for one-off or ad-hoc usage, where such solutions would be an overkill.
 
 Vector provides a simple way for users to visualize and analyze system and application-level metrics in near real-time. It leverages the battle tested open source system monitoring framework, Performance Co-Pilot (PCP),  layering on top a flexible and user-friendly UI. The UI polls metrics at up to 1 second resolution, rendering the data in completely configurable dashboards that simplify cross-metric correlation and analysis.
@@ -24,7 +32,7 @@ Generic data models were also created so they could be reused on new widgets wit
 * **MultipleMetricTimeSeriesDataModel**. Same as MetricTimeSeriesDataModel, but accepts multiple metrics and combines the values into a single data structure.
 * **MultipleCumulativeMetricTimeSeriesDataModel**. Same as CumulativeMetricTimeSeriesDataModel, but accepts multiple metrics and combines the values into a single data structure.
 
-Metrics are polled from Performace Co-Pilot's web daemon. They are referenced by unique names and current values are returned with a timestamp in order for them to be normalized.Vector makes use of two data structures to store metrics and their values. The "raw" metric data structure holds the original metric values that came from PCP. The "derived" metric data structure holds metrics that were modified by a data model function, like a cumulative function or a normalization function.
+Metrics are polled from Performance Co-Pilot's web daemon. They are referenced by unique names and current values are returned with a timestamp in order for them to be normalized.Vector makes use of two data structures to store metrics and their values. The "raw" metric data structure holds the original metric values that came from PCP. The "derived" metric data structure holds metrics that were modified by a data model function, like a cumulative function or a normalization function.
 
 The metric poller is the component that goes over the list of "raw" metrics and polls them from PCP via HTTP, given the selected polling interval. It also executes all data model functions and consequently updates the "derived" metric data structure. Charts are automatically updated every time the data structure is updated.
 
