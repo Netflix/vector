@@ -21,7 +21,8 @@
     "eslint": "~0.18.0",
     "eslint-plugin-angular": "0.0.7",
     "gulp-eslint": "~0.8.0",
-    "gulp-tar": "~1.4.0"
+    "gulp-tar": "~1.4.0",
+    "gulp-bower": "~0.0.10"
   },
   "scripts": {
     "postinstall": "bower install",

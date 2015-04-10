@@ -1,7 +1,8 @@
 var gulp = require('gulp'),
     connect = require('gulp-connect'),
     eslint = require('gulp-eslint'),
-    tar = require('gulp-tar');
+    tar = require('gulp-tar'),
+    bower = require('gulp-bower');
 
 gulp.task('webserver', function() {
 	connect.server({
@@ -19,7 +20,11 @@ gulp.task('eslint', function() {
     ;
 });
 
-gulp.task('dist', function () {
+gulp.task('bower', function() {
+  return bower()
+});
+
+gulp.task('dist', ['bower'], function () {
     return gulp.src('app/**/*')
         .pipe(tar('app.tar'))
         .pipe(gulp.dest('dist'));
