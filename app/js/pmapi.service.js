@@ -18,25 +18,27 @@
 (function () {
     'use strict';
 
-    // PMAPI Service factory
-    angular
-        .module('app.services')
-        .factory('PMAPIService', PMAPIService);
-
-    PMAPIService.$inject = ['$http', '$log', '$rootScope', '$q'];
-
     function PMAPIService($http, $log, $rootScope, $q) {
-        return {
-            getHostspecContext: getHostspecContext,
-            getHostnameContext: getHostnameContext,
-            getLocalContext: getLocalContext,
-            getArchiveContext: getArchiveContext,            
-            getMetricsValues: getMetricsValues,
-            getInstanceDomainsByIndom: getInstanceDomainsByIndom,
-            getInstanceDomainsByName: getInstanceDomainsByName
-        };
-    
-        ///////////
+
+        function getContext(params) {
+            var baseURI = 'http://' + $rootScope.properties.host + ':' +
+               $rootScope.properties.port;
+            var settings = {};
+            settings.method = 'GET';
+            settings.url = baseURI + '/pmapi/context';
+            settings.params = {};
+            settings.params[params.contextType] = params.contextValue;
+            settings.params.polltimeout = params.pollTimeout.toString();
+
+            return $http(settings)
+                .then(function (response) {
+                    if (response.data.context) {
+                        return response.data.context;
+                    }
+
+                    return $q.reject('context is undefined');
+                });
+        }
 
         function getHostspecContext(hostspec, pollTimeout) {
             var params = {};
@@ -70,27 +72,6 @@
             return getContext(params);
         }
 
-        function getContext(params) {
-            var baseURI = 'http://' + $rootScope.properties.host + ':' +
-               $rootScope.properties.port;
-            var settings = {};
-            settings.method = 'GET';
-            settings.url = baseURI + '/pmapi/context';
-            settings.params = {};
-            settings.params[params.contextType] = params.contextValue;
-            settings.params.polltimeout = params.pollTimeout.toString();
-
-            return $http(settings)
-                .then(function (response) { 
-                    if (response.data.context) {
-                        console.log(response.data.context);
-                        return response.data.context;
-                    }
-
-                    return $q.reject('context is undefined'); 
-                });
-        }
-
         function getMetricsValues(context, names, pmids) {
             var baseURI = 'http://' + $rootScope.properties.host + ':' +
                $rootScope.properties.port;
@@ -98,8 +79,8 @@
             settings.method = 'GET';
             settings.url = baseURI + '/pmapi/' + context + '/_fetch';
             settings.params = {
-                names: names.join(','),
-                pmids: pmids.join(',')
+                names: angular.isUndefined(names) ? '' : names.join(','),
+                pmids: angular.isUndefined(pmids) ? '' : pmids.join(',')
             };
 
             return $http(settings)
@@ -115,8 +96,8 @@
             settings.url = baseURI + '/pmapi/' + context + '/_indom';
             settings.params = {
                 indom: indom,
-                instance: typeof instances !== 'undefined' ? instances.join(',') : '',
-                inames: typeof inames !== 'undefined' ? inames.join(',') : ''
+                instance: angular.isUndefined(instances) ? '' : instances.join(','),
+                inames: angular.isUndefined(inames) ? '' : inames.join(',')
             };
 
             return $http(settings)
@@ -131,17 +112,37 @@
             settings.url = baseURI + '/pmapi/' + context + '/_indom';
             settings.params = {
                 name: name,
-                instance: typeof instances !== 'undefined' ? instances.join(',') : '', 
-                inames: typeof inames !== 'undefined' ? inames.join(',') : ''
+                instance: angular.isUndefined(instances) ? '' : instances.join(','),
+                inames: angular.isUndefined(inames) ? '' : inames.join(',')
             };
 
             return $http(settings)
-                .then(function (response) { 
+                .then(function (response) {
                     if (response.instances) {
                       return response;
-                    } 
+                    }
                     return $q.reject('instances is undefined');
                 });
         }
+
+        ///////////
+
+         return {
+            getHostspecContext: getHostspecContext,
+            getHostnameContext: getHostnameContext,
+            getLocalContext: getLocalContext,
+            getArchiveContext: getArchiveContext,
+            getMetricsValues: getMetricsValues,
+            getInstanceDomainsByIndom: getInstanceDomainsByIndom,
+            getInstanceDomainsByName: getInstanceDomainsByName
+        };
     }
+
+    // PMAPI Service factory
+    angular
+        .module('app.services')
+        .factory('PMAPIService', PMAPIService);
+
+    PMAPIService.$inject = ['$http', '$log', '$rootScope', '$q'];
+
 })();

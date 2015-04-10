@@ -303,7 +303,7 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
             PMAPIService.getHostspecContext('localhost', 600)
                 .then(function (data) {
                     $rootScope.flags.contextUpdating = false;
-                    updateContextSuccessCallback(data); 
+                    updateContextSuccessCallback(data);
                 }, function errorHandler() {
                     flash.to('alert-dashboard-error').error = 'Failed fetching context from host. Try updating the hostname.';
                     $rootScope.flags.contextUpdating = false;

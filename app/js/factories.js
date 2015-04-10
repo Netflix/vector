@@ -158,12 +158,12 @@ factories.factory('CumulativeMetric', function ($rootScope, $log, Metric, Metric
             self.data.push(instance);
 
             MetricService.getInames(self.name, iid)
-                .then(function (data) {     
+                .then(function (data) {
                     $.each(data.instances, function (index, value) {
                         if (value.instance === iid) {
                             instance.key = value.name;
                         }
-                    });        
+                    });
                 });
         } else {
             diffValue = ((value - instance.previousValue) / ((timestamp - instance.previousTimestamp) / 1000)); // sampling frequency
@@ -216,7 +216,7 @@ factories.factory('ConvertedMetric', function ($rootScope, $log, Metric, MetricS
             };
             self.data.push(instance);
             MetricService.getInames(self.name, iid)
-            .then(function (data) {    
+            .then(function (data) {
                 $.each(data.instances, function (index, value) {
                     if (value.instance === iid) {
                         instance.key = value.name;
@@ -261,7 +261,7 @@ factories.factory('CumulativeConvertedMetric', function ($rootScope, $log, Metri
             self.data.push(instance);
 
             MetricService.getInames(self.name, iid)
-                .then(function (data) {                    
+                .then(function (data) {
                     $.each(data.instances, function (index, value) {
                         if (value.instance === iid) {
                             instance.key = value.name;
