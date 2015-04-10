@@ -28,10 +28,10 @@
 
 var services = angular.module('app.services', []);
 
-services.factory('MetricService', function ($http, $rootScope) {
+services.factory('MetricService', function ($http, $rootScope, PMAPIService) {
     return {
         getInames: function (metric, iid) {
-            return $http.get('http://' + $rootScope.properties.host + ':' + $rootScope.properties.port + "/pmapi/" + $rootScope.properties.context + "/_indom?name=" + metric + "&instance=" + iid);
+            return PMAPIService.getInstanceDomainsByName($rootScope.properties.context, metric, [iid]);
         }
     };
 });
@@ -250,7 +250,7 @@ services.factory('VectorService', function () {
     };
 });
 
-services.factory('DashboardService', function ($rootScope, $http, $interval, $log, $location, MetricListService, flash, vectorConfig) {
+services.factory('DashboardService', function ($rootScope, $http, $interval, $log, $location, PMAPIService, MetricListService, flash, vectorConfig) {
     var intervalPromise,
         updateContext,
         cancelInterval,
@@ -283,7 +283,7 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
 
     updateContextSuccessCallback = function (data) {
         $rootScope.flags.contextAvailable = true;
-        $rootScope.properties.context =  data.context;
+        $rootScope.properties.context = data;
         updateInterval();
     };
 
@@ -299,13 +299,12 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
             port = $rootScope.properties.port;
 
         if (host && host !== '') {
-          $rootScope.flags.contextUpdating = true;
-            $http.get('http://' + host + ':' + port + '/pmapi/context?hostspec=localhost&polltimeout=600')
-                .success(function (data) {
+            $rootScope.flags.contextUpdating = true;
+            PMAPIService.getHostspecContext('localhost', 600)
+                .then(function (data) {
                     $rootScope.flags.contextUpdating = false;
-                    updateContextSuccessCallback(data);
-                })
-                .error(function () {
+                    updateContextSuccessCallback(data); 
+                }, function errorHandler() {
                     flash.to('alert-dashboard-error').error = 'Failed fetching context from host. Try updating the hostname.';
                     $rootScope.flags.contextUpdating = false;
                     updateContextErrorCallback();
