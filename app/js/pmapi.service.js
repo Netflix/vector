@@ -78,10 +78,15 @@
             var settings = {};
             settings.method = 'GET';
             settings.url = baseURI + '/pmapi/' + context + '/_fetch';
-            settings.params = {
-                names: angular.isUndefined(names) ? '' : names.join(','),
-                pmids: angular.isUndefined(pmids) ? '' : pmids.join(',')
-            };
+            settings.params = {};
+
+            if (angular.isDefined(names) && names !== null) {
+                settings.params.names = names.join(',');
+            }
+
+            if (angular.isDefined(pmids) && pmids !== null)  {
+                settings.params.pmids = pmids.join(',');
+            }
 
             return $http(settings)
                 .then(function (response) {
@@ -102,11 +107,16 @@
             var settings = {};
             settings.method = 'GET';
             settings.url = baseURI + '/pmapi/' + context + '/_indom';
-            settings.params = {
-                indom: indom,
-                instance: angular.isUndefined(instances) ? '' : instances.join(','),
-                inames: angular.isUndefined(inames) ? '' : inames.join(',')
-            };
+            settings.params = {indom: indom}; // required
+
+            if (angular.isDefined(instances) && instances !== null) {
+                settings.params.instance = instances.join(',');
+            }
+
+            if (angular.isDefined(inames) && inames !== null) {
+                settings.params.inames = inames.join(',');
+            }
+
             settings.cache = true;
 
             return $http(settings)
@@ -126,11 +136,16 @@
             var settings = {};
             settings.method = 'GET';
             settings.url = baseURI + '/pmapi/' + context + '/_indom';
-            settings.params = {
-                name: name,
-                instance: angular.isUndefined(instances) ? '' : instances.join(','),
-                inames: angular.isUndefined(inames) ? '' : inames.join(',')
-            };
+            settings.params = {name: name};
+
+            if (angular.isDefined(instances) && instances !== null) {
+                settings.params.instance = instances.join(',');
+            }
+
+            if (angular.isDefined(inames) && inames !== null) {
+                settings.params.inames = inames.join(',');
+            }
+
             settings.cache = true;
 
             return $http(settings)
