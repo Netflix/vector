@@ -36,7 +36,7 @@ services.factory('MetricService', function ($http, $rootScope, PMAPIService) {
     };
 });
 
-services.factory('MetricListService', function ($rootScope, $http, Metric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric, flash) {
+services.factory('MetricListService', function ($rootScope, $http, $log, $q, PMAPIService, Metric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric, flash) {
     var simpleMetrics = [],
         derivedMetrics = [];
     return {
@@ -165,30 +165,29 @@ services.factory('MetricListService', function ($rootScope, $http, Metric, Cumul
 
                 url = 'http://' + host + ':' + port + '/pmapi/' + context + '/_fetch?names=' + metricArr.join(',');
 
-                $http.get(url)
-                    .success(function (data) {
-                        var timestamp = data.timestamp.s + (data.timestamp.us / 1000000); // microsecond
-                        /*jslint unparam: true*/
-                        $.each(data.values, function (valueIndex, value) {
+                PMAPIService.getMetrics(context, metricArr)
+                    .then(function (metrics) {
+                        angular.forEach(metrics.values, function (value) {
                             var name = value.name;
-                            $.each(value.instances, function (instanceIndex, instance) {
-                                var iid = (instance.instance === undefined) ? 1 : instance.instance,
-                                    metricInstance = _.find(simpleMetrics, function (el) {
-                                        return el.name === name;
-                                    });
-                                if (metricInstance !== undefined && metricInstance !== null) {
-                                    metricInstance.pushValues(iid, timestamp * 1000, instance.value);
+                            angular.forEach(value.instances, function (instance) {
+                                var iid = angular.isUndefined(instance.instance) ? 1 : instance.instance;
+                                var iname = metrics.inames[name].inames[iid];
+
+                                var metricInstance = _.find(simpleMetrics, function (el) {
+                                    return el.name === name;
+                                });
+                                if (angular.isDefined(metricInstance) && metricInstance !== null) {
+                                    metricInstance.pushValue(metrics.timestamp, iid, iname, instance.value);
                                 }
                             });
                         });
-                        /*jslint unparam: false*/
-                        callback(true);
-                    })
-                    .error(function () {
-                        flash.to('alert-dashboard-error').error = 'Failed fetching metrics.';
-                        // Check if context is wrong and update it if needed
-                        // PMWEBAPI error, code -12376: Attempt to use an illegal context
-                        callback(false);
+                    }).then(
+                        function () { callback(true); },
+                        function () {
+                            flash.to('alert-dashboard-error').error = 'Failed fetching metrics.';
+                            // Check if context is wrong and update it if needed
+                            // PMWEBAPI error, code -12376: Attempt to use an illegal context
+                            callback(false);
                     });
             }
         },

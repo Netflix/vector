@@ -84,7 +84,15 @@
             };
 
             return $http(settings)
-                .then(function (response) { return response; });
+                .then(function (response) {
+                    if (angular.isUndefined(response.data.timestamp) ||
+                        angular.isUndefined(response.data.timestamp.s) ||
+                        angular.isUndefined(response.data.timestamp.us) ||
+                        angular.isUndefined(response.data.values)) {
+                        return $q.reject('metric values is empty');
+                    }
+                    return response;
+                });
 
         }
 
@@ -99,9 +107,17 @@
                 instance: angular.isUndefined(instances) ? '' : instances.join(','),
                 inames: angular.isUndefined(inames) ? '' : inames.join(',')
             };
+            settings.cache = true;
 
             return $http(settings)
-                .then(function (response) { return response; });
+                .then(function (response) {
+                    if (angular.isDefined(response.data.indom) ||
+                        angular.isDefined(response.data.instances)) {
+                       return response;
+                    }
+
+                    return $q.reject('instances is undefined');
+                });
         }
 
         function getInstanceDomainsByName(context, name, instances, inames) {
@@ -115,14 +131,80 @@
                 instance: angular.isUndefined(instances) ? '' : instances.join(','),
                 inames: angular.isUndefined(inames) ? '' : inames.join(',')
             };
+            settings.cache = true;
 
             return $http(settings)
                 .then(function (response) {
-                    if (response.instances) {
+                    if (angular.isDefined(response.data.instances)) {
                       return response;
                     }
                     return $q.reject('instances is undefined');
                 });
+        }
+
+        function convertTimestampToMillis(response) {
+            // timestamp is in milliseconds
+            var timestamp = (response.data.timestamp.s * 1000) +
+                (response.data.timestamp.us / 1000);
+            var values = response.data.values;
+
+            return {
+                timestamp: timestamp,
+                values: values
+            };
+
+        }
+
+        function appendInstanceDomains(context, data) {
+            var deferred = $q.defer();
+            var instanceDomainPromises = [];
+            angular.forEach(data.values, function (value) {
+                var ids = _.map(value.instances, function (inst) {
+                    return inst.instance;
+                });
+                instanceDomainPromises.push(
+                    getInstanceDomainsByName(context, value.name, ids));
+            });
+
+            $q.all(instanceDomainPromises)
+                .then(function (responses) {
+                    var instanceDomains = {};
+                    angular.forEach(responses, function (response)  {
+                        var indom = response.data.indom;
+                        var name = response.config.params.name;
+                        var inames = {};
+                        angular.forEach(response.data.instances, function (inst) {
+                            inames[inst.instance.toString()] = inst.name;
+                        });
+                        instanceDomains[name.toString()] = {
+                            indom: indom,
+                            name: name,
+                            inames: inames
+                        };
+                    });
+
+                    var result = {
+                        timestamp: data.timestamp,
+                        values: data.values,
+                        inames: instanceDomains
+                    };
+
+                    deferred.resolve(result);
+                }, function (errors) {
+                    deferred.reject(errors);
+                }, function (updates) {
+                    deferred.update(updates);
+                });
+
+            return deferred.promise;
+        }
+
+        function getMetrics(context, metrics) {
+            return getMetricsValues(context, metrics)
+                    .then(convertTimestampToMillis)
+                    .then(function(data) {
+                        return appendInstanceDomains(context, data);
+                    });
         }
 
         ///////////
@@ -133,6 +215,7 @@
             getLocalContext: getLocalContext,
             getArchiveContext: getArchiveContext,
             getMetricsValues: getMetricsValues,
+            getMetrics: getMetrics,
             getInstanceDomainsByIndom: getInstanceDomainsByIndom,
             getInstanceDomainsByName: getInstanceDomainsByName
         };

@@ -40,6 +40,31 @@ factories.factory('Metric', function ($rootScope, $log, MetricService) {
         return this.name;
     };
 
+    Metric.prototype.pushValue = function (timestamp, iid, iname, value) {
+        var self = this,
+            instance,
+            overflow;
+
+        instance = _.find(self.data, function (el) {
+            return el.iid === iid;
+        });
+
+        if (angular.isDefined(instance) && instance !== null) {
+            instance.values.push({ x: timestamp, y: value });
+            overflow = instance.values.length - (($rootScope.properties.window * 60) / $rootScope.properties.interval);
+            if (overflow > 0) {
+                instance.values.splice(0, overflow);
+            }
+        } else {
+            instance = {
+                key: angular.isDefined(iname) ? iname : this.name,
+                iid: iid,
+                values: [{x: timestamp, y: value}]
+            };
+            self.data.push(instance);
+        }
+    };
+
     Metric.prototype.pushValues = function (iid, timestamp, value) {
         var self = this,
             instance,
@@ -63,8 +88,8 @@ factories.factory('Metric', function ($rootScope, $log, MetricService) {
             };
             self.data.push(instance);
             MetricService.getInames(self.name, iid)
-                .then(function (data) {
-                    $.each(data.instances, function (index, value) {
+                .then(function (response) {
+                    $.each(response.data.instances, function (index, value) {
                         if (value.instance === iid) {
                             instance.key = value.name;
                         }
@@ -137,6 +162,37 @@ factories.factory('CumulativeMetric', function ($rootScope, $log, Metric, Metric
 
     CumulativeMetric.prototype = new Metric();
 
+    CumulativeMetric.prototype.pushValue = function (timestamp, iid, iname, value) {
+        var self = this,
+            instance,
+            overflow,
+            diffValue;
+
+        instance = _.find(self.data, function (el) {
+            return el.iid === iid;
+        });
+
+        if (angular.isUndefined(instance)) {
+            instance = {
+                key: angular.isDefined(iname) ? iname : this.name,
+                iid: iid,
+                values: [],
+                previousValue: value,
+                previousTimestamp: timestamp
+            };
+            self.data.push(instance);
+        } else {
+            diffValue = ((value - instance.previousValue) / ((timestamp - instance.previousTimestamp) / 1000)); // sampling frequency
+            instance.values.push({ x: timestamp, y: diffValue });
+            instance.previousValue = value;
+            instance.previousTimestamp = timestamp;
+            overflow = instance.values.length - (($rootScope.properties.window * 60) / $rootScope.properties.interval);
+            if (overflow > 0) {
+                instance.values.splice(0, overflow);
+            }
+        }
+    };
+
     CumulativeMetric.prototype.pushValues = function (iid, timestamp, value) {
         var self = this,
             instance,
@@ -158,8 +214,8 @@ factories.factory('CumulativeMetric', function ($rootScope, $log, Metric, Metric
             self.data.push(instance);
 
             MetricService.getInames(self.name, iid)
-                .then(function (data) {
-                    $.each(data.instances, function (index, value) {
+                .then(function (response) {
+                    $.each(response.data.instances, function (index, value) {
                         if (value.instance === iid) {
                             instance.key = value.name;
                         }
@@ -190,6 +246,34 @@ factories.factory('ConvertedMetric', function ($rootScope, $log, Metric, MetricS
 
     ConvertedMetric.prototype = new Metric();
 
+    ConvertedMetric.prototype.pushValue = function (timestamp, iid, iname, value) {
+        var self = this,
+            instance,
+            overflow,
+            convertedValue;
+
+        convertedValue = self.conversionFunction(value);
+
+        instance = _.find(self.data, function (el) {
+            return el.iid === iid;
+        });
+
+        if (angular.isDefined(instance) && instance !== null) {
+            instance.values.push({ x: timestamp, y: convertedValue });
+            overflow = instance.values.length - (($rootScope.properties.window * 60) / $rootScope.properties.interval);
+            if (overflow > 0) {
+                instance.values.splice(0, overflow);
+            }
+        } else {
+            instance = {
+                key: angular.isDefined(iname) ? iname : this.name,
+                iid: iid,
+                values: [{x: timestamp, y: convertedValue}]
+            };
+            self.data.push(instance);
+        }
+    };
+
     ConvertedMetric.prototype.pushValues = function (iid, timestamp, value) {
         var self = this,
             instance,
@@ -216,8 +300,8 @@ factories.factory('ConvertedMetric', function ($rootScope, $log, Metric, MetricS
             };
             self.data.push(instance);
             MetricService.getInames(self.name, iid)
-            .then(function (data) {
-                $.each(data.instances, function (index, value) {
+            .then(function (response) {
+                $.each(response.data.instances, function (index, value) {
                     if (value.instance === iid) {
                         instance.key = value.name;
                     }
@@ -238,6 +322,39 @@ factories.factory('CumulativeConvertedMetric', function ($rootScope, $log, Metri
     };
 
     CumulativeConvertedMetric.prototype = new Metric();
+
+    CumulativeConvertedMetric.prototype.pushValue = function (timestamp, iid, iname, value) {
+        var self = this,
+            instance,
+            overflow,
+            diffValue,
+            convertedValue;
+
+        instance = _.find(self.data, function (el) {
+            return el.iid === iid;
+        });
+
+        if (angular.isUndefined(instance)) {
+            instance = {
+                key: angular.isDefined(iname) ? iname : this.name,
+                iid: iid,
+                values: [],
+                previousValue: value,
+                previousTimestamp: timestamp
+            };
+            self.data.push(instance);
+        } else {
+            diffValue = ((value - instance.previousValue) / (timestamp - instance.previousTimestamp)); // sampling frequency
+            convertedValue = self.conversionFunction(diffValue);
+            instance.values.push({ x: timestamp, y: convertedValue });
+            instance.previousValue = value;
+            instance.previousTimestamp = timestamp;
+            overflow = instance.values.length - (($rootScope.properties.window * 60) / $rootScope.properties.interval);
+            if (overflow > 0) {
+                instance.values.splice(0, overflow);
+            }
+        }
+    };
 
     CumulativeConvertedMetric.prototype.pushValues = function (iid, timestamp, value) {
         var self = this,
@@ -261,8 +378,8 @@ factories.factory('CumulativeConvertedMetric', function ($rootScope, $log, Metri
             self.data.push(instance);
 
             MetricService.getInames(self.name, iid)
-                .then(function (data) {
-                    $.each(data.instances, function (index, value) {
+                .then(function (response) {
+                    $.each(response.data.instances, function (index, value) {
                         if (value.instance === iid) {
                             instance.key = value.name;
                         }
