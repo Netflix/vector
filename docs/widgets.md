@@ -26,3 +26,5 @@ Here is a simple example of how to create a new widget based on an existing data
 ```
 
 This polls nfs4.client metrics, assuming a cumulative value and reusing the MultipleCumulativeMetricTimeSeriesDataModel data model.
+
+An up-to-date gist can be found [here](https://gist.github.com/spiermar/5d501448e4a445af1608).
