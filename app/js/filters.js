@@ -55,14 +55,9 @@ angular
     .module('app.filters')
     .filter('groupFilter', function () {
         return function (collection, group) {
-            var result = [],
-                i;
-            for (i = 0; i < collection.length; i++) {
-                if (collection[i].group === group) {
-                    result.push(collection[i]);
-                }
-            }
-            return result;
+            return collection.filter(function (item) {
+                return item.group === group;
+            });
         };
     })
 ;
