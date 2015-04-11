@@ -28,15 +28,15 @@
 
 var services = angular.module('app.services', []);
 
-services.factory('MetricService', function ($http, $rootScope) {
+services.factory('MetricService', function ($http, $rootScope, PMAPIService) {
     return {
         getInames: function (metric, iid) {
-            return $http.get('http://' + $rootScope.properties.host + ':' + $rootScope.properties.port + "/pmapi/" + $rootScope.properties.context + "/_indom?name=" + metric + "&instance=" + iid);
+            return PMAPIService.getInstanceDomainsByName($rootScope.properties.context, metric, [iid]);
         }
     };
 });
 
-services.factory('MetricListService', function ($rootScope, $http, Metric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric, flash) {
+services.factory('MetricListService', function ($rootScope, $http, $log, $q, PMAPIService, Metric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric, flash) {
     var simpleMetrics = [],
         derivedMetrics = [];
     return {
@@ -165,30 +165,29 @@ services.factory('MetricListService', function ($rootScope, $http, Metric, Cumul
 
                 url = 'http://' + host + ':' + port + '/pmapi/' + context + '/_fetch?names=' + metricArr.join(',');
 
-                $http.get(url)
-                    .success(function (data) {
-                        var timestamp = data.timestamp.s + (data.timestamp.us / 1000000); // microsecond
-                        /*jslint unparam: true*/
-                        $.each(data.values, function (valueIndex, value) {
+                PMAPIService.getMetrics(context, metricArr)
+                    .then(function (metrics) {
+                        angular.forEach(metrics.values, function (value) {
                             var name = value.name;
-                            $.each(value.instances, function (instanceIndex, instance) {
-                                var iid = (instance.instance === undefined) ? 1 : instance.instance,
-                                    metricInstance = _.find(simpleMetrics, function (el) {
-                                        return el.name === name;
-                                    });
-                                if (metricInstance !== undefined && metricInstance !== null) {
-                                    metricInstance.pushValues(iid, timestamp * 1000, instance.value);
+                            angular.forEach(value.instances, function (instance) {
+                                var iid = angular.isUndefined(instance.instance) ? 1 : instance.instance;
+                                var iname = metrics.inames[name].inames[iid];
+
+                                var metricInstance = _.find(simpleMetrics, function (el) {
+                                    return el.name === name;
+                                });
+                                if (angular.isDefined(metricInstance) && metricInstance !== null) {
+                                    metricInstance.pushValue(metrics.timestamp, iid, iname, instance.value);
                                 }
                             });
                         });
-                        /*jslint unparam: false*/
-                        callback(true);
-                    })
-                    .error(function () {
-                        flash.to('alert-dashboard-error').error = 'Failed fetching metrics.';
-                        // Check if context is wrong and update it if needed
-                        // PMWEBAPI error, code -12376: Attempt to use an illegal context
-                        callback(false);
+                    }).then(
+                        function () { callback(true); },
+                        function () {
+                            flash.to('alert-dashboard-error').error = 'Failed fetching metrics.';
+                            // Check if context is wrong and update it if needed
+                            // PMWEBAPI error, code -12376: Attempt to use an illegal context
+                            callback(false);
                     });
             }
         },
@@ -250,7 +249,7 @@ services.factory('VectorService', function () {
     };
 });
 
-services.factory('DashboardService', function ($rootScope, $http, $interval, $log, $location, MetricListService, flash, vectorConfig) {
+services.factory('DashboardService', function ($rootScope, $http, $interval, $log, $location, PMAPIService, MetricListService, flash, vectorConfig) {
     var intervalPromise,
         updateContext,
         cancelInterval,
@@ -283,7 +282,7 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
 
     updateContextSuccessCallback = function (data) {
         $rootScope.flags.contextAvailable = true;
-        $rootScope.properties.context =  data.context;
+        $rootScope.properties.context = data;
         updateInterval();
     };
 
@@ -299,13 +298,12 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
             port = $rootScope.properties.port;
 
         if (host && host !== '') {
-          $rootScope.flags.contextUpdating = true;
-            $http.get('http://' + host + ':' + port + '/pmapi/context?hostspec=localhost&polltimeout=600')
-                .success(function (data) {
+            $rootScope.flags.contextUpdating = true;
+            PMAPIService.getHostspecContext('localhost', 600)
+                .then(function (data) {
                     $rootScope.flags.contextUpdating = false;
                     updateContextSuccessCallback(data);
-                })
-                .error(function () {
+                }, function errorHandler() {
                     flash.to('alert-dashboard-error').error = 'Failed fetching context from host. Try updating the hostname.';
                     $rootScope.flags.contextUpdating = false;
                     updateContextErrorCallback();
