@@ -320,8 +320,7 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
         if (loopErrors > 5) {
             cancelInterval(intervalPromise);
             loopErrors = 0;
-            flash.to('alert-dashboard-error').error = 'Consistently failed fetching metrics from host (>5). Aborting loop. Trying to update context.';
-            updateContext();
+            flash.to('alert-dashboard-error').error = 'Consistently failed fetching metrics from host (>5). Aborting loop. Please make sure PCP is running correctly.';
         }
     };
 
