@@ -170,12 +170,36 @@
 
         }
 
+        function mapMetricNamesToInstanceDomains(responses) {
+            var instanceDomains = {};
+            angular.forEach(responses, function (response)  {
+                var indom = response.data.indom;
+                var name = response.config.params.name;
+                var inames = {};
+                angular.forEach(response.data.instances, function (inst) {
+                    inames[inst.instance.toString()] = inst.name;
+                });
+                instanceDomains[name.toString()] = {
+                    indom: indom,
+                    name: name,
+                    inames: inames
+                };
+            });
+
+            return instanceDomains;
+        }
+
         function appendInstanceDomains(context, data) {
             var deferred = $q.defer();
             var instanceDomainPromises = [];
             angular.forEach(data.values, function (value) {
                 var ids = _.map(value.instances, function (inst) {
-                    return inst.instance;
+                    if (angular.isDefined(inst.instance) &&
+                        inst.instance !== null) {
+                        return inst.instance;
+                    } else {
+                        return -1;
+                    }
                 });
                 instanceDomainPromises.push(
                     getInstanceDomainsByName(context, value.name, ids));
@@ -183,25 +207,12 @@
 
             $q.all(instanceDomainPromises)
                 .then(function (responses) {
-                    var instanceDomains = {};
-                    angular.forEach(responses, function (response)  {
-                        var indom = response.data.indom;
-                        var name = response.config.params.name;
-                        var inames = {};
-                        angular.forEach(response.data.instances, function (inst) {
-                            inames[inst.instance.toString()] = inst.name;
-                        });
-                        instanceDomains[name.toString()] = {
-                            indom: indom,
-                            name: name,
-                            inames: inames
-                        };
-                    });
+                    var dict = mapMetricNamesToInstanceDomains(responses);
 
                     var result = {
                         timestamp: data.timestamp,
                         values: data.values,
-                        inames: instanceDomains
+                        inames: dict
                     };
 
                     deferred.resolve(result);
