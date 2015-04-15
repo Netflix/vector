@@ -299,6 +299,7 @@ services.factory('DashboardService', function ($rootScope, $http, $interval, $lo
 
         if (host && host !== '') {
             $rootScope.flags.contextUpdating = true;
+            $rootScope.flags.contextAvailable = false;
             PMAPIService.getHostspecContext('localhost', 600)
                 .then(function (data) {
                     $rootScope.flags.contextUpdating = false;
