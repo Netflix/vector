@@ -21,6 +21,10 @@
 (function () {
     'use strict';
 
+    /**
+    * @name flashConfig
+    * @desc Configures flashProvider to use Bootstrap 3 CSS class.
+    */
     function flashConfig(flashProvider)  {
         flashProvider.errorClassnames.push('alert-danger');
     }
