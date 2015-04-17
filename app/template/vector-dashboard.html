@@ -3,7 +3,7 @@
         <form role="form" name="form">
             <div class="input-group input-group-lg" ng-class="{'has-error': form.host.$invalid && form.host.$dirty}">
                 <span class="input-group-addon">Hostname</span>
-                <input type="text" class="form-control" id="hostnameInput" name="host" data-content="Please enter a fully qualified instance hostname." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.host" ng-change="updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" ng-delay="500" required placeholder="Instance Hostname">
+                <input type="text" class="form-control" id="hostnameInput" name="host" data-content="Please enter a fully qualified instance hostname." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.host" ng-change="updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" ng-delay="1000" ng-disabled="flags.contextUpdating == true" required placeholder="Instance Hostname">
                 <i class="fa fa-refresh fa-2x form-control-feedback" ng-if="flags.contextUpdating"></i>
                 <i class="fa fa-check fa-2x form-control-feedback" ng-if="flags.contextAvailable"></i>
             </div>

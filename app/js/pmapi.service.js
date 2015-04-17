@@ -29,7 +29,7 @@
             settings.params = {};
             settings.params[params.contextType] = params.contextValue;
             settings.params.polltimeout = params.pollTimeout.toString();
-            settings.timeout = 10000;
+            settings.timeout = 5000;
 
             return $http(settings)
                 .then(function (response) {
