@@ -30,6 +30,12 @@
     }
 
     angular
+        .module('app.routes', ['ngRoute']);
+
+    angular
+        .module('vector.config', []);
+
+    angular
         .module('app', [
             'app.routes',
             'ui.dashboard',
@@ -46,8 +52,5 @@
             'angular-flash.flash-alert-directive'
         ])
         .config(flashConfig);
-
-    angular
-        .module('app.routes', ['ngRoute']);
 
 })();

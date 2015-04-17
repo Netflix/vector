@@ -15,17 +15,16 @@
  *     limitations under the License.
  *
  */
+(function () {
+    'use strict';
 
-'use strict';
-
-/* Config */
-
-var config = angular.module('vector.config', []);
-
-config.constant('vectorConfig', {
-  'port': 44323,
-  'interval': 2,
-  'window': 2,
-  'enableCpuFlameGraph': false,
-  'enableDiskLatencyHeatMap': false
-});
+    angular
+        .module('vector.config')
+        .constant('vectorConfig', {
+            'port': 44323,  // Port where pmwebd service listens
+            'interval': 2,  // Default update interval in seconds
+            'window': 2,    // Default graph time window in minutes
+            'enableCpuFlameGraph': false,
+            'enableDiskLatencyHeatMap': false
+        });
+})();
