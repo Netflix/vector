@@ -18,46 +18,32 @@
 
 /*jslint node: true */
 /*global angular*/
+(function () {
+    'use strict';
 
-'use strict';
+    function flashConfig(flashProvider)  {
+        flashProvider.errorClassnames.push('alert-danger');
+    }
 
-/* App Module */
+    angular
+        .module('app', [
+            'app.routes',
+            'ui.dashboard',
+            'app.controllers',
+            'app.datamodels',
+            'app.widgets',
+            'app.directives',
+            'app.services',
+            'app.factories',
+            'app.filters',
+            'vector.config',
+            'nvd3ChartDirectives',
+            'angular-flash.service',
+            'angular-flash.flash-alert-directive'
+        ])
+        .config(flashConfig);
 
-var app = angular.module('app', [
-    'ngRoute',
-    'ui.dashboard',
-    'app.controllers',
-    'app.datamodels',
-    'app.widgets',
-    'app.directives',
-    'app.services',
-    'app.factories',
-    'app.filters',
-    'vector.config',
-    'nvd3ChartDirectives',
-    'angular-flash.service',
-    'angular-flash.flash-alert-directive'
-]);
+    angular
+        .module('app.routes', ['ngRoute']);
 
-app.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider
-        .when('/', {
-            templateUrl: 'partials/dashboard.html',
-            controller: 'DashboardCtrl',
-            title: 'Dashboard - Vector',
-            reloadOnSearch: false
-        })
-        .when('/empty', {
-            templateUrl: 'partials/dashboard.html',
-            controller: 'DashboardCtrl',
-            title: 'Dashboard - Vector',
-            reloadOnSearch: false
-        })
-        .otherwise({
-            redirectTo: '/'
-        });
-}]);
-
-app.config(['flashProvider', function (flashProvider) {
-    flashProvider.errorClassnames.push('alert-danger');
-}]);
+})();
