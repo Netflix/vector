@@ -24,7 +24,7 @@
     */
     function config($routeProvider) {
         $routeProvider.when('/', {
-            templateUrl: 'partials/dashboard.html',
+            templateUrl: 'app/partials/dashboard.html',
             controller: 'DashboardController',
             controllerAs: 'vm',
             title: 'Dashboard - Vector',
@@ -35,7 +35,7 @@
                 }
             }
         }).when('/empty', {
-            templateUrl: 'partials/dashboard.html',
+            templateUrl: 'app/partials/dashboard.html',
             controller: 'DashboardController',
             controllerAs: 'vm',
             title: 'Dashboard - Vector',
