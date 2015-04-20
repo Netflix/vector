@@ -26,17 +26,15 @@
     'use strict';
 
     /* Services */
-    var services = angular.module('app.services', []);
-
-    services.factory('MetricService', function ($http, $rootScope, PMAPIService) {
+    function MetricService($http, $rootScope, PMAPIService) {
         return {
             getInames: function (metric, iid) {
                 return PMAPIService.getInstanceDomainsByName($rootScope.properties.context, metric, [iid]);
             }
         };
-    });
+    }
 
-    services.factory('MetricListService', function ($rootScope, $http, $log, $q, PMAPIService, Metric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric, flash) {
+    function MetricListService($rootScope, $http, $log, $q, PMAPIService, Metric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric, flash) {
         var simpleMetrics = [],
             derivedMetrics = [];
         return {
@@ -45,7 +43,7 @@
                     return el.name === name;
                 });
 
-                if (metric === undefined) {
+                if (angular.isUndefined(metric)) {
                     metric = new Metric(name);
                     simpleMetrics.push(metric);
                 } else {
@@ -58,7 +56,7 @@
                     return el.name === name;
                 });
 
-                if (metric === undefined) {
+                if (angular.isUndefined(metric)) {
                     metric = new CumulativeMetric(name);
                     simpleMetrics.push(metric);
                 } else {
@@ -71,7 +69,7 @@
                     return el.name === name;
                 });
 
-                if (metric === undefined) {
+                if (angular.isUndefined(metric)) {
                     metric = new ConvertedMetric(name, conversionFunction);
                     simpleMetrics.push(metric);
                 } else {
@@ -84,7 +82,7 @@
                     return el.name === name;
                 });
 
-                if (metric === undefined) {
+                if (angular.isUndefined(metric)) {
                     metric = new CumulativeConvertedMetric(name, conversionFunction);
                     simpleMetrics.push(metric);
                 } else {
@@ -97,7 +95,7 @@
                     return metric.name === name;
                 });
 
-                if (metric === undefined) {
+                if (angular.isUndefined(metric)) {
                     metric = new DerivedMetric(name, derivedFunction);
                     derivedMetrics.push(metric);
                 } else {
@@ -201,9 +199,9 @@
                 }
             }
         };
-    });
+    }
 
-    services.factory('D3Service', function () {
+    function D3Service() {
         return {
             xAxisTickFormat: function () {
                 return function (d) {
@@ -239,17 +237,17 @@
                 return 'chart_' + Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
             }
         };
-    });
+    }
 
-    services.factory('VectorService', function () {
+    function VectorService() {
         return {
             getGuid: function () {
                 return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
             }
         };
-    });
+    }
 
-    services.factory('DashboardService', function ($rootScope, $http, $interval, $log, $location, PMAPIService, MetricListService, flash, vectorConfig) {
+    function DashboardService($rootScope, $http, $interval, $log, $location, PMAPIService, MetricListService, flash, vectorConfig) {
         var intervalPromise,
             updateContext,
             cancelInterval,
@@ -383,9 +381,9 @@
                 };
             }
         };
-    });
+    }
 
-    services.factory('FlameGraphService', function ($log, $rootScope, $http, flash) {
+    function FlameGraphService($log, $rootScope, $http, flash) {
         return {
             generate: function () {
                 $http.get("http://" + $rootScope.properties.host + ":" + $rootScope.properties.port + "/pmapi/" + $rootScope.properties.context + "/_fetch?names=generic.systack")
@@ -398,9 +396,9 @@
                     });
             }
         };
-    });
+    }
 
-    services.factory('HeatMapService', function ($log, $rootScope, $http, flash) {
+    function HeatMapService($log, $rootScope, $http, flash) {
         return {
             generate: function () {
                 $http.get("http://" + $rootScope.properties.host + ":" + $rootScope.properties.port + "/pmapi/" + $rootScope.properties.context + "/_fetch?names=generic.heatmap")
@@ -413,6 +411,15 @@
                     });
             }
         };
-    });
+    }
 
+    angular
+        .module('app.services', [])
+        .factory('MetricService', MetricService)
+        .factory('MetricListService', MetricListService)
+        .factory('D3Service', D3Service)
+        .factory('VectorService', VectorService)
+        .factory('DashboardService', DashboardService)
+        .factory('FlameGraphService', FlameGraphService)
+        .factory('HeatMapService', HeatMapService);
 })();
