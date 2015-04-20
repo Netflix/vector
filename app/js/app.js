@@ -36,6 +36,9 @@
         .module('vector.config', []);
 
     angular
+        .module('app.factories', []);
+
+    angular
         .module('app.services', []);
 
     angular
