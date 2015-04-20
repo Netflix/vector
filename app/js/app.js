@@ -36,13 +36,16 @@
         .module('vector.config', []);
 
     angular
+        .module('app.directives', []);
+
+    angular
+        .module('app.filters', []);
+
+    angular
         .module('app.factories', []);
 
     angular
         .module('app.services', []);
-
-    angular
-        .module('app.filters', []);
 
     angular
         .module('app', [
