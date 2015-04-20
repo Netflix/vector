@@ -25,16 +25,26 @@
     function config($routeProvider) {
         $routeProvider.when('/', {
             templateUrl: 'partials/dashboard.html',
-            controller: 'DashboardCtrl',
+            controller: 'DashboardController',
             controllerAs: 'vm',
             title: 'Dashboard - Vector',
-            reloadOnSearch: false
+            reloadOnSearch: false,
+            resolve: {
+                'widgets': function (defaultWidgets) {
+                    return defaultWidgets;
+                }
+            }
         }).when('/empty', {
             templateUrl: 'partials/dashboard.html',
-            controller: 'DashboardCtrl',
+            controller: 'DashboardController',
             controllerAs: 'vm',
             title: 'Dashboard - Vector',
-            reloadOnSearch: false
+            reloadOnSearch: false,
+            resolve: {
+                'widgets': function (emptyWidgets) {
+                    return emptyWidgets;
+                }
+            }
         })
         .otherwise('/');
     }
