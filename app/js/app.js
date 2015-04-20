@@ -36,6 +36,9 @@
         .module('vector.config', []);
 
     angular
+        .module('app.services', []);
+
+    angular
         .module('app', [
             'app.routes',
             'ui.dashboard',
