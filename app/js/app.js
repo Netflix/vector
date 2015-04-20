@@ -39,6 +39,9 @@
         .module('app.services', []);
 
     angular
+        .module('app.filters', []);
+
+    angular
         .module('app', [
             'app.routes',
             'ui.dashboard',
