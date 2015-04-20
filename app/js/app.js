@@ -18,46 +18,51 @@
 
 /*jslint node: true */
 /*global angular*/
+(function () {
+    'use strict';
 
-'use strict';
+    /**
+    * @name flashConfig
+    * @desc Configures flashProvider to use Bootstrap 3 CSS class.
+    */
+    function flashConfig(flashProvider)  {
+        flashProvider.errorClassnames.push('alert-danger');
+    }
 
-/* App Module */
+    angular
+        .module('app.routes', ['ngRoute']);
 
-var app = angular.module('app', [
-    'ngRoute',
-    'ui.dashboard',
-    'app.controllers',
-    'app.datamodels',
-    'app.widgets',
-    'app.directives',
-    'app.services',
-    'app.factories',
-    'app.filters',
-    'vector.config',
-    'nvd3ChartDirectives',
-    'angular-flash.service',
-    'angular-flash.flash-alert-directive'
-]);
+    angular
+        .module('vector.config', []);
 
-app.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider
-        .when('/', {
-            templateUrl: 'partials/dashboard.html',
-            controller: 'DashboardCtrl',
-            title: 'Dashboard - Vector',
-            reloadOnSearch: false
-        })
-        .when('/empty', {
-            templateUrl: 'partials/dashboard.html',
-            controller: 'DashboardCtrl',
-            title: 'Dashboard - Vector',
-            reloadOnSearch: false
-        })
-        .otherwise({
-            redirectTo: '/'
-        });
-}]);
+    angular
+        .module('app.directives', []);
 
-app.config(['flashProvider', function (flashProvider) {
-    flashProvider.errorClassnames.push('alert-danger');
-}]);
+    angular
+        .module('app.filters', []);
+
+    angular
+        .module('app.factories', []);
+
+    angular
+        .module('app.services', []);
+
+    angular
+        .module('app', [
+            'app.routes',
+            'ui.dashboard',
+            'app.controllers',
+            'app.datamodels',
+            'app.widgets',
+            'app.directives',
+            'app.services',
+            'app.factories',
+            'app.filters',
+            'vector.config',
+            'nvd3ChartDirectives',
+            'angular-flash.service',
+            'angular-flash.flash-alert-directive'
+        ])
+        .config(flashConfig);
+
+})();

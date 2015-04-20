@@ -3,7 +3,7 @@
         <form role="form" name="form">
             <div class="input-group input-group-lg" ng-class="{'has-error': form.host.$invalid && form.host.$dirty}">
                 <span class="input-group-addon">Hostname</span>
-                <input type="text" class="form-control" id="hostnameInput" name="host" data-content="Please enter a fully qualified instance hostname." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.host" ng-change="updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" ng-delay="1000" ng-disabled="flags.contextUpdating == true" required placeholder="Instance Hostname">
+                <input type="text" class="form-control" id="hostnameInput" name="host" data-content="Please enter a fully qualified instance hostname." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.host" ng-change="vm.updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" ng-delay="1000" ng-disabled="flags.contextUpdating == true" required placeholder="Instance Hostname">
                 <i class="fa fa-refresh fa-2x form-control-feedback" ng-if="flags.contextUpdating"></i>
                 <i class="fa fa-check fa-2x form-control-feedback" ng-if="flags.contextAvailable"></i>
             </div>
@@ -22,15 +22,19 @@
                 </ul>
             </li>
             <li role="presentation" class="divider"></li>
-            <li><a href="javascript:void(0);" ng-click="loadWidgets(defaultWidgets);">Default Widgets</a></li>
-            <li><a href="javascript:void(0);" ng-click="loadWidgets(emptyWidgets);">Clear</a></li>
+            <li>
+                <a href="javascript:void(0);"
+                   ng-click="loadWidgets(defaultWidgets);">Default Widgets</a></li>
+            <li>
+                <a href="javascript:void(0);"
+                   ng-click="loadWidgets(emptyWidgets);">Clear</a></li>
         </ul>
     </div>
     <div class="col-md-2">
         <form role="form">
             <div class="input-group input-group-lg" ng-class="{'has-error': form.window.$invalid && form.window.$dirty}" style="border-radius: 6 !important;">
                 <span class="input-group-addon">Window</span>
-                <select class="form-control" name="window" id="windowInput" data-content="The duration window for all charts in this dashboard." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.window" ng-change="updateWindow()" style="border-radius: 6 !important;">
+                <select class="form-control" name="window" id="windowInput" data-content="The duration window for all charts in this dashboard." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.window" ng-change="vm.updateWindow()" style="border-radius: 6 !important;">
                     <option value="2">2 min</option>
                     <option value="5">5 min</option>
                     <option value="10">10 min</option>
@@ -42,7 +46,7 @@
         <form role="form">
             <div class="input-group input-group-lg" ng-class="{'has-error': form.interval.$invalid && form.interval.$dirty}">
                 <span class="input-group-addon">Interval</span>
-                <select class="form-control" name="interval" id="intervalInput" data-content="The update interval used by all charts in this dashboard." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.interval" ng-change="updateInterval()">
+                <select class="form-control" name="interval" id="intervalInput" data-content="The update interval used by all charts in this dashboard." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.interval" ng-change="vm.updateInterval()">
                     <option value="1">1 sec</option>
                     <option value="2">2 sec</option>
                     <option value="3">3 sec</option>
@@ -107,6 +111,7 @@
 </div>
 <script>
     (function () {
+        'use strict';
         $('#hostnameInput').popover();
         $('#windowInput').popover();
         $('#intervalInput').popover();

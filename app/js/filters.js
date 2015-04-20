@@ -20,44 +20,56 @@
 /*global angular*/
 /*jslint plusplus: true */
 
-'use strict';
+(function () {
+    'use strict';
 
-/* Filters */
+    /* Filters */
 
-angular.module('app.filters', []);
-
-var uniqueItems = function (data, key) {
-    var result = [],
-        i,
-        value;
-    for (i = 0; i < data.length; i++) {
-        value = data[i][key];
-        if (result.indexOf(value) === -1) {
-            result.push(value);
+    /**
+    * @name uniqueItems
+    * @desc
+    */
+    function uniqueItems(data, key) {
+        var result = [],
+            i,
+            value;
+        for (i = 0; i < data.length; i++) {
+            value = data[i][key];
+            if (result.indexOf(value) === -1) {
+                result.push(value);
+            }
         }
+        return result;
     }
-    return result;
-};
 
-angular
-    .module('app.filters')
-    .filter('groupBy', function () {
+    /**
+    * @name groupBy
+    * @desc
+    */
+    function groupBy() {
         return function (collection, key) {
             if (collection === null) {
                 return;
             }
             return uniqueItems(collection, key);
         };
-    })
-;
+    }
 
-angular
-    .module('app.filters')
-    .filter('groupFilter', function () {
+    /**
+    * @name groupFilter
+    * @desc
+    */
+    function groupFilter() {
         return function (collection, group) {
             return collection.filter(function (item) {
                 return item.group === group;
             });
         };
-    })
-;
+    }
+
+    angular
+        .module('app.filters')
+        .filter('groupBy', groupBy)
+        .filter('groupFilter', groupFilter);
+
+})();
