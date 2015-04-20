@@ -20,21 +20,14 @@
 /*jslint todo: true */
 /*global d3, angular*/
 
-'use strict';
+(function () {
+    'use strict';
 
-/* Directives */
+    /* Directives */
 
-var directives = angular.module('app.directives', []);
+    function lineTimeSeries($rootScope, D3Service) {
 
-directives.directive('lineTimeSeries', function ($rootScope, D3Service) {
-    return {
-        restrict: 'A',
-        replace: true,
-        templateUrl: 'partials/line-timeseries.html',
-        scope: {
-            data: '='
-        },
-        link: function (scope) {
+        function link(scope) {
             scope.yAxisTickFormat = D3Service.yAxisTickFormat;
             scope.xAxisTickFormat = D3Service.xAxisTickFormat;
             scope.yFunction = D3Service.yFunction;
@@ -48,18 +41,21 @@ directives.directive('lineTimeSeries', function ($rootScope, D3Service) {
                 d3.select('#' + scope.id + ' svg').style({'height': scope.height});
             });
         }
-    };
-});
 
-directives.directive('lineIntegerTimeSeries', function ($rootScope, D3Service) {
-    return {
-        restrict: 'A',
-        replace: true,
-        templateUrl: 'partials/line-timeseries.html',
-        scope: {
-            data: '='
-        },
-        link: function (scope) {
+        return {
+            restrict: 'A',
+            replace: true,
+            templateUrl: 'partials/line-timeseries.html',
+            scope: {
+                data: '='
+            },
+            link: link
+        };
+    }
+
+    function lineIntegerTimeSeries($rootScope, D3Service) {
+
+        function link(scope) {
             scope.yAxisTickFormat = D3Service.yAxisIntegerTickFormat;
             scope.xAxisTickFormat = D3Service.xAxisTickFormat;
             scope.yFunction = D3Service.yFunction;
@@ -73,18 +69,22 @@ directives.directive('lineIntegerTimeSeries', function ($rootScope, D3Service) {
                 d3.select('#' + scope.id + ' svg').style({'height': scope.height});
             });
         }
-    };
-});
 
-directives.directive('linePercentageTimeSeries', function ($rootScope, D3Service) {
-    return {
-        restrict: 'A',
-        replace: true,
-        templateUrl: 'partials/line-timeseries.html',
-        scope: {
-            data: '='
-        },
-        link: function (scope) {
+        return {
+            restrict: 'A',
+            replace: true,
+            templateUrl: 'partials/line-timeseries.html',
+            scope: {
+                data: '='
+            },
+            link: link
+        };
+    }
+
+
+    function linePercentageTimeSeries($rootScope, D3Service) {
+
+        function link(scope) {
             scope.yAxisTickFormat = D3Service.yAxisPercentageTickFormat;
             scope.xAxisTickFormat = D3Service.xAxisTickFormat;
             scope.yFunction = D3Service.yFunction;
@@ -98,18 +98,21 @@ directives.directive('linePercentageTimeSeries', function ($rootScope, D3Service
                 d3.select('#' + scope.id + ' svg').style({'height': scope.height});
             });
         }
-    };
-});
 
-directives.directive('linePercentageForceYTimeSeries', function ($rootScope, D3Service) {
-    return {
-        restrict: 'A',
-        replace: true,
-        templateUrl: 'partials/line-forcey-timeseries.html',
-        scope: {
-            data: '='
-        },
-        link: function (scope) {
+        return {
+            restrict: 'A',
+            replace: true,
+            templateUrl: 'partials/line-timeseries.html',
+            scope: {
+                data: '='
+            },
+            link: link
+        };
+    }
+
+    function linePercentageForceYTimeSeries($rootScope, D3Service) {
+
+        function link(scope) {
             scope.yAxisTickFormat = D3Service.yAxisPercentageTickFormat;
             scope.xAxisTickFormat = D3Service.xAxisTickFormat;
             scope.yFunction = D3Service.yFunction;
@@ -123,18 +126,21 @@ directives.directive('linePercentageForceYTimeSeries', function ($rootScope, D3S
                 d3.select('#' + scope.id + ' svg').style({'height': scope.height});
             });
         }
-    };
-});
 
-directives.directive('lineIntegerForceYTimeSeries', function ($rootScope, D3Service) {
-    return {
-        restrict: 'A',
-        replace: true,
-        templateUrl: 'partials/line-integer-forcey-timeseries.html',
-        scope: {
-            data: '='
-        },
-        link: function (scope) {
+        return {
+            restrict: 'A',
+            replace: true,
+            templateUrl: 'partials/line-forcey-timeseries.html',
+            scope: {
+                data: '='
+            },
+            link: link
+        };
+    }
+
+    function lineIntegerForceYTimeSeries($rootScope, D3Service) {
+
+        function link(scope) {
             scope.yAxisTickFormat = D3Service.yAxisIntegerTickFormat;
             scope.xAxisTickFormat = D3Service.xAxisTickFormat;
             scope.yFunction = D3Service.yFunction;
@@ -148,18 +154,21 @@ directives.directive('lineIntegerForceYTimeSeries', function ($rootScope, D3Serv
                 d3.select('#' + scope.id + ' svg').style({'height': scope.height});
             });
         }
-    };
-});
 
-directives.directive('areaStackedTimeSeries', function ($rootScope, D3Service) {
-    return {
-        restrict: 'A',
-        replace: true,
-        templateUrl: 'partials/area-stacked-timeseries.html',
-        scope: {
-            data: '='
-        },
-        link: function (scope) {
+        return {
+            restrict: 'A',
+            replace: true,
+            templateUrl: 'partials/line-integer-forcey-timeseries.html',
+            scope: {
+                data: '='
+            },
+            link: link
+        };
+    }
+
+    function areaStackedTimeSeries($rootScope, D3Service) {
+
+        function link(scope) {
             scope.yAxisTickFormat = D3Service.yAxisTickFormat;
             scope.xAxisTickFormat = D3Service.xAxisTickFormat;
             scope.yFunction = D3Service.yFunction;
@@ -173,18 +182,21 @@ directives.directive('areaStackedTimeSeries', function ($rootScope, D3Service) {
                 d3.select('#' + scope.id + ' svg').style({'height': scope.height});
             });
         }
-    };
-});
 
-directives.directive('areaStackedIntegerTimeSeries', function ($rootScope, D3Service) {
-    return {
-        restrict: 'A',
-        replace: true,
-        templateUrl: 'partials/area-stacked-timeseries.html',
-        scope: {
-            data: '='
-        },
-        link: function (scope) {
+        return {
+            restrict: 'A',
+            replace: true,
+            templateUrl: 'partials/area-stacked-timeseries.html',
+            scope: {
+                data: '='
+            },
+            link: link
+        };
+    }
+
+    function areaStackedIntegerTimeSeries($rootScope, D3Service) {
+
+        function link(scope) {
             scope.yAxisTickFormat = D3Service.yAxisIntegerTickFormat;
             scope.xAxisTickFormat = D3Service.xAxisTickFormat;
             scope.yFunction = D3Service.yFunction;
@@ -198,18 +210,21 @@ directives.directive('areaStackedIntegerTimeSeries', function ($rootScope, D3Ser
                 d3.select('#' + scope.id + ' svg').style({'height': scope.height});
             });
         }
-    };
-});
 
-directives.directive('areaStackedPercentageTimeSeries', function ($rootScope, D3Service) {
-    return {
-        restrict: 'A',
-        replace: true,
-        templateUrl: 'partials/area-stacked-timeseries.html',
-        scope: {
-            data: '='
-        },
-        link: function (scope) {
+        return {
+            restrict: 'A',
+            replace: true,
+            templateUrl: 'partials/area-stacked-timeseries.html',
+            scope: {
+                data: '='
+            },
+            link: link
+        };
+    }
+
+    function areaStackedPercentageTimeSeries($rootScope, D3Service) {
+
+        function link(scope) {
             scope.yAxisTickFormat = D3Service.yAxisPercentageTickFormat;
             scope.xAxisTickFormat = D3Service.xAxisTickFormat;
             scope.yFunction = D3Service.yFunction;
@@ -223,18 +238,21 @@ directives.directive('areaStackedPercentageTimeSeries', function ($rootScope, D3
                 d3.select('#' + scope.id + ' svg').style({'height': scope.height});
             });
         }
-    };
-});
 
-directives.directive('areaStackedPercentageForceYTimeSeries', function ($rootScope, D3Service) {
-    return {
-        restrict: 'A',
-        replace: true,
-        templateUrl: 'partials/area-stacked-forcey-timeseries.html',
-        scope: {
-            data: '='
-        },
-        link: function (scope) {
+        return {
+            restrict: 'A',
+            replace: true,
+            templateUrl: 'partials/area-stacked-timeseries.html',
+            scope: {
+                data: '='
+            },
+            link: link
+        };
+    }
+
+    function areaStackedPercentageForceYTimeSeries($rootScope, D3Service) {
+
+        function link(scope) {
             scope.yAxisTickFormat = D3Service.yAxisPercentageTickFormat;
             scope.xAxisTickFormat = D3Service.xAxisTickFormat;
             scope.yFunction = D3Service.yFunction;
@@ -248,27 +266,35 @@ directives.directive('areaStackedPercentageForceYTimeSeries', function ($rootSco
                 d3.select('#' + scope.id + ' svg').style({'height': scope.height});
             });
         }
-    };
-});
 
-directives.directive('ngDelay', ['$timeout', function ($timeout) {
-    return {
-        restrict: 'A',
-        scope: true,
-        compile: function (element, attributes) {
-            var expression = attributes['ngChange'];
+        return {
+            restrict: 'A',
+            replace: true,
+            templateUrl: 'partials/area-stacked-forcey-timeseries.html',
+            scope: {
+                data: '='
+            },
+            link: link
+        };
+    }
+
+    function ngDelay($timeout) {
+        function compile(element, attributes) {
+            var expression = attributes.ngChange;
             if (!expression)
                 return;
 
-            var ngModel = attributes['ngModel'];
-            if (ngModel) attributes['ngModel'] = '$parent.' + ngModel;
-            attributes['ngChange'] = '$$delay.execute()';
+            var ngModel = attributes.ngModel;
+            if (ngModel)
+                attributes.ngModel = '$parent.' + ngModel;
+
+            attributes.ngChange = '$$delay.execute()';
 
             return {
                 post: function (scope, element, attributes) {
                     scope.$$delay = {
                         expression: expression,
-                        delay: scope.$eval(attributes['ngDelay']),
+                        delay: scope.$eval(attributes.ngDelay),
                         execute: function () {
                             var state = scope.$$delay;
                             state.then = Date.now();
@@ -279,20 +305,21 @@ directives.directive('ngDelay', ['$timeout', function ($timeout) {
                         }
                     };
                 }
-            }
+            };
         }
-    };
-}]);
 
+        return {
+            restrict: 'A',
+            scope: true,
+            compile: compile
+        };
+    }
 
-directives.directive('cpuFlameGraph', function ($rootScope, $timeout, FlameGraphService, VectorService) {
-    return {
-        restrict: 'A',
-        replace: true,
-        templateUrl: 'partials/cpu-flame-graph.html',
-        link: function (scope) {
+    function cpuFlameGraph($rootScope, $timeout, FlameGraphService, VectorService) {
+
+        function link(scope) {
             scope.host = $rootScope.properties.host;
-            scope.port = $rootScope.properties.port
+            scope.port = $rootScope.properties.port;
             scope.context = $rootScope.properties.context;
             scope.ready = false;
             scope.processing = false;
@@ -303,20 +330,23 @@ directives.directive('cpuFlameGraph', function ($rootScope, $timeout, FlameGraph
                 scope.processing = true;
                 $timeout(function () {
                     scope.processing = false;
-                }, 65000)
-            }
+                }, 65000);
+            };
         }
-    };
-});
 
-directives.directive('diskLatencyHeatMap', function ($rootScope, $timeout, HeatMapService, VectorService) {
-    return {
-        restrict: 'A',
-        replace: true,
-        templateUrl: 'partials/disk-latency-graph.html',
-        link: function (scope) {
+        return {
+            restrict: 'A',
+            replace: true,
+            templateUrl: 'partials/cpu-flame-graph.html',
+            link: link
+        };
+    }
+
+    function diskLatencyHeatMap($rootScope, $timeout, HeatMapService, VectorService) {
+
+        function link(scope) {
             scope.host = $rootScope.properties.host;
-            scope.port = $rootScope.properties.port
+            scope.port = $rootScope.properties.port;
             scope.context = $rootScope.properties.context;
             scope.ready = false;
             scope.processing = false;
@@ -327,8 +357,39 @@ directives.directive('diskLatencyHeatMap', function ($rootScope, $timeout, HeatM
                 scope.processing = true;
                 $timeout(function () {
                     scope.processing = false;
-                }, 150000)
-            }
+                }, 150000);
+            };
         }
-    };
-});
+
+        return {
+            restrict: 'A',
+            replace: true,
+            templateUrl: 'partials/disk-latency-graph.html',
+            link: link
+        };
+    }
+
+    angular
+        .module('app.directives', [])
+        .directive('lineTimeSeries', lineTimeSeries)
+        .directive('lineIntegerTimeSeries',
+                   lineIntegerTimeSeries)
+        .directive('linePercentageTimeSeries',
+                   linePercentageTimeSeries)
+        .directive('linePercentageForceYTimeSeries',
+                   linePercentageForceYTimeSeries)
+        .directive('lineIntegerForceYTimeSeries',
+                   lineIntegerForceYTimeSeries)
+        .directive('areaStackedTimeSeries',
+                   areaStackedTimeSeries)
+        .directive('areaStackedIntegerTimeSeries',
+                   areaStackedIntegerTimeSeries)
+        .directive('areaStackedPercentageTimeSeries',
+                   areaStackedPercentageTimeSeries)
+        .directive('areaStackedPercentageForceYTimeSeries',
+                   areaStackedPercentageForceYTimeSeries)
+        .directive('ngDelay', ngDelay)
+        .directive('cpuFlameGraph', cpuFlameGraph)
+        .directive('diskLatencyHeatMap', diskLatencyHeatMap);
+
+})();
