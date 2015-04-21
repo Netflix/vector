@@ -50,7 +50,7 @@
         }
 
         return {
-            restrict: 'A',
+            restrict: 'E',
             scope: true,
             compile: compile
         };

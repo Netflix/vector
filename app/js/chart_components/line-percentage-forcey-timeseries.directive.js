@@ -38,7 +38,6 @@
 
         return {
             restrict: 'A',
-            replace: true,
             templateUrl: 'partials/line-forcey-timeseries.html',
             scope: {
                 data: '='

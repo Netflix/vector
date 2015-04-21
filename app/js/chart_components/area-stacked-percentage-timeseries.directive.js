@@ -38,7 +38,6 @@
 
         return {
             restrict: 'A',
-            replace: true,
             templateUrl: 'partials/area-stacked-timeseries.html',
             scope: {
                 data: '='

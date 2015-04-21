@@ -40,7 +40,6 @@
 
         return {
             restrict: 'A',
-            replace: true,
             templateUrl: 'partials/disk-latency-graph.html',
             link: link
         };

@@ -40,7 +40,6 @@
 
         return {
             restrict: 'A',
-            replace: true,
             templateUrl: 'partials/cpu-flame-graph.html',
             link: link
         };
