@@ -19,33 +19,32 @@
      'use strict';
 
     /**
-    * @name ConvertedMetric
+    * @name Metric
     * @desc
     */
-    function ConvertedMetric($rootScope, $log, Metric, MetricService) {
+    function Metric($rootScope, $log, MetricService) {
 
-        var ConvertedMetric = function (name, conversionFunction) {
-            this.base = Metric;
-            this.base(name);
-            this.conversionFunction = conversionFunction;
+        var Metric = function (name) {
+            this.name = name || null;
+            this.data = [];
+            this.subscribers = 1;
         };
 
-        ConvertedMetric.prototype = new Metric();
+        Metric.prototype.toString = function () {
+            return this.name;
+        };
 
-        ConvertedMetric.prototype.pushValue = function (timestamp, iid, iname, value) {
+        Metric.prototype.pushValue = function (timestamp, iid, iname, value) {
             var self = this,
                 instance,
-                overflow,
-                convertedValue;
-
-            convertedValue = self.conversionFunction(value);
+                overflow;
 
             instance = _.find(self.data, function (el) {
                 return el.iid === iid;
             });
 
             if (angular.isDefined(instance) && instance !== null) {
-                instance.values.push({ x: timestamp, y: convertedValue });
+                instance.values.push({ x: timestamp, y: value });
                 overflow = instance.values.length - (($rootScope.properties.window * 60) / $rootScope.properties.interval);
                 if (overflow > 0) {
                     instance.values.splice(0, overflow);
@@ -54,26 +53,23 @@
                 instance = {
                     key: angular.isDefined(iname) ? iname : this.name,
                     iid: iid,
-                    values: [{x: timestamp, y: convertedValue}]
+                    values: [{x: timestamp, y: value}]
                 };
                 self.data.push(instance);
             }
         };
 
-        ConvertedMetric.prototype.pushValues = function (iid, timestamp, value) {
+        Metric.prototype.pushValues = function (iid, timestamp, value) {
             var self = this,
                 instance,
-                overflow,
-                convertedValue;
-
-            convertedValue = self.conversionFunction(value);
+                overflow;
 
             instance = _.find(self.data, function (el) {
                 return el.iid === iid;
             });
 
             if (angular.isDefined(instance) && instance !== null) {
-                instance.values.push({ x: timestamp, y: convertedValue });
+                instance.values.push({ x: timestamp, y: value });
                 overflow = instance.values.length - (($rootScope.properties.window * 60) / $rootScope.properties.interval);
                 if (overflow > 0) {
                     instance.values.splice(0, overflow);
@@ -82,24 +78,28 @@
                 instance = {
                     key: 'Series ' + iid,
                     iid: iid,
-                    values: [{x: timestamp, y: convertedValue}]
+                    values: [{x: timestamp, y: value}]
                 };
                 self.data.push(instance);
                 MetricService.getInames(self.name, iid)
-                .then(function (response) {
-                    $.each(response.data.instances, function (index, value) {
-                        if (value.instance === iid) {
-                            instance.key = value.name;
-                        }
+                    .then(function (response) {
+                        $.each(response.data.instances, function (index, value) {
+                            if (value.instance === iid) {
+                                instance.key = value.name;
+                            }
+                        });
                     });
-                });
             }
         };
 
-        return ConvertedMetric;
+        Metric.prototype.clearData = function () {
+            this.data.length = 0;
+        };
+
+        return Metric;
     }
 
     angular
         .module('app.metrics')
-        .factory('ConvertedMetric', ConvertedMetric);
+        .factory('Metric', Metric);
  })();

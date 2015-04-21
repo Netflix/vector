@@ -42,7 +42,7 @@
         .module('app.filters', []);
 
     angular
-        .module('app.factories', []);
+        .module('app.metrics', []);
 
     angular
         .module('app.services', []);
@@ -56,8 +56,8 @@
             'app.widgets',
             'app.directives',
             'app.services',
-            'app.factories',
             'app.filters',
+            'app.metrics',
             'vector.config',
             'nvd3ChartDirectives',
             'angular-flash.service',
