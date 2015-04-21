@@ -45,6 +45,9 @@
         .module('app.metrics', []);
 
     angular
+        .module('app.datamodels', []);
+
+    angular
         .module('app.services', []);
 
     angular
