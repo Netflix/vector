@@ -23,17 +23,17 @@
     'use strict';
 
     /* Widgets */
-    function widgetDefinitions(MetricTimeSeriesDataModel,
-                               CumulativeMetricTimeSeriesDataModel,
-                               MemoryMetricTimeSeriesDataModel,
-                               NetworkBytesMetricTimeSeriesDataModel,
-                               CpuUtilizationMetricTimeSeriesDataModel,
-                               PerCpuUtilizationMetricTimeSeriesDataModel,
-                               MultipleMetricTimeSeriesDataModel,
-                               MultipleCumulativeMetricTimeSeriesDataModel,
+    function widgetDefinitions(MetricDataModel,
+                               CumulativeMetricDataModel,
+                               MemoryUtilizationMetricDataModel,
+                               NetworkBytesMetricDataModel,
+                               CpuUtilizationMetricDataModel,
+                               PerCpuUtilizationMetricDataModel,
+                               MultipleMetricDataModel,
+                               MultipleCumulativeMetricDataModel,
                                DummyMetricDataModel,
-                               DiskLatencyTimeSeriesDataModel,
-                               CumulativeUtilizationMetricTimeSeriesDataModel,
+                               DiskLatencyMetricDataModel,
+                               CumulativeUtilizationMetricDataModel,
                                vectorConfig) {
         var definitions = [
             {
@@ -41,7 +41,7 @@
                 title: 'Load Average',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: MetricTimeSeriesDataModel,
+                dataModelType: MetricDataModel,
                 dataModelOptions: {
                     name: 'kernel.all.load'
                 },
@@ -56,7 +56,7 @@
                 title: 'Runnable',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: MetricTimeSeriesDataModel,
+                dataModelType: MetricDataModel,
                 dataModelOptions: {
                     name: 'kernel.all.runnable'
                 },
@@ -71,7 +71,7 @@
                 title: 'CPU Utilization (System)',
                 directive: 'line-percentage-force-y-time-series',
                 dataAttrName: 'data',
-                dataModelType: CumulativeUtilizationMetricTimeSeriesDataModel,
+                dataModelType: CumulativeUtilizationMetricDataModel,
                 dataModelOptions: {
                     name: 'kernel.all.cpu.sys'
                 },
@@ -86,7 +86,7 @@
                 title: 'CPU Utilization (User)',
                 directive: 'line-percentage-force-y-time-series',
                 dataAttrName: 'data',
-                dataModelType: CumulativeUtilizationMetricTimeSeriesDataModel,
+                dataModelType: CumulativeUtilizationMetricDataModel,
                 dataModelOptions: {
                     name: 'kernel.all.cpu.user'
                 },
@@ -101,7 +101,7 @@
                 title: 'CPU Utilization',
                 directive: 'area-stacked-percentage-force-y-time-series',
                 dataAttrName: 'data',
-                dataModelType: CpuUtilizationMetricTimeSeriesDataModel,
+                dataModelType: CpuUtilizationMetricDataModel,
                 dataModelOptions: {
                     name: 'kernel.all.cpu'
                 },
@@ -116,7 +116,7 @@
                 title: 'Per-CPU Utilization (System)',
                 directive: 'line-percentage-force-y-time-series',
                 dataAttrName: 'data',
-                dataModelType: CumulativeUtilizationMetricTimeSeriesDataModel,
+                dataModelType: CumulativeUtilizationMetricDataModel,
                 dataModelOptions: {
                     name: 'kernel.percpu.cpu.sys'
                 },
@@ -131,7 +131,7 @@
                 title: 'Per-CPU Utilization (User)',
                 directive: 'line-percentage-force-y-time-series',
                 dataAttrName: 'data',
-                dataModelType: CumulativeUtilizationMetricTimeSeriesDataModel,
+                dataModelType: CumulativeUtilizationMetricDataModel,
                 dataModelOptions: {
                     name: 'kernel.percpu.cpu.user'
                 },
@@ -146,7 +146,7 @@
                 title: 'Per-CPU Utilization',
                 directive: 'line-percentage-force-y-time-series',
                 dataAttrName: 'data',
-                dataModelType: PerCpuUtilizationMetricTimeSeriesDataModel,
+                dataModelType: PerCpuUtilizationMetricDataModel,
                 dataModelOptions: {
                     name: 'kernel.percpu.cpu'
                 },
@@ -161,7 +161,7 @@
                 title: 'Memory Utilization (Free)',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: MetricTimeSeriesDataModel,
+                dataModelType: MetricDataModel,
                 dataModelOptions: {
                     name: 'mem.freemem'
                 },
@@ -176,7 +176,7 @@
                 title: 'Memory Utilization (Used)',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: MetricTimeSeriesDataModel,
+                dataModelType: MetricDataModel,
                 dataModelOptions: {
                     name: 'mem.util.used'
                 },
@@ -191,7 +191,7 @@
                 title: 'Memory Utilization (Cached)',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: MetricTimeSeriesDataModel,
+                dataModelType: MetricDataModel,
                 dataModelOptions: {
                     name: 'mem.util.cached'
                 },
@@ -206,7 +206,7 @@
                 title: 'Memory Utilization',
                 directive: 'area-stacked-integer-time-series',
                 dataAttrName: 'data',
-                dataModelType: MemoryMetricTimeSeriesDataModel,
+                dataModelType: MemoryUtilizationMetricDataModel,
                 dataModelOptions: {
                     name: 'mem'
                 },
@@ -221,7 +221,7 @@
                 title: 'Network Drops (Out)',
                 directive: 'line-integer-force-y-time-series',
                 dataAttrName: 'data',
-                dataModelType: MetricTimeSeriesDataModel,
+                dataModelType: MetricDataModel,
                 dataModelOptions: {
                     name: 'network.interface.out.drops'
                 },
@@ -236,7 +236,7 @@
                 title: 'Network Drops (In)',
                 directive: 'line-integer-force-y-time-series',
                 dataAttrName: 'data',
-                dataModelType: MetricTimeSeriesDataModel,
+                dataModelType: MetricDataModel,
                 dataModelOptions: {
                     name: 'network.interface.in.drops'
                 },
@@ -251,7 +251,7 @@
                 title: 'Network Drops',
                 directive: 'line-integer-force-y-time-series',
                 dataAttrName: 'data',
-                dataModelType: MultipleMetricTimeSeriesDataModel,
+                dataModelType: MultipleMetricDataModel,
                 dataModelOptions: {
                     name: 'network.interface.drops',
                     metricDefinitions: {
@@ -270,7 +270,7 @@
                 title: 'TCP Connections (Estabilished)',
                 directive: 'line-integer-time-series',
                 dataAttrName: 'data',
-                dataModelType: MetricTimeSeriesDataModel,
+                dataModelType: MetricDataModel,
                 dataModelOptions: {
                     name: 'network.tcpconn.established'
                 },
@@ -285,7 +285,7 @@
                 title: 'TCP Connections (Time Wait)',
                 directive: 'line-integer-time-series',
                 dataAttrName: 'data',
-                dataModelType: MetricTimeSeriesDataModel,
+                dataModelType: MetricDataModel,
                 dataModelOptions: {
                     name: 'network.tcpconn.time_wait'
                 },
@@ -300,7 +300,7 @@
                 title: 'TCP Connections (Close Wait)',
                 directive: 'line-integer-time-series',
                 dataAttrName: 'data',
-                dataModelType: MetricTimeSeriesDataModel,
+                dataModelType: MetricDataModel,
                 dataModelOptions: {
                     name: 'network.tcpconn.close_wait'
                 },
@@ -315,7 +315,7 @@
                 title: 'TCP Connections',
                 directive: 'line-integer-time-series',
                 dataAttrName: 'data',
-                dataModelType: MultipleMetricTimeSeriesDataModel,
+                dataModelType: MultipleMetricDataModel,
                 dataModelOptions: {
                     name: 'network.tcpconn',
                     metricDefinitions: {
@@ -335,7 +335,7 @@
                 title: 'Network Throughput (kB)',
                 directive: 'line-integer-time-series',
                 dataAttrName: 'data',
-                dataModelType: NetworkBytesMetricTimeSeriesDataModel,
+                dataModelType: NetworkBytesMetricDataModel,
                 dataModelOptions: {
                     name: 'network.interface.bytes'
                 },
@@ -350,7 +350,7 @@
                 title: 'Disk IOPS',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: MultipleCumulativeMetricTimeSeriesDataModel,
+                dataModelType: MultipleCumulativeMetricDataModel,
                 dataModelOptions: {
                     name: 'disk.iops',
                     metricDefinitions: {
@@ -369,7 +369,7 @@
                 title: 'Disk Throughput (Bytes)',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: MultipleCumulativeMetricTimeSeriesDataModel,
+                dataModelType: MultipleCumulativeMetricDataModel,
                 dataModelOptions: {
                     name: 'disk.bytes',
                     metricDefinitions: {
@@ -388,7 +388,7 @@
                 title: 'Disk Utilization',
                 directive: 'line-percentage-force-y-time-series',
                 dataAttrName: 'data',
-                dataModelType: CumulativeUtilizationMetricTimeSeriesDataModel,
+                dataModelType: CumulativeUtilizationMetricDataModel,
                 dataModelOptions: {
                     name: 'disk.dev.avactive'
                 },
@@ -403,7 +403,7 @@
                 title: 'Context Switches',
                 directive: 'line-integer-time-series',
                 dataAttrName: 'data',
-                dataModelType: CumulativeMetricTimeSeriesDataModel,
+                dataModelType: CumulativeMetricDataModel,
                 dataModelOptions: {
                     name: 'kernel.all.pswitch'
                 },
@@ -418,7 +418,7 @@
                 title: 'Page Faults',
                 directive: 'area-stacked-integer-time-series',
                 dataAttrName: 'data',
-                dataModelType: MultipleCumulativeMetricTimeSeriesDataModel,
+                dataModelType: MultipleCumulativeMetricDataModel,
                 dataModelOptions: {
                     name: 'mem.vmstat.pgfault',
                     metricDefinitions: {
@@ -437,7 +437,7 @@
                 title: 'Network Packets',
                 directive: 'line-integer-time-series',
                 dataAttrName: 'data',
-                dataModelType: MultipleCumulativeMetricTimeSeriesDataModel,
+                dataModelType: MultipleCumulativeMetricDataModel,
                 dataModelOptions: {
                     name: 'network.interface.packets',
                     metricDefinitions: {
@@ -456,7 +456,7 @@
                 title: 'Network Retransmits',
                 directive: 'line-integer-force-y-time-series',
                 dataAttrName: 'data',
-                dataModelType: MultipleCumulativeMetricTimeSeriesDataModel,
+                dataModelType: MultipleCumulativeMetricDataModel,
                 dataModelOptions: {
                     name: 'network.tcp.retrans',
                     metricDefinitions: {
@@ -479,7 +479,7 @@
                 title: 'Disk Latency',
                 directive: 'line-integer-time-series',
                 dataAttrName: 'data',
-                dataModelType: DiskLatencyTimeSeriesDataModel,
+                dataModelType: DiskLatencyMetricDataModel,
                 dataModelOptions: {
                     name: 'disk.dev.latency'
                 },
