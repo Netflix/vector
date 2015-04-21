@@ -19,7 +19,7 @@
 (function () {
     'use strict';
 
-    function ngDelay($timeout) {
+    function delay($timeout) {
         function compile(element, attributes) {
             var expression = attributes.ngChange;
             if (!expression)
@@ -35,7 +35,7 @@
                 post: function (scope, element, attributes) {
                     scope.$$delay = {
                         expression: expression,
-                        delay: scope.$eval(attributes.ngDelay),
+                        delay: scope.$eval(attributes.delay),
                         execute: function () {
                             var state = scope.$$delay;
                             state.then = Date.now();
@@ -58,6 +58,6 @@
 
     angular
         .module('app.directives')
-        .directive('ngDelay', ngDelay);
+        .directive('delay', delay);
 
 })();
