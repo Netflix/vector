@@ -93,9 +93,9 @@
                     <div class="widget-header panel-heading">
                         <h3 class="panel-title">
                             <span class="widget-title" ng-dblclick="editTitle(widget)" ng-hide="widget.editingTitle">{{widget.title}}</span>
-                            <form action="" class="widget-title" ng-show="widget.editingTitle" ng-submit="saveTitleEdit(widget)">
+                            <!-- <form action="" class="widget-title" ng-show="widget.editingTitle" ng-submit="saveTitleEdit(widget)">
                                 <input type="text" ng-model="widget.title" class="form-control">
-                            </form>
+                            </form> -->
                             <span class="label label-primary" ng-if="!options.hideWidgetName">{{widget.name}}</span>
                             <span ng-click="removeWidget(widget);" class="glyphicon glyphicon-remove" ng-if="!options.hideWidgetClose"></span>
                             <span ng-click="openWidgetDialog(widget);" class="glyphicon glyphicon-cog" ng-if="!options.hideWidgetSettings"></span>
