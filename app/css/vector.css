@@ -22,6 +22,7 @@
 
  .main-container {
    padding-top: 46px;
+   will-change: transform;
  }
 
  .spacer {
@@ -122,6 +123,10 @@
 
 .panel.widget {
    border: 1px solid #c4c4c4;
+}
+
+.widget-container {
+	will-change: transform;
 }
 
 .widget-header.panel-heading.ui-sortable-handle {
