@@ -54,11 +54,25 @@
         function activate() {
             DashboardService.initializeProperties();
 
+            // XXX: overriding DashboardService::initializeProperties()
+
+            // pmwebd host
             if ($routeParams.host) {
-                $log.info("Host: " + $routeParams.host);
                 $rootScope.properties.host = $routeParams.host;
-                DashboardService.updateHost();
+            } else {
+                $rootScope.properties.host = window.location.host; // assuming pmwebd serving webapp
             }
+            // pmcd hostspec
+            if ($routeParams.pmcd) {
+                $rootScope.properties.pmcd = $routeParams.pmcd;
+            } else {
+                $rootScope.properties.pmcd = 'local:';
+            }
+
+            $log.info("PMWEBD Host: " + $rootScope.properties.host);
+            $log.info("PMCD Hostspec: " + $rootScope.properties.pmcd);
+
+            DashboardService.updateHost();
 
             // hack to deal with window/tab out of focus
             $document[0]
