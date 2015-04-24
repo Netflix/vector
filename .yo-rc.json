@@ -1,0 +1,54 @@
+{
+  "generator-gulp-angular": {
+    "version": "0.11.0",
+    "props": {
+      "angularVersion": "~1.3.4",
+      "angularModules": [],
+      "jQuery": {
+        "key": "jquery2"
+      },
+      "resource": {
+        "key": "none",
+        "module": null
+      },
+      "router": {
+        "key": "angular-route",
+        "module": "ngRoute"
+      },
+      "ui": {
+        "key": "bootstrap",
+        "module": null,
+        "name": "bootstrap"
+      },
+      "bootstrapComponents": {
+        "key": "official",
+        "module": null
+      },
+      "cssPreprocessor": {
+        "key": "none",
+        "extension": "css"
+      },
+      "jsPreprocessor": {
+        "key": "none",
+        "extension": "js",
+        "srcExtension": "js"
+      },
+      "htmlPreprocessor": {
+        "key": "none",
+        "extension": "html"
+      },
+      "foundationComponents": {
+        "name": null,
+        "version": null,
+        "key": null,
+        "module": null
+      },
+      "paths": {
+        "src": "src",
+        "dist": "dist",
+        "e2e": "e2e",
+        "tmp": ".tmp"
+      }
+    }
+  }
+}
