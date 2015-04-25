@@ -19,10 +19,10 @@
 (function () {
     'use strict';
 
-    function areaStackedIntegerTimeSeries($rootScope, D3Service) {
+    function areaStackedPercentageForceYTimeSeries($rootScope, D3Service) {
 
         function link(scope) {
-            scope.yAxisTickFormat = D3Service.yAxisIntegerTickFormat;
+            scope.yAxisTickFormat = D3Service.yAxisPercentageTickFormat;
             scope.xAxisTickFormat = D3Service.xAxisTickFormat;
             scope.yFunction = D3Service.yFunction;
             scope.xFunction = D3Service.xFunction;
@@ -38,7 +38,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/partials/area-stacked-timeseries.html',
+            templateUrl: 'app/charts/area-stacked-forcey-timeseries.html',
             scope: {
                 data: '='
             },
@@ -48,7 +48,7 @@
 
     angular
         .module('app.directives')
-        .directive('areaStackedIntegerTimeSeries',
-                   areaStackedIntegerTimeSeries);
+        .directive('areaStackedPercentageForceYTimeSeries',
+                   areaStackedPercentageForceYTimeSeries);
 
 })();

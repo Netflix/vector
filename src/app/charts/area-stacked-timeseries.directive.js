@@ -19,7 +19,7 @@
 (function () {
     'use strict';
 
-    function lineTimeSeries($rootScope, D3Service) {
+    function areaStackedTimeSeries($rootScope, D3Service) {
 
         function link(scope) {
             scope.yAxisTickFormat = D3Service.yAxisTickFormat;
@@ -38,7 +38,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/partials/line-timeseries.html',
+            templateUrl: 'app/charts/area-stacked-timeseries.html',
             scope: {
                 data: '='
             },
@@ -48,6 +48,5 @@
 
     angular
         .module('app.directives')
-        .directive('lineTimeSeries', lineTimeSeries);
-
+        .directive('areaStackedTimeSeries', areaStackedTimeSeries);
 })();

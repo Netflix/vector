@@ -19,7 +19,7 @@
 (function () {
     'use strict';
 
-    function cpuFlameGraph($rootScope, $timeout, FlameGraphService, VectorService) {
+    function diskLatencyHeatMap($rootScope, $timeout, HeatMapService, VectorService) {
 
         function link(scope) {
             scope.host = $rootScope.properties.host;
@@ -28,25 +28,25 @@
             scope.ready = false;
             scope.processing = false;
             scope.id = VectorService.getGuid();
-            scope.generateFlameGraph = function(){
-                FlameGraphService.generate();
+            scope.generateHeatMap = function(){
+                HeatMapService.generate();
                 scope.ready = true;
                 scope.processing = true;
                 $timeout(function () {
                     scope.processing = false;
-                }, 65000);
+                }, 150000);
             };
         }
 
         return {
             restrict: 'A',
-            templateUrl: 'app/partials/cpu-flame-graph.html',
+            templateUrl: 'app/charts/disk-latency-heatmap.html',
             link: link
         };
     }
 
     angular
         .module('app.directives')
-        .directive('cpuFlameGraph', cpuFlameGraph);
+        .directive('diskLatencyHeatMap', diskLatencyHeatMap);
 
 })();
