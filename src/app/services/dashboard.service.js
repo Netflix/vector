@@ -133,6 +133,7 @@
             $log.info('Host updated.');
 
             $location.search('host', $rootScope.properties.host);
+            $location.search('hostspec', $rootScope.properties.hostspec);
 
             $rootScope.properties.context = -1;
 
