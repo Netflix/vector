@@ -82,6 +82,24 @@
         }
 
         /**
+        * @name updateHostnameSuccessCallback
+        * @desc
+        */
+        function updateHostnameSuccessCallback(data) {
+          $rootScope.properties.hostname = data.values[0].instances[0].value;
+          $log.info('Hostname updated: ' + $rootScope.properties.hostname);
+        }
+
+        /**
+        * @name updateHostnameErrorCallback
+        * @desc
+        */
+        function updateHostnameErrorCallback() {
+            $rootScope.properties.hostname = 'Hostname not available.';
+            $log.error('Error fetching hostname.');
+        }
+
+        /**
         * @name updateContextSuccessCallback
         * @desc
         */
@@ -117,6 +135,12 @@
                     .then(function (data) {
                         $rootScope.flags.contextUpdating = false;
                         updateContextSuccessCallback(data);
+                        PMAPIService.getMetrics(data, ['pmcd.hostname'])
+                            .then(function (metrics) {
+                                updateHostnameSuccessCallback(metrics);
+                            }, function errorHandler() {
+                                updateHostnameErrorCallback();
+                            });
                     }, function errorHandler() {
                         flash.to('alert-dashboard-error').error = 'Failed fetching context from host. Try updating the hostname.';
                         $rootScope.flags.contextUpdating = false;
@@ -136,6 +160,7 @@
             $location.search('hostspec', $rootScope.properties.hostspec);
 
             $rootScope.properties.context = -1;
+            $rootScope.properties.hostname = null;
 
             MetricListService.clearMetricList();
             MetricListService.clearDerivedMetricList();
@@ -184,6 +209,7 @@
                     hostspec: vectorConfig.hostspec,
                     port: vectorConfig.port,
                     context: -1,
+                    hostname: null,
                     window: vectorConfig.window,
                     interval: vectorConfig.interval
                 };

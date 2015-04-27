@@ -81,6 +81,10 @@
      margin-top: 8px;
  }
 
+ #hostnameLabel {
+    margin-top: 18px;
+ }
+
  .alert,
  .btn {
      background-image: none !important;
