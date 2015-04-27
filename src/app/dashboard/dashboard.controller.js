@@ -57,8 +57,10 @@
             if ($routeParams.host) {
                 $rootScope.properties.host = $routeParams.host;
                 $log.info("Host: " + $routeParams.host);
-                $rootScope.properties.hostspec = $routeParams.hostspec;
-                $log.info("Hostspec: " + $routeParams.hostspec);
+                if ($routeParams.hostspec) {
+                    $rootScope.properties.hostspec = $routeParams.hostspec;
+                    $log.info("Hostspec: " + $routeParams.hostspec);
+                }
                 DashboardService.updateHost();
             }
 
