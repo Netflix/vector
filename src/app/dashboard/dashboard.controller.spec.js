@@ -1,5 +1,7 @@
 'use strict';
 
+/*jslint devel: true */
+
 /* Controller Tests */
 
 describe('DashboardCtrl', function() {
@@ -26,7 +28,7 @@ describe('DashboardCtrl', function() {
     route = {
       current: {
         $$route: {
-          originalPath: "/empty"
+          originalPath: '/empty'
         }
       }
     };
@@ -47,7 +49,7 @@ describe('DashboardCtrl', function() {
     route = {
       current: {
         $$route: {
-          originalPath: "/empty"
+          originalPath: '/empty'
         }
       }
     };

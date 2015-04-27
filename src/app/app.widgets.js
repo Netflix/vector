@@ -50,7 +50,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "CPU"
+                group: 'CPU'
             }, {
                 name: 'kernel.all.runnable',
                 title: 'Runnable',
@@ -65,7 +65,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "CPU"
+                group: 'CPU'
             }, {
                 name: 'kernel.all.cpu.sys',
                 title: 'CPU Utilization (System)',
@@ -80,7 +80,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "CPU"
+                group: 'CPU'
             }, {
                 name: 'kernel.all.cpu.user',
                 title: 'CPU Utilization (User)',
@@ -95,7 +95,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "CPU"
+                group: 'CPU'
             }, {
                 name: 'kernel.all.cpu',
                 title: 'CPU Utilization',
@@ -110,7 +110,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "CPU"
+                group: 'CPU'
             }, {
                 name: 'kernel.percpu.cpu.sys',
                 title: 'Per-CPU Utilization (System)',
@@ -125,7 +125,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "CPU"
+                group: 'CPU'
             }, {
                 name: 'kernel.percpu.cpu.user',
                 title: 'Per-CPU Utilization (User)',
@@ -140,7 +140,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "CPU"
+                group: 'CPU'
             }, {
                 name: 'kernel.percpu.cpu',
                 title: 'Per-CPU Utilization',
@@ -155,7 +155,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "CPU"
+                group: 'CPU'
             }, {
                 name: 'mem.freemem',
                 title: 'Memory Utilization (Free)',
@@ -170,7 +170,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Memory"
+                group: 'Memory'
             }, {
                 name: 'mem.util.used',
                 title: 'Memory Utilization (Used)',
@@ -185,7 +185,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Memory"
+                group: 'Memory'
             }, {
                 name: 'mem.util.cached',
                 title: 'Memory Utilization (Cached)',
@@ -200,7 +200,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Memory"
+                group: 'Memory'
             }, {
                 name: 'mem',
                 title: 'Memory Utilization',
@@ -215,7 +215,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Memory"
+                group: 'Memory'
             }, {
                 name: 'network.interface.out.drops',
                 title: 'Network Drops (Out)',
@@ -230,7 +230,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Network"
+                group: 'Network'
             }, {
                 name: 'network.interface.in.drops',
                 title: 'Network Drops (In)',
@@ -245,7 +245,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Network"
+                group: 'Network'
             }, {
                 name: 'network.interface.drops',
                 title: 'Network Drops',
@@ -255,8 +255,8 @@
                 dataModelOptions: {
                     name: 'network.interface.drops',
                     metricDefinitions: {
-                        "{key} in": "network.interface.in.drops",
-                        "{key} out": "network.interface.out.drops"
+                        '{key} in': 'network.interface.in.drops',
+                        '{key} out': 'network.interface.out.drops'
                     }
                 },
                 size: {
@@ -264,7 +264,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Network"
+                group: 'Network'
             }, {
                 name: 'network.tcpconn.established',
                 title: 'TCP Connections (Estabilished)',
@@ -279,7 +279,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Network"
+                group: 'Network'
             }, {
                 name: 'network.tcpconn.time_wait',
                 title: 'TCP Connections (Time Wait)',
@@ -294,7 +294,7 @@
                     width: '25%',
                     height: '250px'
                 },
-                group: "Network"
+                group: 'Network'
             }, {
                 name: 'network.tcpconn.close_wait',
                 title: 'TCP Connections (Close Wait)',
@@ -309,7 +309,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Network"
+                group: 'Network'
             }, {
                 name: 'network.tcpconn',
                 title: 'TCP Connections',
@@ -319,9 +319,9 @@
                 dataModelOptions: {
                     name: 'network.tcpconn',
                     metricDefinitions: {
-                        "established": "network.tcpconn.established",
-                        "time_wait": "network.tcpconn.time_wait",
-                        "close_wait": "network.tcpconn.close_wait"
+                        'established': 'network.tcpconn.established',
+                        'time_wait': 'network.tcpconn.time_wait',
+                        'close_wait': 'network.tcpconn.close_wait'
                     }
                 },
                 size: {
@@ -329,7 +329,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Network"
+                group: 'Network'
             }, {
                 name: 'network.interface.bytes',
                 title: 'Network Throughput (kB)',
@@ -344,7 +344,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Network"
+                group: 'Network'
             }, {
                 name: 'disk.iops',
                 title: 'Disk IOPS',
@@ -354,8 +354,8 @@
                 dataModelOptions: {
                     name: 'disk.iops',
                     metricDefinitions: {
-                        "{key} read": "disk.dev.read",
-                        "{key} write": "disk.dev.write"
+                        '{key} read': 'disk.dev.read',
+                        '{key} write': 'disk.dev.write'
                     }
                 },
                 size: {
@@ -363,7 +363,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Disk"
+                group: 'Disk'
             }, {
                 name: 'disk.bytes',
                 title: 'Disk Throughput (Bytes)',
@@ -373,8 +373,8 @@
                 dataModelOptions: {
                     name: 'disk.bytes',
                     metricDefinitions: {
-                        "{key} read": "disk.dev.read_bytes",
-                        "{key} write": "disk.dev.write_bytes"
+                        '{key} read': 'disk.dev.read_bytes',
+                        '{key} write': 'disk.dev.write_bytes'
                     }
                 },
                 size: {
@@ -382,7 +382,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Disk"
+                group: 'Disk'
             }, {
                 name: 'disk.dev.avactive',
                 title: 'Disk Utilization',
@@ -397,7 +397,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Disk"
+                group: 'Disk'
             }, {
                 name: 'kernel.all.pswitch',
                 title: 'Context Switches',
@@ -412,7 +412,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "CPU"
+                group: 'CPU'
             }, {
                 name: 'mem.vmstat.pgfault',
                 title: 'Page Faults',
@@ -422,8 +422,8 @@
                 dataModelOptions: {
                     name: 'mem.vmstat.pgfault',
                     metricDefinitions: {
-                        "page faults": "mem.vmstat.pgfault",
-                        "major page faults": "mem.vmstat.pgmajfault"
+                        'page faults': 'mem.vmstat.pgfault',
+                        'major page faults': 'mem.vmstat.pgmajfault'
                     }
                 },
                 size: {
@@ -431,7 +431,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Memory"
+                group: 'Memory'
             }, {
                 name: 'network.interface.packets',
                 title: 'Network Packets',
@@ -441,8 +441,8 @@
                 dataModelOptions: {
                     name: 'network.interface.packets',
                     metricDefinitions: {
-                        "{key} in": "network.interface.in.packets",
-                        "{key} out": "network.interface.out.packets"
+                        '{key} in': 'network.interface.in.packets',
+                        '{key} out': 'network.interface.out.packets'
                     }
                 },
                 size: {
@@ -450,7 +450,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Network"
+                group: 'Network'
             }, {
                 name: 'network.tcp.retrans',
                 title: 'Network Retransmits',
@@ -460,12 +460,12 @@
                 dataModelOptions: {
                     name: 'network.tcp.retrans',
                     metricDefinitions: {
-                        "retranssegs": "network.tcp.retranssegs",
-                        "timeouts": "network.tcp.timeouts",
-                        "listendrops": "network.tcp.listendrops",
-                        "fastretrans": "network.tcp.fastretrans",
-                        "slowstartretrans": "network.tcp.slowstartretrans",
-                        "syncretrans": "network.tcp.syncretrans"
+                        'retranssegs': 'network.tcp.retranssegs',
+                        'timeouts': 'network.tcp.timeouts',
+                        'listendrops': 'network.tcp.listendrops',
+                        'fastretrans': 'network.tcp.fastretrans',
+                        'slowstartretrans': 'network.tcp.slowstartretrans',
+                        'syncretrans': 'network.tcp.syncretrans'
                     }
                 },
                 size: {
@@ -473,7 +473,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Network"
+                group: 'Network'
             }, {
                 name: 'disk.dev.latency',
                 title: 'Disk Latency',
@@ -488,7 +488,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: "Disk"
+                group: 'Disk'
             }
         ];
 
@@ -503,7 +503,7 @@
               height: '250px'
             },
             enableVerticalResize: false,
-            group: "CPU"
+            group: 'CPU'
           });
         }
 
@@ -518,7 +518,7 @@
               height: '250px'
             },
             enableVerticalResize: false,
-            group: "Disk"
+            group: 'Disk'
           });
         }
 

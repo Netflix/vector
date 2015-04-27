@@ -20,7 +20,7 @@
 /*global angular*/
 /*jslint browser: true*/
 /*jslint nomen: true */
-/*global $, jQuery, alert, _*/
+/*global $, _*/
 
 (function () {
     'use strict';
@@ -56,25 +56,25 @@
 
             if ($routeParams.host) {
                 $rootScope.properties.host = $routeParams.host;
-                $log.info("Host: " + $routeParams.host);
+                $log.info('Host: ' + $routeParams.host);
                 if ($routeParams.hostspec) {
                     $rootScope.properties.hostspec = $routeParams.hostspec;
-                    $log.info("Hostspec: " + $routeParams.hostspec);
+                    $log.info('Hostspec: ' + $routeParams.hostspec);
                 }
                 DashboardService.updateHost();
             }
 
             // hack to deal with window/tab out of focus
             $document[0]
-                .addEventListener("visibilitychange", visibilityChanged, false);
+                .addEventListener('visibilitychange', visibilityChanged, false);
             $document[0]
-                .addEventListener("webkitvisibilitychange", visibilityChanged, false);
+                .addEventListener('webkitvisibilitychange', visibilityChanged, false);
             $document[0]
-                .addEventListener("msvisibilitychange", visibilityChanged, false);
+                .addEventListener('msvisibilitychange', visibilityChanged, false);
             $document[0]
-                .addEventListener("mozvisibilitychange", visibilityChanged, false);
+                .addEventListener('mozvisibilitychange', visibilityChanged, false);
 
-            $log.info("Dashboard controller initialized with " + path + " view.");
+            $log.info('Dashboard controller initialized with ' + path + ' view.');
         }
 
          vm.dashboardOptions = {
