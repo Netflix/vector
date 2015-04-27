@@ -15,6 +15,9 @@
  *     limitations under the License.
  *
  */
+
+ /*global _*/
+
 (function () {
     'use strict';
 

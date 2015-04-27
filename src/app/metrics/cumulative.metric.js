@@ -15,6 +15,9 @@
  *     limitations under the License.
  *
  */
+
+ /*global _*/
+
  (function () {
      'use strict';
 
@@ -22,16 +25,16 @@
     * @name CumulativeMetric
     * @desc
     */
-    function CumulativeMetric($rootScope, $log, Metric, MetricService) {
+    function CumulativeMetric($rootScope, $log, SimpleMetric, MetricService) {
 
-        var CumulativeMetric = function (name) {
-            this.base = Metric;
+        var Metric = function (name) {
+            this.base = SimpleMetric;
             this.base(name);
         };
 
-        CumulativeMetric.prototype = new Metric();
+        Metric.prototype = new SimpleMetric();
 
-        CumulativeMetric.prototype.pushValue = function (timestamp, iid, iname, value) {
+        Metric.prototype.pushValue = function (timestamp, iid, iname, value) {
             var self = this,
                 instance,
                 overflow,
@@ -62,7 +65,7 @@
             }
         };
 
-        CumulativeMetric.prototype.pushValues = function (iid, timestamp, value) {
+        Metric.prototype.pushValues = function (iid, timestamp, value) {
             var self = this,
                 instance,
                 overflow,
@@ -84,7 +87,7 @@
 
                 MetricService.getInames(self.name, iid)
                     .then(function (response) {
-                        $.each(response.data.instances, function (index, value) {
+                        angular.forEach(response.data.instances, function (value) {
                             if (value.instance === iid) {
                                 instance.key = value.name;
                             }
@@ -102,7 +105,7 @@
             }
         };
 
-        return CumulativeMetric;
+        return Metric;
     }
 
     angular

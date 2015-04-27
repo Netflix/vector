@@ -15,6 +15,9 @@
  *     limitations under the License.
  *
  */
+
+ /*global d3*/
+ 
  (function () {
      'use strict';
 

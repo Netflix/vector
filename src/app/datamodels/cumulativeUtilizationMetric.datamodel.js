@@ -23,13 +23,13 @@
     * @desc
     */
     function CumulativeUtilizationMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
-        var CumulativeUtilizationMetricDataModel = function () {
+        var DataModel = function () {
             return this;
         };
 
-        CumulativeUtilizationMetricDataModel.prototype = Object.create(WidgetDataModel.prototype);
+        DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        CumulativeUtilizationMetricDataModel.prototype.init = function () {
+        DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
@@ -41,8 +41,7 @@
                 var returnValues = [],
                     lastValue;
 
-                /*jslint unparam: true*/
-                $.each(rawMetric.data, function (index, instance) {
+                angular.forEach(rawMetric.data, function (instance) {
                     if (instance.values.length > 0) {
                         lastValue = instance.values[instance.values.length - 1];
                         returnValues.push({
@@ -52,7 +51,6 @@
                         });
                     }
                 });
-                /*jslint unparam: false*/
 
                 return returnValues;
             };
@@ -64,7 +62,7 @@
 
         };
 
-        CumulativeUtilizationMetricDataModel.prototype.destroy = function () {
+        DataModel.prototype.destroy = function () {
             // remove subscribers and delete derived metric
             MetricListService.destroyDerivedMetric(this.name);
 
@@ -74,7 +72,7 @@
             WidgetDataModel.prototype.destroy.call(this);
         };
 
-        return CumulativeUtilizationMetricDataModel;
+        return DataModel;
     }
 
     angular

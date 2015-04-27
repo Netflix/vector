@@ -23,13 +23,13 @@
     * @desc
     */
     function CumulativeMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
-        var CumulativeMetricDataModel = function () {
+        var DataModel = function () {
             return this;
         };
 
-        CumulativeMetricDataModel.prototype = Object.create(WidgetDataModel.prototype);
+        DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        CumulativeMetricDataModel.prototype.init = function () {
+        DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
@@ -40,13 +40,13 @@
 
         };
 
-        CumulativeMetricDataModel.prototype.destroy = function () {
+        DataModel.prototype.destroy = function () {
             MetricListService.destroyMetric(this.name);
 
             WidgetDataModel.prototype.destroy.call(this);
         };
 
-        return CumulativeMetricDataModel;
+        return DataModel;
     }
 
     angular

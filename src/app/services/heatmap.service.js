@@ -29,13 +29,13 @@
         * @desc
         */
         function generate() {
-                $http.get("http://" + $rootScope.properties.host + ":" + $rootScope.properties.port + "/pmapi/" + $rootScope.properties.context + "/_fetch?names=generic.heatmap")
+                $http.get('http://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=generic.heatmap')
                     .success(function () {
                         flash.to('alert-disklatency-success').success = 'generic.heatmap requested!';
-                        $log.info("generic.heatmap requested");
+                        $log.info('generic.heatmap requested');
                     }).error(function () {
                         flash.to('alert-disklatency-error').error = 'failed requesting generic.heatmap!';
-                        $log.error("failed requesting generic.heatmap");
+                        $log.error('failed requesting generic.heatmap');
                     });
         }
 

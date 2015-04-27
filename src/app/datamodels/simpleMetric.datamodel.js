@@ -19,17 +19,17 @@
      'use strict';
 
     /**
-    * @name MetricDataModel
+    * @name SimpleMetricDataModel
     * @desc
     */
-    function MetricDataModel(WidgetDataModel, MetricListService, VectorService) {
-        var MetricDataModel = function () {
+    function SimpleMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
+        var DataModel = function () {
             return this;
         };
 
-        MetricDataModel.prototype = Object.create(WidgetDataModel.prototype);
+        DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        MetricDataModel.prototype.init = function () {
+        DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
@@ -40,16 +40,16 @@
 
         };
 
-        MetricDataModel.prototype.destroy = function () {
+        DataModel.prototype.destroy = function () {
             MetricListService.destroyMetric(this.name);
 
             WidgetDataModel.prototype.destroy.call(this);
         };
 
-        return MetricDataModel;
+        return DataModel;
     }
 
     angular
         .module('app.datamodels')
-        .factory('MetricDataModel', MetricDataModel);
+        .factory('MetricDataModel', SimpleMetricDataModel);
  })();

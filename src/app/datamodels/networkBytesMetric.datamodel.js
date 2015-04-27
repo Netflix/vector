@@ -15,6 +15,7 @@
  *     limitations under the License.
  *
  */
+
  (function () {
      'use strict';
 
@@ -23,13 +24,13 @@
     * @desc
     */
     function NetworkBytesMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
-        var NetworkBytesMetricDataModel = function () {
+        var DataModel = function () {
             return this;
         };
 
-        NetworkBytesMetricDataModel.prototype = Object.create(WidgetDataModel.prototype);
+        DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        NetworkBytesMetricDataModel.prototype.init = function () {
+        DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
@@ -44,8 +45,7 @@
                 var returnValues = [],
                     lastValue;
 
-                /*jslint unparam: true*/
-                $.each(inMetric.data, function (index, instance) {
+                angular.forEach(inMetric.data, function (instance) {
                     if (instance.values.length > 0) {
                         lastValue = instance.values[instance.values.length - 1];
                         returnValues.push({
@@ -55,10 +55,8 @@
                         });
                     }
                 });
-                /*jslint unparam: false*/
 
-                /*jslint unparam: true*/
-                $.each(outMetric.data, function (index, instance) {
+                angular.forEach(outMetric.data, function (instance) {
                     if (instance.values.length > 0) {
                         lastValue = instance.values[instance.values.length - 1];
                         returnValues.push({
@@ -68,7 +66,6 @@
                         });
                     }
                 });
-                /*jslint unparam: false*/
 
                 return returnValues;
             };
@@ -79,7 +76,7 @@
             this.updateScope(this.metric.data);
         };
 
-        NetworkBytesMetricDataModel.prototype.destroy = function () {
+        DataModel.prototype.destroy = function () {
             // remove subscribers and delete derived metric
             MetricListService.destroyDerivedMetric(this.name);
 
@@ -90,7 +87,7 @@
             WidgetDataModel.prototype.destroy.call(this);
         };
 
-        return NetworkBytesMetricDataModel;
+        return DataModel;
     }
 
     angular

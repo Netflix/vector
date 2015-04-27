@@ -15,6 +15,9 @@
  *     limitations under the License.
  *
  */
+
+ /*global _*/
+ 
  (function () {
     'use strict';
 
@@ -23,7 +26,7 @@
     * @name MetricListService
     * @desc
     */
-    function MetricListService($rootScope, $http, $log, $q, PMAPIService, Metric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric, flash) {
+    function MetricListService($rootScope, $http, $log, $q, PMAPIService, SimpleMetric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric, flash) {
         var simpleMetrics = [],
             derivedMetrics = [];
 
@@ -37,7 +40,7 @@
             });
 
             if (angular.isUndefined(metric)) {
-                metric = new Metric(name);
+                metric = new SimpleMetric(name);
                 simpleMetrics.push(metric);
             } else {
                 metric.subscribers++;
@@ -162,11 +165,9 @@
         * @desc
         */
         function clearMetricList() {
-            /*jslint unparam: true*/
-            $.each(simpleMetrics, function (index, metric) {
+            angular.forEach(simpleMetrics, function (metric) {
                 metric.clearData();
             });
-            /*jslint unparam: false*/
         }
 
         /**
@@ -174,11 +175,9 @@
         * @desc
         */
         function clearDerivedMetricList() {
-            /*jslint unparam: true*/
-            $.each(derivedMetrics, function (index, metric) {
+            angular.forEach(derivedMetrics, function (metric) {
                 metric.clearData();
             });
-            /*jslint unparam: false*/
         }
 
         /**
@@ -193,11 +192,9 @@
                 context = $rootScope.properties.context;
 
             if (context && context > 0 && simpleMetrics.length > 0) {
-                /*jslint unparam: true*/
-                $.each(simpleMetrics, function (index, value) {
+                angular.forEach(simpleMetrics, function (value) {
                     metricArr.push(value.name);
                 });
-                /*jslint unparam: false*/
 
                 url = 'http://' + host + ':' + port + '/pmapi/' + context + '/_fetch?names=' + metricArr.join(',');
 
@@ -234,11 +231,9 @@
         */
         function updateDerivedMetrics() {
             if (derivedMetrics.length > 0) {
-                /*jslint unparam: true*/
-                $.each(derivedMetrics, function (index, metric) {
+                angular.forEach(derivedMetrics, function (metric) {
                     metric.updateValues();
                 });
-                /*jslint unparam: false*/
             }
         }
 

@@ -33,7 +33,7 @@
         function cancelInterval() {
             if (intervalPromise) {
                 $interval.cancel(intervalPromise);
-                $log.info("Interval canceled.");
+                $log.info('Interval canceled.');
             }
         }
 
@@ -77,7 +77,7 @@
                 } else {
                     flash.to('alert-dashboard-error').error = 'Invalid context. Please update host to resume operation.';
                 }
-                $log.info("Interval updated.");
+                $log.info('Interval updated.');
             }
         }
 
@@ -97,7 +97,7 @@
         */
         function updateContextErrorCallback() {
             $rootScope.flags.contextAvailable = false;
-            $log.error("Error fetching context.");
+            $log.error('Error fetching context.');
         }
 
         /**
@@ -105,11 +105,10 @@
         * @desc
         */
         function updateContext() {
-            $log.info("Context updated.");
+            $log.info('Context updated.');
 
             var host = $rootScope.properties.host,
-                hostspec = $rootScope.properties.hostspec,
-                port = $rootScope.properties.port;
+                hostspec = $rootScope.properties.hostspec;
 
             if (host && host !== '') {
                 $rootScope.flags.contextUpdating = true;
@@ -131,7 +130,7 @@
         * @desc
         */
         function updateHost() {
-            $log.info("Host updated.");
+            $log.info('Host updated.');
 
             $location.search('host', $rootScope.properties.host);
 
@@ -148,7 +147,7 @@
         * @desc
         */
         function updateWindow() {
-            $log.log("Window updated.");
+            $log.log('Window updated.');
         }
 
         /**

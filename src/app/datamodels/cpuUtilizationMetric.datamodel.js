@@ -23,13 +23,13 @@
     * @desc
     */
     function CpuUtilizationMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
-        var CpuUtilizationMetricDataModel = function () {
+        var DataModel = function () {
             return this;
         };
 
-        CpuUtilizationMetricDataModel.prototype = Object.create(WidgetDataModel.prototype);
+        DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        CpuUtilizationMetricDataModel.prototype.init = function () {
+        DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
@@ -51,8 +51,7 @@
                     if (cpuInstance.values.length > 0) {
                         cpuCount = cpuInstance.values[cpuInstance.values.length - 1].y;
 
-                        /*jslint unparam: true*/
-                        $.each(cpuSysMetric.data, function (index, instance) {
+                        angular.forEach(cpuSysMetric.data, function (instance) {
                             if (instance.values.length > 0) {
                                 var lastValue = instance.values[instance.values.length - 1];
                                 returnValues.push({
@@ -62,10 +61,8 @@
                                 });
                             }
                         });
-                        /*jslint unparam: false*/
 
-                        /*jslint unparam: true*/
-                        $.each(cpuUserMetric.data, function (index, instance) {
+                        angular.forEach(cpuUserMetric.data, function (instance) {
                             if (instance.values.length > 0) {
                                 var lastValue = instance.values[instance.values.length - 1];
                                 returnValues.push({
@@ -75,7 +72,6 @@
                                 });
                             }
                         });
-                        /*jslint unparam: false*/
                     }
                 }
 
@@ -88,7 +84,7 @@
             this.updateScope(this.metric.data);
         };
 
-        CpuUtilizationMetricDataModel.prototype.destroy = function () {
+        DataModel.prototype.destroy = function () {
             // remove subscribers and delete derived metric
             MetricListService.destroyDerivedMetric(this.name);
 
@@ -100,7 +96,7 @@
             WidgetDataModel.prototype.destroy.call(this);
         };
 
-        return CpuUtilizationMetricDataModel;
+        return DataModel;
     }
 
     angular

@@ -15,14 +15,17 @@
  *     limitations under the License.
  *
  */
+
+ /*global _*/
+ 
  (function () {
      'use strict';
 
     /**
-    * @name Metric
+    * @name SimpleMetric
     * @desc
     */
-    function Metric($rootScope, $log, MetricService) {
+    function SimpleMetric($rootScope, $log, MetricService) {
 
         var Metric = function (name) {
             this.name = name || null;
@@ -83,7 +86,7 @@
                 self.data.push(instance);
                 MetricService.getInames(self.name, iid)
                     .then(function (response) {
-                        $.each(response.data.instances, function (index, value) {
+                        angular.forEach(response.data.instances, function (value) {
                             if (value.instance === iid) {
                                 instance.key = value.name;
                             }
@@ -101,5 +104,5 @@
 
     angular
         .module('app.metrics')
-        .factory('Metric', Metric);
+        .factory('SimpleMetric', SimpleMetric);
  })();

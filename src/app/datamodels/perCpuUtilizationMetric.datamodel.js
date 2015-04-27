@@ -15,6 +15,9 @@
  *     limitations under the License.
  *
  */
+
+ /*global _*/
+ 
  (function () {
      'use strict';
 
@@ -23,13 +26,13 @@
     * @desc
     */
     function PerCpuUtilizationMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
-        var PerCpuUtilizationMetricDataModel = function () {
+        var DataModel = function () {
             return this;
         };
 
-        PerCpuUtilizationMetricDataModel.prototype = Object.create(WidgetDataModel.prototype);
+        DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        PerCpuUtilizationMetricDataModel.prototype.init = function () {
+        DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
@@ -44,8 +47,7 @@
                     cpuSysLastValue,
                     cpuUserLastValue;
 
-                /*jslint unparam: true*/
-                $.each(cpuSysMetric.data, function (index, cpuSysInstance) {
+                angular.forEach(cpuSysMetric.data, function (cpuSysInstance) {
                     if (cpuSysInstance.values.length > 0) {
                         cpuUserInstance = _.find(cpuUserMetric.data, function (el) {
                             return el.key === cpuSysInstance.key;
@@ -63,7 +65,6 @@
                         }
                     }
                 });
-                /*jslint unparam: false*/
 
                 return returnValues;
             };
@@ -74,7 +75,7 @@
             this.updateScope(this.metric.data);
         };
 
-        PerCpuUtilizationMetricDataModel.prototype.destroy = function () {
+        DataModel.prototype.destroy = function () {
             // remove subscribers and delete derived metric
             MetricListService.destroyDerivedMetric(this.name);
 
@@ -85,7 +86,7 @@
             WidgetDataModel.prototype.destroy.call(this);
         };
 
-        return PerCpuUtilizationMetricDataModel;
+        return DataModel;
     }
 
     angular
