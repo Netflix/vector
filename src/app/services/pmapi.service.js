@@ -21,7 +21,8 @@
     function PMAPIService($http, $log, $rootScope, $q) {
 
         function getContext(params) {
-            var baseURI = 'http://' + $rootScope.properties.host;
+            var baseURI = 'http://' + $rootScope.properties.host + ':' +
+               $rootScope.properties.port;
             var settings = {};
             settings.method = 'GET';
             settings.url = baseURI + '/pmapi/context';
@@ -73,7 +74,8 @@
         }
 
         function getMetricsValues(context, names, pmids) {
-            var baseURI = 'http://' + $rootScope.properties.host;
+            var baseURI = 'http://' + $rootScope.properties.host + ':' +
+               $rootScope.properties.port;
             var settings = {};
             settings.method = 'GET';
             settings.url = baseURI + '/pmapi/' + context + '/_fetch';
@@ -101,7 +103,8 @@
         }
 
         function getInstanceDomainsByIndom(context, indom, instances, inames) {
-            var baseURI = 'http://' + $rootScope.properties.host;
+            var baseURI = 'http://' + $rootScope.properties.host + ':' +
+                $rootScope.properties.port;
             var settings = {};
             settings.method = 'GET';
             settings.url = baseURI + '/pmapi/' + context + '/_indom';
@@ -129,7 +132,8 @@
         }
 
         function getInstanceDomainsByName(context, name, instances, inames) {
-            var baseURI = 'http://' + $rootScope.properties.host;
+            var baseURI = 'http://' + $rootScope.properties.host + ':' +
+                $rootScope.properties.port;
             var settings = {};
             settings.method = 'GET';
             settings.url = baseURI + '/pmapi/' + context + '/_indom';

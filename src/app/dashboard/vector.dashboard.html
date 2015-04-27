@@ -2,20 +2,10 @@
     <div class="col-md-6">
         <form role="form" name="form">
             <div class="input-group input-group-lg" ng-class="{'has-error': form.host.$invalid && form.host.$dirty}">
-              <accordion>
-                <accordion-group>
-                  <accordion-heading>
-                    <span class="input-group-lg">
-                      Hostname {{properties.context >= 0 ? properties.hostname : "(disconnected)"}}
-                      <i class="fa fa-refresh fa-2x form-control-feedback" ng-if="flags.contextUpdating"></i>
-                      <i class="fa fa-check fa-2x form-control-feedback" ng-if="flags.contextAvailable"></i>
-                    </span>
-                  </accordion-heading>
-                  <label>Please enter the pmwebd host:port and the pmcd hostspec.</label>
-                  <input type="text" class="form-control" id="hostnameInput" name="host" ng-model="properties.host" ng-change="vm.updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" ng-delay="500" required placeholder="PMWEBD" tooltip-placement="bottom" tooltip="Connection from vector to pmwebd: the web data relay">
-                  <input type="text" class="form-control" id="hostnameInput" name="pmcd" ng-model="properties.pmcd" ng-change="vm.updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" ng-delay="500" required placeholder="PMCD" tooltip-placement="bottom" tooltip="Connection from pmwebd to pmcd: the data source">
-                </accordion-group>
-              </accordion>
+                <span class="input-group-addon">Hostname</span>
+                <input type="text" class="form-control" id="hostnameInput" name="host" data-content="Please enter a fully qualified instance hostname." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.host" ng-change="vm.updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" delay="1000" ng-disabled="flags.contextUpdating == true" required placeholder="Instance Hostname">
+                <i class="fa fa-refresh fa-2x form-control-feedback" ng-if="flags.contextUpdating"></i>
+                <i class="fa fa-check fa-2x form-control-feedback" ng-if="flags.contextAvailable"></i>
             </div>
         </form>
 

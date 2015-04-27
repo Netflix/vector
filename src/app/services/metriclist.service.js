@@ -189,6 +189,7 @@
             var metricArr = [],
                 url,
                 host = $rootScope.properties.host,
+                port = $rootScope.properties.port,
                 context = $rootScope.properties.context;
 
             if (context && context > 0 && simpleMetrics.length > 0) {
@@ -198,7 +199,7 @@
                 });
                 /*jslint unparam: false*/
 
-                url = 'http://' + host + '/pmapi/' + context + '/_fetch?names=' + metricArr.join(',');
+                url = 'http://' + host + ':' + port + '/pmapi/' + context + '/_fetch?names=' + metricArr.join(',');
 
                 PMAPIService.getMetrics(context, metricArr)
                     .then(function (metrics) {

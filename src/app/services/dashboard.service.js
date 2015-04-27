@@ -89,16 +89,6 @@
             $rootScope.flags.contextAvailable = true;
             $rootScope.properties.context = data;
             updateInterval();
-            // fetch hostname
-            PMAPIService.getMetrics(data, ["pmcd.hostname"])
-                .then(function (metrics) {
-                    angular.forEach(metrics.values, function (values) {                    
-                        angular.forEach(values.instances, function (pair) {
-                            $rootScope.properties.hostname = metrics.values[0].instances[0].value;
-                            $log.info("Hostname updated: " + $rootScope.properties.hostname);
-                        });
-                    });
-                });
         }
 
         /**
@@ -117,12 +107,13 @@
         function updateContext() {
             $log.info("Context updated.");
 
-            var host = $rootScope.properties.host;
+            var host = $rootScope.properties.host,
+                port = $rootScope.properties.port;
 
             if (host && host !== '') {
                 $rootScope.flags.contextUpdating = true;
                 $rootScope.flags.contextAvailable = false;
-                PMAPIService.getHostspecContext($rootScope.properties.pmcd, 600)
+                PMAPIService.getHostspecContext('localhost', 600)
                     .then(function (data) {
                         $rootScope.flags.contextUpdating = false;
                         updateContextSuccessCallback(data);
@@ -142,7 +133,6 @@
             $log.info("Host updated.");
 
             $location.search('host', $rootScope.properties.host);
-            $location.search('pmcd', $rootScope.properties.pmcd);
 
             $rootScope.properties.context = -1;
 
@@ -173,10 +163,10 @@
                     $rootScope.properties.window = vectorConfig.window;
                 }
                 if (!$rootScope.properties.host) {
-                    $rootScope.properties.host = vectorConfig.host;
+                    $rootScope.properties.host = '';
                 }
-                if (!$rootScope.properties.pmcd) {
-                    $rootScope.properties.pmcd = vectorConfig.pmcd;
+                if (!$rootScope.properties.port) {
+                    $rootScope.properties.port = vectorConfig.port;
                 }
                 if (!$rootScope.properties.context ||
                     $rootScope.properties.context < 0) {

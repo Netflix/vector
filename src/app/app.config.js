@@ -21,8 +21,7 @@
     angular
         .module('vector.config')
         .constant('vectorConfig', {
-            'host': 'localhost:44323',  // Port where pmwebd service listens
-            'pmcd': 'localhost',  // Hostspec for pmwebd to talk to pmcd
+            'port': 44323,  // Port where pmwebd service listens
             'interval': 2,  // Default update interval in seconds
             'window': 2,    // Default graph time window in minutes
             'enableCpuFlameGraph': false,
