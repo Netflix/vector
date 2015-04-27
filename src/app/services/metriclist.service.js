@@ -23,7 +23,7 @@
     * @name MetricListService
     * @desc
     */
-    function MetricListService($rootScope, $http, $log, $q, PMAPIService, Metric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric, flash) {
+    function MetricListService($rootScope, $http, $log, $q, PMAPIService, SimpleMetric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric, flash) {
         var simpleMetrics = [],
             derivedMetrics = [];
 
@@ -37,7 +37,7 @@
             });
 
             if (angular.isUndefined(metric)) {
-                metric = new Metric(name);
+                metric = new SimpleMetric(name);
                 simpleMetrics.push(metric);
             } else {
                 metric.subscribers++;
