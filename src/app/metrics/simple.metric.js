@@ -83,7 +83,7 @@
                 self.data.push(instance);
                 MetricService.getInames(self.name, iid)
                     .then(function (response) {
-                        $.each(response.data.instances, function (index, value) {
+                        angular.forEach(response.data.instances, function (value) {
                             if (value.instance === iid) {
                                 instance.key = value.name;
                             }

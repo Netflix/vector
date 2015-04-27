@@ -41,7 +41,7 @@
                 self.data.length = 0;
             }
 
-            $.each(values, function (index, data) {
+            angular.forEach(values, function (data) {
                 var overflow,
                     instance = _.find(self.data, function (el) {
                         return el.key === data.key;
