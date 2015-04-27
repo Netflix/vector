@@ -22,16 +22,16 @@
     * @name DerivedMetric
     * @desc
     */
-    function DerivedMetric($rootScope, $log) {
+    function DerivedMetric($rootScope) {
 
-        var DerivedMetric = function (name, derivedFunction) {
+        var Metric = function (name, derivedFunction) {
             this.name = name;
             this.data = [];
             this.subscribers = 1;
             this.derivedFunction = derivedFunction;
         };
 
-        DerivedMetric.prototype.updateValues = function () {
+        Metric.prototype.updateValues = function () {
             var self = this,
                 values;
 
@@ -63,11 +63,11 @@
             });
         };
 
-        DerivedMetric.prototype.clearData = function () {
+        Metric.prototype.clearData = function () {
             this.data.length = 0;
         };
 
-        return DerivedMetric;
+        return Metric;
     }
 
     angular

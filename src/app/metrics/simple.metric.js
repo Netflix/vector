@@ -19,10 +19,10 @@
      'use strict';
 
     /**
-    * @name Metric
+    * @name SimpleMetric
     * @desc
     */
-    function Metric($rootScope, $log, MetricService) {
+    function SimpleMetric($rootScope, $log, MetricService) {
 
         var Metric = function (name) {
             this.name = name || null;
@@ -101,5 +101,5 @@
 
     angular
         .module('app.metrics')
-        .factory('Metric', Metric);
+        .factory('SimpleMetric', SimpleMetric);
  })();

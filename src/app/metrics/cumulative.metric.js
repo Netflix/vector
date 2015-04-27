@@ -22,16 +22,16 @@
     * @name CumulativeMetric
     * @desc
     */
-    function CumulativeMetric($rootScope, $log, Metric, MetricService) {
+    function CumulativeMetric($rootScope, $log, SimpleMetric, MetricService) {
 
-        var CumulativeMetric = function (name) {
+        var Metric = function (name) {
             this.base = Metric;
             this.base(name);
         };
 
-        CumulativeMetric.prototype = new Metric();
+        Metric.prototype = new SimpleMetric();
 
-        CumulativeMetric.prototype.pushValue = function (timestamp, iid, iname, value) {
+        Metric.prototype.pushValue = function (timestamp, iid, iname, value) {
             var self = this,
                 instance,
                 overflow,
@@ -62,7 +62,7 @@
             }
         };
 
-        CumulativeMetric.prototype.pushValues = function (iid, timestamp, value) {
+        Metric.prototype.pushValues = function (iid, timestamp, value) {
             var self = this,
                 instance,
                 overflow,
@@ -102,7 +102,7 @@
             }
         };
 
-        return CumulativeMetric;
+        return Metric;
     }
 
     angular

@@ -22,17 +22,17 @@
     * @name CumulativeConvertedMetric
     * @desc
     */
-    function CumulativeConvertedMetric($rootScope, $log, Metric, MetricService) {
+    function CumulativeConvertedMetric($rootScope, $log, SimpleMetric, MetricService) {
 
-        var CumulativeConvertedMetric = function (name, conversionFunction) {
+        var Metric = function (name, conversionFunction) {
             this.base = Metric;
             this.base(name);
             this.conversionFunction = conversionFunction;
         };
 
-        CumulativeConvertedMetric.prototype = new Metric();
+        Metric.prototype = new SimpleMetric();
 
-        CumulativeConvertedMetric.prototype.pushValue = function (timestamp, iid, iname, value) {
+        Metric.prototype.pushValue = function (timestamp, iid, iname, value) {
             var self = this,
                 instance,
                 overflow,
@@ -65,7 +65,7 @@
             }
         };
 
-        CumulativeConvertedMetric.prototype.pushValues = function (iid, timestamp, value) {
+        Metric.prototype.pushValues = function (iid, timestamp, value) {
             var self = this,
                 instance,
                 overflow,
@@ -107,7 +107,7 @@
             }
         };
 
-        return CumulativeConvertedMetric;
+        return Metric;
     }
 
     angular

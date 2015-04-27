@@ -22,17 +22,17 @@
     * @name ConvertedMetric
     * @desc
     */
-    function ConvertedMetric($rootScope, $log, Metric, MetricService) {
+    function ConvertedMetric($rootScope, $log, SimpleMetric, MetricService) {
 
-        var ConvertedMetric = function (name, conversionFunction) {
+        var Metric = function (name, conversionFunction) {
             this.base = Metric;
             this.base(name);
             this.conversionFunction = conversionFunction;
         };
 
-        ConvertedMetric.prototype = new Metric();
+        Metric.prototype = new SimpleMetric();
 
-        ConvertedMetric.prototype.pushValue = function (timestamp, iid, iname, value) {
+        Metric.prototype.pushValue = function (timestamp, iid, iname, value) {
             var self = this,
                 instance,
                 overflow,
@@ -60,7 +60,7 @@
             }
         };
 
-        ConvertedMetric.prototype.pushValues = function (iid, timestamp, value) {
+        Metric.prototype.pushValues = function (iid, timestamp, value) {
             var self = this,
                 instance,
                 overflow,
@@ -96,7 +96,7 @@
             }
         };
 
-        return ConvertedMetric;
+        return Metric;
     }
 
     angular
