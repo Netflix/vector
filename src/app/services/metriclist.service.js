@@ -164,7 +164,7 @@
         function clearMetricList() {
             angular.forEach(simpleMetrics, function (metric) {
                 metric.clearData();
-            }
+            });
         }
 
         /**
@@ -174,7 +174,7 @@
         function clearDerivedMetricList() {
             angular.forEach(derivedMetrics, function (metric) {
                 metric.clearData();
-            }
+            });
         }
 
         /**
@@ -191,7 +191,7 @@
             if (context && context > 0 && simpleMetrics.length > 0) {
                 angular.forEach(simpleMetrics, function (value) {
                     metricArr.push(value.name);
-                }
+                });
 
                 url = 'http://' + host + ':' + port + '/pmapi/' + context + '/_fetch?names=' + metricArr.join(',');
 
@@ -230,7 +230,7 @@
             if (derivedMetrics.length > 0) {
                 angular.forEach(derivedMetrics, function (metric) {
                     metric.updateValues();
-                }
+                });
             }
         }
 
