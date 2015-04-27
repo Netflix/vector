@@ -15,6 +15,7 @@
  *     limitations under the License.
  *
  */
+
  (function () {
      'use strict';
 
@@ -44,8 +45,7 @@
                 var returnValues = [],
                     lastValue;
 
-                /*jslint unparam: true*/
-                $.each(inMetric.data, function (index, instance) {
+                angular.forEach(inMetric.data, function (index, instance) {
                     if (instance.values.length > 0) {
                         lastValue = instance.values[instance.values.length - 1];
                         returnValues.push({
@@ -55,10 +55,8 @@
                         });
                     }
                 });
-                /*jslint unparam: false*/
 
-                /*jslint unparam: true*/
-                $.each(outMetric.data, function (index, instance) {
+                angular.forEach(outMetric.data, function (index, instance) {
                     if (instance.values.length > 0) {
                         lastValue = instance.values[instance.values.length - 1];
                         returnValues.push({
@@ -68,7 +66,6 @@
                         });
                     }
                 });
-                /*jslint unparam: false*/
 
                 return returnValues;
             };

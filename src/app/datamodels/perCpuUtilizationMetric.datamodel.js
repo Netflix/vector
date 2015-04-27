@@ -44,8 +44,7 @@
                     cpuSysLastValue,
                     cpuUserLastValue;
 
-                /*jslint unparam: true*/
-                $.each(cpuSysMetric.data, function (index, cpuSysInstance) {
+                angular.forEach(cpuSysMetric.data, function (cpuSysInstance) {
                     if (cpuSysInstance.values.length > 0) {
                         cpuUserInstance = _.find(cpuUserMetric.data, function (el) {
                             return el.key === cpuSysInstance.key;
@@ -63,7 +62,6 @@
                         }
                     }
                 });
-                /*jslint unparam: false*/
 
                 return returnValues;
             };

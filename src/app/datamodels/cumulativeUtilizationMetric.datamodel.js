@@ -41,8 +41,7 @@
                 var returnValues = [],
                     lastValue;
 
-                /*jslint unparam: true*/
-                $.each(rawMetric.data, function (index, instance) {
+                angular.forEach(rawMetric.data, function (instance) {
                     if (instance.values.length > 0) {
                         lastValue = instance.values[instance.values.length - 1];
                         returnValues.push({
@@ -52,7 +51,6 @@
                         });
                     }
                 });
-                /*jslint unparam: false*/
 
                 return returnValues;
             };

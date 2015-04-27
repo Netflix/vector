@@ -39,19 +39,16 @@
             var derivedFunction,
                 metrics = {};
 
-            /*jslint unparam: true*/
-            $.each(this.metricDefinitions, function (key, definition) {
+            angular.forEach(this.metricDefinitions, function (definition, key) {
                 metrics[key] = MetricListService.getOrCreateMetric(definition);
             });
-            /*jslint unparam: false*/
 
             derivedFunction = function () {
                 var returnValues = [],
                     lastValue;
 
-                /*jslint unparam: true*/
-                $.each(metrics, function (key, metric) {
-                    $.each(metric.data, function (index, instance) {
+                angular.forEach(metrics, function (metric, key) {
+                    angular.forEach(metric.data, function (instance) {
                         if (instance.values.length > 0) {
                             lastValue = instance.values[instance.values.length - 1];
                             returnValues.push({
@@ -62,7 +59,6 @@
                         }
                     });
                 });
-                /*jslint unparam: false*/
 
                 return returnValues;
             };
@@ -78,11 +74,9 @@
             MetricListService.destroyDerivedMetric(this.name);
 
             // remove subscribers and delete base metrics
-            /*jslint unparam: true*/
-            $.each(this.metricDefinitions, function (key, definition) {
+            angular.forEach(this.metricDefinitions, function (definition) {
                 MetricListService.destroyMetric(definition);
             });
-            /*jslint unparam: false*/
 
             WidgetDataModel.prototype.destroy.call(this);
         };

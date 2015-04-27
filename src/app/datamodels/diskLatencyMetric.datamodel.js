@@ -49,8 +49,7 @@
 
                 function calculateValues(metric, rawactiveMetric, key, outputArr) {
                     if (metric.data.length > 0) {
-                        /*jslint unparam: true*/
-                        $.each(metric.data, function (index, instance) {
+                        angular.forEach(metric.data, function (instance) {
                             rawactiveInstance = _.find(rawactiveMetric.data, function (element) {
                                 return element.key === instance.key;
                             });
@@ -73,7 +72,6 @@
                                 }
                             }
                         });
-                        /*jslint unparam: false*/
                     }
                 }
 

@@ -51,8 +51,7 @@
                     if (cpuInstance.values.length > 0) {
                         cpuCount = cpuInstance.values[cpuInstance.values.length - 1].y;
 
-                        /*jslint unparam: true*/
-                        $.each(cpuSysMetric.data, function (index, instance) {
+                        angular.forEach(cpuSysMetric.data, function (instance) {
                             if (instance.values.length > 0) {
                                 var lastValue = instance.values[instance.values.length - 1];
                                 returnValues.push({
@@ -62,10 +61,8 @@
                                 });
                             }
                         });
-                        /*jslint unparam: false*/
 
-                        /*jslint unparam: true*/
-                        $.each(cpuUserMetric.data, function (index, instance) {
+                        angular.forEach(cpuUserMetric.data, function (instance) {
                             if (instance.values.length > 0) {
                                 var lastValue = instance.values[instance.values.length - 1];
                                 returnValues.push({
@@ -75,7 +72,6 @@
                                 });
                             }
                         });
-                        /*jslint unparam: false*/
                     }
                 }
 
