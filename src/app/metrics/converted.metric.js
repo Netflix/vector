@@ -17,7 +17,7 @@
  */
 
  /*global _*/
- 
+
  (function () {
      'use strict';
 
@@ -28,7 +28,7 @@
     function ConvertedMetric($rootScope, $log, SimpleMetric, MetricService) {
 
         var Metric = function (name, conversionFunction) {
-            this.base = Metric;
+            this.base = SimpleMetric;
             this.base(name);
             this.conversionFunction = conversionFunction;
         };
