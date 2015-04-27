@@ -20,7 +20,6 @@
 /*global angular*/
 /*jslint browser: true*/
 /*jslint nomen: true */
-/*global $, _*/
 
 (function () {
     'use strict';
