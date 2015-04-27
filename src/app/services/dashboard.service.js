@@ -108,12 +108,13 @@
             $log.info("Context updated.");
 
             var host = $rootScope.properties.host,
+                hostspec = $rootScope.properties.hostspec,
                 port = $rootScope.properties.port;
 
             if (host && host !== '') {
                 $rootScope.flags.contextUpdating = true;
                 $rootScope.flags.contextAvailable = false;
-                PMAPIService.getHostspecContext('localhost', 600)
+                PMAPIService.getHostspecContext(hostspec, 600)
                     .then(function (data) {
                         $rootScope.flags.contextUpdating = false;
                         updateContextSuccessCallback(data);
@@ -165,6 +166,9 @@
                 if (!$rootScope.properties.host) {
                     $rootScope.properties.host = '';
                 }
+                if (!$rootScope.properties.hostspec) {
+                    $rootScope.properties.hostspec = vectorConfig.hostspec;
+                }
                 if (!$rootScope.properties.port) {
                     $rootScope.properties.port = vectorConfig.port;
                 }
@@ -177,6 +181,7 @@
             } else {
                 $rootScope.properties = {
                     host: '',
+                    hostspec: vectorConfig.hostspec,
                     port: vectorConfig.port,
                     context: -1,
                     window: vectorConfig.window,

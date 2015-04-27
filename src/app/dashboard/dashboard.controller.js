@@ -55,8 +55,12 @@
             DashboardService.initializeProperties();
 
             if ($routeParams.host) {
-                $log.info("Host: " + $routeParams.host);
                 $rootScope.properties.host = $routeParams.host;
+                $log.info("Host: " + $routeParams.host);
+                if ($routeParams.hostspec) {
+                    $rootScope.properties.hostspec = $routeParams.hostspec;
+                    $log.info("Hostspec: " + $routeParams.hostspec);
+                }
                 DashboardService.updateHost();
             }
 
@@ -86,7 +90,7 @@
         vm.updateInterval = DashboardService.updateInterval;
         vm.updateHost = DashboardService.updateHost;
         vm.updateWindow = DashboardService.updateWindow;
-
+        vm.isHostnameExpanded = false;
         activate();
     }
 

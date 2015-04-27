@@ -2,13 +2,12 @@
     <div class="col-md-6">
         <form role="form" name="form">
             <div class="input-group input-group-lg" ng-class="{'has-error': form.host.$invalid && form.host.$dirty}">
-                <span class="input-group-addon">Hostname</span>
-                <input type="text" class="form-control" id="hostnameInput" name="host" data-content="Please enter a fully qualified instance hostname." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.host" ng-change="vm.updateHost()" ng-model-options="{ updateOn: 'default', debounce: 500 }" delay="1000" ng-disabled="flags.contextUpdating == true" required placeholder="Instance Hostname">
+                <span class="input-group-addon" ng-click="vm.isHostnameExpanded = !vm.isHostnameExpanded">Hostname &nbsp; <i class="fa fa-plus-square-o"></i></span>
+                <input type="text" class="form-control" id="hostnameInput" name="host" data-content="Please enter a fully qualified instance hostname." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.host" ng-change="vm.updateHost()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" ng-disabled="flags.contextUpdating == true" required placeholder="Instance Hostname">
                 <i class="fa fa-refresh fa-2x form-control-feedback" ng-if="flags.contextUpdating"></i>
                 <i class="fa fa-check fa-2x form-control-feedback" ng-if="flags.contextAvailable"></i>
             </div>
         </form>
-
     </div>
     <div class="btn-group col-md-2">
         <button id="widgetButton" type="button" class="dropdown-toggle btn btn-lg btn-default btn-block" data-toggle="dropdown">Widget <span class="caret"></span></button>
@@ -52,6 +51,16 @@
                     <option value="3">3 sec</option>
                     <option value="5">5 sec</option>
                 </select>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row" ng-show="vm.isHostnameExpanded">
+    <div class="col-md-6">
+        <form role="form" name="form">
+            <div class="input-group input-group-lg" ng-class="{'has-error': form.hostspec.$invalid && form.hostspec.$dirty}">
+                <span class="input-group-addon">Hostspec&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input type="text" class="form-control" id="hostspecInput" name="host" data-content="Please enter the instance hostspec." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.hostspec" ng-change="vm.updateHost()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" ng-disabled="flags.contextUpdating == true" required placeholder="Instance Hostspec">
             </div>
         </form>
     </div>
@@ -113,6 +122,7 @@
     (function () {
         'use strict';
         $('#hostnameInput').popover();
+        $('#hostspecInput').popover();
         $('#windowInput').popover();
         $('#intervalInput').popover();
     }());
