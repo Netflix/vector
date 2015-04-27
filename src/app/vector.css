@@ -156,7 +156,10 @@
 }
 
 .form-control-feedback {
-    margin: 10px;
+    margin-top: 6px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
 }
 
 .widget-icon {
