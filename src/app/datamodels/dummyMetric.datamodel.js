@@ -23,25 +23,25 @@
     * @desc
     */
     function DummyMetricDataModel(WidgetDataModel, MetricListService) {
-        var DummyMetricDataModel = function () {
+        var DataModel = function () {
             return this;
         };
 
-        DummyMetricDataModel.prototype = Object.create(WidgetDataModel.prototype);
+        DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        DummyMetricDataModel.prototype.init = function () {
+        DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
             this.metric = MetricListService.getOrCreateMetric('kernel.uname.release');
         };
 
-        DummyMetricDataModel.prototype.destroy = function () {
+        DataModel.prototype.destroy = function () {
             MetricListService.destroyMetric('kernel.uname.release');
 
             WidgetDataModel.prototype.destroy.call(this);
         };
 
-        return DummyMetricDataModel;
+        return DataModel;
     }
 
     angular

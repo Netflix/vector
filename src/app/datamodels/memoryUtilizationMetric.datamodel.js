@@ -23,13 +23,13 @@
     * @desc
     */
     function MemoryUtilizationMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
-        var MemoryUtilizationMetricDataModel = function () {
+        var DataModel = function () {
             return this;
         };
 
-        MemoryUtilizationMetricDataModel.prototype = Object.create(WidgetDataModel.prototype);
+        DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        MemoryUtilizationMetricDataModel.prototype.init = function () {
+        DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
@@ -127,7 +127,7 @@
             this.updateScope(this.metric.data);
         };
 
-        MemoryUtilizationMetricDataModel.prototype.destroy = function () {
+        DataModel.prototype.destroy = function () {
             // remove subscribers and delete derived metric
             MetricListService.destroyDerivedMetric(this.name);
 
@@ -140,7 +140,7 @@
             WidgetDataModel.prototype.destroy.call(this);
         };
 
-        return MemoryUtilizationMetricDataModel;
+        return DataModel;
     }
 
     angular

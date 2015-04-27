@@ -23,13 +23,13 @@
     * @desc
     */
     function PerCpuUtilizationMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
-        var PerCpuUtilizationMetricDataModel = function () {
+        var DataModel = function () {
             return this;
         };
 
-        PerCpuUtilizationMetricDataModel.prototype = Object.create(WidgetDataModel.prototype);
+        DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        PerCpuUtilizationMetricDataModel.prototype.init = function () {
+        DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
@@ -74,7 +74,7 @@
             this.updateScope(this.metric.data);
         };
 
-        PerCpuUtilizationMetricDataModel.prototype.destroy = function () {
+        DataModel.prototype.destroy = function () {
             // remove subscribers and delete derived metric
             MetricListService.destroyDerivedMetric(this.name);
 
@@ -85,7 +85,7 @@
             WidgetDataModel.prototype.destroy.call(this);
         };
 
-        return PerCpuUtilizationMetricDataModel;
+        return DataModel;
     }
 
     angular

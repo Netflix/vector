@@ -23,13 +23,13 @@
     * @desc
     */
     function MultipleCumulativeMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
-        var MultipleCumulativeMetricDataModel = function () {
+        var DataModel = function () {
             return this;
         };
 
-        MultipleCumulativeMetricDataModel.prototype = Object.create(WidgetDataModel.prototype);
+        DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        MultipleCumulativeMetricDataModel.prototype.init = function () {
+        DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
@@ -56,7 +56,7 @@
                             lastValue = instance.values[instance.values.length - 1];
                             returnValues.push({
                                 timestamp: lastValue.x,
-                                key: key.replace("{key}", instance.key),
+                                key: key.replace('{key}', instance.key),
                                 value: lastValue.y
                             });
                         }
@@ -73,7 +73,7 @@
             this.updateScope(this.metric.data);
         };
 
-        MultipleCumulativeMetricDataModel.prototype.destroy = function () {
+        DataModel.prototype.destroy = function () {
             // remove subscribers and delete derived metric
             MetricListService.destroyDerivedMetric(this.name);
 
@@ -87,7 +87,7 @@
             WidgetDataModel.prototype.destroy.call(this);
         };
 
-        return MultipleCumulativeMetricDataModel;
+        return DataModel;
     }
 
     angular
