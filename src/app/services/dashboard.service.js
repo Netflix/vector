@@ -122,15 +122,24 @@
         * @name updateContext
         * @desc
         */
-        function updateContext() {
+        function updateContext(host) {
             $log.info('Context updated.');
 
-            var host = $rootScope.properties.host,
-                hostspec = $rootScope.properties.hostspec;
+            var hostspec = $rootScope.properties.hostspec,
+                hostMatch = null;
 
             if (host && host !== '') {
                 $rootScope.flags.contextUpdating = true;
                 $rootScope.flags.contextAvailable = false;
+                hostMatch = host.match('(.*):([0-9]*)');
+
+                if (hostMatch !== null) {
+                    $rootScope.properties.host = hostMatch[1];
+                    $rootScope.properties.port = hostMatch[2];
+                } else {
+                    $rootScope.properties.host = host;
+                }
+
                 PMAPIService.getHostspecContext(hostspec, 600)
                     .then(function (data) {
                         $rootScope.flags.contextUpdating = false;
@@ -153,19 +162,20 @@
         * @name updateHost
         * @desc
         */
-        function updateHost() {
+        function updateHost(host) {
             $log.info('Host updated.');
 
-            $location.search('host', $rootScope.properties.host);
+            $location.search('host', host);
             $location.search('hostspec', $rootScope.properties.hostspec);
 
             $rootScope.properties.context = -1;
             $rootScope.properties.hostname = null;
+            $rootScope.properties.port = vectorConfig.port;
 
             MetricListService.clearMetricList();
             MetricListService.clearDerivedMetricList();
 
-            updateContext();
+            updateContext(host);
         }
 
         /**
