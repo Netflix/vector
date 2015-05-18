@@ -40,7 +40,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/charts/pu-flame-graph.html',
+            templateUrl: 'app/charts/cpu-flame-graph.html',
             link: link
         };
     }
