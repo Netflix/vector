@@ -29,7 +29,7 @@
         * @desc
         */
         function generate() {
-                $http.get('http://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=generic.heatmap')
+                $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=generic.heatmap')
                     .success(function () {
                         flash.to('alert-disklatency-success').success = 'generic.heatmap requested!';
                         $log.info('generic.heatmap requested');

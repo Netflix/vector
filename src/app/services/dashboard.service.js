@@ -198,6 +198,9 @@
                 if (!$rootScope.properties.window) {
                     $rootScope.properties.window = vectorConfig.window;
                 }
+                if (!$rootScope.properties.protocol) {
+                    $rootScope.properties.protocol = vectorConfig.protocol;
+                }
                 if (!$rootScope.properties.host) {
                     $rootScope.properties.host = '';
                 }
@@ -215,6 +218,7 @@
                 }
             } else {
                 $rootScope.properties = {
+                    protocol: vectorConfig.protocol,
                     host: '',
                     hostspec: vectorConfig.hostspec,
                     port: vectorConfig.port,

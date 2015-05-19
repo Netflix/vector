@@ -17,7 +17,7 @@
  */
 
  /*global _*/
- 
+
  (function () {
     'use strict';
 
@@ -189,14 +189,15 @@
                 url,
                 host = $rootScope.properties.host,
                 port = $rootScope.properties.port,
-                context = $rootScope.properties.context;
+                context = $rootScope.properties.context,
+                protocol = $rootScope.properties.protocol;
 
             if (context && context > 0 && simpleMetrics.length > 0) {
                 angular.forEach(simpleMetrics, function (value) {
                     metricArr.push(value.name);
                 });
 
-                url = 'http://' + host + ':' + port + '/pmapi/' + context + '/_fetch?names=' + metricArr.join(',');
+                url = protocol + '://' + host + ':' + port + '/pmapi/' + context + '/_fetch?names=' + metricArr.join(',');
 
                 PMAPIService.getMetrics(context, metricArr)
                     .then(function (metrics) {

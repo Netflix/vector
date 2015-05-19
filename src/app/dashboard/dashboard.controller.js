@@ -53,6 +53,11 @@
         function activate() {
             DashboardService.initializeProperties();
 
+            if ($routeParams.protocol) {
+                $rootScope.properties.protocol = $routeParams.protocol;
+                $log.info('Protocol: ' + $routeParams.protocol);
+            }
+
             if ($routeParams.host) {
                 vm.inputHost = $routeParams.host;
                 $log.info('Host: ' + $routeParams.host);

@@ -21,6 +21,7 @@
     angular
         .module('vector.config')
         .constant('vectorConfig', {
+            'protocol': 'http', // PMWEBD protocol (http or https)
             'port': 44323,  // PMWEBD port
             'hostspec': 'localhost', // Default PMCD hostspec
             'interval': 2,  // Default update interval in seconds
