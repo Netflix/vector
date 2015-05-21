@@ -230,20 +230,16 @@
 }
 
 @media screen and (max-width: 990px) {
+  .widget-container {
+    width: 50% !important;
+  }
   #widgetWrapper {
     width: 100% !important;
   }
-
   #widgetWrapper ul {
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
-  }
-}
-
-@media screen and (max-width: 960) {
-  .widget-container {
-    width: 50% !important;
   }
 }
 
