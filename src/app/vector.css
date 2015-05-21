@@ -222,3 +222,33 @@
     -moz-border-radius:6px 0 6px 6px;
     border-radius:6px 0 6px 6px;
 }
+
+@media screen and (max-width: 1280px) {
+  .widget-container {
+    width: 33% !important;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  #widgetWrapper {
+    width: 100% !important;
+  }
+
+  #widgetWrapper ul {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (max-width: 960) {
+  .widget-container {
+    width: 50% !important;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .widget-container {
+    width: 100% !important;
+  }
+}
