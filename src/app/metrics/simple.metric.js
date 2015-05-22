@@ -56,7 +56,7 @@
                 instance = {
                     key: angular.isDefined(iname) ? iname : this.name,
                     iid: iid,
-                    values: [{x: timestamp, y: value}]
+                    values: [{x: timestamp, y: value}, {x: timestamp + 1, y: value}]
                 };
                 self.data.push(instance);
             }

@@ -55,7 +55,11 @@
                 self.data.push(instance);
             } else {
                 diffValue = ((value - instance.previousValue) / ((timestamp - instance.previousTimestamp) / 1000)); // sampling frequency
-                instance.values.push({ x: timestamp, y: diffValue });
+                if (instance.values.length < 1) {
+                  instance.values.push({ x: timestamp, y: diffValue }, { x: timestamp + 1, y: diffValue });
+                } else {
+                    instance.values.push({ x: timestamp, y: diffValue });
+                }
                 instance.previousValue = value;
                 instance.previousTimestamp = timestamp;
                 overflow = instance.values.length - (($rootScope.properties.window * 60) / $rootScope.properties.interval);

@@ -17,7 +17,7 @@
  */
 
  /*global _*/
- 
+
  (function () {
      'use strict';
 
@@ -53,7 +53,7 @@
                 if (angular.isUndefined(instance)) {
                     instance = {
                         key: data.key,
-                        values: [{x: data.timestamp, y: data.value}]
+                        values: [{x: data.timestamp, y: data.value}, {x: data.timestamp + 1, y: data.value}]
                     };
                     self.data.push(instance);
                 } else {
