@@ -25,7 +25,7 @@
     * @name SimpleMetric
     * @desc
     */
-    function SimpleMetric($rootScope, $log) {
+    function SimpleMetric($rootScope) {
 
         var Metric = function (name) {
             this.name = name || null;
