@@ -25,7 +25,7 @@
     * @name ConvertedMetric
     * @desc
     */
-    function ConvertedMetric($rootScope, $log, SimpleMetric, MetricService) {
+    function ConvertedMetric($rootScope, $log, SimpleMetric) {
 
         var Metric = function (name, conversionFunction) {
             this.base = SimpleMetric;
@@ -60,42 +60,6 @@
                     values: [{x: timestamp, y: convertedValue}]
                 };
                 self.data.push(instance);
-            }
-        };
-
-        Metric.prototype.pushValues = function (iid, timestamp, value) {
-            var self = this,
-                instance,
-                overflow,
-                convertedValue;
-
-            convertedValue = self.conversionFunction(value);
-
-            instance = _.find(self.data, function (el) {
-                return el.iid === iid;
-            });
-
-            if (angular.isDefined(instance) && instance !== null) {
-                instance.values.push({ x: timestamp, y: convertedValue });
-                overflow = instance.values.length - (($rootScope.properties.window * 60) / $rootScope.properties.interval);
-                if (overflow > 0) {
-                    instance.values.splice(0, overflow);
-                }
-            } else {
-                instance = {
-                    key: 'Series ' + iid,
-                    iid: iid,
-                    values: [{x: timestamp, y: convertedValue}]
-                };
-                self.data.push(instance);
-                MetricService.getInames(self.name, iid)
-                .then(function (response) {
-                    angular.forEach(response.data.instances, function (value) {
-                        if (value.instance === iid) {
-                            instance.key = value.name;
-                        }
-                    });
-                });
             }
         };
 

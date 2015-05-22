@@ -25,7 +25,7 @@
     * @name CumulativeMetric
     * @desc
     */
-    function CumulativeMetric($rootScope, $log, SimpleMetric, MetricService) {
+    function CumulativeMetric($rootScope, $log, SimpleMetric) {
 
         var Metric = function (name) {
             this.base = SimpleMetric;
@@ -53,46 +53,6 @@
                     previousTimestamp: timestamp
                 };
                 self.data.push(instance);
-            } else {
-                diffValue = ((value - instance.previousValue) / ((timestamp - instance.previousTimestamp) / 1000)); // sampling frequency
-                instance.values.push({ x: timestamp, y: diffValue });
-                instance.previousValue = value;
-                instance.previousTimestamp = timestamp;
-                overflow = instance.values.length - (($rootScope.properties.window * 60) / $rootScope.properties.interval);
-                if (overflow > 0) {
-                    instance.values.splice(0, overflow);
-                }
-            }
-        };
-
-        Metric.prototype.pushValues = function (iid, timestamp, value) {
-            var self = this,
-                instance,
-                overflow,
-                diffValue;
-
-            instance = _.find(self.data, function (el) {
-                return el.iid === iid;
-            });
-
-            if (angular.isUndefined(instance)) {
-                instance = {
-                    key: 'Series ' + iid,
-                    iid: iid,
-                    values: [],
-                    previousValue: value,
-                    previousTimestamp: timestamp
-                };
-                self.data.push(instance);
-
-                MetricService.getInames(self.name, iid)
-                    .then(function (response) {
-                        angular.forEach(response.data.instances, function (value) {
-                            if (value.instance === iid) {
-                                instance.key = value.name;
-                            }
-                        });
-                    });
             } else {
                 diffValue = ((value - instance.previousValue) / ((timestamp - instance.previousTimestamp) / 1000)); // sampling frequency
                 instance.values.push({ x: timestamp, y: diffValue });
