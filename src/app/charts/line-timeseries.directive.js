@@ -28,7 +28,7 @@
                 scope.chart = nv.models.lineChart().options({
                     transitionDuration: 0,
                     useInteractiveGuideline: true,
-                    interactive: true,
+                    interactive: false,
                     showLegend: true,
                     showXAxis: true,
                     showYAxis: true,
