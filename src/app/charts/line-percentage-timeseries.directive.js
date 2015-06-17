@@ -25,22 +25,20 @@
 
         function link(scope) {
             nv.addGraph(function() {
-                scope.chart = nv.models.lineChart();
+                scope.chart = nv.models.lineChart().options({
+                    transitionDuration: 0,
+                    useInteractiveGuideline: true,
+                    interactive: true,
+                    showLegend: true,
+                    showXAxis: true,
+                    showYAxis: true,
+                });
 
                 scope.chart.margin({'left': 50, 'right': 50});
 
                 scope.chart.height(scope.height);
 
-                scope.chart.useInteractiveGuideline(true);
-
-                scope.chart.interactive(true);
-
-                scope.chart.showLegend(true);
-
                 scope.chart.noData('There is no data to display');
-
-                scope.chart.showXAxis(true);
-                scope.chart.showYAxis(true);
 
                 scope.chart.x(D3Service.xFunction());
                 scope.chart.y(D3Service.yFunction());
