@@ -16,7 +16,7 @@
  *
  */
 
- /*global d3*/
+ /*global d3, nv*/
 
 (function () {
     'use strict';
@@ -27,7 +27,7 @@
             nv.addGraph(function() {
                 scope.chart = nv.models.lineChart();
 
-                scope.chart.margin({"left": 50,"right": 50});
+                scope.chart.margin({'left': 50, 'right': 50});
 
                 scope.chart.height(scope.height);
 
@@ -37,7 +37,7 @@
 
                 scope.chart.showLegend(true);
 
-                scope.chart.noData("There is no data to display");
+                scope.chart.noData('There is no data to display');
 
                 scope.chart.showXAxis(true);
                 scope.chart.showYAxis(true);
@@ -68,9 +68,9 @@
                 d3.select('#' + scope.id + ' svg').style({'height': scope.height});
             });
 
-            scope.$on('updateMetrics', function (event) {
+            scope.$on('updateMetrics', function () {
                 scope.chart.update();
-            })
+            });
         }
 
         return {
