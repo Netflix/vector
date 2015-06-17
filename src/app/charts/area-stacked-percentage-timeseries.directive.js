@@ -24,10 +24,43 @@
     function areaStackedPercentageTimeSeries($rootScope, D3Service) {
 
         function link(scope) {
-            scope.yAxisTickFormat = D3Service.yAxisPercentageTickFormat;
-            scope.xAxisTickFormat = D3Service.xAxisTickFormat;
-            scope.yFunction = D3Service.yFunction;
-            scope.xFunction = D3Service.xFunction;
+            nv.addGraph(function() {
+                scope.chart = nv.models.stackedAreaChart();
+
+                scope.chart.margin({"left": 50,"right": 50});
+
+                scope.chart.height(scope.height);
+
+                scope.chart.useInteractiveGuideline(true);
+
+                scope.chart.interactive(true);
+
+                scope.chart.showLegend(true);
+
+                scope.chart.showControls(false);
+
+                scope.chart.noData("There is no data to display");
+
+                scope.chart.showXAxis(true);
+                scope.chart.showYAxis(true);
+
+                scope.chart.x(D3Service.xFunction());
+                scope.chart.y(D3Service.yFunction());
+
+                scope.chart.xAxis.tickFormat(D3Service.xAxisTickFormat());
+                scope.chart.yAxis.tickFormat(D3Service.yAxisPercentageTickFormat());
+
+                d3.select('#' + scope.id + ' svg')
+                  .datum(scope.data)
+                  .style({'height': scope.height})
+                  .transition().duration(0)
+                  .call(scope.chart);
+
+                nv.utils.windowResize(scope.chart.update);
+
+                return scope.chart;
+            });
+
             scope.id = D3Service.getId();
             scope.height = 250;
             scope.flags = $rootScope.flags;
@@ -36,11 +69,15 @@
                 scope.height = size.height || scope.height;
                 d3.select('#' + scope.id + ' svg').style({'height': scope.height});
             });
+
+            scope.$on('updateMetrics', function (event) {
+                scope.chart.update();
+            })
         }
 
         return {
             restrict: 'A',
-            templateUrl: 'app/charts/area-stacked-timeseries.html',
+            templateUrl: 'app/charts/nvd3-chart.html',
             scope: {
                 data: '='
             },

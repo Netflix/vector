@@ -223,6 +223,8 @@
                             // PMWEBAPI error, code -12376: Attempt to use an illegal context
                             callback(false);
                     });
+
+                $rootScope.$broadcast('updateMetrics');
             }
         }
 
@@ -235,6 +237,7 @@
                 angular.forEach(derivedMetrics, function (metric) {
                     metric.updateValues();
                 });
+                $rootScope.$broadcast('updateDerivedMetrics');
             }
         }
 

@@ -11,8 +11,7 @@
   "dependencies": {
     "angular-flash": "~0.1.14",
     "d3": "~3.4.13",
-    "nvd3": "~v1.1.15-beta",
-    "angularjs-nvd3-directives": "~0.0.7",
+    "nvd3": "~v1.8.1",
     "angular-ui-dashboard": "~0.8.2",
     "font-awesome": "~4.3.0",
     "bootstrap": "~3.3.2",

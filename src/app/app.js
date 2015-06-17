@@ -62,7 +62,6 @@
             'app.filters',
             'app.metrics',
             'vector.config',
-            'nvd3ChartDirectives',
             'angular-flash.service',
             'angular-flash.flash-alert-directive'
         ])
