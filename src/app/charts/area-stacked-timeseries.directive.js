@@ -29,52 +29,52 @@
             scope.flags = $rootScope.flags;
             scope.legend = true;
 
-            var chart = nv.models.stackedAreaChart().options({
-                transitionDuration: 0,
-                useInteractiveGuideline: true,
-                interactive: false,
-                showLegend: true,
-                showXAxis: true,
-                showYAxis: true,
-                showControls: false
+            var chart;
+
+            nv.addGraph(function () {
+              chart = nv.models.stackedAreaChart().options({
+                  transitionDuration: 0,
+                  useInteractiveGuideline: true,
+                  interactive: false,
+                  showLegend: true,
+                  showXAxis: true,
+                  showYAxis: true,
+                  showControls: false
+              });
+
+              chart.margin({'left': 35, 'right': 35});
+
+              chart.height(scope.height);
+
+              chart.noData('There is no data to display');
+
+              if (scope.forcey) {
+                  chart.yDomain([0, scope.forcey]);
+              }
+
+              chart.x(D3Service.xFunction());
+              chart.y(D3Service.yFunction());
+
+              chart.xAxis.tickFormat(D3Service.xAxisTickFormat());
+
+              if (scope.percentage) {
+                  chart.yAxis.tickFormat(D3Service.yAxisPercentageTickFormat());
+              } else if (scope.integer) {
+                  chart.yAxis.tickFormat(D3Service.yAxisIntegerTickFormat());
+              } else {
+                  chart.yAxis.tickFormat(D3Service.yAxisTickFormat());
+              }
+
+              nv.utils.windowResize(chart.update);
+
+              d3.select('#' + scope.id + ' svg')
+                .datum(scope.data)
+                .style({'height': scope.height})
+                .transition().duration(0)
+                .call(chart);
+
+              return chart;
             });
-
-            chart.margin({'left': 35, 'right': 35});
-
-            chart.height(scope.height);
-
-            chart.noData('There is no data to display');
-
-            if (scope.forcey) {
-                chart.yDomain([0, scope.forcey]);
-            }
-
-            chart.x(D3Service.xFunction());
-            chart.y(D3Service.yFunction());
-
-            chart.xAxis.tickFormat(D3Service.xAxisTickFormat());
-
-            if (scope.percentage) {
-                chart.yAxis.tickFormat(D3Service.yAxisPercentageTickFormat());
-            } else if (scope.integer) {
-                chart.yAxis.tickFormat(D3Service.yAxisIntegerTickFormat());
-            } else {
-                chart.yAxis.tickFormat(D3Service.yAxisTickFormat());
-            }
-
-            function loadGraph() {
-                d3.select('#' + scope.id + ' svg')
-                  .datum(scope.data)
-                  .style({'height': scope.height})
-                  .transition().duration(0)
-                  .call(chart);
-
-                nv.utils.windowResize(chart.update);
-            }
-
-            nv.addGraph(chart);
-
-            loadGraph();
 
             scope.$on('widgetResized', function (event, size) {
                 scope.width = size.width || scope.width;
@@ -83,7 +83,7 @@
             });
 
             scope.$on('updateMetrics', function () {
-                loadGraph();
+                chart.update();
             });
 
             scope.$on('hideLegend', function (event, widget) {
