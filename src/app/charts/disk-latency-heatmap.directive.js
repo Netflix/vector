@@ -46,7 +46,7 @@
     }
 
     angular
-        .module('app.directives')
+        .module('app.charts')
         .directive('diskLatencyHeatMap', diskLatencyHeatMap);
 
 })();

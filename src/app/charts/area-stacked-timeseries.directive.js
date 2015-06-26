@@ -21,46 +21,50 @@
 (function () {
     'use strict';
 
-    function areaStackedTimeSeries($rootScope, D3Service) {
+    function areaStackedTimeSeries($rootScope, $log, D3Service) {
 
-        function link(scope) {
-            nv.addGraph(function() {
-                scope.chart = nv.models.stackedAreaChart().options({
-                    transitionDuration: 0,
-                    useInteractiveGuideline: true,
-                    interactive: false,
-                    showLegend: true,
-                    showXAxis: true,
-                    showYAxis: true,
-                    showControls: false
-                });
+        function link(scope, element, attrs) {
+            scope.id = D3Service.getId();
+            scope.height = 250;
+            scope.flags = $rootScope.flags;
+            scope.legend = true;
 
-                scope.chart.margin({'left': 50,'right': 50});
+            var chart = nv.models.stackedAreaChart().options({
+                transitionDuration: 0,
+                useInteractiveGuideline: true,
+                interactive: false,
+                showLegend: true,
+                showXAxis: true,
+                showYAxis: true,
+                showControls: false
+            });
 
-                scope.chart.height(scope.height);
+            chart.margin({'left': 35, 'right': 35});
 
-                scope.chart.noData('There is no data to display');
+            chart.height(scope.height);
 
-                scope.chart.x(D3Service.xFunction());
-                scope.chart.y(D3Service.yFunction());
+            chart.noData('There is no data to display');
 
-                scope.chart.xAxis.tickFormat(D3Service.xAxisTickFormat());
-                scope.chart.yAxis.tickFormat(D3Service.yAxisTickFormat());
+            chart.x(D3Service.xFunction());
+            chart.y(D3Service.yFunction());
 
+            chart.xAxis.tickFormat(D3Service.xAxisTickFormat());
+            chart.yAxis.tickFormat(D3Service.yAxisTickFormat());
+
+            function loadGraph() {
                 d3.select('#' + scope.id + ' svg')
                   .datum(scope.data)
                   .style({'height': scope.height})
                   .transition().duration(0)
-                  .call(scope.chart);
+                  .call(chart);
 
-                nv.utils.windowResize(scope.chart.update);
+                nv.utils.windowResize(chart.update);
+            }
 
-                return scope.chart;
-            });
+            nv.addGraph(chart);
 
-            scope.id = D3Service.getId();
-            scope.height = 250;
-            scope.flags = $rootScope.flags;
+            loadGraph();
+
             scope.$on('widgetResized', function (event, size) {
                 scope.width = size.width || scope.width;
                 scope.height = size.height || scope.height;
@@ -68,7 +72,12 @@
             });
 
             scope.$on('updateMetrics', function () {
-                scope.chart.update();
+                loadGraph();
+            });
+
+            scope.$on('hideLegend', function (event, widget) {
+                $log.info(widget);
+                $log.info(scope);
             });
         }
 
@@ -82,7 +91,13 @@
         };
     }
 
+    areaStackedTimeSeries.$inject = [
+        '$rootScope',
+        '$log',
+        'D3Service'
+    ];
+
     angular
-        .module('app.directives')
+        .module('app.charts')
         .directive('areaStackedTimeSeries', areaStackedTimeSeries);
 })();
