@@ -23,7 +23,7 @@
 
     function areaStackedTimeSeries($rootScope, $log, D3Service) {
 
-        function link(scope, element, attrs) {
+        function link(scope) {
             scope.id = D3Service.getId();
             scope.height = 250;
             scope.flags = $rootScope.flags;
@@ -84,11 +84,6 @@
 
             scope.$on('updateMetrics', function () {
                 chart.update();
-            });
-
-            scope.$on('hideLegend', function (event, widget) {
-                $log.info(widget);
-                $log.info(scope);
             });
         }
 

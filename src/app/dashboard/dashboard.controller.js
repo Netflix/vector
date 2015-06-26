@@ -86,7 +86,6 @@
             widgetButtons: false,
             hideWidgetName: true,
             hideWidgetSettings: true,
-            hideWidgetHideLegend: false,
             widgetDefinitions: widgetDefinitions,
             defaultWidgets: widgets
         };
@@ -95,9 +94,6 @@
         vm.updateInterval = DashboardService.updateInterval;
         vm.updateHost = function() {
             DashboardService.updateHost(vm.inputHost);
-        };
-        vm.hideLegend = function(widget) {
-            $rootScope.$broadcast('hideLegend', widget);
         };
         vm.updateWindow = DashboardService.updateWindow;
         vm.isHostnameExpanded = false;

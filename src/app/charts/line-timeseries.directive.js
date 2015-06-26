@@ -23,12 +23,12 @@
 
     function lineTimeSeries($rootScope, $log, D3Service) {
 
-        function link(scope, element, attrs) {
+        function link(scope) {
             scope.id = D3Service.getId();
             scope.height = 250;
             scope.flags = $rootScope.flags;
 
-            var chart
+            var chart;
 
             nv.addGraph(function () {
               chart = nv.models.lineChart().options({
@@ -82,11 +82,6 @@
 
             scope.$on('updateMetrics', function () {
                 chart.update();
-            });
-
-            scope.$on('hideLegend', function (event, widget) {
-                $log.info("Hiding");
-                chart.options({showLegend: false});
             });
         }
 
