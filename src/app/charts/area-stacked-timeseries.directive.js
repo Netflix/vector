@@ -45,11 +45,22 @@
 
             chart.noData('There is no data to display');
 
+            if (scope.forcey) {
+                chart.forceY([0, scope.forcey]);
+            }
+
             chart.x(D3Service.xFunction());
             chart.y(D3Service.yFunction());
 
             chart.xAxis.tickFormat(D3Service.xAxisTickFormat());
-            chart.yAxis.tickFormat(D3Service.yAxisTickFormat());
+
+            if (scope.percentage) {
+                chart.yAxis.tickFormat(D3Service.yAxisPercentageTickFormat());
+            } else if (scope.integer) {
+                chart.yAxis.tickFormat(D3Service.yAxisIntegerTickFormat());
+            } else {
+                chart.yAxis.tickFormat(D3Service.yAxisTickFormat());
+            }
 
             function loadGraph() {
                 d3.select('#' + scope.id + ' svg')
@@ -85,7 +96,10 @@
             restrict: 'A',
             templateUrl: 'app/charts/nvd3-chart.html',
             scope: {
-                data: '='
+                data: '=',
+                percentage: '=',
+                integer: '=',
+                forcey: '='
             },
             link: link
         };
