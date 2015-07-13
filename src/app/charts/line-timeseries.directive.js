@@ -32,7 +32,7 @@
 
             nv.addGraph(function () {
               chart = nv.models.lineChart().options({
-                  transitionDuration: 0,
+                  duration: 0,
                   useInteractiveGuideline: true,
                   interactive: false,
                   showLegend: true,

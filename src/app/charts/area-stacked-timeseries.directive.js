@@ -33,7 +33,7 @@
 
             nv.addGraph(function () {
               chart = nv.models.stackedAreaChart().options({
-                  transitionDuration: 0,
+                  duration: 0,
                   useInteractiveGuideline: true,
                   interactive: false,
                   showLegend: true,
