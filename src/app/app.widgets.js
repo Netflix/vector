@@ -65,7 +65,11 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: 'CPU'
+                group: 'CPU',
+                attrs: {
+                    forcey: 2,
+                    integer: true
+                }
             }, {
                 name: 'kernel.all.cpu.sys',
                 title: 'CPU Utilization (System)',
