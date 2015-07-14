@@ -70,15 +70,15 @@
 
               chart.interactiveLayer.tooltip.contentGenerator(function (d) {
                   var header = d.value;
-                  var headerhtml = "<thead><tr><td colspan='3'><strong class='x-value'>"+header+"</strong></td></tr></thead>";
+                  var headerhtml = '<thead><tr><td colspan="3"><strong class="x-value">' + header + '</strong></td></tr></thead>';
 
-                  var bodyhtml = "<tbody>";
+                  var bodyhtml = '<tbody>';
                   var series = d.series;
                   series.forEach(function (d) {
-                      bodyhtml = bodyhtml+"<tr><td class='legend-color-guide'><div style='background-color: "+d.color+";'></div></td><td class='key'>"+d.key+"</td><td class='value'>"+d.value+"</td></tr>";
+                      bodyhtml = bodyhtml + '<tr><td class="legend-color-guide"><div style="background-color: ' + d.color + ';"></div></td><td class="key">' + d.key + '</td><td class="value">' + d.value + '</td></tr>';
                   });
-                  bodyhtml = bodyhtml+"</tbody>";
-                  return "<table>"+headerhtml+''+bodyhtml+"</table>";
+                  bodyhtml = bodyhtml + '</tbody>';
+                  return '<table>' + headerhtml + bodyhtml + '</table>';
               });
 
               /* End of workaround */
