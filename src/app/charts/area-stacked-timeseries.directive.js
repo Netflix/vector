@@ -31,7 +31,7 @@
             var chart;
 
             nv.addGraph(function () {
-              
+
               var height = 250;
 
               chart = nv.models.stackedAreaChart().options({
@@ -47,8 +47,6 @@
               chart.margin({'left': 35, 'right': 35});
 
               chart.height(height);
-
-              chart.noData('There is no data to display');
 
               if (scope.forcey) {
                   chart.yDomain([0, scope.forcey]);

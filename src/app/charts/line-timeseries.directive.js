@@ -46,8 +46,6 @@
 
               chart.height(height);
 
-              chart.noData('There is no data to display');
-
               if (scope.forcey) {
                   chart.forceY([0, scope.forcey]);
               }
