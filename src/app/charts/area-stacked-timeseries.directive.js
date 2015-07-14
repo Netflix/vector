@@ -32,7 +32,8 @@
 
             nv.addGraph(function () {
 
-              var height = 250;
+              var yAxisTickFormat = D3Service.yAxisTickFormat(),
+                  height = 250;
 
               chart = nv.models.stackedAreaChart().options({
                   duration: 0,
@@ -58,12 +59,14 @@
               chart.xAxis.tickFormat(D3Service.xAxisTickFormat());
 
               if (scope.percentage) {
-                  chart.yAxis.tickFormat(D3Service.yAxisPercentageTickFormat());
+                  yAxisTickFormat = D3Service.yAxisPercentageTickFormat()
+                  chart.yAxis.tickFormat();
               } else if (scope.integer) {
-                  chart.yAxis.tickFormat(D3Service.yAxisIntegerTickFormat());
-              } else {
-                  chart.yAxis.tickFormat(D3Service.yAxisTickFormat());
+                  yAxisTickFormat = D3Service.yAxisIntegerTickFormat()
+                  chart.yAxis.tickFormat();
               }
+
+              chart.yAxis.tickFormat(yAxisTickFormat);
 
 
               /* Woraround for NVD3 Bug #1081 (https://github.com/novus/nvd3/issues/1081) */
@@ -75,7 +78,7 @@
                   var bodyhtml = '<tbody>';
                   var series = d.series;
                   series.forEach(function (d) {
-                      bodyhtml = bodyhtml + '<tr><td class="legend-color-guide"><div style="background-color: ' + d.color + ';"></div></td><td class="key">' + d.key + '</td><td class="value">' + d.value + '</td></tr>';
+                      bodyhtml = bodyhtml + '<tr><td class="legend-color-guide"><div style="background-color: ' + d.color + ';"></div></td><td class="key">' + d.key + '</td><td class="value">' + yAxisTickFormat(d.value) + '</td></tr>';
                   });
                   bodyhtml = bodyhtml + '</tbody>';
                   return '<table>' + headerhtml + bodyhtml + '</table>';
