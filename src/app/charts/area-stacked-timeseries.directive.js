@@ -25,13 +25,15 @@
 
         function link(scope) {
             scope.id = D3Service.getId();
-            scope.height = 250;
             scope.flags = $rootScope.flags;
             scope.legend = true;
 
             var chart;
 
             nv.addGraph(function () {
+              
+              var height = 250;
+
               chart = nv.models.stackedAreaChart().options({
                   duration: 0,
                   useInteractiveGuideline: true,
@@ -44,7 +46,7 @@
 
               chart.margin({'left': 35, 'right': 35});
 
-              chart.height(scope.height);
+              chart.height(height);
 
               chart.noData('There is no data to display');
 
@@ -87,17 +89,11 @@
 
               d3.select('#' + scope.id + ' svg')
                 .datum(scope.data)
-                .style({'height': scope.height})
+                .style({'height': height})
                 .transition().duration(0)
                 .call(chart);
 
               return chart;
-            });
-
-            scope.$on('widgetResized', function (event, size) {
-                scope.width = size.width || scope.width;
-                scope.height = size.height || scope.height;
-                d3.select('#' + scope.id + ' svg').style({'height': scope.height});
             });
 
             scope.$on('updateMetrics', function () {
