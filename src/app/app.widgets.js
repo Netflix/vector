@@ -67,7 +67,7 @@
                 enableVerticalResize: false,
                 group: 'CPU',
                 attrs: {
-                    forcey: 2,
+                    forcey: 4,
                     integer: true
                 }
             }, {
