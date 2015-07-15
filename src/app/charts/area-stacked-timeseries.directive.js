@@ -59,10 +59,10 @@
               chart.xAxis.tickFormat(D3Service.xAxisTickFormat());
 
               if (scope.percentage) {
-                  yAxisTickFormat = D3Service.yAxisPercentageTickFormat()
+                  yAxisTickFormat = D3Service.yAxisPercentageTickFormat();
                   chart.yAxis.tickFormat();
               } else if (scope.integer) {
-                  yAxisTickFormat = D3Service.yAxisIntegerTickFormat()
+                  yAxisTickFormat = D3Service.yAxisIntegerTickFormat();
                   chart.yAxis.tickFormat();
               }
 
