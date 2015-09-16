@@ -90,7 +90,7 @@
 
               d3.select('#' + scope.id + ' svg')
                 .datum(scope.data)
-                .style({'height': height})
+                .style('height', height + 'px')
                 .transition().duration(0)
                 .call(chart);
 
