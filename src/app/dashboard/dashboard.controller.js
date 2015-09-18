@@ -28,10 +28,10 @@
     * @name DashboardCtrl
     * @desc Main dashboard Controller
     */
-    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, widgetDefinitions, widgets, DashboardService) {
+    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, DashboardService) {
         var vm = this;
         var path = $route.current.$$route.originalPath;
-
+        var widgetsToLoad = widgets;
 
         /**
         * @name visibilityChanged
@@ -81,16 +81,68 @@
             $log.info('Dashboard controller initialized with ' + path + ' view.');
         }
 
+        if ($routeParams.widgets !== undefined ){
+            var widgetNameArr = $routeParams.widgets.split(',') || [];
+            widgetsToLoad = widgetNameArr.reduce(function(all, name){
+                return all.concat(widgetDefinitions.filter(function(def){
+                    return def.name === name;
+                }));
+            },[]);
+        } else {
+            var urlArr = widgets.reduce(function(all,item){
+                all.push(item.name);
+                return all;
+            },[]).join();
+            $location.search('widgets', urlArr);
+        }
+
+
          vm.dashboardOptions = {
             hideToolbar: true,
             widgetButtons: false,
             hideWidgetName: true,
             hideWidgetSettings: true,
             widgetDefinitions: widgetDefinitions,
-            defaultWidgets: widgets
+            defaultWidgets: widgetsToLoad
         };
 
         // Export controller public functions
+        vm.addWidgetToURL = function(widgetObj){
+            var newUrl ='';
+            if ($routeParams.widgets === undefined) {
+                $routeParams.widgets = '';
+            } else {
+                newUrl = ',';
+            }
+
+            if (widgetObj.length){
+                $routeParams.widgets = '';
+                newUrl = widgetObj.reduce(function(all,item){
+                    all.push(item.name);
+                    return all;
+                },[]).join();
+            } else {
+                newUrl = newUrl + widgetObj.name;
+            }
+            $location.search('widgets', $routeParams.widgets + newUrl);            
+        };
+        vm.removeWidgetFromURL = function(widgetObj){
+            var widgetNameArr = $routeParams.widgets.split(',') || [];
+            for (var d=0; d< widgetNameArr.length; d++){
+                if (widgetNameArr[d] === widgetObj.name){
+                    widgetNameArr.splice(d,1);
+                    break;
+                }
+            }
+            if (widgetNameArr.length < 1){
+                $location.search('widgets', null);
+            } else {
+                $location.search('widgets', widgetNameArr.toString()); 
+            }
+        };
+        vm.removeAllWidgetFromURL = function(){
+            $location.search('widgets', null);
+        };
         vm.updateInterval = DashboardService.updateInterval;
         vm.updateHost = function() {
             DashboardService.updateHost(vm.inputHost);
@@ -107,6 +159,7 @@
         '$log',
         '$route',
         '$routeParams',
+        '$location',
         'widgetDefinitions',
         'widgets',
         'DashboardService'
