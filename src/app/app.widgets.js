@@ -25,6 +25,8 @@
     /* Widgets */
     function widgetDefinitions(MetricDataModel,
                                CumulativeMetricDataModel,
+                               containerCPUstatMetricTimeSeriesDataModel,
+                               containerMemoryBytesMetricTimeSeriesDataModel,
                                MemoryUtilizationMetricDataModel,
                                NetworkBytesMetricDataModel,
                                CpuUtilizationMetricDataModel,
@@ -36,6 +38,38 @@
                                CumulativeUtilizationMetricDataModel,
                                vectorConfig) {
         var definitions = [
+            {
+                name: 'cgroup.cpuacct.stat.user',
+                title: 'CPU Utilization',
+                directive: 'line-time-series',
+                dataAttrName: 'data',
+                dataModelType: containerCPUstatMetricTimeSeriesDataModel,
+                dataModelOptions: {
+                    name: 'cgroup.cpuacct.stat.user',
+                },
+                size: {
+                    width: '50%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'Container'
+            },
+            {
+                name: 'cgroup.memory.usage',
+                title: 'Memory Usage',
+                directive: 'line-time-series',
+                dataAttrName: 'data',
+                dataModelType: containerMemoryBytesMetricTimeSeriesDataModel,
+                dataModelOptions: {
+                    name: 'cgroup.memory.usage'
+                },
+                size: {
+                    width: '50%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'Container',
+            },
             {
                 name: 'kernel.all.load',
                 title: 'Load Average',
