@@ -38,15 +38,19 @@
                     });
 
                     angular.forEach(cpuUserMetric.data, function (instance) {
+
                         if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1) {
                             var lastValue = instance.values[instance.values.length - 1];
+                            var filter = ContainerMetadataService.getGlobalFilter();
                             var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
 
-                            returnValues.push({
-                                timestamp: lastValue.x,
-                                key: name,
-                                value: instance.previousValue / lastValue2.shift()
-                            });
+                            if (filter === '' || name.indexOf(filter) !==-1){
+                                returnValues.push({
+                                    timestamp: lastValue.x,
+                                    key: name,
+                                    value: instance.previousValue / lastValue2.shift()
+                                });
+                            }
                             
                         }
                     });

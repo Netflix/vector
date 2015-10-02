@@ -69,11 +69,19 @@
      margin-top: 8px;
  }
 
+ #globalFilterInput {
+     margin-left: -1px;
+     margin-top: 8px;
+ }
+
  .input-group-lg > #hostnameInput {
      margin-top: 0;
  }
 
  .input-group-lg > #hostspecInput {
+     margin-top: 0;
+ }
+ .input-group-lg > #globalFilterInput {
      margin-top: 0;
  }
 
