@@ -27,6 +27,7 @@
                                CumulativeMetricDataModel,
                                containerCPUstatMetricTimeSeriesDataModel,
                                containerMemoryBytesMetricTimeSeriesDataModel,
+                               containerMemoryUtilizationMetricDataModel,
                                MemoryUtilizationMetricDataModel,
                                NetworkBytesMetricDataModel,
                                CpuUtilizationMetricDataModel,
@@ -69,6 +70,26 @@
                 },
                 enableVerticalResize: false,
                 group: 'Container',
+            },
+            {
+                name: 'memory.Headroom',
+                title: 'Memory Headroom',
+                directive: 'area-stacked-time-series',
+                dataAttrName: 'data',
+                dataModelType: containerMemoryUtilizationMetricDataModel,
+                dataModelOptions: {
+                    name: 'mem'
+                },
+                size: {
+                    width: '25%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'Container',
+                attrs: {
+                    percentage: false,
+                    integer: true
+                }
             },
             {
                 name: 'kernel.all.load',
