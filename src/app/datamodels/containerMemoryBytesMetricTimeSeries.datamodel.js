@@ -23,18 +23,23 @@
 
             // create create base metrics
             var inMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.memory.usage'),
-                //outMetric = MetricListService.getOrCreateCumulativeMetric('network.interface.out.bytes'),
                 derivedFunction;
 
 
             // create derived function
             derivedFunction = function () {
                 var returnValues = [],
-                    lastValue;         
+                    lastValue,
+                    latestTimestamp = 0;    
 
                 angular.forEach(inMetric.data, function (instance) {
-                    
-                    if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1 ) {
+                    //hack to remove stale containers by using latest timestamp from server
+                    if (instance.previousTimestamp > latestTimestamp){ 
+                        latestTimestamp = instance.previousTimestamp;
+                    }
+                    var difference = latestTimestamp - instance.previousTimestamp;
+
+                    if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1 && difference < 5500) {
 
                         ContainerMetadataService.resolveId(instance.key);
                         lastValue = instance.values[instance.values.length - 1];
