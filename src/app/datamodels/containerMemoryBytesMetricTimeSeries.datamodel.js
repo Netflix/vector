@@ -6,10 +6,10 @@
      'use strict';
 
     /**
-    * @name containerMemoryBytesMetricTimeSeriesDataModel
+    * @name ContainerMemoryBytesMetricTimeSeriesDataModel
     * @desc
     */
-    function containerMemoryBytesMetricTimeSeriesDataModel(ContainerMetadataService, $rootScope, WidgetDataModel, MetricListService, VectorService) {
+    function ContainerMemoryBytesMetricTimeSeriesDataModel(ContainerMetadataService, $rootScope, WidgetDataModel, MetricListService, VectorService) {
         var DataModel = function () {
             return this;
         };
@@ -33,7 +33,7 @@
                     latestTimestamp = 0;    
 
                 angular.forEach(inMetric.data, function (instance) {
-                    //hack to remove stale containers by using latest timestamp from server
+                    //hack to remove stale Containers by using latest timestamp from server
                     if (instance.previousTimestamp > latestTimestamp){ 
                         latestTimestamp = instance.previousTimestamp;
                     }
@@ -81,5 +81,5 @@
 
     angular
         .module('app.datamodels')
-        .factory('containerMemoryBytesMetricTimeSeriesDataModel', containerMemoryBytesMetricTimeSeriesDataModel);
+        .factory('ContainerMemoryBytesMetricTimeSeriesDataModel', ContainerMemoryBytesMetricTimeSeriesDataModel);
  })();

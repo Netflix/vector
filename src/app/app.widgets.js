@@ -25,9 +25,10 @@
     /* Widgets */
     function widgetDefinitions(MetricDataModel,
                                CumulativeMetricDataModel,
-                               containerCPUstatMetricTimeSeriesDataModel,
-                               containerMemoryBytesMetricTimeSeriesDataModel,
-                               containerMemoryUtilizationMetricDataModel,
+                               ContainerCPUstatMetricTimeSeriesDataModel,
+                               ContainerMemoryBytesMetricTimeSeriesDataModel,
+                               ContainerMemoryUtilizationMetricDataModel,
+                               ContainerNetworkBytesMetricDataModel,
                                MemoryUtilizationMetricDataModel,
                                NetworkBytesMetricDataModel,
                                CpuUtilizationMetricDataModel,
@@ -44,7 +45,7 @@
                 title: 'CPU Utilization',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: containerCPUstatMetricTimeSeriesDataModel,
+                dataModelType: ContainerCPUstatMetricTimeSeriesDataModel,
                 dataModelOptions: {
                     name: 'cgroup.cpuacct.stat.user',
                 },
@@ -60,7 +61,7 @@
                 title: 'Memory Usage',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: containerMemoryBytesMetricTimeSeriesDataModel,
+                dataModelType: ContainerMemoryBytesMetricTimeSeriesDataModel,
                 dataModelOptions: {
                     name: 'cgroup.memory.usage'
                 },
@@ -76,9 +77,28 @@
                 title: 'Memory Headroom',
                 directive: 'area-stacked-time-series',
                 dataAttrName: 'data',
-                dataModelType: containerMemoryUtilizationMetricDataModel,
+                dataModelType: ContainerMemoryUtilizationMetricDataModel,
                 dataModelOptions: {
                     name: 'mem'
+                },
+                size: {
+                    width: '25%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'Container',
+                attrs: {
+                    percentage: false,
+                    integer: true
+                }
+            },{
+                name: 'container.network.interface.bytes',
+                title: 'Container Network Throughput (kB)',
+                directive: 'line-time-series',
+                dataAttrName: 'data',
+                dataModelType: ContainerNetworkBytesMetricDataModel,
+                dataModelOptions: {
+                    name: 'network.interface.bytes'
                 },
                 size: {
                     width: '25%',

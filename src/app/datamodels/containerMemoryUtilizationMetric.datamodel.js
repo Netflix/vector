@@ -19,10 +19,10 @@
      'use strict';
 
     /**
-    * @name containerMemoryUtilizationMetricDataModel
+    * @name ContainerMemoryUtilizationMetricDataModel
     * @desc
     */
-    function containerMemoryUtilizationMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
+    function ContainerMemoryUtilizationMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
         var DataModel = function () {
             return this;
         };
@@ -114,14 +114,14 @@
             };
 
             // create derived metric
-            this.metric = MetricListService.getOrCreateDerivedMetric(this.name, derivedFunction);
+            this.metric = MetricListService.getOrCreateDerivedMetric('container.memory.headroom', derivedFunction);
 
             this.updateScope(this.metric.data);
         };
 
         DataModel.prototype.destroy = function () {
             // remove subscribers and delete derived metric
-            MetricListService.destroyDerivedMetric(this.name);
+            MetricListService.destroyDerivedMetric('container.memory.headroom');
 
             // remove subscribers and delete base metrics
             MetricListService.destroyMetric('mem.util.used');
@@ -136,5 +136,5 @@
 
     angular
         .module('app.datamodels')
-        .factory('containerMemoryUtilizationMetricDataModel', containerMemoryUtilizationMetricDataModel);
+        .factory('ContainerMemoryUtilizationMetricDataModel', ContainerMemoryUtilizationMetricDataModel);
  })();
