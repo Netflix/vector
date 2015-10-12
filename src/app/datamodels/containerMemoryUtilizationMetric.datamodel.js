@@ -37,15 +37,19 @@
             var conversionFunction = function (value) {
                     return value / 1024;
                 },
+                cachedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.cached', conversionFunction),
                 usedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.used', conversionFunction),
                 freeMemMetric = MetricListService.getOrCreateConvertedMetric('mem.freemem', conversionFunction),
+                buffersMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.bufmem', conversionFunction),
                 containerMemMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.memory.usage'),
                 derivedFunction;
 
             derivedFunction = function () {
                 var returnValues = [],
                     usedValue,
+                    cachedValue,
                     freeValue,
+                    buffersValue,
                     containerUsedValue,
                     tempTimestamp;
 
@@ -59,11 +63,29 @@
                     }
                 }());
 
+                cachedValue = (function () {
+                    if (cachedMemMetric.data.length > 0) {
+                        var instance = cachedMemMetric.data[cachedMemMetric.data.length - 1];
+                        if (instance.values.length > 0) {
+                            return instance.values[instance.values.length - 1];
+                        }
+                    }
+                }());
+
                 freeValue = (function () {
                     if (freeMemMetric.data.length > 0) {
                         var instance = freeMemMetric.data[freeMemMetric.data.length - 1];
                         if (instance.values.length > 0) {
                             tempTimestamp = instance.values[instance.values.length - 1].x;
+                            return instance.values[instance.values.length - 1];
+                        }
+                    }
+                }());
+
+                buffersValue = (function () {
+                    if (buffersMemMetric.data.length > 0) {
+                        var instance = buffersMemMetric.data[buffersMemMetric.data.length - 1];
+                        if (instance.values.length > 0) {
                             return instance.values[instance.values.length - 1];
                         }
                     }
@@ -96,8 +118,8 @@
 
                     returnValues.push({
                         timestamp: usedValue.x,
-                        key: 'System free mem',
-                        value: freeValue.y / 1024
+                        key: 'System free (unused)',
+                        value: freeValue.y
                     });
                 }
 
