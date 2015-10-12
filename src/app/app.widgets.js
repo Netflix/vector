@@ -101,7 +101,7 @@
                     name: 'network.interface.bytes'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,

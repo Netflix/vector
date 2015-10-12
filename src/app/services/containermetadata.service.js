@@ -64,6 +64,26 @@
             return globalFilter;
         }
 
+        /**
+        * @name setCurrentTime
+        * @desc
+        */
+        var currentTime = 0;
+        function setCurrentTime(time){
+            if (time > currentTime){
+                currentTime = time;
+            }
+        }
+
+        /**
+        * @name isTimeCurrent
+        * @desc
+        */
+        function isTimeCurrent(time){
+            var difference = currentTime - time;
+            return difference < 6000;
+        }
+
         //////////
 
         return {
@@ -71,7 +91,9 @@
             clearIdDictionary: clearIdDictionary,
             resolveId: resolveId,
             setGlobalFilter: setGlobalFilter,
-            getGlobalFilter:getGlobalFilter
+            getGlobalFilter: getGlobalFilter,
+            setCurrentTime: setCurrentTime,
+            isTimeCurrent: isTimeCurrent
         };
     }
 

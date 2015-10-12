@@ -34,12 +34,13 @@
                         if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1) {
                             lastValue2.push(instance.previousValue);
                             ContainerMetadataService.resolveId(instance.key);
+                            ContainerMetadataService.setCurrentTime(instance.previousTimestamp);
                         }
                     });
 
                     angular.forEach(cpuUserMetric.data, function (instance) {
 
-                        if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1) {
+                        if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1 && ContainerMetadataService.isTimeCurrent(instance.previousTimestamp)) {
                             var lastValue = instance.values[instance.values.length - 1];
                             var filter = ContainerMetadataService.getGlobalFilter();
                             var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;

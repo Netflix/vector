@@ -29,17 +29,13 @@
             // create derived function
             derivedFunction = function () {
                 var returnValues = [],
-                    lastValue,
-                    latestTimestamp = 0;    
+                    lastValue;   
 
                 angular.forEach(inMetric.data, function (instance) {
                     //hack to remove stale Containers by using latest timestamp from server
-                    if (instance.previousTimestamp > latestTimestamp){ 
-                        latestTimestamp = instance.previousTimestamp;
-                    }
-                    var difference = latestTimestamp - instance.previousTimestamp;
+                    ContainerMetadataService.setCurrentTime(instance.previousTimestamp);
 
-                    if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1 && difference < 5500) {
+                    if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1 && ContainerMetadataService.isTimeCurrent(instance.previousTimestamp)) {
 
                         ContainerMetadataService.resolveId(instance.key);
                         lastValue = instance.values[instance.values.length - 1];
