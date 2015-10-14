@@ -45,26 +45,23 @@
                 var returnValues = [],
                     lastValue;
 
-                angular.forEach(inMetric.data, function (instance) {
+                var pushReturnValues = function(instance, metricName) {
                     if (instance.values.length > 0) {
                         lastValue = instance.values[instance.values.length - 1];
                         returnValues.push({
                             timestamp: lastValue.x,
-                            key: instance.key + ' in',
+                            key: instance.key + metricName,
                             value: lastValue.y / 1024
                         });
                     }
+                }
+
+                angular.forEach(inMetric.data, function (instance) {
+                    pushReturnValues(instance, ' in');
                 });
 
                 angular.forEach(outMetric.data, function (instance) {
-                    if (instance.values.length > 0) {
-                        lastValue = instance.values[instance.values.length - 1];
-                        returnValues.push({
-                            timestamp: lastValue.x,
-                            key: instance.key + ' out',
-                            value: lastValue.y / 1024
-                        });
-                    }
+                    pushReturnValues(instance, ' out');
                 });
 
                 return returnValues;
