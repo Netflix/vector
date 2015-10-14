@@ -51,26 +51,23 @@
                     if (cpuInstance.values.length > 0) {
                         cpuCount = cpuInstance.values[cpuInstance.values.length - 1].y;
 
-                        angular.forEach(cpuSysMetric.data, function (instance) {
+                        var pushReturnValues = function(instance, keyName) {
                             if (instance.values.length > 0) {
                                 var lastValue = instance.values[instance.values.length - 1];
                                 returnValues.push({
                                     timestamp: lastValue.x,
-                                    key: 'sys',
+                                    key: keyName,
                                     value: lastValue.y / (cpuCount * 1000)
                                 });
                             }
+                        }
+
+                        angular.forEach(cpuSysMetric.data, function (instance) {
+                            pushReturnValues(instance, 'sys');
                         });
 
                         angular.forEach(cpuUserMetric.data, function (instance) {
-                            if (instance.values.length > 0) {
-                                var lastValue = instance.values[instance.values.length - 1];
-                                returnValues.push({
-                                    timestamp: lastValue.x,
-                                    key: 'user',
-                                    value: lastValue.y / (cpuCount * 1000)
-                                });
-                            }
+                            pushReturnValues(instance, 'user');
                         });
                     }
                 }
