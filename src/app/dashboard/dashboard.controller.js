@@ -143,11 +143,15 @@
         vm.removeAllWidgetFromURL = function(){
             $location.search('widgets', null);
         };
+        vm.updateGlobalFilter = function(){
+            DashboardService.updateGlobalFilter(vm.globalFilter);
+        };
         vm.updateInterval = DashboardService.updateInterval;
         vm.updateHost = function() {
             DashboardService.updateHost(vm.inputHost);
         };
         vm.updateWindow = DashboardService.updateWindow;
+        vm.globalFilter ='';
         vm.isHostnameExpanded = false;
         vm.inputHost = '';
         activate();
