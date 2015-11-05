@@ -28,7 +28,7 @@
     * @name DashboardCtrl
     * @desc Main dashboard Controller
     */
-    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, DashboardService, vectorVersion) {
+    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, DashboardService, vectorVersion) {
         var vm = this;
         var path = $route.current.$$route.originalPath;
         var widgetsToLoad = widgets;
@@ -96,7 +96,6 @@
             $location.search('widgets', urlArr);
         }
 
-
          vm.dashboardOptions = {
             hideToolbar: true,
             widgetButtons: false,
@@ -107,6 +106,8 @@
         };
 
         vm.version = vectorVersion.id;
+
+        vm.embed = embed;
 
         // Export controller public functions
         vm.addWidgetToURL = function(widgetObj){
@@ -168,6 +169,7 @@
         '$location',
         'widgetDefinitions',
         'widgets',
+        'embed',
         'DashboardService',
         'vectorVersion'
     ];

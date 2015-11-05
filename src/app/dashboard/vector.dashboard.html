@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-if="!vm.embed">
     <div class="col-md-6">
         <form role="form" name="form">
             <div class="input-group input-group-lg" ng-class="{'has-error': form.host.$invalid && form.host.$dirty}">
@@ -55,7 +55,7 @@
         </form>
     </div>
 </div>
-<div class="row" ng-show="vm.isHostnameExpanded">
+<div class="row" ng-show="vm.isHostnameExpanded" ng-if="!vm.embed">
     <div class="col-md-6">
         <form role="form" name="form">
             <div class="input-group input-group-lg" ng-class="{'has-error': form.hostspec.$invalid && form.hostspec.$dirty}">
@@ -124,9 +124,9 @@
                 </div>
             </div>
         </div>
-        <div>Version: {{vm.version}}</div>
     </div>
 </div>
+<div class="row" style="padding-left: 15px; " ng-if="!vm.embed">Version: {{vm.version}}</div>
 <script>
     (function () {
         'use strict';

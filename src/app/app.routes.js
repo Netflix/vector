@@ -32,6 +32,23 @@
             resolve: {
                 'widgets': function (defaultWidgets) {
                     return defaultWidgets;
+                },
+                'embed': function () {
+                  return false;
+                }
+            }
+        }).when('/embed', {
+            templateUrl: 'app/dashboard/dashboard.html',
+            controller: 'DashboardController',
+            controllerAs: 'vm',
+            title: 'Dashboard - Vector',
+            reloadOnSearch: false,
+            resolve: {
+                'widgets': function (defaultWidgets) {
+                    return defaultWidgets;
+                },
+                'embed': function () {
+                  return true;
                 }
             }
         }).when('/empty', {
@@ -43,6 +60,9 @@
             resolve: {
                 'widgets': function (emptyWidgets) {
                     return emptyWidgets;
+                },
+                'embed': function () {
+                  return false;
                 }
             }
         })
