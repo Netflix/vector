@@ -28,7 +28,7 @@
     * @name DashboardCtrl
     * @desc Main dashboard Controller
     */
-    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, DashboardService) {
+    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, DashboardService, vectorVersion) {
         var vm = this;
         var path = $route.current.$$route.originalPath;
         var widgetsToLoad = widgets;
@@ -106,6 +106,8 @@
             defaultWidgets: widgetsToLoad
         };
 
+        vm.version = vectorVersion.id;
+
         // Export controller public functions
         vm.addWidgetToURL = function(widgetObj){
             var newUrl ='';
@@ -124,7 +126,7 @@
             } else {
                 newUrl = newUrl + widgetObj.name;
             }
-            $location.search('widgets', $routeParams.widgets + newUrl);            
+            $location.search('widgets', $routeParams.widgets + newUrl);
         };
         vm.removeWidgetFromURL = function(widgetObj){
             var widgetNameArr = $routeParams.widgets.split(',') || [];
@@ -137,7 +139,7 @@
             if (widgetNameArr.length < 1){
                 $location.search('widgets', null);
             } else {
-                $location.search('widgets', widgetNameArr.toString()); 
+                $location.search('widgets', widgetNameArr.toString());
             }
         };
         vm.removeAllWidgetFromURL = function(){
@@ -166,7 +168,8 @@
         '$location',
         'widgetDefinitions',
         'widgets',
-        'DashboardService'
+        'DashboardService',
+        'vectorVersion'
     ];
 
     angular

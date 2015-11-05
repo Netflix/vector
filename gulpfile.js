@@ -4,6 +4,9 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var wrench = require('wrench');
 var eslint = require('gulp-eslint');
+var git = require('git-rev')
+var fs = require('fs');
+var p = require('./package.json')
 
 var options = {
   src: 'src',
@@ -25,6 +28,12 @@ wrench.readdirSyncRecursive('./gulp').filter(function(file) {
   return (/\.(js|coffee)$/i).test(file);
 }).map(function(file) {
   require('./gulp/' + file)(options);
+});
+
+gulp.task('version', function () {
+  git.short(function (commit) {
+    fs.writeFile('src/app/app.version.js','(function () { \'use strict\'; angular.module(\'vector.version\').constant(\'vectorVersion\', { \'id\': \'{version}\' }); })();'.replace('{version}', p.version + ' # ' + commit));
+  })
 });
 
 gulp.task('default', ['clean'], function () {
