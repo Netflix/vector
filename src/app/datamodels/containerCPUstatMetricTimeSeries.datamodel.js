@@ -5,10 +5,10 @@
      'use strict';
 
     /**
-    * @name containerCPUstatMetricTimeSeriesDataModel
+    * @name ContainerCPUstatMetricTimeSeriesDataModel
     * @desc
     */
-    function containerCPUstatMetricTimeSeriesDataModel(ContainerMetadataService, WidgetDataModel, MetricListService, VectorService) {
+    function ContainerCPUstatMetricTimeSeriesDataModel(ContainerMetadataService, WidgetDataModel, MetricListService, VectorService) {
         var DataModel = function () {
             return this;
         };
@@ -34,19 +34,24 @@
                         if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1) {
                             lastValue2.push(instance.previousValue);
                             ContainerMetadataService.resolveId(instance.key);
+                            ContainerMetadataService.setCurrentTime(instance.previousTimestamp);
                         }
                     });
 
                     angular.forEach(cpuUserMetric.data, function (instance) {
-                        if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1) {
+
+                        if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1 && ContainerMetadataService.isTimeCurrent(instance.previousTimestamp)) {
                             var lastValue = instance.values[instance.values.length - 1];
+                            var filter = ContainerMetadataService.getGlobalFilter();
                             var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
 
-                            returnValues.push({
-                                timestamp: lastValue.x,
-                                key: name,
-                                value: instance.previousValue / lastValue2.shift()
-                            });
+                            if (filter === '' || name.indexOf(filter) !==-1){
+                                returnValues.push({
+                                    timestamp: lastValue.x,
+                                    key: name,
+                                    value: instance.previousValue / lastValue2.shift()
+                                });
+                            }
                             
                         }
                     });
@@ -77,5 +82,5 @@
 
     angular
         .module('app.datamodels')
-        .factory('containerCPUstatMetricTimeSeriesDataModel', containerCPUstatMetricTimeSeriesDataModel);
+        .factory('ContainerCPUstatMetricTimeSeriesDataModel', ContainerCPUstatMetricTimeSeriesDataModel);
  })();

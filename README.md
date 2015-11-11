@@ -16,6 +16,10 @@ See the [GitHub Wiki](https://github.com/Netflix/vector/wiki/Getting-Started) fo
 
 For bugs, questions and discussions please use the [GitHub Issues](https://github.com/Netflix/vector/issues).
 
+## User Group
+
+You can ask questions to other Vector users and contributors on [Google Groups](https://groups.google.com/forum/#!forum/vector-users).
+
 ## License
 
 Copyright 2015 Netflix, Inc.

@@ -62,6 +62,10 @@
                 <span class="input-group-addon">Hostspec&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <input type="text" class="form-control" id="hostspecInput" name="host" data-content="Please enter the instance hostspec." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.hostspec" ng-change="vm.updateHost()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" ng-disabled="flags.contextUpdating == true" required placeholder="Instance Hostspec">
             </div>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">Filter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input type="text" class="form-control" id="globalFilterInput" name="globalFilter" data-content="Global filter for container widgets" rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="vm.globalFilter" ng-change="vm.updateGlobalFilter()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" placeholder="Container Filter">            
+            </div>
         </form>
     </div>
     <div class="col-md-2">
@@ -127,6 +131,7 @@
         'use strict';
         $('#hostnameInput').popover();
         $('#hostspecInput').popover();
+        $('#globalFilterInput').popover();
         $('#windowInput').popover();
         $('#intervalInput').popover();
         $('#hostnameLabel').popover();

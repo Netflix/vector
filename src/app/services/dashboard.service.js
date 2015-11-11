@@ -22,7 +22,7 @@
      * @name DashboardService
      * @desc
      */
-     function DashboardService($rootScope, $http, $interval, $log, $location, PMAPIService, MetricListService, flash, vectorConfig) {
+     function DashboardService($rootScope, $http, $interval, $log, $location, PMAPIService, MetricListService, flash, vectorConfig, ContainerMetadataService) {
         var loopErrors = 0;
         var intervalPromise;
 
@@ -187,6 +187,16 @@
         }
 
         /**
+        * @name updateGlobalFilter
+        * @desc
+        */
+        function updateGlobalFilter(word) {
+            $log.log('Global Filter updated.');
+            //$rootScope.flags.filterDone = true;
+            ContainerMetadataService.setGlobalFilter(word);
+        }
+
+        /**
         * @name initializeProperties
         * @desc
         */
@@ -243,6 +253,7 @@
             updateInterval: updateInterval,
             updateHost: updateHost,
             updateWindow: updateWindow,
+            updateGlobalFilter: updateGlobalFilter,
             initializeProperties: initializeProperties
         };
     }
