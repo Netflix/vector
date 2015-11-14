@@ -13,12 +13,8 @@
         * @desc
         */
         var idMap = {};
-        function idDictionary(key, value){
-            if (value === undefined){
-                return idMap[key];
-            } else {
-                idMap[key] = parseId(key);
-            }
+        function idDictionary(key){
+                return idMap[parseId(key)];
         }
 
         /**
@@ -33,7 +29,7 @@
             } else if (id.indexOf('/docker-') !==-1){
                 id = id.split('-')[1].split('.')[0];
             }
-            return id.substring(0,12);
+            return id;
         }
 
         /**
@@ -54,10 +50,6 @@
                 //need to set containerConfig.externalAPI to true in app.config.js
             } else {
                 idDictionary(instanceKey,instanceKey);
-                if (!containerCgroups){
-                    containerCgroups = true;
-                    initContainerCgroups();
-                }
             }
         }
 
@@ -66,14 +58,13 @@
         * @desc
         */
         function containerIdExist(id) {
-            return idMap[id];
+            return (idMap[parseId(id)] !== undefined);
         }
 
         /**;
         * @name initContainerCgroups
         * @desc
         */
-        var containerCgroups = false;
         var activeContainers;
         function initContainerCgroups(){
             activeContainers = MetricListService.getOrCreateMetric('containers.cgroup');
@@ -86,9 +77,9 @@
         */
         function containerCgroupIntervalFunction(){
             idMap = activeContainers.data.reduce(function(obj, item){
-                var parsedKey = parseId(item.key);
                 if (isTimeCurrent(item.values[item.values.length-1].x)){
-                    obj[item.key] = parsedKey;
+                    //bypass differences in return values from pcp, should be fixed in 3.10.8-1+
+                    obj[item.key] = item.key.substring(0,12);
                 } else {
                     delete obj[item.key];
                 }
@@ -143,7 +134,8 @@
             getGlobalFilter: getGlobalFilter,
             setCurrentTime: setCurrentTime,
             isTimeCurrent: isTimeCurrent,
-            containerIdExist: containerIdExist
+            containerIdExist: containerIdExist,
+            initContainerCgroups:initContainerCgroups
         };
     }
 
