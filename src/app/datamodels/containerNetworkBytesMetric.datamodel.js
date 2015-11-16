@@ -47,7 +47,7 @@
 
                 angular.forEach(inMetric.data, function (instance) {
                     ContainerMetadataService.setCurrentTime(instance.previousTimestamp);
-                    if (instance.values.length > 0 && instance.key.indexOf('veth') !== -1 && ContainerMetadataService.isTimeCurrent(instance.previousTimestamp)) {
+                    if (instance.values.length > 0 && instance.key.indexOf('veth') !== -1) {
                         lastValue = instance.values[instance.values.length - 1];
                         returnValues.push({
                             timestamp: lastValue.x,
@@ -58,7 +58,7 @@
                 });
 
                 angular.forEach(outMetric.data, function (instance) {
-                    if (instance.values.length > 0 && instance.key.indexOf('veth') !==- 1 && ContainerMetadataService.isTimeCurrent(instance.previousTimestamp)) {
+                    if (instance.values.length > 0 && instance.key.indexOf('veth') !==- 1) {
                         lastValue = instance.values[instance.values.length - 1];
                         returnValues.push({
                             timestamp: lastValue.x,

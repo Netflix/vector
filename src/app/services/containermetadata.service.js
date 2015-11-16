@@ -78,7 +78,6 @@
         function containerCgroupIntervalFunction(){
             idMap = activeContainers.data.reduce(function(obj, item){
                 if (isTimeCurrent(item.values[item.values.length-1].x)){
-                    //bypass differences in return values from pcp, should be fixed in 3.10.8-1+
                     obj[item.key] = item.key.substring(0,12);
                 } else {
                     delete obj[item.key];

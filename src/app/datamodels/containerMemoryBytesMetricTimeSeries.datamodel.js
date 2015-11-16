@@ -32,9 +32,7 @@
                     lastValue;   
 
                 angular.forEach(inMetric.data, function (instance) {
-                    //hack to remove stale Containers by using latest timestamp from server
-                    ContainerMetadataService.setCurrentTime(instance.previousTimestamp);
-                    if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key) && ContainerMetadataService.isTimeCurrent(instance.previousTimestamp)) {
+                    if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
                         ContainerMetadataService.resolveId(instance.key);
                         lastValue = instance.values[instance.values.length - 1];
                         var filter = ContainerMetadataService.getGlobalFilter();
