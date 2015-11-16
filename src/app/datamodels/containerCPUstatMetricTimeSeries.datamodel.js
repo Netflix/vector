@@ -47,7 +47,7 @@
                                 returnValues.push({
                                     timestamp: lastValue.x,
                                     key: name,
-                                    value: instance.previousValue / lastValue2.shift()
+                                    value: instance.previousValue / lastValue2.shift() / 100
                                 });
                             }
                             
