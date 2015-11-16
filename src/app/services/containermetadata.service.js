@@ -96,11 +96,11 @@
         }
 
         /**
-        * @name getGlobalFilter
+        * @name checkGlobalFilter
         * @desc
         */
-        function getGlobalFilter(){
-            return globalFilter;
+        function checkGlobalFilter(name){
+            return (globalFilter === '' || name.indexOf(globalFilter) !==-1);
         }
 
         /**
@@ -130,7 +130,7 @@
             clearIdDictionary: clearIdDictionary,
             resolveId: resolveId,
             setGlobalFilter: setGlobalFilter,
-            getGlobalFilter: getGlobalFilter,
+            checkGlobalFilter: checkGlobalFilter,
             setCurrentTime: setCurrentTime,
             isTimeCurrent: isTimeCurrent,
             containerIdExist: containerIdExist,
