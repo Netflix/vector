@@ -51,7 +51,7 @@
                     name: 'cgroup.cpuacct.stat.user',
                 },
                 size: {
-                    width: '50%',
+                    width: '25%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -72,7 +72,7 @@
                     name: 'cgroup.memory.usage'
                 },
                 size: {
-                    width: '50%',
+                    width: '25%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -107,7 +107,7 @@
                     name: 'network.interface.bytes'
                 },
                 size: {
-                    width: '50%',
+                    width: '25%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
