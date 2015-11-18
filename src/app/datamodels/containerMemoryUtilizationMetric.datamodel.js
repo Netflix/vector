@@ -136,14 +136,14 @@
             };
 
             // create derived metric
-            this.metric = MetricListService.getOrCreateDerivedMetric('container.memory.headroom', derivedFunction);
+            this.metric = MetricListService.getOrCreateDerivedMetric(this.name, derivedFunction);
 
             this.updateScope(this.metric.data);
         };
 
         DataModel.prototype.destroy = function () {
             // remove subscribers and delete derived metric
-            MetricListService.destroyDerivedMetric('container.memory.headroom');
+            MetricListService.destroyDerivedMetric(this.name);
 
             // remove subscribers and delete base metrics
             MetricListService.destroyMetric('mem.util.used');

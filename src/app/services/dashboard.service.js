@@ -243,6 +243,7 @@
               contextAvailable: false,
               contextUpdating: false
             };
+            ContainerMetadataService.initContainerCgroups();
         }
 
         ///////

@@ -44,7 +44,7 @@
             {
                 name: 'cgroup.cpuacct.stat.user',
                 title: 'Container CPU Utilization',
-                directive: 'line-time-series',
+                directive: 'area-stacked-time-series',
                 dataAttrName: 'data',
                 dataModelType: ContainerCPUstatMetricTimeSeriesDataModel,
                 dataModelOptions: {
@@ -55,7 +55,12 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: 'Container'
+                group: 'Container',
+                attrs: {
+                    forcey: 1,
+                    percentage: true,
+                    integer: false
+                }
             },
             {
                 name: 'cgroup.memory.usage',

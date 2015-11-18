@@ -6,29 +6,36 @@
      /**
      * @name ContainerMetadataService
      */
-     function ContainerMetadataService($http, $rootScope, $q, containerConfig) {
+     function ContainerMetadataService($http, $rootScope, $q, $interval, containerConfig, MetricListService) {
 
         /**
         * @name idDictionary
         * @desc
         */
         var idMap = {};
-        function idDictionary(key, value){
-            if (key.indexOf('docker/') !==-1){
-                if (key === value){
-                    value = value.split('/')[2];
-                }
-                key = key.split('/')[2];
-            } 
-
-            if (value === undefined){
-                return idMap[key];
-            } else {
-                idMap[key] = value;
-            }
-
+        function idDictionary(key){
+                return idMap[parseId(key)];
         }
 
+        /**
+        * @name parseId
+        * @desc parses different types of docker ID
+        */
+        function parseId(id){
+            //handle regular docker
+            if (id.indexOf('docker/') !==-1){
+                id = id.split('/')[2];
+            //handle systemd
+            } else if (id.indexOf('/docker-') !==-1){
+                id = id.split('-')[1].split('.')[0];
+            }
+            return id;
+        }
+
+        /**
+        * @name clearIdDictionary
+        * @desc
+        */
         function clearIdDictionary(){
             idMap = {};
         }
@@ -44,7 +51,39 @@
             } else {
                 idDictionary(instanceKey,instanceKey);
             }
-            
+        }
+
+        /**
+        * @name containerIdExist
+        * @desc
+        */
+        function containerIdExist(id) {
+            return (idMap[parseId(id)] !== undefined);
+        }
+
+        /**;
+        * @name initContainerCgroups
+        * @desc
+        */
+        var activeContainers;
+        function initContainerCgroups(){
+            activeContainers = MetricListService.getOrCreateMetric('containers.cgroup');
+            $interval(containerCgroupIntervalFunction, $rootScope.properties.interval * 1000);
+        }
+
+        /**;
+        * @name containerCgroupIntervalFunction
+        * @desc
+        */
+        function containerCgroupIntervalFunction(){
+            idMap = activeContainers.data.reduce(function(obj, item){
+                if (isTimeCurrent(item.values[item.values.length-1].x)){
+                    obj[item.key] = item.key.substring(0,12);
+                } else {
+                    delete obj[item.key];
+                }
+                return obj;
+            },{});
         }
 
         /**
@@ -57,11 +96,11 @@
         }
 
         /**
-        * @name getGlobalFilter
+        * @name checkGlobalFilter
         * @desc
         */
-        function getGlobalFilter(){
-            return globalFilter;
+        function checkGlobalFilter(name){
+            return (globalFilter === '' || name.indexOf(globalFilter) !==-1);
         }
 
         /**
@@ -91,9 +130,11 @@
             clearIdDictionary: clearIdDictionary,
             resolveId: resolveId,
             setGlobalFilter: setGlobalFilter,
-            getGlobalFilter: getGlobalFilter,
+            checkGlobalFilter: checkGlobalFilter,
             setCurrentTime: setCurrentTime,
-            isTimeCurrent: isTimeCurrent
+            isTimeCurrent: isTimeCurrent,
+            containerIdExist: containerIdExist,
+            initContainerCgroups:initContainerCgroups
         };
     }
 
