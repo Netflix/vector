@@ -28,7 +28,7 @@
     * @name DashboardCtrl
     * @desc Main dashboard Controller
     */
-    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, DashboardService) {
+    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, DashboardService, ContainerMetadataService) {
         var vm = this;
         var path = $route.current.$$route.originalPath;
         var widgetsToLoad = widgets;
@@ -150,7 +150,14 @@
         vm.updateHost = function() {
             DashboardService.updateHost(vm.inputHost);
         };
+        vm.containerNames = function(){
+            return ContainerMetadataService.getAllContainers();
+        };
+        vm.containerNameChanged = function(){
+            ContainerMetadataService.setContainerName(vm.containerName);
+        };
         vm.updateWindow = DashboardService.updateWindow;
+        vm.containerName = '';
         vm.globalFilter ='';
         vm.isHostnameExpanded = false;
         vm.inputHost = '';
@@ -166,7 +173,8 @@
         '$location',
         'widgetDefinitions',
         'widgets',
-        'DashboardService'
+        'DashboardService',
+        'ContainerMetadataService'
     ];
 
     angular
