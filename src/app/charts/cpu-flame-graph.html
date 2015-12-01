@@ -1,25 +1,14 @@
 <div class="col-md-12">
     <div class="row" style="text-align: center;">
-        <p class="lead" ng-if="!ready">Click on the button below to generate your CPU Flame Graph! (60 sec)</p>
-    </div>
-    <div class="row" ng-if="!processing && ready" style="text-align: center;">
-        <object data="http://{{host}}:{{port}}/systack/systack.svg" type="image/svg+xml" style="width:100%; height:auto;"></object>
-        <br>
-        <a class="btn btn-default pull-right" href="http://{{host}}:{{port}}/systack/systack.svg" target="_blank">Open in a new Tab</a>
-    </div>
-    <div class="row">
-        <div id="alert-sysstack-error" flash-alert="error" active-class="in alert" class="fade">
-            <strong class="alert-heading">Error!</strong>
+        <div id="alert-sysstack" flash-alert active-class="in alert" class="fade">
             <span class="alert-message">{{flash.message}}</span>
         </div>
+        <p>Click on the button below to generate a CPU flame graph! (60 sec)</p>
+        <button type="button" class="btn btn-primary" ng-disabled="processing" ng-click="generateFlameGraph()">Generate Flame Graph <i ng-if="processing" class="fa fa-refresh fa-spin"></i></button>
     </div>
-    <div class="row">
-        <div id="alert-sysstack-success" flash-alert="success" active-class="in alert" class="fade">
-            <strong class="alert-heading">Success!</strong>
-            <span class="alert-message">{{flash.message}}</span>
-        </div>
+    <div class="row" ng-if="!processing && ready" style="text-align: center; margin-top: 15px;">
+        <p>The CPU flame graph is ready. Please click on the button below to open it.</p>
+        <a class="btn btn-default" href="http://{{host}}:{{port}}/systack/systack.svg" target="_blank">Open Flame Graph</a>
     </div>
-    <div class="row" style="text-align: center; margin-top: 15px;">
-        <button type="button" class="btn btn-primary btn-lg" ng-disabled="processing" ng-click="generateFlameGraph()">Generate <i ng-if="processing" class="fa fa-refresh fa-spin"></i></button>
-    </div>
+
 </div>
