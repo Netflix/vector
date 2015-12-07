@@ -1,6 +1,6 @@
 <div>
 	<i class="fa fa-line-chart fa-5x widget-icon" ng-hide="flags.contextAvailable"></i>
-	<div id="{{id}}" class="chart">
+	<div id="{{id}}" class="chart" ng-hide="!flags.contextAvailable">
     <svg></svg>
 	</div>
 </div>
