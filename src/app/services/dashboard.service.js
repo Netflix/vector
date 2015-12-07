@@ -243,10 +243,11 @@
               contextAvailable: false,
               contextUpdating: false
             };
-            ContainerMetadataService.initContainerCgroups();
-        }
 
-        ///////
+            if (vectorConfig.enableContainerWidgets) {
+              ContainerMetadataService.initContainerCgroups();
+            }
+        }
 
         return {
             updateContext: updateContext,
