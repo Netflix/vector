@@ -42,120 +42,6 @@
                                vectorConfig) {
         var definitions = [
             {
-                name: 'cgroup.cpuacct.stat.user',
-                title: 'Container CPU Utilization',
-                directive: 'area-stacked-time-series',
-                dataAttrName: 'data',
-                dataModelType: ContainerCPUstatMetricTimeSeriesDataModel,
-                dataModelOptions: {
-                    name: 'cgroup.cpuacct.stat.user',
-                },
-                size: {
-                    width: '25%',
-                    height: '250px'
-                },
-                enableVerticalResize: false,
-                group: 'Container',
-                attrs: {
-                    forcey: 1,
-                    percentage: true,
-                    integer: false
-                }
-            },
-            {
-                name: 'cgroup.memory.usage',
-                title: 'Container Memory Usage',
-                directive: 'line-time-series',
-                dataAttrName: 'data',
-                dataModelType: ContainerMemoryBytesMetricTimeSeriesDataModel,
-                dataModelOptions: {
-                    name: 'cgroup.memory.usage'
-                },
-                size: {
-                    width: '25%',
-                    height: '250px'
-                },
-                enableVerticalResize: false,
-                group: 'Container',
-            },
-            {
-                name: 'memory.Headroom',
-                title: 'Container Memory Headroom',
-                directive: 'area-stacked-time-series',
-                dataAttrName: 'data',
-                dataModelType: ContainerMemoryUtilizationMetricDataModel,
-                dataModelOptions: {
-                    name: 'mem'
-                },
-                size: {
-                    width: '25%',
-                    height: '250px'
-                },
-                enableVerticalResize: false,
-                group: 'Container',
-                attrs: {
-                    percentage: false,
-                    integer: true
-                }
-            },{
-                name: 'container.network.interface.bytes',
-                title: 'Container Network Throughput (kB)',
-                directive: 'line-time-series',
-                dataAttrName: 'data',
-                dataModelType: ContainerNetworkBytesMetricDataModel,
-                dataModelOptions: {
-                    name: 'network.interface.bytes'
-                },
-                size: {
-                    width: '25%',
-                    height: '250px'
-                },
-                enableVerticalResize: false,
-                group: 'Container',
-                attrs: {
-                    percentage: false,
-                    integer: true
-                }
-            },{
-                name: 'container.disk.iops',
-                title: 'Container Disk IOPS',
-                directive: 'line-time-series',
-                dataAttrName: 'data',
-                dataModelType: ContainerMultipleCumulativeMetricDataModel,
-                dataModelOptions: {
-                    name: 'container.disk.iops',
-                    metricDefinitions: {
-                        '{key} read': 'cgroup.blkio.all.io_serviced.read',
-                        '{key} write': 'cgroup.blkio.all.io_serviced.write'
-                    }
-                },
-                size: {
-                    width: '25%',
-                    height: '250px'
-                },
-                enableVerticalResize: false,
-                group: 'Container'
-            },{
-                name: 'container.disk.bytes',
-                title: 'Container Disk Throughput (kB)',
-                directive: 'line-time-series',
-                dataAttrName: 'data',
-                dataModelType: ContainerMultipleCumulativeMetricDataModel,
-                dataModelOptions: {
-                    name: 'container.disk.bytes',
-                    metricDefinitions: {
-                        '{key} read': 'cgroup.blkio.all.io_service_bytes.read',
-                        '{key} write': 'cgroup.blkio.all.io_service_bytes.write'
-                    }
-                },
-                size: {
-                    width: '25%',
-                    height: '250px'
-                },
-                enableVerticalResize: false,
-                group: 'Container'
-            },
-            {
                 name: 'kernel.all.load',
                 title: 'Load Average',
                 directive: 'line-time-series',
@@ -738,6 +624,125 @@
             enableVerticalResize: false,
             group: 'Disk'
           });
+        }
+
+        if (vectorConfig.enableContainerWidgets) {
+            definitions.push(
+                {
+                    name: 'cgroup.cpuacct.stat.user',
+                    title: 'Container CPU Utilization',
+                    directive: 'area-stacked-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: ContainerCPUstatMetricTimeSeriesDataModel,
+                    dataModelOptions: {
+                        name: 'cgroup.cpuacct.stat.user',
+                    },
+                    size: {
+                        width: '25%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                    attrs: {
+                        forcey: 1,
+                        percentage: true,
+                        integer: false
+                    }
+                },
+                {
+                    name: 'cgroup.memory.usage',
+                    title: 'Container Memory Usage',
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: ContainerMemoryBytesMetricTimeSeriesDataModel,
+                    dataModelOptions: {
+                        name: 'cgroup.memory.usage'
+                    },
+                    size: {
+                        width: '25%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                },
+                {
+                    name: 'memory.Headroom',
+                    title: 'Container Memory Headroom',
+                    directive: 'area-stacked-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: ContainerMemoryUtilizationMetricDataModel,
+                    dataModelOptions: {
+                        name: 'mem'
+                    },
+                    size: {
+                        width: '25%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                    attrs: {
+                        percentage: false,
+                        integer: true
+                    }
+                },{
+                    name: 'container.network.interface.bytes',
+                    title: 'Container Network Throughput (kB)',
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: ContainerNetworkBytesMetricDataModel,
+                    dataModelOptions: {
+                        name: 'network.interface.bytes'
+                    },
+                    size: {
+                        width: '25%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                    attrs: {
+                        percentage: false,
+                        integer: true
+                    }
+                },{
+                    name: 'container.disk.iops',
+                    title: 'Container Disk IOPS',
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: ContainerMultipleCumulativeMetricDataModel,
+                    dataModelOptions: {
+                        name: 'container.disk.iops',
+                        metricDefinitions: {
+                            '{key} read': 'cgroup.blkio.all.io_serviced.read',
+                            '{key} write': 'cgroup.blkio.all.io_serviced.write'
+                        }
+                    },
+                    size: {
+                        width: '25%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container'
+                },{
+                    name: 'container.disk.bytes',
+                    title: 'Container Disk Throughput (kB)',
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: ContainerMultipleCumulativeMetricDataModel,
+                    dataModelOptions: {
+                        name: 'container.disk.bytes',
+                        metricDefinitions: {
+                            '{key} read': 'cgroup.blkio.all.io_service_bytes.read',
+                            '{key} write': 'cgroup.blkio.all.io_service_bytes.write'
+                        }
+                    },
+                    size: {
+                        width: '25%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container'
+                }
+            );
         }
 
         return definitions;
