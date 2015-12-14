@@ -30,6 +30,8 @@
                                ContainerMemoryUtilizationMetricDataModel,
                                ContainerNetworkBytesMetricDataModel,
                                ContainerMultipleCumulativeMetricDataModel,
+                               ContainerMemoryHeadroomAggregateMetricDataModel,
+                               ContainerMemoryHeadroomMetricDataModel,
                                MemoryUtilizationMetricDataModel,
                                NetworkBytesMetricDataModel,
                                CpuUtilizationMetricDataModel,
@@ -40,6 +42,8 @@
                                DiskLatencyMetricDataModel,
                                CumulativeUtilizationMetricDataModel,
                                vectorConfig) {
+        var OVERVIEW = 1;
+        var SPECIFIC = 2;
         var definitions = [
             {
                 name: 'cgroup.cpuacct.stat.user',
@@ -56,13 +60,13 @@
                 },
                 enableVerticalResize: false,
                 group: 'Container',
+                type: OVERVIEW,
                 attrs: {
                     forcey: 1,
                     percentage: true,
                     integer: false
                 }
-            },
-            {
+            }, {
                 name: 'cgroup.memory.usage',
                 title: 'Container Memory Usage',
                 directive: 'line-time-series',
@@ -77,15 +81,14 @@
                 },
                 enableVerticalResize: false,
                 group: 'Container',
-            },
-            {
-                name: 'memory.Headroom',
-                title: 'Container Memory Headroom',
+            }, {
+                name: 'container.memory.utilization',
+                title: 'Container Memory Utilization',
                 directive: 'area-stacked-time-series',
                 dataAttrName: 'data',
                 dataModelType: ContainerMemoryUtilizationMetricDataModel,
                 dataModelOptions: {
-                    name: 'mem'
+                    name: 'container.memory.utilization'
                 },
                 size: {
                     width: '25%',
@@ -97,14 +100,53 @@
                     percentage: false,
                     integer: true
                 }
-            },{
+            }, {
+                name: 'container.memory.headroom',
+                title: 'Container Memory Headroom',
+                directive: 'line-time-series',
+                dataAttrName: 'data',
+                dataModelType: ContainerMemoryHeadroomMetricDataModel,
+                dataModelOptions: {
+                    name: 'container.memory.headroom'
+                },
+                size: {
+                    width: '25%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'Container',
+                type: SPECIFIC,
+                attrs: {
+                    percentage: false,
+                    integer: true
+                }
+            }, {
+                name: 'container.memory.aggregate.headroom',
+                title: 'Container Memory Aggregate Headroom',
+                directive: 'area-stacked-time-series',
+                dataAttrName: 'data',
+                dataModelType: ContainerMemoryHeadroomAggregateMetricDataModel,
+                dataModelOptions: {
+                    name: 'container.memory.aggregate.headroom'
+                },
+                size: {
+                    width: '25%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'Container',
+                attrs: {
+                    percentage: false,
+                    integer: true
+                }
+            }, {
                 name: 'container.network.interface.bytes',
                 title: 'Container Network Throughput (kB)',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
                 dataModelType: ContainerNetworkBytesMetricDataModel,
                 dataModelOptions: {
-                    name: 'network.interface.bytes'
+                    name: 'container.network.interface.bytes'
                 },
                 size: {
                     width: '50%',
@@ -135,7 +177,7 @@
                 },
                 enableVerticalResize: false,
                 group: 'Container'
-            },{
+            }, {
                 name: 'container.disk.bytes',
                 title: 'Container Disk Throughput (kB)',
                 directive: 'line-time-series',
@@ -154,8 +196,7 @@
                 },
                 enableVerticalResize: false,
                 group: 'Container'
-            },
-            {
+            }, {
                 name: 'kernel.all.load',
                 title: 'Load Average',
                 directive: 'line-time-series',

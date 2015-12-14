@@ -122,6 +122,14 @@
         }
 
         /**
+        * @name getGlobalFilter
+        * @desc function name to be updated later
+        */
+        function getGlobalFilter(name){
+            return containerName;
+        }
+
+        /**
         * @name setCurrentTime
         * @desc
         */
@@ -158,6 +166,7 @@
             resolveId: resolveId,
             setGlobalFilter: setGlobalFilter,
             checkGlobalFilter: checkGlobalFilter,
+            getGlobalFilter : getGlobalFilter,
             setCurrentTime: setCurrentTime,
             isTimeCurrent: isTimeCurrent,
             containerIdExist: containerIdExist,

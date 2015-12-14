@@ -16,7 +16,7 @@
                 <a ng-click="void(0)"  data-toggle="dropdown">{{group}}</a>
                 <ul class="dropdown-menu">
                     <li ng-repeat="widget in widgetDefs | groupFilter: group">
-                        <a href="#" ng-click="addWidgetInternal($event, widget); vm.addWidgetToURL(widget);">{{widget.title}}</a>
+                        <a ng-click="vm.checkWidgetType(widget) && addWidgetInternal($event, widget) && vm.addWidgetToURL(widget);">{{widget.title}}</a>
                     </li>
                 </ul>
             </li>
@@ -77,8 +77,8 @@
         <form role="form" name="form">
             <div class="input-group input-group-lg">
                 <span class="input-group-addon">Container&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <select id="selectedContainer" ng-model="vm.containerName" ng-change="vm.containerNameChanged()"  class="form-control">
-                    <option value="">Select a Container</option>
+                <select id="selectedContainer" ng-model="vm.containerName" ng-change="vm.containerNameChanged()" ng-click="vm.firstClick = false;" class="form-control">
+                    <option ng-hide="!vm.firstClick" value="">Select a Container</option>
                     <option ng-repeat="names in vm.containerNames()"> {{names}}</option>
                 </select>
 <!--                 <input type="text" class="form-control" id="globalFilterInput" name="globalFilter" data-content="Default container for widgets" rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="vm.globalFilter" ng-change="vm.updateGlobalFilter()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" placeholder="Select default container">     -->        

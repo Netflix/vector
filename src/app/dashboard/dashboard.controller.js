@@ -28,7 +28,7 @@
     * @name DashboardCtrl
     * @desc Main dashboard Controller
     */
-    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, DashboardService, ContainerMetadataService) {
+    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, DashboardService, ContainerMetadataService, ModalService) {
         var vm = this;
         var path = $route.current.$$route.originalPath;
         var widgetsToLoad = widgets;
@@ -156,6 +156,40 @@
         vm.containerNameChanged = function(){
             ContainerMetadataService.setContainerName(vm.containerName);
         };
+        vm.checkWidgetType = function(widgetObj){
+            if (widgetObj.type !== undefined){
+                switch (widgetObj.type){
+                    case 1:
+
+                    break;
+                    case 2:
+                        if (ContainerMetadataService.getGlobalFilter() === ''){
+
+                            var modalOptions = {
+                                closeButtonText: '',
+                                actionButtonText: 'Ok',
+                                headerText: 'Error',
+                                bodyText: 'Please select a container.'
+                            };
+
+                            ModalService.showModal({}, modalOptions).then(function () {
+                                document.getElementById('selectedContainer').focus();
+                            });
+
+                            return false;
+                            
+                        }
+                    break;
+                    default:
+                    return true;
+
+                }
+
+
+            }
+            return true;
+        };
+        vm.firstClick = true;
         vm.updateWindow = DashboardService.updateWindow;
         vm.containerName = '';
         vm.globalFilter ='';
@@ -174,7 +208,8 @@
         'widgetDefinitions',
         'widgets',
         'DashboardService',
-        'ContainerMetadataService'
+        'ContainerMetadataService',
+        'ModalService'
     ];
 
     angular
