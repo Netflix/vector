@@ -77,10 +77,10 @@
         */
         function containerCgroupIntervalFunction(){
             idMap = activeContainers.data.reduce(function(obj, item){
-                if (isTimeCurrent(item.values[item.values.length-1].x)){
+                var time = item.values[item.values.length-1].x
+                setCurrentTime(time);
+                if (isTimeCurrent(time)){
                     obj[item.key] = item.key.substring(0,12);
-                } else {
-                    delete obj[item.key];
                 }
                 return obj;
             },{});
