@@ -156,11 +156,18 @@
         vm.containerNameChanged = function(){
             ContainerMetadataService.setContainerName(vm.containerName);
         };
+        vm.addWidget = function(event, directive){
+            event.preventDefault();
+            if ( vm.checkWidgetType(directive) ) {
+                vm.dashboardOptions.addWidget(directive);
+                vm.addWidgetToURL(directive);
+            };
+        };
         vm.checkWidgetType = function(widgetObj){
             if (widgetObj.type !== undefined){
                 switch (widgetObj.type){
                     case 1:
-
+                        return true;
                     break;
                     case 2:
                         if (ContainerMetadataService.getGlobalFilter() === ''){
