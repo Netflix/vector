@@ -79,32 +79,40 @@
                 .addEventListener('mozvisibilitychange', visibilityChanged, false);
 
             $log.info('Dashboard controller initialized with ' + path + ' view.');
+
+            if ($routeParams.widgets !== undefined ){
+                var widgetNameArr = $routeParams.widgets.split(',') || [];
+                widgetsToLoad = widgetNameArr.reduce(function(all, name){
+                    return all.concat(widgetDefinitions.filter(function(def){
+                        return def.name === name;
+                    }));
+                },[]);
+            } else {
+                var urlArr = widgets.reduce(function(all,item){
+                    all.push(item.name);
+                    return all;
+                },[]).join();
+                $location.search('widgets', urlArr);
+            }
+
+            if ($routeParams.container !== undefined){
+                vm.selectedContainer = $routeParams.container;
+                vm.disableSelect = true;
+                //hack to change select value
+                setTimeout(function(){
+                    //$document[0].getElementById("selectedContainer").value = $routeParams.container;
+                },7000);
+            }
+
+             vm.dashboardOptions = {
+                hideToolbar: true,
+                widgetButtons: false,
+                hideWidgetName: true,
+                hideWidgetSettings: true,
+                widgetDefinitions: widgetDefinitions,
+                defaultWidgets: widgetsToLoad
+            };
         }
-
-        if ($routeParams.widgets !== undefined ){
-            var widgetNameArr = $routeParams.widgets.split(',') || [];
-            widgetsToLoad = widgetNameArr.reduce(function(all, name){
-                return all.concat(widgetDefinitions.filter(function(def){
-                    return def.name === name;
-                }));
-            },[]);
-        } else {
-            var urlArr = widgets.reduce(function(all,item){
-                all.push(item.name);
-                return all;
-            },[]).join();
-            $location.search('widgets', urlArr);
-        }
-
-
-         vm.dashboardOptions = {
-            hideToolbar: true,
-            widgetButtons: false,
-            hideWidgetName: true,
-            hideWidgetSettings: true,
-            widgetDefinitions: widgetDefinitions,
-            defaultWidgets: widgetsToLoad
-        };
 
         // Export controller public functions
         vm.addWidgetToURL = function(widgetObj){
@@ -155,6 +163,7 @@
         };
         vm.containerNameChanged = function(){
             ContainerMetadataService.setContainerName(vm.containerName);
+            $location.search('container', vm.containerName);
         };
         vm.addWidget = function(event, directive){
             event.preventDefault();
@@ -202,6 +211,8 @@
         vm.globalFilter ='';
         vm.isHostnameExpanded = false;
         vm.inputHost = '';
+        vm.disableSelect = false;
+        vm.selectedContainer;
         activate();
     }
 

@@ -45,11 +45,7 @@
                 var returnValues = [],
                     lastValue;
 
-                var pushReturnValues = function(instance, metricName){
-                    if (instance.key.indexOf("docker") !==-1){
-                        console.log(instance);
-                    }
-                    
+                var pushReturnValues = function(instance, metricName){                    
                     ContainerMetadataService.setCurrentTime(instance.previousTimestamp);
                     if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
                         lastValue = instance.values[instance.values.length - 1];
