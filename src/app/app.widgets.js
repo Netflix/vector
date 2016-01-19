@@ -42,8 +42,8 @@
                                DiskLatencyMetricDataModel,
                                CumulativeUtilizationMetricDataModel,
                                vectorConfig) {
-        var OVERVIEW = 1;
-        var SPECIFIC = 2;
+        var GENERAL = 1;
+        var CONTAINER = 2;
         var definitions = [
             {
                 name: 'cgroup.cpuacct.stat.user',
@@ -60,7 +60,7 @@
                 },
                 enableVerticalResize: false,
                 group: 'Container',
-                type: OVERVIEW,
+                type: CONTAINER,
                 attrs: {
                     forcey: 1,
                     percentage: true,
@@ -102,7 +102,7 @@
                 }
             }, {
                 name: 'container.memory.headroom',
-                title: 'Container Memory Headroom',
+                title: '*Container Memory Headroom',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
                 dataModelType: ContainerMemoryHeadroomMetricDataModel,
@@ -115,7 +115,7 @@
                 },
                 enableVerticalResize: false,
                 group: 'Container',
-                type: SPECIFIC,
+                type: CONTAINER,
                 attrs: {
                     percentage: false,
                     integer: true

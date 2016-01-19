@@ -14,7 +14,7 @@
         */
         var idMap = {};
         function idDictionary(key){
-                return idMap[parseId(key)];
+            return idMap[parseId(key)];
         }
 
         /**
@@ -77,7 +77,7 @@
         */
         function containerCgroupIntervalFunction(){
             idMap = activeContainers.data.reduce(function(obj, item){
-                var time = item.values[item.values.length-1].x
+                var time = item.values[item.values.length-1].x;
                 setCurrentTime(time);
                 if (isTimeCurrent(time)){
                     obj[item.key] = item.key.substring(0,12);
@@ -125,7 +125,7 @@
         * @name getGlobalFilter
         * @desc function name to be updated later
         */
-        function getGlobalFilter(name){
+        function getGlobalFilter(){
             return containerName;
         }
 
@@ -158,6 +158,14 @@
             containerName = name;
         }
 
+        /**
+        * @name getSelectedContainer
+        * @desc
+        */
+        function getSelectedContainer(){
+            return containerName;
+        }
+
         //////////
 
         return {
@@ -172,7 +180,8 @@
             containerIdExist: containerIdExist,
             getAllContainers: getAllContainers,
             initContainerCgroups:initContainerCgroups,
-            setContainerName: setContainerName
+            setContainerName: setContainerName,
+            getSelectedContainer: getSelectedContainer
         };
     }
 

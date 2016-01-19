@@ -50,14 +50,15 @@
                     if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
                         lastValue = instance.values[instance.values.length - 1];
                         var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
-                        if (ContainerMetadataService.checkGlobalFilter(name)){
+                        if (name.indexOf(ContainerMetadataService.getSelectedContainer()) !== -1){
                             returnValues.push({
                                 timestamp: lastValue.x,
-                                key: instance.key + metricName,
+                                key: name + metricName,
                                 value: instance.previousValue / 1024 / 1024
                             });
                         }
                     }
+
                 };
 
                 angular.forEach(usageMetric.data, function (instance) {

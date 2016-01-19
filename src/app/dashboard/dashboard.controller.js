@@ -98,10 +98,7 @@
             if ($routeParams.container !== undefined){
                 vm.selectedContainer = $routeParams.container;
                 vm.disableSelect = true;
-                //hack to change select value
-                setTimeout(function(){
-                    //$document[0].getElementById("selectedContainer").value = $routeParams.container;
-                },7000);
+                ContainerMetadataService.setContainerName(vm.selectedContainer);
             }
 
              vm.dashboardOptions = {
@@ -143,13 +140,31 @@
                 }
             }
             if (widgetNameArr.length < 1){
-                $location.search('widgets', null);
+                vm.removeAllWidgetFromURL();
             } else {
                 $location.search('widgets', widgetNameArr.toString()); 
             }
         };
         vm.removeAllWidgetFromURL = function(){
             $location.search('widgets', null);
+        };
+        vm.removeContainerFromURL = function(){
+
+            var modalOptions = {
+                closeButtonText: 'Cancel',
+                actionButtonText: 'Ok',
+                headerText: 'Reset dashboard',
+                bodyText: 'Are you sure you want to reset the dashboard?'
+            };
+
+            ModalService.showModal({}, modalOptions).then(function() {
+                $location.search('container', null);
+                vm.disableSelect = false;
+                vm.dashboardOptions.loadWidgets([]);
+                document.getElementById('selectedContainer').value = '';
+                vm.containerName = '';
+                vm.removeAllWidgetFromURL();
+            });
         };
         vm.updateGlobalFilter = function(){
             DashboardService.updateGlobalFilter(vm.globalFilter);
@@ -159,7 +174,17 @@
             DashboardService.updateHost(vm.inputHost);
         };
         vm.containerNames = function(){
-            return ContainerMetadataService.getAllContainers();
+            var containerList = ContainerMetadataService.getAllContainers();
+            if (ContainerMetadataService.getAllContainers().length < 1){
+                vm.containerName = '';
+                document.getElementById('selectedContainer').value = '';
+            };
+            if (containerList.indexOf(vm.containerName) != -1){
+                vm.selectedContainerRunning = true;
+            } else {
+                vm.selectedContainerRunning = false;
+            }
+            return containerList;
         };
         vm.containerNameChanged = function(){
             ContainerMetadataService.setContainerName(vm.containerName);
@@ -212,6 +237,7 @@
         vm.isHostnameExpanded = false;
         vm.inputHost = '';
         vm.disableSelect = false;
+        vm.selectedContainerRunning = false;
         vm.selectedContainer;
         activate();
     }
