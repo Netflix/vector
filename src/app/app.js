@@ -36,6 +36,9 @@
         .module('vector.config', []);
 
     angular
+        .module('vector.version', []);
+
+    angular
         .module('app.charts', []);
 
     angular
@@ -62,6 +65,7 @@
             'app.filters',
             'app.metrics',
             'vector.config',
+            'vector.version',
             'angular-flash.service',
             'angular-flash.flash-alert-directive'
         ])

@@ -54,7 +54,7 @@
                             value: lastValue.y / 1024
                         });
                     }
-                }
+                };
 
                 angular.forEach(inMetric.data, function (instance) {
                     pushReturnValues(instance, ' in');

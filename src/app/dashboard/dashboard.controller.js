@@ -28,7 +28,8 @@
     * @name DashboardCtrl
     * @desc Main dashboard Controller
     */
-    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, DashboardService, ContainerMetadataService, ModalService) {
+    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, DashboardService, vectorVersion, ContainerMetadataService, ModalService, vectorConfig) {
+
         var vm = this;
         var path = $route.current.$$route.originalPath;
         var widgetsToLoad = widgets;
@@ -111,6 +112,10 @@
             };
         }
 
+        vm.version = vectorVersion.id;
+
+        vm.embed = embed;
+
         // Export controller public functions
         vm.addWidgetToURL = function(widgetObj){
             var newUrl ='';
@@ -129,7 +134,7 @@
             } else {
                 newUrl = newUrl + widgetObj.name;
             }
-            $location.search('widgets', $routeParams.widgets + newUrl);            
+            $location.search('widgets', $routeParams.widgets + newUrl);
         };
         vm.removeWidgetFromURL = function(widgetObj){
             var widgetNameArr = $routeParams.widgets.split(',') || [];
@@ -142,7 +147,7 @@
             if (widgetNameArr.length < 1){
                 vm.removeAllWidgetFromURL();
             } else {
-                $location.search('widgets', widgetNameArr.toString()); 
+                $location.search('widgets', widgetNameArr.toString());
             }
         };
         vm.removeAllWidgetFromURL = function(){
@@ -178,8 +183,8 @@
             if (ContainerMetadataService.getAllContainers().length < 1){
                 vm.containerName = '';
                 document.getElementById('selectedContainer').value = '';
-            };
-            if (containerList.indexOf(vm.containerName) != -1){
+            }
+            if (containerList.indexOf(vm.containerName) !== -1){
                 vm.selectedContainerRunning = true;
             } else {
                 vm.selectedContainerRunning = false;
@@ -195,14 +200,13 @@
             if ( vm.checkWidgetType(directive) ) {
                 vm.dashboardOptions.addWidget(directive);
                 vm.addWidgetToURL(directive);
-            };
+            }
         };
         vm.checkWidgetType = function(widgetObj){
             if (widgetObj.type !== undefined){
                 switch (widgetObj.type){
                     case 1:
                         return true;
-                    break;
                     case 2:
                         if (ContainerMetadataService.getGlobalFilter() === ''){
 
@@ -238,7 +242,8 @@
         vm.inputHost = '';
         vm.disableSelect = false;
         vm.selectedContainerRunning = false;
-        vm.selectedContainer;
+        vm.selectedContainer = '';
+        vm.enableContainerWidgets = vectorConfig.enableContainerWidgets;
         activate();
     }
 
@@ -251,9 +256,12 @@
         '$location',
         'widgetDefinitions',
         'widgets',
+        'embed',
         'DashboardService',
+        'vectorVersion',
         'ContainerMetadataService',
-        'ModalService'
+        'ModalService',
+        'vectorConfig'
     ];
 
     angular

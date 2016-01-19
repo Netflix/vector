@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-if="!vm.embed">
     <div class="col-md-6">
         <form role="form" name="form">
             <div class="input-group input-group-lg" ng-class="{'has-error': form.host.$invalid && form.host.$dirty}">
@@ -59,24 +59,24 @@
         </form>
     </div>
 </div>
-<div class="row" ng-show="vm.isHostnameExpanded">
+<div class="row" ng-show="vm.isHostnameExpanded" ng-if="!vm.embed">
     <div class="col-md-6">
         <form role="form" name="form">
             <div class="input-group input-group-lg" ng-class="{'has-error': form.hostspec.$invalid && form.hostspec.$dirty}">
                 <span class="input-group-addon">Hostspec&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <input type="text" class="form-control" id="hostspecInput" name="host" data-content="Please enter the instance hostspec." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.hostspec" ng-change="vm.updateHost()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" ng-disabled="flags.contextUpdating == true || vm.disableSelect" required placeholder="Instance Hostspec">
             </div>
-<!--             <div class="input-group input-group-lg">
+            <div class="input-group input-group-lg" ng-show="!vm.enableContainerWidgets">
                 <span class="input-group-addon">Filter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="text" class="form-control" id="globalFilterInput" name="globalFilter" data-content="Global filter for container widgets" rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="vm.globalFilter" ng-change="vm.updateGlobalFilter()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" placeholder="Container Filter">            
-            </div> -->
+                <input type="text" class="form-control" id="globalFilterInput" name="globalFilter" data-content="Global filter for container widgets" rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="vm.globalFilter" ng-change="vm.updateGlobalFilter()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" placeholder="Global Filter">
+            </div>
         </form>
     </div>
     <div class="col-md-2">
         <p class="lead" id="hostnameLabel" data-content="PMCD hostname. The hostname from the actual instance you're monitoring." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body">{{flags.contextAvailable && properties.hostname ? properties.hostname : 'Disconnected'}}</p>
     </div>
 </div>
-<div class="row">
+<div class="row" ng-show="vm.enableContainerWidgets">
     <div class="col-md-6">
         <form role="form" name="form">
             <div class="input-group input-group-lg">
@@ -85,7 +85,6 @@
                     <option ng-model="vm.disableSelect" ng-disabled="vm.disableSelect" value="">Select a Container</option>
                     <option ng-repeat="names in vm.containerNames()" ng-selected="vm.selectedContainer == names"> {{names}}</option>
                 </select>
-<!--                 <input type="text" class="form-control" id="globalFilterInput" name="globalFilter" data-content="Default container for widgets" rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="vm.globalFilter" ng-change="vm.updateGlobalFilter()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" placeholder="Select default container">     -->
                 <i class="fa fa-check fa-2x form-control-feedback" ng-if="vm.selectedContainerRunning"></i>
             </div>
         </form>
@@ -145,6 +144,7 @@
         </div>
     </div>
 </div>
+<div class="row" style="padding-left: 15px; " ng-if="!vm.embed">Version: {{vm.version}}</div>
 <script>
     (function () {
         'use strict';

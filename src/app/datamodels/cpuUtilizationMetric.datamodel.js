@@ -60,7 +60,7 @@
                                     value: lastValue.y / (cpuCount * 1000)
                                 });
                             }
-                        }
+                        };
 
                         angular.forEach(cpuSysMetric.data, function (instance) {
                             pushReturnValues(instance, 'sys');

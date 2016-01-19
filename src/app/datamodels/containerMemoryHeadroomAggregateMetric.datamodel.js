@@ -22,7 +22,7 @@
     * @name ContainerMemoryHeadroomAggregateMetricDataModel
     * @desc
     */
-    function ContainerMemoryHeadroomAggregateMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
+    function ContainerMemoryHeadroomAggregateMetricDataModel(WidgetDataModel, MetricListService, VectorService, ContainerMetadataService) {
         var DataModel = function () {
             return this;
         };

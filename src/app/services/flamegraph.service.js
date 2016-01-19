@@ -30,10 +30,10 @@
         function generate() {
             $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=generic.systack')
                 .success(function () {
-                    flash.to('alert-sysstack-success').success = 'generic.systack requested!';
+                    flash.to('alert-sysstack').success = 'generic.systack requested!';
                     $log.info('generic.systack requested');
                 }).error(function () {
-                    flash.to('alert-sysstack-error').error = 'failed requesting generic.systack!';
+                    flash.to('alert-sysstack').error = 'failed requesting generic.systack!';
                     $log.error('failed requesting generic.systack');
                 });
         }
