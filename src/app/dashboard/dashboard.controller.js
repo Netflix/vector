@@ -106,7 +106,7 @@
                 hideToolbar: true,
                 widgetButtons: false,
                 hideWidgetName: true,
-                hideWidgetSettings: true,
+                hideWidgetSettings: false,
                 widgetDefinitions: widgetDefinitions,
                 defaultWidgets: widgetsToLoad
             };
@@ -205,9 +205,9 @@
         vm.checkWidgetType = function(widgetObj){
             if (widgetObj.type !== undefined){
                 switch (widgetObj.type){
-                    case 1:
+                    case 1: //regular widgets
                         return true;
-                    case 2:
+                    case 2: //container widgets
                         if (ContainerMetadataService.getGlobalFilter() === ''){
 
                             var modalOptions = {
@@ -222,9 +222,11 @@
                             });
 
                             return false;
-                            
+
                         }
                     break;
+                    case 3:// filterable widget
+                        return true;
                     default:
                     return true;
 
