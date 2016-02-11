@@ -44,6 +44,12 @@
                                vectorConfig) {
         var GENERAL = 1;
         var CONTAINER = 2;
+        var FILTERABLE = 3;
+        var onSettingsClose = function(resultFromModal, widgetModel) {
+            if (typeof resultFromModal !== 'undefined'){
+                widgetModel.filter = resultFromModal.filter; 
+            }    
+        };        
         var definitions = [
             {
                 name: 'kernel.all.load',
@@ -634,7 +640,7 @@
             definitions.push(
                 {
                     name: 'cgroup.cpuacct.stat.user',
-                title: 'Container CPU Utilization',
+                title: '*Container CPU Utilization',
                 directive: 'area-stacked-time-series',
                 dataAttrName: 'data',
                 dataModelType: ContainerCPUstatMetricTimeSeriesDataModel,
@@ -744,7 +750,14 @@
                 attrs: {
                     percentage: false,
                     integer: true
-                }
+                },
+                type: FILTERABLE,
+                settingsModalOptions: {
+                    templateUrl: 'app/dashboard/custom-widget-settings-template.html',
+                    controller: 'customWidgetSettingsCtrl'
+                },
+                onSettingsClose: onSettingsClose,
+                filter: ''       
             },{
                 name: 'container.disk.iops',
                 title: 'Container Disk IOPS',

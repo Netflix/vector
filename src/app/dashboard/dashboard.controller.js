@@ -169,6 +169,7 @@
                 document.getElementById('selectedContainer').value = '';
                 vm.containerName = '';
                 vm.removeAllWidgetFromURL();
+                ContainerMetadataService.setContainerName('');
             });
         };
         vm.updateGlobalFilter = function(){
