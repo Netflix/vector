@@ -1,6 +1,6 @@
 ![Vector](vector.png)
 
-[![Slack Status](http://slackin-vector.herokuapp.com/badge.svg)](http://slackin-vector.herokuapp.com)
+[![Slack Status](http://slack.vectoross.io/badge.svg)](http://slack.vectoross.io)
 
 Vector is an open source on-host performance monitoring framework which exposes hand picked high resolution system and application metrics to every engineer’s browser. Having the right metrics available on-demand and at a high resolution is key to understand how a system behaves and correctly troubleshoot performance issues.
 
