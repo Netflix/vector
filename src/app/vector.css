@@ -62,6 +62,8 @@
  #hostnameInput {
      margin-left: -1px;
      margin-top: 8px;
+     text-overflow: ellipsis;
+     padding-right: 33px;
  }
 
  #hostspecInput {
@@ -231,24 +233,48 @@
     border-radius:6px 0 6px 6px;
 }
 
+@media screen and (max-width: 1250px) {
+    #widgetWrapper {
+        width: 50%;
+    }
+
+    #widgetWrapper + .col-md-2 {
+        clear: left;
+    }
+
+    #widgetWrapper ~ .col-md-2 {
+        width: 50%;
+    }
+}
+
 @media screen and (max-width: 1280px) {
   .widget-container {
     width: 33% !important;
   }
 }
 
-@media screen and (max-width: 990px) {
-  .widget-container {
-    width: 50% !important;
-  }
-  #widgetWrapper {
-    width: 100% !important;
-  }
-  #widgetWrapper ul {
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-  }
+@media screen and (max-width: 991px) {
+    #widgetWrapper + .col-md-2 {
+        clear: none;
+    }
+
+    #widgetWrapper ~ .col-md-2 {
+        width: auto;
+    }
+
+    .widget-container {
+        width: 50% !important;
+    }
+
+    #widgetWrapper {
+        width: 100% !important;
+    }
+
+    #widgetWrapper ul {
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
 }
 
 @media screen and (max-width: 640px) {
