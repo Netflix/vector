@@ -5,10 +5,10 @@
      'use strict';
 
     /**
-    * @name ContainerCPUstatMetricTimeSeriesDataModel
+    * @name ContainerCPUUtilizationMetricTimeSeriesDataModel
     * @desc
     */
-    function ContainerCPUstatMetricTimeSeriesDataModel(ContainerMetadataService, WidgetDataModel, MetricListService, VectorService) {
+    function ContainerCPUUtilizationMetricTimeSeriesDataModel(ContainerMetadataService, WidgetDataModel, MetricListService, VectorService) {
         var DataModel = function () {
             return this;
         };
@@ -72,5 +72,5 @@
 
     angular
         .module('app.datamodels')
-        .factory('ContainerCPUstatMetricTimeSeriesDataModel', ContainerCPUstatMetricTimeSeriesDataModel);
+        .factory('ContainerCPUUtilizationMetricTimeSeriesDataModel', ContainerCPUUtilizationMetricTimeSeriesDataModel);
  })();

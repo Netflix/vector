@@ -25,7 +25,7 @@
     /* Widgets */
     function widgetDefinitions(MetricDataModel,
                                CumulativeMetricDataModel,
-                               ContainerCPUstatMetricTimeSeriesDataModel,
+                               ContainerCPUUtilizationMetricTimeSeriesDataModel,
                                ContainerMemoryBytesMetricTimeSeriesDataModel,
                                ContainerMemoryUtilizationMetricDataModel,
                                ContainerNetworkBytesMetricDataModel,
@@ -633,7 +633,7 @@
                     title: 'Container CPU Utilization',
                     directive: 'line-time-series',
                     dataAttrName: 'data',
-                    dataModelType: ContainerCPUstatMetricTimeSeriesDataModel,
+                    dataModelType: ContainerCPUUtilizationMetricTimeSeriesDataModel,
                     dataModelOptions: {
                         name: 'cgroup.cpuacct.usage',
                     },
