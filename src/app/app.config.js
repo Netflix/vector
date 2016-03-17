@@ -28,7 +28,7 @@
             'window': 2,    // Default graph time window in minutes
             'enableCpuFlameGraph': false,
             'enableDiskLatencyHeatMap': false,
-            'enableContainerWidgets': false,
+            'enableContainerWidgets': true,
         }).constant('containerConfig', {
             'externalAPI': false //enable and edit containermetadata.service to call external API to resolve
         });
