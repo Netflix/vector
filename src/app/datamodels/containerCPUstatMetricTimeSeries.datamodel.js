@@ -20,38 +20,31 @@
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
 
             // create create base metrics
-            var cpuSysMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.cpuacct.stat.user'),
-                cpuUserMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.cpuacct.stat.system'),
+            var cpuUsageMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.cpuacct.usage'),
                 derivedFunction;
 
             derivedFunction = function () {
-                var returnValues = [],
-                    lastValue2 = [];
+                var returnValues = [];
 
-                if ( cpuSysMetric.data.length > 0 && cpuUserMetric.data.length > 0){
-                    angular.forEach(cpuSysMetric.data, function (instance) {
+                if ( cpuUsageMetric.data.length > 0){
+                    angular.forEach(cpuUsageMetric.data, function (instance) {
+
                         ContainerMetadataService.setCurrentTime(instance.previousTimestamp);
-                        if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
-                            lastValue2.push(instance.previousValue);
-                            ContainerMetadataService.resolveId(instance.key);
-                        }
-                    });
-
-                    angular.forEach(cpuUserMetric.data, function (instance) {
 
                         if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
                             var lastValue = instance.values[instance.values.length - 1];
                             var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
 
-                            if (ContainerMetadataService.checkGlobalFilter(name)){
+                            if (ContainerMetadataService.checkGlobalFilter(name)) {
                                 returnValues.push({
                                     timestamp: lastValue.x,
                                     key: name,
-                                    value: instance.previousValue / lastValue2.shift() / 100
+                                    value: lastValue.y / 1000 / 1000 / 1000
                                 });
                             }
-                            
                         }
+
+                        ContainerMetadataService.resolveId(instance.key);
                     });
                 }
 
@@ -69,8 +62,7 @@
             MetricListService.destroyDerivedMetric(this.name);
 
             // remove subscribers and delete base metrics
-            MetricListService.destroyMetric('cgroup.cpuacct.stat.user');
-            MetricListService.destroyMetric('cgroup.cpuacct.stat.system');
+            MetricListService.destroyMetric('cgroup.cpuacct.usage');
 
             WidgetDataModel.prototype.destroy.call(this);
         };

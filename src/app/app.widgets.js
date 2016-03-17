@@ -629,13 +629,13 @@
         if (vectorConfig.enableContainerWidgets) {
             definitions.push(
                 {
-                    name: 'cgroup.cpuacct.stat.user',
+                    name: 'cgroup.cpuacct.usage',
                     title: 'Container CPU Utilization',
-                    directive: 'area-stacked-time-series',
+                    directive: 'line-time-series',
                     dataAttrName: 'data',
                     dataModelType: ContainerCPUstatMetricTimeSeriesDataModel,
                     dataModelOptions: {
-                        name: 'cgroup.cpuacct.stat.user',
+                        name: 'cgroup.cpuacct.usage',
                     },
                     size: {
                         width: '25%',
