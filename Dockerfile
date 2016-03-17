@@ -15,10 +15,6 @@
 FROM httpd:2.4
 MAINTAINER Martin Spier <mspier@netflix.com>
 
-RUN apt-get update \
-  && apt-get install -y wget \
-  && cd /usr/local/apache2/htdocs/ \
-  && wget -q https://bintray.com/artifact/download/netflixoss/downloads/1.0.3/vector.tar.gz \
-  && tar xvzf vector.tar.gz
+COPY /dist /usr/local/apache2/htdocs
 
 EXPOSE 80
