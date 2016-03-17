@@ -68,24 +68,6 @@
 
               chart.yAxis.tickFormat(yAxisTickFormat);
 
-
-              /* Woraround for NVD3 Bug #1081 (https://github.com/novus/nvd3/issues/1081) */
-
-              chart.interactiveLayer.tooltip.contentGenerator(function (d) {
-                  var header = d.value;
-                  var headerhtml = '<thead><tr><td colspan="3"><strong class="x-value">' + header + '</strong></td></tr></thead>';
-
-                  var bodyhtml = '<tbody>';
-                  var series = d.series;
-                  series.forEach(function (d) {
-                      bodyhtml = bodyhtml + '<tr><td class="legend-color-guide"><div style="background-color: ' + d.color + ';"></div></td><td class="key">' + d.key + '</td><td class="value">' + yAxisTickFormat(d.value) + '</td></tr>';
-                  });
-                  bodyhtml = bodyhtml + '</tbody>';
-                  return '<table>' + headerhtml + bodyhtml + '</table>';
-              });
-
-              /* End of workaround */
-
               nv.utils.windowResize(chart.update);
 
               d3.select('#' + scope.id + ' svg')
