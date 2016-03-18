@@ -178,6 +178,7 @@
         vm.updateInterval = DashboardService.updateInterval;
         vm.updateHost = function() {
             DashboardService.updateHost(vm.inputHost);
+            ContainerMetadataService.clearIdDictionary();
         };
         vm.containerNames = function(){
             var containerList = ContainerMetadataService.getAllContainers();
@@ -190,7 +191,7 @@
             } else {
                 vm.selectedContainerRunning = false;
             }
-            return containerList;
+            return containerList.filter(Boolean);
         };
         vm.containerNameChanged = function(){
             ContainerMetadataService.setContainerName(vm.containerName);

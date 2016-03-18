@@ -35,6 +35,7 @@
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
 
+            var widgetDefinition = this;
             // create create base metrics
             var inMetric = MetricListService.getOrCreateCumulativeMetric('network.interface.in.bytes'),
                 outMetric = MetricListService.getOrCreateCumulativeMetric('network.interface.out.bytes'),
@@ -46,7 +47,7 @@
                     lastValue;
 
                 var pushReturnValues = function(instance, metricName) {
-                    if (instance.values.length > 0) {
+                    if (instance.values.length > 0 && instance.key.indexOf(widgetDefinition.widgetScope.widget.filter) !==-1) {
                         lastValue = instance.values[instance.values.length - 1];
                         returnValues.push({
                             timestamp: lastValue.x,
