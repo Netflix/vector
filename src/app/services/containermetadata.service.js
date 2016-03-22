@@ -14,7 +14,7 @@
         */
         var idMap = {};
         function idDictionary(key){
-                return idMap[parseId(key)];
+            return idMap[parseId(key)];
         }
 
         /**
@@ -23,6 +23,9 @@
         */
         function parseId(id){
             //handle regular docker
+            if (id === null){
+                return false;
+            }
             if (id.indexOf('docker/') !==-1){
                 id = id.split('/')[2];
             //handle systemd
@@ -38,6 +41,7 @@
         */
         function clearIdDictionary(){
             idMap = {};
+            taskNames = {};
         }
 
         /**
@@ -49,7 +53,7 @@
                 //make external api call here to resolve container id
                 //need to set containerConfig.externalAPI to true in app.config.js
             } else {
-                idDictionary(instanceKey,instanceKey);
+                idDictionary(instanceKey);
             }
         }
 
@@ -58,7 +62,7 @@
         * @desc
         */
         function containerIdExist(id) {
-            return (idMap[parseId(id)] !== undefined);
+            return (idMap[parseId(id)] !== undefined && idMap[parseId(id)] !== '');
         }
 
         /**;
@@ -77,30 +81,68 @@
         */
         function containerCgroupIntervalFunction(){
             idMap = activeContainers.data.reduce(function(obj, item){
-                if (isTimeCurrent(item.values[item.values.length-1].x)){
+                var time = item.values[item.values.length-1].x;
+                setCurrentTime(time);
+                if (isTimeCurrent(time)){
                     obj[item.key] = item.key.substring(0,12);
-                } else {
-                    delete obj[item.key];
                 }
-                return obj;
+                if (containerConfig.externalAPI){
+                    resolveId(item.key);
+                }
+                if (obj !==''){
+                    return obj;
+                }
             },{});
+            if (!containerIdExist(containerName)){
+                getAllContainers();
+            }
+
+        }
+
+        /**;
+        * @name getAllContainers
+        * @desc
+        */
+        var taskNames = {};
+        function getAllContainers(){
+            var keys = Object.keys(idMap);
+            var tempObj = idMap;
+            if (containerConfig.externalAPI){
+                keys = Object.keys(taskNames);
+                tempObj = taskNames;
+            }
+            
+            var values = new Array(keys.length);
+            for(var i = 0; i < keys.length; i++) {
+                values[i] = tempObj[keys[i]];
+            }
+            return values;
         }
 
         /**
         * @name setGlobalFilter
-        * @desc
+        * @desc deprecated, to be removed later
         */
-        var globalFilter = '';
+        var globalFilter;
         function setGlobalFilter(word){
             globalFilter = word;
         }
 
         /**
         * @name checkGlobalFilter
-        * @desc
+        * @desc function name to be updated later
         */
         function checkGlobalFilter(name){
-            return (globalFilter === '' || name.indexOf(globalFilter) !==-1);
+            //return (globalFilter === '' || name.indexOf(globalFilter) !==-1);
+            return (containerName === '' || name.indexOf(containerName) !==-1);
+        }
+
+        /**
+        * @name getGlobalFilter
+        * @desc function name to be updated later
+        */
+        function getGlobalFilter(){
+            return containerName;
         }
 
         /**
@@ -123,6 +165,23 @@
             return difference < 6000;
         }
 
+        /**
+        * @name setContainerName
+        * @desc
+        */
+        var containerName = '';
+        function setContainerName(name){
+            containerName = name;
+        }
+
+        /**
+        * @name getSelectedContainer
+        * @desc
+        */
+        function getSelectedContainer(){
+            return containerName;
+        }
+
         //////////
 
         return {
@@ -131,10 +190,14 @@
             resolveId: resolveId,
             setGlobalFilter: setGlobalFilter,
             checkGlobalFilter: checkGlobalFilter,
+            getGlobalFilter : getGlobalFilter,
             setCurrentTime: setCurrentTime,
             isTimeCurrent: isTimeCurrent,
             containerIdExist: containerIdExist,
-            initContainerCgroups:initContainerCgroups
+            getAllContainers: getAllContainers,
+            initContainerCgroups:initContainerCgroups,
+            setContainerName: setContainerName,
+            getSelectedContainer: getSelectedContainer
         };
     }
 

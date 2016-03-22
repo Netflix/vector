@@ -30,6 +30,8 @@
                                ContainerMemoryUtilizationMetricDataModel,
                                ContainerNetworkBytesMetricDataModel,
                                ContainerMultipleCumulativeMetricDataModel,
+                               ContainerMemoryHeadroomAggregateMetricDataModel,
+                               ContainerMemoryHeadroomMetricDataModel,
                                MemoryUtilizationMetricDataModel,
                                NetworkBytesMetricDataModel,
                                CpuUtilizationMetricDataModel,
@@ -40,6 +42,14 @@
                                DiskLatencyMetricDataModel,
                                CumulativeUtilizationMetricDataModel,
                                vectorConfig) {
+        //var GENERAL = 1; default widget type
+        var CONTAINER = 2;
+        var FILTERABLE = 3;
+        var onSettingsClose = function(resultFromModal, widgetModel) {
+            if (typeof resultFromModal !== 'undefined'){
+                widgetModel.filter = resultFromModal.filter; 
+            }    
+        };        
         var definitions = [
             {
                 name: 'kernel.all.load',
@@ -422,7 +432,14 @@
                 attrs: {
                     percentage: false,
                     integer: true
-                }
+                },
+                type: FILTERABLE,
+                settingsModalOptions: {
+                    templateUrl: 'app/dashboard/custom-widget-settings-template.html',
+                    controller: 'customWidgetSettingsCtrl'
+                },
+                onSettingsClose: onSettingsClose,
+                filter: ''  
             }, {
                 name: 'disk.iops',
                 title: 'Disk IOPS',
@@ -638,18 +655,38 @@
                         name: 'cgroup.cpuacct.usage',
                     },
                     size: {
-                        width: '25%',
+                        width: '50%',
                         height: '250px'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
+                    type: CONTAINER,
                     attrs: {
                         forcey: 1,
                         percentage: true,
                         integer: false
                     }
-                },
-                {
+                }, {
+                    name: 'container.memory.headroom',
+                    title: 'Container Memory Headroom',
+                    directive: 'area-stacked-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: ContainerMemoryHeadroomMetricDataModel,
+                    dataModelOptions: {
+                        name: 'container.memory.headroom'
+                    },
+                    size: {
+                        width: '25%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                    type: CONTAINER,
+                    attrs: {
+                        percentage: false,
+                        integer: true
+                    }
+                }, {
                     name: 'cgroup.memory.usage',
                     title: 'Container Memory Usage',
                     directive: 'line-time-series',
@@ -659,20 +696,19 @@
                         name: 'cgroup.memory.usage'
                     },
                     size: {
-                        width: '25%',
+                        width: '50%',
                         height: '250px'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
-                },
-                {
-                    name: 'memory.Headroom',
-                    title: 'Container Memory Headroom',
+                }, {
+                    name: 'container.memory.utilization',
+                    title: 'Container Memory Utilization',
                     directive: 'area-stacked-time-series',
                     dataAttrName: 'data',
                     dataModelType: ContainerMemoryUtilizationMetricDataModel,
                     dataModelOptions: {
-                        name: 'mem'
+                        name: 'container.memory.utilization'
                     },
                     size: {
                         width: '25%',
@@ -684,17 +720,36 @@
                         percentage: false,
                         integer: true
                     }
-                },{
+                }, {
+                    name: 'container.memory.aggregate.headroom',
+                    title: 'Container Memory Aggregate Headroom',
+                    directive: 'area-stacked-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: ContainerMemoryHeadroomAggregateMetricDataModel,
+                    dataModelOptions: {
+                        name: 'container.memory.aggregate.headroom'
+                    },
+                    size: {
+                        width: '25%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                    attrs: {
+                        percentage: false,
+                        integer: true
+                    }
+                /*}, {
                     name: 'container.network.interface.bytes',
                     title: 'Container Network Throughput (kB)',
                     directive: 'line-time-series',
                     dataAttrName: 'data',
                     dataModelType: ContainerNetworkBytesMetricDataModel,
                     dataModelOptions: {
-                        name: 'network.interface.bytes'
+                        name: 'container.network.interface.bytes'
                     },
                     size: {
-                        width: '25%',
+                        width: '50%',
                         height: '250px'
                     },
                     enableVerticalResize: false,
@@ -702,7 +757,14 @@
                     attrs: {
                         percentage: false,
                         integer: true
-                    }
+                    },
+                    type: FILTERABLE,
+                    settingsModalOptions: {
+                        templateUrl: 'app/dashboard/custom-widget-settings-template.html',
+                        controller: 'customWidgetSettingsCtrl'
+                    },
+                    onSettingsClose: onSettingsClose,
+                    filter: ''       */
                 },{
                     name: 'container.disk.iops',
                     title: 'Container Disk IOPS',
@@ -722,7 +784,7 @@
                     },
                     enableVerticalResize: false,
                     group: 'Container'
-                },{
+                }, {
                     name: 'container.disk.bytes',
                     title: 'Container Disk Throughput (kB)',
                     directive: 'line-time-series',
@@ -741,8 +803,36 @@
                     },
                     enableVerticalResize: false,
                     group: 'Container'
+                },{
+                    name: 'network.interface.bytes',
+                    title: 'Container Network Throughput (kB)',
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: NetworkBytesMetricDataModel,
+                    dataModelOptions: {
+                        name: 'network.interface.bytes'
+                    },
+                    size: {
+                        width: '25%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Network',
+                    attrs: {
+                        percentage: false,
+                        integer: true
+                    },
+                    type: FILTERABLE,
+                    settingsModalOptions: {
+                        templateUrl: 'app/dashboard/custom-widget-settings-template.html',
+                        controller: 'customWidgetSettingsCtrl'
+                    },
+                    onSettingsClose: onSettingsClose,
+                    filter: ''  
                 }
+
             );
+
         }
 
         return definitions;
@@ -828,7 +918,6 @@
     ];
 
    var emptyWidgets = [];
-
     angular
         .module('app.widgets', [])
         .factory('widgetDefinitions', widgetDefinitions)

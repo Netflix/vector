@@ -20,10 +20,10 @@
      'use strict';
 
     /**
-    * @name NetworkBytesMetricDataModel
+    * @name ContainerMemoryHeadroomMetricDataModel
     * @desc
     */
-    function NetworkBytesMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
+    function ContainerMemoryHeadroomMetricDataModel(WidgetDataModel, MetricListService, VectorService, ContainerMetadataService) {
         var DataModel = function () {
             return this;
         };
@@ -35,10 +35,9 @@
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
 
-            var widgetDefinition = this;
             // create create base metrics
-            var inMetric = MetricListService.getOrCreateCumulativeMetric('network.interface.in.bytes'),
-                outMetric = MetricListService.getOrCreateCumulativeMetric('network.interface.out.bytes'),
+            var usageMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.memory.usage'),
+                limitMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.memory.limit'),
                 derivedFunction;
 
             // create derived function
@@ -46,26 +45,31 @@
                 var returnValues = [],
                     lastValue;
 
-                var pushReturnValues = function(instance, metricName) {
-                    if (instance.values.length > 0 && instance.key.indexOf(widgetDefinition.widgetScope.widget.filter) !==-1) {
+                var pushReturnValues = function(instance, metricName){                    
+                    ContainerMetadataService.setCurrentTime(instance.previousTimestamp);
+                    if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
                         lastValue = instance.values[instance.values.length - 1];
-                        returnValues.push({
-                            timestamp: lastValue.x,
-                            key: instance.key + metricName,
-                            value: lastValue.y / 1024
-                        });
+                        var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
+                        if (name.indexOf(ContainerMetadataService.getSelectedContainer()) !== -1){
+                            returnValues.push({
+                                timestamp: lastValue.x,
+                                key: name + metricName,
+                                value: instance.previousValue / 1024 / 1024
+                            });
+                        }
                     }
+
                 };
 
-                angular.forEach(inMetric.data, function (instance) {
-                    pushReturnValues(instance, ' in');
+                angular.forEach(usageMetric.data, function (instance) {
+                    pushReturnValues(instance, ' - Usage');
                 });
 
-                angular.forEach(outMetric.data, function (instance) {
-                    pushReturnValues(instance, ' out');
+                angular.forEach(limitMetric.data, function (instance) {
+                    pushReturnValues(instance, ' - Limit');
                 });
 
-                return returnValues;
+                return returnValues.sort(function(val1, val2){ return val1.key < val2.key; });
             };
 
             // create derived metric
@@ -79,8 +83,8 @@
             MetricListService.destroyDerivedMetric(this.name);
 
             // remove subscribers and delete base metrics
-            MetricListService.destroyMetric('network.interface.in.bytes');
-            MetricListService.destroyMetric('network.interface.out.bytes');
+            MetricListService.destroyMetric('cgroup.memory.usage');
+            MetricListService.destroyMetric('cgroup.memory.limit');
 
             WidgetDataModel.prototype.destroy.call(this);
         };
@@ -90,5 +94,5 @@
 
     angular
         .module('app.datamodels')
-        .factory('NetworkBytesMetricDataModel', NetworkBytesMetricDataModel);
+        .factory('ContainerMemoryHeadroomMetricDataModel', ContainerMemoryHeadroomMetricDataModel);
  })();
