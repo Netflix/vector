@@ -669,7 +669,7 @@
                 }, {
                     name: 'container.memory.headroom',
                     title: 'Container Memory Headroom',
-                    directive: 'area-stacked-time-series',
+                    directive: 'area-stacked-time-series-no-total',
                     dataAttrName: 'data',
                     dataModelType: ContainerMemoryHeadroomMetricDataModel,
                     dataModelOptions: {
