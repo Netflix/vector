@@ -804,7 +804,7 @@
                     enableVerticalResize: false,
                     group: 'Container'
                 },{
-                    name: 'network.interface.bytes',
+                    name: 'container.network.interface.bytes',
                     title: 'Container Network Throughput (kB)',
                     directive: 'line-time-series',
                     dataAttrName: 'data',
