@@ -120,6 +120,7 @@ form div input[name="widgetFilter"] {
 
 .widget-container {
   will-change: transform;
+  padding-bottom: 0px !important;
 }
 
 .widget-header.panel-heading.ui-sortable-handle {
