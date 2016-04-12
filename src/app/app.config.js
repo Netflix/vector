@@ -30,7 +30,8 @@
             'enableDiskLatencyHeatMap': false,
             'enableContainerWidgets': true,
             'disableContainerFilter': false,
-            'disableContainerSelect': false
+            'disableContainerSelect': false,
+            'allowNoContainerSelect': true
         }).constant('containerConfig', {
             'externalAPI': false //enable and edit containermetadata.service to call external API to resolve
         });

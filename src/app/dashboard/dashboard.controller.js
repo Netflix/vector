@@ -136,6 +136,7 @@
             }
             $location.search('widgets', $routeParams.widgets + newUrl);
         };
+
         vm.removeWidgetFromURL = function(widgetObj){
             var widgetNameArr = $routeParams.widgets.split(',') || [];
             for (var d=0; d< widgetNameArr.length; d++){
@@ -150,15 +151,17 @@
                 $location.search('widgets', widgetNameArr.toString());
             }
         };
+
         vm.removeAllWidgetFromURL = function(){
             $location.search('widgets', null);
         };
+
         vm.removeContainerFromURL = function(){
 
             var modalOptions = {
                 closeButtonText: 'Cancel',
                 actionButtonText: 'Ok',
-                headerText: 'Reset dashboard',
+                headerText: 'Reset Dashboard',
                 bodyText: 'Are you sure you want to reset the dashboard?'
             };
 
@@ -171,14 +174,18 @@
                 ContainerMetadataService.setContainerName('');
             });
         };
+
         vm.updateGlobalFilter = function(){
             DashboardService.updateGlobalFilter(vm.globalFilter);
         };
+
         vm.updateInterval = DashboardService.updateInterval;
+
         vm.updateHost = function() {
             DashboardService.updateHost(vm.inputHost);
             ContainerMetadataService.clearIdDictionary();
         };
+
         vm.containerList = function(){
             var containerList = ContainerMetadataService.getAllContainers();
             if (ContainerMetadataService.getAllContainers().length < 1){
@@ -191,10 +198,12 @@
             }
             return containerList.filter(Boolean);
         };
+
         vm.containerChanged = function(){
             ContainerMetadataService.setContainerName(vm.selectedContainer);
             $location.search('container', vm.selectedContainer);
         };
+
         vm.addWidget = function(event, directive){
             event.preventDefault();
             if ( vm.checkWidgetType(directive) ) {
@@ -202,8 +211,9 @@
                 vm.addWidgetToURL(directive);
             }
         };
+
         vm.checkWidgetType = function(widgetObj) {
-            if (widgetObj.requireContainerFilter !== undefined && widgetObj.requireContainerFilter === true && vm.disableContainerSelect === false) {
+            if (widgetObj.requireContainerFilter !== undefined && widgetObj.requireContainerFilter === true && vm.disableContainerSelect === false && !vm.allowNoContainerSelect) {
               if (ContainerMetadataService.getSelectedContainer() === ''){
 
                   var modalOptions = {
@@ -222,6 +232,7 @@
             }
             return true;
         };
+
         vm.firstClick = true;
         vm.updateWindow = DashboardService.updateWindow;
         vm.globalFilter ='';
@@ -233,6 +244,8 @@
         vm.enableContainerWidgets = vectorConfig.enableContainerWidgets;
         vm.disableContainerFilter = vectorConfig.disableContainerFilter;
         vm.disableContainerSelect = vectorConfig.disableContainerSelect;
+        vm.allowNoContainerSelect = vectorConfig.allowNoContainerSelect;
+
         activate();
     }
 

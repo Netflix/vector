@@ -73,8 +73,8 @@
             <div class="input-group input-group-lg target" ng-show="vm.enableContainerWidgets && !vm.disableContainerSelect">
                 <span class="input-group-addon" >Container Id</span>
                 <select id="selectedContainer" ng-model="vm.selectedContainer" ng-change="vm.containerChanged(); vm.disableContainerSelectNone = true;" class="form-control">
-                    <option ng-model="vm.disableContainerSelectNone" ng-disabled="vm.disableContainerSelectNone" value="">None</option>
-                    <option ng-repeat="containerId in vm.containerList()" ng-selected="vm.selectedContainer === containerId">{{containerId}}</option>
+                    <option ng-disabled="vm.disableContainerSelectNone && !vm.allowNoContainerSelect" value="">All</option>
+                    <option ng-repeat="containerId in vm.containerList()" ng-selected="vm.selectedContainer == containerId">{{containerId}}</option>
                 </select>
                 <i class="fa fa-check fa-2x form-control-feedback" ng-if="vm.selectedContainerRunning"></i>
             </div>

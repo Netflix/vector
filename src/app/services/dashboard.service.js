@@ -191,7 +191,6 @@
         * @desc
         */
         function updateGlobalFilter(word) {
-            $log.log('Global Filter updated.');
             //$rootScope.flags.filterDone = true;
             ContainerMetadataService.setGlobalFilter(word);
         }
