@@ -24,7 +24,9 @@
                 derivedFunction;
 
             derivedFunction = function () {
-                var returnValues = [];
+                var returnValues = [],
+                    lastValue,
+                    name;
 
                 if ( cpuUsageMetric.data.length > 0){
                     angular.forEach(cpuUsageMetric.data, function (instance) {
@@ -32,8 +34,8 @@
                         ContainerMetadataService.setCurrentTime(instance.previousTimestamp);
 
                         if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
-                            var lastValue = instance.values[instance.values.length - 1];
-                            var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
+                            lastValue = instance.values[instance.values.length - 1];
+                            name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
 
                             if (ContainerMetadataService.checkContainerName(name) && ContainerMetadataService.checkGlobalFilter(name)) {
                                 returnValues.push({

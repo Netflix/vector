@@ -22,7 +22,7 @@
     * @name ContainerMultipleCumulativeMetricDataModel
     * @desc
     */
-    function ContainerMultipleCumulativeMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
+    function ContainerMultipleCumulativeMetricDataModel(WidgetDataModel, MetricListService, VectorService, ContainerMetadataService) {
         var DataModel = function () {
             return this;
         };
@@ -45,17 +45,22 @@
 
             derivedFunction = function () {
                 var returnValues = [],
-                    lastValue;
+                    lastValue,
+                    name;
 
                 angular.forEach(metrics, function (metric, key) {
                     angular.forEach(metric.data, function (instance) {
-                        if (instance.values.length > 0 && instance.key.indexOf('docker/') !==- 1 ) {
-                            lastValue = instance.values[instance.values.length - 1];
-                            returnValues.push({
-                                timestamp: lastValue.x,
-                                key: key.replace('{key}', instance.key),
-                                value: lastValue.y
-                            });
+                        //TODO: find another way of filtering the containers without using /docker/
+                        if (instance.key.indexOf('/docker/') !==- 1) {
+                            name = instance.key.replace('/docker/', '').substring(0, 12);;
+                            if (instance.values.length > 0 && ContainerMetadataService.checkContainerName(name) && ContainerMetadataService.checkGlobalFilter(name)) {
+                                lastValue = instance.values[instance.values.length - 1];
+                                returnValues.push({
+                                    timestamp: lastValue.x,
+                                    key: key.replace('{key}', name),
+                                    value: lastValue.y
+                                });
+                            }
                         }
                     });
                 });
