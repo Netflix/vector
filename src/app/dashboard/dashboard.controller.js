@@ -204,37 +204,23 @@
                 vm.addWidgetToURL(directive);
             }
         };
-        vm.checkWidgetType = function(widgetObj){
-            if (widgetObj.type !== undefined){
-                switch (widgetObj.type){
-                    case 1: //regular widgets
-                        return true;
-                    case 2: //container widgets
-                        if (ContainerMetadataService.getGlobalFilter() === ''){
+        vm.checkWidgetType = function(widgetObj) {
+            if (widgetObj.requireContainerFilter !== undefined && widgetObj.requireContainerFilter === true) {
+              if (ContainerMetadataService.getGlobalFilter() === ''){
 
-                            var modalOptions = {
-                                closeButtonText: '',
-                                actionButtonText: 'Ok',
-                                headerText: 'Error',
-                                bodyText: 'Please select a container.'
-                            };
+                  var modalOptions = {
+                      closeButtonText: '',
+                      actionButtonText: 'Ok',
+                      headerText: 'Error: Container selection required.',
+                      bodyText: 'This widget requires a container to be selected. Please select a container and try again.'
+                  };
 
-                            ModalService.showModal({}, modalOptions).then(function () {
-                                document.getElementById('selectedContainer').focus();
-                            });
+                  ModalService.showModal({}, modalOptions).then(function () {
+                      document.getElementById('selectedContainer').focus();
+                  });
 
-                            return false;
-
-                        }
-                    break;
-                    case 3:// filterable widget
-                        return true;
-                    default:
-                    return true;
-
-                }
-
-
+                  return false;
+              }
             }
             return true;
         };

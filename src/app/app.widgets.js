@@ -42,14 +42,12 @@
                                DiskLatencyMetricDataModel,
                                CumulativeUtilizationMetricDataModel,
                                vectorConfig) {
-        //var GENERAL = 1; default widget type
-        var CONTAINER = 2;
-        var FILTERABLE = 3;
+
         var onSettingsClose = function(resultFromModal, widgetModel) {
             if (typeof resultFromModal !== 'undefined'){
-                widgetModel.filter = resultFromModal.filter; 
-            }    
-        };        
+                widgetModel.filter = resultFromModal.filter;
+            }
+        };
         var definitions = [
             {
                 name: 'kernel.all.load',
@@ -433,13 +431,12 @@
                     percentage: false,
                     integer: true
                 },
-                type: FILTERABLE,
                 settingsModalOptions: {
                     templateUrl: 'app/dashboard/custom-widget-settings-template.html',
                     controller: 'customWidgetSettingsCtrl'
                 },
                 onSettingsClose: onSettingsClose,
-                filter: ''  
+                filter: ''
             }, {
                 name: 'disk.iops',
                 title: 'Disk IOPS',
@@ -660,7 +657,7 @@
                     },
                     enableVerticalResize: false,
                     group: 'Container',
-                    type: CONTAINER,
+                    requireContainerFilter: true,
                     attrs: {
                         forcey: 1,
                         percentage: true,
@@ -681,7 +678,7 @@
                     },
                     enableVerticalResize: false,
                     group: 'Container',
-                    type: CONTAINER,
+                    requireContainerFilter: true,
                     attrs: {
                         percentage: false,
                         integer: true
@@ -758,7 +755,6 @@
                         percentage: false,
                         integer: true
                     },
-                    type: FILTERABLE,
                     settingsModalOptions: {
                         templateUrl: 'app/dashboard/custom-widget-settings-template.html',
                         controller: 'customWidgetSettingsCtrl'
@@ -822,13 +818,12 @@
                         percentage: false,
                         integer: true
                     },
-                    type: FILTERABLE,
                     settingsModalOptions: {
                         templateUrl: 'app/dashboard/custom-widget-settings-template.html',
                         controller: 'customWidgetSettingsCtrl'
                     },
                     onSettingsClose: onSettingsClose,
-                    filter: ''  
+                    filter: ''
                 }
 
             );
