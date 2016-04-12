@@ -36,7 +36,7 @@
                         ContainerMetadataService.resolveId(instance.key);
                         lastValue = instance.values[instance.values.length - 1];
                         var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
-                        if (ContainerMetadataService.checkContainerName(name)){
+                        if (ContainerMetadataService.checkContainerName(name) && ContainerMetadataService.checkGlobalFilter(name)){
                             returnValues.push({
                                 timestamp: lastValue.x,
                                 key: name,

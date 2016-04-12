@@ -123,7 +123,7 @@
         * @name setGlobalFilter
         * @desc
         */
-        var globalFilter;
+        var globalFilter = '';
         function setGlobalFilter(word){
             globalFilter = word;
         }
@@ -134,14 +134,6 @@
         */
         function checkGlobalFilter(name){
             return (globalFilter === '' || name.indexOf(globalFilter) !==-1);
-        }
-
-        /**
-        * @name checkContainerName
-        * @desc
-        */
-        function checkContainerName(name){
-            return (containerName === '' || name.indexOf(containerName) !== -1);
         }
 
         /**
@@ -182,11 +174,19 @@
         }
 
         /**
-        * @name getSelectedContainer
+        * @name getContainerName
         * @desc
         */
-        function getSelectedContainer(){
+        function getContainerName(){
             return containerName;
+        }
+
+        /**
+        * @name checkContainerName
+        * @desc
+        */
+        function checkContainerName(name){
+            return (containerName === '' || name.indexOf(containerName) !== -1);
         }
 
         return {
@@ -202,7 +202,7 @@
             getAllContainers: getAllContainers,
             initContainerCgroups:initContainerCgroups,
             setContainerName: setContainerName,
-            getSelectedContainer: getSelectedContainer,
+            getContainerName: getContainerName,
             checkContainerName: checkContainerName
         };
     }

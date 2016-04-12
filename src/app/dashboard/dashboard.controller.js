@@ -214,7 +214,7 @@
 
         vm.checkWidgetType = function(widgetObj) {
             if (widgetObj.requireContainerFilter !== undefined && widgetObj.requireContainerFilter === true && vm.disableContainerSelect === false && !vm.allowNoContainerSelect) {
-              if (ContainerMetadataService.getSelectedContainer() === ''){
+              if (ContainerMetadataService.getContainerName() === ''){
 
                   var modalOptions = {
                       closeButtonText: '',
