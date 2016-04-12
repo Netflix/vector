@@ -58,6 +58,10 @@ body {
   margin-top: 18px;
 }
 
+.hostname-label {
+  margin-top: 18px;
+}
+
 form div input[name="widgetFilter"] {
   margin-left: -1px;
   margin-top: 0px;
