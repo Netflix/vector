@@ -191,6 +191,10 @@ form div input[name="widgetFilter"] {
   border-radius: 6px 0 6px 6px;
 }
 
+.version-div {
+  padding-left: 15px;
+}
+
 @media screen and (max-width: 1250px) {
   .widget-wrapper {
     width: 50%;

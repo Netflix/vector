@@ -35,9 +35,9 @@
     </div>
     <div class="col-md-2">
         <form role="form">
-            <div class="input-group input-group-lg" ng-class="{'has-error': form.window.$invalid && form.window.$dirty}" style="border-radius: 6 !important;">
+            <div class="input-group input-group-lg" ng-class="{'has-error': form.window.$invalid && form.window.$dirty}">
                 <span class="input-group-addon">Window</span>
-                <select class="form-control" name="window" id="windowInput" data-content="The duration window for all charts in this dashboard." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.window" ng-change="vm.updateWindow()" style="border-radius: 6 !important;">
+                <select class="form-control" name="window" id="windowInput" data-content="The duration window for all charts in this dashboard." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.window" ng-change="vm.updateWindow()">
                     <option value="2">2 min</option>
                     <option value="5">5 min</option>
                     <option value="10">10 min</option>
@@ -68,7 +68,7 @@
             </div>
             <div class="input-group input-group-lg target" ng-show="vm.enableContainerWidgets">
                 <span class="input-group-addon">Container Filter</span>
-                <input type="text" class="form-control" id="globalFilterInput" name="globalFilter" data-content="Global filter for container widgets" rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="vm.globalFilter" ng-change="vm.updateGlobalFilter()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000">
+                <input type="text" class="form-control" id="globalFilterInput" name="globalFilter" data-content="Global filter for container widgets" rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="vm.globalFilter" ng-change="vm.updateGlobalFilter()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" placeholder="Container Filter">
             </div>
             <div class="input-group input-group-lg target" ng-show="vm.enableContainerWidgets">
                 <span class="input-group-addon" >Container Id</span>
@@ -138,7 +138,7 @@
         </div>
     </div>
 </div>
-<div class="row" style="padding-left: 15px; " ng-if="!vm.embed">Version: {{vm.version}}</div>
+<div class="row version-div" ng-if="!vm.embed">Version: {{vm.version}}</div>
 <script>
     (function () {
         'use strict';
