@@ -98,7 +98,7 @@
 
             if ($routeParams.container !== undefined){
                 vm.selectedContainer = $routeParams.container;
-                vm.disableSelect = true;
+                vm.disableContainerSelectNone = true;
                 ContainerMetadataService.setContainerName(vm.selectedContainer);
             }
 
@@ -164,9 +164,8 @@
 
             ModalService.showModal({}, modalOptions).then(function() {
                 $location.search('container', null);
-                vm.disableSelect = false;
+                vm.disableContainerSelectNone = false;
                 vm.dashboardOptions.loadWidgets([]);
-                document.getElementById('selectedContainer').value = '';
                 vm.selectedContainer = '';
                 vm.removeAllWidgetFromURL();
                 ContainerMetadataService.setContainerName('');
@@ -184,7 +183,6 @@
             var containerList = ContainerMetadataService.getAllContainers();
             if (ContainerMetadataService.getAllContainers().length < 1){
                 vm.selectedContainer = '';
-                document.getElementById('selectedContainer').value = '';
             }
             if (containerList.indexOf(vm.selectedContainer) !== -1){
                 vm.selectedContainerRunning = true;
@@ -229,7 +227,7 @@
         vm.globalFilter ='';
         vm.isHostnameExpanded = false;
         vm.inputHost = '';
-        vm.disableSelect = false;
+        vm.disableContainerSelectNone = false;
         vm.selectedContainerRunning = false;
         vm.selectedContainer = '';
         vm.enableContainerWidgets = vectorConfig.enableContainerWidgets;
