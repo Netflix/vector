@@ -50,7 +50,7 @@
             if (loopErrors > 5) {
                 cancelInterval(intervalPromise);
                 loopErrors = 0;
-                flash.to('alert-dashboard-error').error = 'Consistently failed fetching metrics from host (>5). Aborting loop. Please make sure PCP is running correctly.';
+                flash.to('dashboardAlertError').error = 'Consistently failed fetching metrics from host (>5). Aborting loop. Please make sure PCP is running correctly.';
             }
         }
 
@@ -75,7 +75,7 @@
                     $rootScope.properties.context > 0) {
                     intervalPromise = $interval(intervalFunction, $rootScope.properties.interval * 1000);
                 } else {
-                    flash.to('alert-dashboard-error').error = 'Invalid context. Please update host to resume operation.';
+                    flash.to('dashboardAlertError').error = 'Invalid context. Please update host to resume operation.';
                 }
                 $log.info('Interval updated.');
             }
@@ -151,7 +151,7 @@
                                 updateHostnameErrorCallback();
                             });
                     }, function errorHandler() {
-                        flash.to('alert-dashboard-error').error = 'Failed fetching context from host. Try updating the hostname.';
+                        flash.to('dashboardAlertError').error = 'Failed fetching context from host. Try updating the hostname.';
                         $rootScope.flags.contextUpdating = false;
                         updateContextErrorCallback();
                     });

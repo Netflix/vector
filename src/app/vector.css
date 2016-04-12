@@ -49,31 +49,13 @@ body {
   margin-top: -7px;
 }
 
-.jumbotron {
-  text-align: center;
-  background-color: transparent;
-}
-
-.jumbotron .btn {
-  padding: 14px 24px;
-  font-size: 21px;
-}
-
-#hostnameInput {
-  margin-left: -1px;
-  margin-top: 8px;
+.hostname-input {
   text-overflow: ellipsis;
   padding-right: 33px;
 }
 
-#hostspecInput {
-  margin-left: -1px;
-  margin-top: 8px;
-}
-
-#globalFilterInput {
-  margin-left: -1px;
-  margin-top: 8px;
+.hostname-input {
+  margin-top: 18px;
 }
 
 form div input[name="widgetFilter"] {
@@ -81,24 +63,20 @@ form div input[name="widgetFilter"] {
   margin-top: 0px;
 }
 
-.input-group-lg > #hostnameInput {
-  margin-top: 0;
+.target > input {
+  margin-top: 0 !important;
+  margin-left: -1px !important;
 }
 
-.input-group-lg > #hostspecInput {
-  margin-top: 0;
-}
-
-.input-group-lg > #globalFilterInput {
-  margin-top: 0;
+.input-group-lg select {
+  margin: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .input-group-lg {
   margin-top: 8px;
-}
-
-#hostnameLabel {
-  margin-top: 18px;
 }
 
 .alert, .btn {
@@ -114,39 +92,18 @@ form div input[name="widgetFilter"] {
   z-index: 3;
 }
 
-.contextOptions {
-  margin-bottom: 50px;
-}
-
-.contextOptions p {
-  min-height: 40px;
-}
-
 .input-group-lg > .input-group-addon {
   height: 40px;
 }
 
-#widgetButton {
-  margin-top: 7px;
-}
-
-#welcomeScreen #hostnameInput {
-  margin-top: 8px;
+.widget-button{
+  margin-top: 8px !important;
 }
 
 @-moz-document url-prefix() {
-  #welcomeScreen #hostnameInput {
+  #hostnameInput {
     margin-top: 5px;
   }
-}
-
-#requiredHelper {
-  float: right;
-  z-index: 2;
-  position: relative;
-  top: -38px;
-  left: -11px;
-  opacity: 0.4;
 }
 
 .panel.widget {
@@ -163,14 +120,7 @@ form div input[name="widgetFilter"] {
   background-image: none !important;
 }
 
-.input-group-lg select {
-  margin: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-#alert-dashboard-error {
+.dashboard-alert {
   margin-top: 15px;
 }
 
@@ -238,13 +188,13 @@ form div input[name="widgetFilter"] {
 }
 
 @media screen and (max-width: 1250px) {
-  #widgetWrapper {
+  .widget-wrapper {
     width: 50%;
   }
-  #widgetWrapper + .col-md-2 {
+  .widget-wrapper + .col-md-2 {
     clear: left;
   }
-  #widgetWrapper ~ .col-md-2 {
+  .widget-wrapper ~ .col-md-2 {
     width: 50%;
   }
 }
@@ -256,19 +206,19 @@ form div input[name="widgetFilter"] {
 }
 
 @media screen and (max-width: 991px) {
-  #widgetWrapper + .col-md-2 {
+  .widget-wrapper + .col-md-2 {
     clear: none;
   }
-  #widgetWrapper ~ .col-md-2 {
+  .widget-wrapper ~ .col-md-2 {
     width: auto;
   }
   .widget-container {
     width: 50% !important;
   }
-  #widgetWrapper {
+  .widget-wrapper {
     width: 100% !important;
   }
-  #widgetWrapper ul {
+  .widget-wrapper ul {
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);

@@ -218,7 +218,7 @@
                     }).then(
                         function () { callback(true); },
                         function () {
-                            flash.to('alert-dashboard-error').error = 'Failed fetching metrics.';
+                            flash.to('dashboardAlertError').error = 'Failed fetching metrics.';
                             // Check if context is wrong and update it if needed
                             // PMWEBAPI error, code -12376: Attempt to use an illegal context
                             callback(false);
