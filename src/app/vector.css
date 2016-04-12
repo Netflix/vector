@@ -72,6 +72,10 @@ form div input[name="widgetFilter"] {
   margin-left: -1px !important;
 }
 
+.target > span {
+  min-width: 150px;
+}
+
 .input-group-lg select {
   margin: 0;
   -webkit-appearance: none;
