@@ -205,7 +205,7 @@
             }
         };
         vm.checkWidgetType = function(widgetObj) {
-            if (widgetObj.requireContainerFilter !== undefined && widgetObj.requireContainerFilter === true) {
+            if (widgetObj.requireContainerFilter !== undefined && widgetObj.requireContainerFilter === true && vm.disableContainerSelect === false) {
               if (ContainerMetadataService.getGlobalFilter() === ''){
 
                   var modalOptions = {
@@ -234,6 +234,8 @@
         vm.selectedContainerRunning = false;
         vm.selectedContainer = '';
         vm.enableContainerWidgets = vectorConfig.enableContainerWidgets;
+        vm.disableContainerFilter = vectorConfig.disableContainerFilter;
+        vm.disableContainerSelect = vectorConfig.disableContainerSelect;
         activate();
     }
 

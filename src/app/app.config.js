@@ -29,6 +29,8 @@
             'enableCpuFlameGraph': false,
             'enableDiskLatencyHeatMap': false,
             'enableContainerWidgets': true,
+            'disableContainerFilter': false,
+            'disableContainerSelect': false
         }).constant('containerConfig', {
             'externalAPI': false //enable and edit containermetadata.service to call external API to resolve
         });
