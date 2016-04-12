@@ -59,7 +59,7 @@
                     name: 'kernel.all.load'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -74,7 +74,7 @@
                     name: 'kernel.all.runnable'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -93,7 +93,7 @@
                     name: 'kernel.all.cpu.sys'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -113,7 +113,7 @@
                     name: 'kernel.all.cpu.user'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -133,7 +133,7 @@
                     name: 'kernel.all.cpu'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -153,7 +153,7 @@
                     name: 'kernel.percpu.cpu.sys'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -173,7 +173,7 @@
                     name: 'kernel.percpu.cpu.user'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -193,7 +193,7 @@
                     name: 'kernel.percpu.cpu'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -213,7 +213,7 @@
                     name: 'mem.freemem'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -228,7 +228,7 @@
                     name: 'mem.util.used'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -243,7 +243,7 @@
                     name: 'mem.util.cached'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -258,7 +258,7 @@
                     name: 'mem'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -277,7 +277,7 @@
                     name: 'network.interface.out.drops'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -297,7 +297,7 @@
                     name: 'network.interface.in.drops'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -321,7 +321,7 @@
                     }
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -341,7 +341,7 @@
                     name: 'network.tcpconn.established'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -361,7 +361,7 @@
                 },
                 enableVerticalResize: false,
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 group: 'Network',
@@ -379,7 +379,7 @@
                     name: 'network.tcpconn.close_wait'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -403,7 +403,7 @@
                     }
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -422,7 +422,7 @@
                     name: 'network.interface.bytes'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -451,7 +451,7 @@
                     }
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -470,7 +470,7 @@
                     }
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -485,7 +485,7 @@
                     name: 'disk.dev.avactive'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -505,7 +505,7 @@
                     name: 'kernel.all.pswitch'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -528,7 +528,7 @@
                     }
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -551,7 +551,7 @@
                     }
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -578,7 +578,7 @@
                     }
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -598,7 +598,7 @@
                     name: 'disk.dev.latency'
                 },
                 size: {
-                    width: '25%',
+                    width: '50%',
                     height: '250px'
                 },
                 enableVerticalResize: false,
@@ -617,7 +617,7 @@
             directive: 'cpu-flame-graph',
             dataModelType: DummyMetricDataModel,
             size: {
-              width: '25%',
+              width: '50%',
               height: '250px'
             },
             enableVerticalResize: false,
@@ -632,7 +632,7 @@
             directive: 'disk-latency-heat-map',
             dataModelType: DummyMetricDataModel,
             size: {
-              width: '25%',
+              width: '50%',
               height: '250px'
             },
             enableVerticalResize: false,
@@ -673,7 +673,7 @@
                         name: 'container.memory.headroom'
                     },
                     size: {
-                        width: '25%',
+                        width: '50%',
                         height: '250px'
                     },
                     enableVerticalResize: false,
@@ -708,7 +708,7 @@
                         name: 'container.memory.utilization'
                     },
                     size: {
-                        width: '25%',
+                        width: '50%',
                         height: '250px'
                     },
                     enableVerticalResize: false,
@@ -727,7 +727,7 @@
                         name: 'container.memory.aggregate.headroom'
                     },
                     size: {
-                        width: '25%',
+                        width: '50%',
                         height: '250px'
                     },
                     enableVerticalResize: false,
@@ -775,7 +775,7 @@
                         }
                     },
                     size: {
-                        width: '25%',
+                        width: '50%',
                         height: '250px'
                     },
                     enableVerticalResize: false,
@@ -794,7 +794,7 @@
                         }
                     },
                     size: {
-                        width: '25%',
+                        width: '50%',
                         height: '250px'
                     },
                     enableVerticalResize: false,
@@ -809,7 +809,7 @@
                         name: 'network.interface.bytes'
                     },
                     size: {
-                        width: '25%',
+                        width: '50%',
                         height: '250px'
                     },
                     enableVerticalResize: false,
@@ -837,42 +837,42 @@
         {
             name: 'kernel.all.cpu',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }, {
             name: 'kernel.percpu.cpu',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }, {
             name: 'kernel.all.runnable',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }, {
             name: 'kernel.all.load',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }, {
             name: 'network.interface.bytes',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }, {
             name: 'network.tcpconn',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }, {
             name: 'network.interface.packets',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }, {
             name: 'network.tcp.retrans',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }, {
             name: 'mem',
@@ -882,32 +882,32 @@
         }, {
             name: 'mem.vmstat.pgfault',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }, {
             name: 'kernel.all.pswitch',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }, {
             name: 'disk.iops',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }, {
             name: 'disk.bytes',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }, {
             name: 'disk.dev.avactive',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }, {
             name: 'disk.dev.latency',
             size: {
-                width: '25%'
+                width: '50%'
             }
         }
     ];
