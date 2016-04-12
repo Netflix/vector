@@ -22,15 +22,15 @@
             </li>
             <li role="presentation" class="divider"></li>
             <li>
-                <a href="javascript:void(0);"
-                   ng-click="loadWidgets(defaultWidgets); vm.addWidgetToURL(defaultWidgets);">Default Widgets</a></li>
+                <a href="javascript:void(0);" ng-click="loadWidgets(defaultWidgets); vm.addWidgetToURL(defaultWidgets);">Default Widgets</a>
+            </li>
             <li>
-                <a href="javascript:void(0);"
-                   ng-click="loadWidgets(emptyWidgets); vm.removeAllWidgetFromURL();">Clear Widgets</a></li>
+                <a href="javascript:void(0);" ng-click="loadWidgets(emptyWidgets); vm.removeAllWidgetFromURL();">Clear Widgets</a>
+            </li>
             <li role="presentation" class="divider"></li>
             <li>
-                <a href="javascript:void(0);"
-                   ng-click="vm.removeContainerFromURL();">Reset Dashboard</a></li>
+                <a href="javascript:void(0);" ng-click="vm.removeContainerFromURL();">Reset Dashboard</a>
+            </li>
         </ul>
     </div>
     <div class="col-md-2">
@@ -72,9 +72,9 @@
             </div>
             <div class="input-group input-group-lg target" ng-show="vm.enableContainerWidgets && !vm.disableContainerSelect">
                 <span class="input-group-addon" >Container Id</span>
-                <select id="selectedContainer" ng-model="vm.containerName" ng-change="vm.containerNameChanged(); vm.disableSelect = true;" class="form-control">
+                <select id="selectedContainer" ng-model="vm.selectedContainer" ng-change="vm.containerChanged(); vm.disableSelect = true;" class="form-control">
                     <option ng-model="vm.disableSelect" ng-disabled="vm.disableSelect" value="">None</option>
-                    <option ng-repeat="names in vm.containerNames()" ng-selected="vm.selectedContainer == names"> {{names}}</option>
+                    <option ng-repeat="containerId in vm.containerList()" ng-selected="vm.selectedContainer === containerId">{{containerId}}</option>
                 </select>
                 <i class="fa fa-check fa-2x form-control-feedback" ng-if="vm.selectedContainerRunning"></i>
             </div>

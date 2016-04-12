@@ -167,7 +167,7 @@
                 vm.disableSelect = false;
                 vm.dashboardOptions.loadWidgets([]);
                 document.getElementById('selectedContainer').value = '';
-                vm.containerName = '';
+                vm.selectedContainer = '';
                 vm.removeAllWidgetFromURL();
                 ContainerMetadataService.setContainerName('');
             });
@@ -180,22 +180,22 @@
             DashboardService.updateHost(vm.inputHost);
             ContainerMetadataService.clearIdDictionary();
         };
-        vm.containerNames = function(){
+        vm.containerList = function(){
             var containerList = ContainerMetadataService.getAllContainers();
             if (ContainerMetadataService.getAllContainers().length < 1){
-                vm.containerName = '';
+                vm.selectedContainer = '';
                 document.getElementById('selectedContainer').value = '';
             }
-            if (containerList.indexOf(vm.containerName) !== -1){
+            if (containerList.indexOf(vm.selectedContainer) !== -1){
                 vm.selectedContainerRunning = true;
             } else {
                 vm.selectedContainerRunning = false;
             }
             return containerList.filter(Boolean);
         };
-        vm.containerNameChanged = function(){
-            ContainerMetadataService.setContainerName(vm.containerName);
-            $location.search('container', vm.containerName);
+        vm.containerChanged = function(){
+            ContainerMetadataService.setContainerName(vm.selectedContainer);
+            $location.search('container', vm.selectedContainer);
         };
         vm.addWidget = function(event, directive){
             event.preventDefault();
@@ -206,7 +206,7 @@
         };
         vm.checkWidgetType = function(widgetObj) {
             if (widgetObj.requireContainerFilter !== undefined && widgetObj.requireContainerFilter === true && vm.disableContainerSelect === false) {
-              if (ContainerMetadataService.getGlobalFilter() === ''){
+              if (ContainerMetadataService.getSelectedContainer() === ''){
 
                   var modalOptions = {
                       closeButtonText: '',
@@ -226,7 +226,6 @@
         };
         vm.firstClick = true;
         vm.updateWindow = DashboardService.updateWindow;
-        vm.containerName = '';
         vm.globalFilter ='';
         vm.isHostnameExpanded = false;
         vm.inputHost = '';

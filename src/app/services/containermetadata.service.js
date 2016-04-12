@@ -111,7 +111,7 @@
                 keys = Object.keys(taskNames);
                 tempObj = taskNames;
             }
-            
+
             var values = new Array(keys.length);
             for(var i = 0; i < keys.length; i++) {
                 values[i] = tempObj[keys[i]];
@@ -121,7 +121,7 @@
 
         /**
         * @name setGlobalFilter
-        * @desc deprecated, to be removed later
+        * @desc
         */
         var globalFilter;
         function setGlobalFilter(word){
@@ -130,19 +130,26 @@
 
         /**
         * @name checkGlobalFilter
-        * @desc function name to be updated later
+        * @desc
         */
         function checkGlobalFilter(name){
-            //return (globalFilter === '' || name.indexOf(globalFilter) !==-1);
-            return (containerName === '' || name.indexOf(containerName) !==-1);
+            return (globalFilter === '' || name.indexOf(globalFilter) !==-1);
+        }
+
+        /**
+        * @name checkContainerName
+        * @desc
+        */
+        function checkContainerName(name){
+            return (containerName === '' || name.indexOf(containerName) !== -1);
         }
 
         /**
         * @name getGlobalFilter
-        * @desc function name to be updated later
+        * @desc
         */
         function getGlobalFilter(){
-            return containerName;
+            return globalFilter;
         }
 
         /**
@@ -182,8 +189,6 @@
             return containerName;
         }
 
-        //////////
-
         return {
             idDictionary: idDictionary,
             clearIdDictionary: clearIdDictionary,
@@ -197,7 +202,8 @@
             getAllContainers: getAllContainers,
             initContainerCgroups:initContainerCgroups,
             setContainerName: setContainerName,
-            getSelectedContainer: getSelectedContainer
+            getSelectedContainer: getSelectedContainer,
+            checkContainerName: checkContainerName
         };
     }
 

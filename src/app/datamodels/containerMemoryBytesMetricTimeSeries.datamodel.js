@@ -29,24 +29,24 @@
             // create derived function
             derivedFunction = function () {
                 var returnValues = [],
-                    lastValue;   
+                    lastValue;
 
                 angular.forEach(inMetric.data, function (instance) {
                     if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
                         ContainerMetadataService.resolveId(instance.key);
                         lastValue = instance.values[instance.values.length - 1];
                         var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
-                        if (ContainerMetadataService.checkGlobalFilter(name)){
+                        if (ContainerMetadataService.checkContainerName(name)){
                             returnValues.push({
                                 timestamp: lastValue.x,
                                 key: name,
                                 value: instance.previousValue / 1024 / 1024
                             });
                         }
-                        
+
                     }
                 });
-                
+
                 return returnValues;
             };
 
