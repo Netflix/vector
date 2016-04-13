@@ -156,7 +156,7 @@
             $location.search('widgets', null);
         };
 
-        vm.removeContainerFromURL = function(){
+        vm.resetDashboard = function(){
 
             var modalOptions = {
                 closeButtonText: 'Cancel',
