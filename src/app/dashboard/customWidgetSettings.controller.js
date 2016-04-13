@@ -3,7 +3,7 @@
     'use strict';
 
 angular.module('ui.dashboard')
-  .controller('customWidgetSettingsCtrl', ['$scope', '$modalInstance', 'widget', function ($scope, $modalInstance, widget) {
+  .controller('CustomWidgetSettingsController', ['$scope', '$modalInstance', 'widget', function ($scope, $modalInstance, widget) {
 
     $scope.widget = widget;
     $scope.result = angular.extend({},$scope.result, widget);

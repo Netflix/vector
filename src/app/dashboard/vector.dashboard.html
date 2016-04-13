@@ -145,7 +145,7 @@
                             </form> -->
                             <span class="label label-primary" ng-if="!options.hideWidgetName">{{widget.name}}</span>
                             <span ng-click="removeWidget(widget);  vm.removeWidgetFromURL(widget);" class="glyphicon glyphicon-remove" ng-if="!options.hideWidgetClose"></span>
-                            <span ng-click="openWidgetSettings(widget);" class="glyphicon glyphicon-cog" ng-if="!options.hideWidgetSettings && widget.type === 3"></span>
+                            <span ng-click="openWidgetSettings(widget);" class="glyphicon glyphicon-cog" ng-if="!options.hideWidgetSettings && widget.hasLocalSettings"></span>
                         </h3>
                     </div>
                     <div class="panel-body widget-content" ng-style="widget.contentStyle"></div>

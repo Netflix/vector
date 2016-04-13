@@ -432,9 +432,10 @@
                     integer: true
                 },
                 settingsModalOptions: {
-                    templateUrl: 'app/dashboard/custom-widget-settings-template.html',
-                    controller: 'customWidgetSettingsCtrl'
+                    templateUrl: 'app/dashboard/customWidgetSettings.html',
+                    controller: 'CustomWidgetSettingsController'
                 },
+                hasLocalSettings: true,
                 onSettingsClose: onSettingsClose,
                 filter: ''
             }, {
@@ -736,31 +737,6 @@
                         percentage: false,
                         integer: true
                     }
-                /*}, {
-                    name: 'container.network.interface.bytes',
-                    title: 'Container Network Throughput (kB)',
-                    directive: 'line-time-series',
-                    dataAttrName: 'data',
-                    dataModelType: ContainerNetworkBytesMetricDataModel,
-                    dataModelOptions: {
-                        name: 'container.network.interface.bytes'
-                    },
-                    size: {
-                        width: '50%',
-                        height: '250px'
-                    },
-                    enableVerticalResize: false,
-                    group: 'Container',
-                    attrs: {
-                        percentage: false,
-                        integer: true
-                    },
-                    settingsModalOptions: {
-                        templateUrl: 'app/dashboard/custom-widget-settings-template.html',
-                        controller: 'customWidgetSettingsCtrl'
-                    },
-                    onSettingsClose: onSettingsClose,
-                    filter: ''       */
                 },{
                     name: 'container.disk.iops',
                     title: 'Container Disk IOPS',
@@ -799,31 +775,6 @@
                     },
                     enableVerticalResize: false,
                     group: 'Container'
-                },{
-                    name: 'container.network.interface.bytes',
-                    title: 'Container Network Throughput (kB)',
-                    directive: 'line-time-series',
-                    dataAttrName: 'data',
-                    dataModelType: NetworkBytesMetricDataModel,
-                    dataModelOptions: {
-                        name: 'network.interface.bytes'
-                    },
-                    size: {
-                        width: '50%',
-                        height: '250px'
-                    },
-                    enableVerticalResize: false,
-                    group: 'Network',
-                    attrs: {
-                        percentage: false,
-                        integer: true
-                    },
-                    settingsModalOptions: {
-                        templateUrl: 'app/dashboard/custom-widget-settings-template.html',
-                        controller: 'customWidgetSettingsCtrl'
-                    },
-                    onSettingsClose: onSettingsClose,
-                    filter: ''
                 }
 
             );
