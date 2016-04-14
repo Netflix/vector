@@ -667,7 +667,7 @@
                 }, {
                     name: 'container.memory.headroom',
                     title: 'Container Memory Headroom',
-                    directive: 'area-stacked-time-series-no-total',
+                    directive: 'line-time-series-filled',
                     dataAttrName: 'data',
                     dataModelType: ContainerMemoryHeadroomMetricDataModel,
                     dataModelOptions: {

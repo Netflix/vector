@@ -38,6 +38,9 @@
             // create create base metrics
             var usageMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.memory.usage'),
                 limitMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.memory.limit'),
+                physicalMemMaxMetric = MetricListService.getOrCreateCumulativeMetric('mem.physmem'),
+                calculatedMaxMem,
+                maxInt = 18446744073709552000,
                 derivedFunction;
 
             // create derived function
@@ -45,31 +48,48 @@
                 var returnValues = [],
                     lastValue;
 
-                var pushReturnValues = function(instance, metricName){
+                var pushReturnValues = function(instance, metricName){                    
                     ContainerMetadataService.setCurrentTime(instance.previousTimestamp);
-                    if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
+                    if (instance.values.length > 0){
                         lastValue = instance.values[instance.values.length - 1];
-                        var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
-                        if (ContainerMetadataService.checkContainerName(name) && ContainerMetadataService.checkGlobalFilter(name)){
-                            returnValues.push({
-                                timestamp: lastValue.x,
-                                key: name + metricName,
-                                value: instance.previousValue / 1024 / 1024
-                            });
+
+                        //metric used to get physical max to overwrite cgroup.memory.limit when it returns max int
+                        var value = instance.previousValue;
+                        if (metricName === ' - Physical'){
+                            calculatedMaxMem = instance.previousValue;
+                        }
+                        if (instance.previousValue >= maxInt){
+                           value = calculatedMaxMem * 1024;
+                        }
+
+                        if (ContainerMetadataService.containerIdExist(instance.key)) {
+                            var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
+                            if (name.indexOf(ContainerMetadataService.getContainerName()) !== -1){
+                                returnValues.push({
+                                    timestamp: lastValue.x,
+                                    key: name + metricName,
+                                    value: value / 1024 / 1024
+                                });
+                            }
                         }
                     }
 
                 };
 
                 angular.forEach(usageMetric.data, function (instance) {
-                    pushReturnValues(instance, ' used');
+                    pushReturnValues(instance, ' - Usage');
                 });
 
                 angular.forEach(limitMetric.data, function (instance) {
-                    pushReturnValues(instance, ' limit');
+                    pushReturnValues(instance, ' - Limit');
                 });
 
-                return returnValues.sort(function(val1, val2){ return val1.key < val2.key; });
+                //metric used to get physical max to overwrite cgroup.memory.limit when it returns max int
+                angular.forEach(physicalMemMaxMetric.data, function (instance) {
+                    pushReturnValues(instance, ' - Physical');
+                });
+
+                return returnValues;
             };
 
             // create derived metric
@@ -85,6 +105,7 @@
             // remove subscribers and delete base metrics
             MetricListService.destroyMetric('cgroup.memory.usage');
             MetricListService.destroyMetric('cgroup.memory.limit');
+            MetricListService.destroyMetric('mem.physmem');
 
             WidgetDataModel.prototype.destroy.call(this);
         };

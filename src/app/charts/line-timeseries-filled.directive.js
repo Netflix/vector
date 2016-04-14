@@ -21,55 +21,42 @@
 (function () {
     'use strict';
 
-    function areaStackedTimeSeriesNoTotal($rootScope, $log, D3Service) {
+    function lineTimeSeriesFilled($rootScope, $log, D3Service) {
 
         function link(scope) {
             scope.id = D3Service.getId();
             scope.flags = $rootScope.flags;
-            scope.legend = true;
 
             var chart;
 
             nv.addGraph(function () {
 
-              var yAxisTickFormat = D3Service.yAxisTickFormat(),
-                  height = 250;
+              var height = 250;
 
-              chart = nv.models.stackedAreaChart().options({
+              chart = nv.models.lineChart().options({
                   duration: 0,
                   useInteractiveGuideline: true,
                   interactive: false,
                   showLegend: true,
                   showXAxis: true,
-                  showYAxis: true,
-                  showControls: false,
-                  showTotalInTooltip: false
+                  showYAxis: true
               });
 
-              chart.margin({'left': 35, 'right': 35});
+              chart.margin({'left': 45, 'right': 35});
 
               chart.height(height);
 
-              if (scope.forcey) {
-                  chart.yDomain([0, scope.forcey]);
-              }
+              chart.forceY([0]);
 
               chart.x(D3Service.xFunction());
-              chart.y(D3Service.yFunction());
-
-              chart.xAxis.tickFormat(D3Service.xAxisTickFormat());
 
               if (scope.percentage) {
-                  yAxisTickFormat = D3Service.yAxisPercentageTickFormat();
-                  chart.yAxis.tickFormat();
+                  chart.yAxis.tickFormat(D3Service.yAxisPercentageTickFormat());
               } else if (scope.integer) {
-                  yAxisTickFormat = D3Service.yAxisIntegerTickFormat();
-                  chart.yAxis.tickFormat();
+                  chart.yAxis.tickFormat(D3Service.yAxisIntegerTickFormat());
+              } else {
+                  chart.yAxis.tickFormat(D3Service.yAxisTickFormat());
               }
-
-              chart.yAxis.tickFormat(yAxisTickFormat);
-
-              nv.utils.windowResize(chart.update);
 
               d3.select('#' + scope.id + ' svg')
                 .datum(scope.data)
@@ -81,6 +68,9 @@
             });
 
             scope.$on('updateMetrics', function () {
+                angular.forEach(scope.data, function (instance) {
+                  instance['area']=true;
+                });
                 chart.update();
             });
         }
@@ -98,7 +88,7 @@
         };
     }
 
-    areaStackedTimeSeriesNoTotal.$inject = [
+    lineTimeSeriesFilled.$inject = [
         '$rootScope',
         '$log',
         'D3Service'
@@ -106,5 +96,6 @@
 
     angular
         .module('app.charts')
-        .directive('areaStackedTimeSeriesNoTotal', areaStackedTimeSeriesNoTotal);
+        .directive('lineTimeSeriesFilled', lineTimeSeriesFilled);
+
 })();
