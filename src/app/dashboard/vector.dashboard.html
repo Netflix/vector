@@ -68,7 +68,7 @@
             </div>
             <div class="input-group input-group-lg target" ng-show="vm.enableContainerWidgets && !vm.disableContainerFilter"  ng-if="!vm.popContainerFilter">
                 <span class="input-group-addon">Container Filter</span>
-                <input type="text" class="form-control" id="globalFilterInput" name="globalFilter" data-content="Global filter for container widgets" rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="vm.globalFilter" ng-change="vm.updateGlobalFilter()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" placeholder="Container Filter">
+                <input type="text" class="form-control" id="globalFilterInput" name="globalFilter" data-content="Global filter for container widgets" rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="vm.containerFilter" ng-change="vm.updateContainerFilter()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" placeholder="Container Filter">
             </div>
             <div class="input-group input-group-lg target" ng-show="vm.enableContainerWidgets && !vm.disableContainerSelect"  ng-if="!vm.popContainerSelect">
                 <span class="input-group-addon" >Container Id</span>
@@ -89,7 +89,7 @@
         <form role="form" name="form">
             <div class="input-group input-group-lg target" ng-show="!vm.disableContainerFilter" ng-if="vm.popContainerFilter">
                 <span class="input-group-addon">Container Filter</span>
-                <input type="text" class="form-control" id="globalFilterInput" name="globalFilter" data-content="Global filter for container widgets" rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="vm.globalFilter" ng-change="vm.updateGlobalFilter()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" placeholder="Container Filter">
+                <input type="text" class="form-control" id="globalFilterInput" name="globalFilter" data-content="Global filter for container widgets" rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="vm.containerFilter" ng-change="vm.updateContainerFilter()" ng-model-options="{ updateOn: 'default', debounce: 1000 }" delay="1000" placeholder="Container Filter">
             </div>
             <div class="input-group input-group-lg target" ng-show="!vm.disableContainerSelect" ng-if="vm.popContainerSelect">
                 <span class="input-group-addon" >Container Id</span>

@@ -102,6 +102,11 @@
                 ContainerMetadataService.setContainerName(vm.selectedContainer);
             }
 
+            if ($routeParams.containerFilter !== undefined){
+                vm.containerFilter = $routeParams.containerFilter;
+                ContainerMetadataService.setGlobalFilter(vm.containerFilter);
+            }
+
              vm.dashboardOptions = {
                 hideToolbar: true,
                 widgetButtons: false,
@@ -167,6 +172,7 @@
 
             ModalService.showModal({}, modalOptions).then(function() {
                 $location.search('container', null);
+                $location.search('containerFilter', null);
                 vm.disableContainerSelectNone = false;
                 vm.dashboardOptions.loadWidgets([]);
                 vm.selectedContainer = '';
@@ -175,8 +181,9 @@
             });
         };
 
-        vm.updateGlobalFilter = function(){
-            DashboardService.updateGlobalFilter(vm.globalFilter);
+        vm.updateContainerFilter = function(){
+            ContainerMetadataService.setGlobalFilter(vm.containerFilter);
+            $location.search('containerFilter', vm.containerFilter);
         };
 
         vm.updateInterval = DashboardService.updateInterval;
@@ -235,7 +242,7 @@
 
         vm.firstClick = true;
         vm.updateWindow = DashboardService.updateWindow;
-        vm.globalFilter ='';
+        vm.containerFilter ='';
         vm.isHostnameExpanded = false;
         vm.inputHost = '';
         vm.disableContainerSelectNone = false;

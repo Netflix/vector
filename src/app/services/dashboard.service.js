@@ -187,15 +187,6 @@
         }
 
         /**
-        * @name updateGlobalFilter
-        * @desc
-        */
-        function updateGlobalFilter(word) {
-            //$rootScope.flags.filterDone = true;
-            ContainerMetadataService.setGlobalFilter(word);
-        }
-
-        /**
         * @name initializeProperties
         * @desc
         */
@@ -254,7 +245,6 @@
             updateInterval: updateInterval,
             updateHost: updateHost,
             updateWindow: updateWindow,
-            updateGlobalFilter: updateGlobalFilter,
             initializeProperties: initializeProperties
         };
     }

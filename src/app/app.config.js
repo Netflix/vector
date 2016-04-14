@@ -29,7 +29,7 @@
             'enableCpuFlameGraph': false,
             'enableDiskLatencyHeatMap': false,
             'enableContainerWidgets': true,
-            'disableContainerFilter': true,
+            'disableContainerFilter': false,
             'disableContainerSelect': false,
             'allowNoContainerSelect': true,
             'popContainerFilter': false,
