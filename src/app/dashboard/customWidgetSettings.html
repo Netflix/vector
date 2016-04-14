@@ -5,14 +5,13 @@
 
 <div class="modal-body">
     <form name="form" novalidate class="form-horizontal">
-        <div class="input-group input-group-lg">
+        <div class="input-group">
             <span class="input-group-addon">Filter</span>
-            <input class="widgetInput form-control" name="widgetFilter" ng-model="result.filter" ng-keypress="modalFilterDirty=true" ng-change="vm.updateFilterWidget(this.widget, result)" ng-keydown="$event.which === 13 && ok()">
-            <i class="fa fa-cog fa-spin form-control-feedback" ng-if='modalFilterDirty'></i>
+            <input class="widgetInput form-control" name="widgetFilter" ng-model="result.filter" ng-change="vm.updateFilterWidget(this.widget, result)" ng-keydown="$event.which === 13 && ok()">
         </div>
 
     </form>
-    
+
 </div>
 
 <div class="modal-footer">
