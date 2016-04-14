@@ -253,7 +253,7 @@
         vm.disableContainerSelect = vectorConfig.disableContainerSelect;
         vm.allowNoContainerSelect = vectorConfig.allowNoContainerSelect;
         vm.popContainerFilter = vectorConfig.popContainerFilter;
-        vm.popContainerSelect = vectorConfig.popContainerSelect
+        vm.popContainerSelect = vectorConfig.popContainerSelect;
 
         activate();
     }
