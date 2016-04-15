@@ -43,8 +43,6 @@
                                 });
                             }
                         }
-
-                        ContainerMetadataService.resolveId(instance.key);
                     });
                 }
 

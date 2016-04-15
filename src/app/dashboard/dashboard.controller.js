@@ -103,6 +103,11 @@
 
             $rootScope.$on('updateMetrics', function () {
                 vm.containerList = ContainerMetadataService.getContainerList();
+                //TODO: deal with the case where all containers might stop and the list would be empty.
+                if(vm.containerList.length > 0 && vm.selectedContainer.indexOf(vm.containerList) !== -1) {
+                    vm.selectedContainer = '';
+                    ContainerMetadataService.setContainerName('');
+                }
             });
 
             vm.dashboardOptions = {

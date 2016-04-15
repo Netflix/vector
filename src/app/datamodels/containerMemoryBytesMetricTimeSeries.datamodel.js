@@ -34,7 +34,6 @@
 
                 angular.forEach(inMetric.data, function (instance) {
                     if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
-                        ContainerMetadataService.resolveId(instance.key);
                         lastValue = instance.values[instance.values.length - 1];
                         name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
                         if (ContainerMetadataService.checkContainerName(name) && ContainerMetadataService.checkGlobalFilter(name)){

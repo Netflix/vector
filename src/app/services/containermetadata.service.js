@@ -39,7 +39,7 @@
         * @name clearIdDictionary
         * @desc
         */
-        function clearIdDictionary(){
+        function clearIdDictionary() {
             idMap = {};
         }
 
@@ -48,12 +48,9 @@
         * @desc
         */
         function resolveId(instanceKey) {
-            if (containerConfig.externalAPI){
-                //make external api call here to resolve container id
-                //need to set containerConfig.externalAPI to true in app.config.js
-            } else {
-                return idDictionary(instanceKey);
-            }
+            //make external api call here to resolve container id
+            //need to set containerConfig.externalAPI to true in app.config.js
+            return instanceKey.substring(0,12);
         }
 
         /**
@@ -69,7 +66,7 @@
         * @desc
         */
         var activeContainers;
-        function initialize(){
+        function initialize() {
             activeContainers = MetricListService.getOrCreateMetric('containers.cgroup');
         }
 
@@ -78,6 +75,7 @@
         * @desc
         */
         function updateIdDictionary(){
+            //TODO: implement better logic to add and remove items from idMap. Always creating a new object and resolving all names is expensive.
             idMap = activeContainers.data.reduce(function(obj, item) {
                 if (containerConfig.externalAPI) {
                     obj[item.key] = resolveId(item.key);
@@ -158,7 +156,6 @@
             getContainerList: getContainerList,
             updateIdDictionary: updateIdDictionary,
             clearIdDictionary: clearIdDictionary,
-            resolveId: resolveId,
             setGlobalFilter: setGlobalFilter,
             checkGlobalFilter: checkGlobalFilter,
             getGlobalFilter : getGlobalFilter,
