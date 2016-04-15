@@ -195,9 +195,10 @@
 
         vm.containerList = function(){
             var containerList = ContainerMetadataService.getAllContainers();
-            if (ContainerMetadataService.getAllContainers().length < 1){
+            //TODO: need another way to reset this to nothing when all containers are killed from a server
+/*            if (containerList.length < 1){
                 vm.selectedContainer = '';
-            }
+            }*/
             if (containerList.indexOf(vm.selectedContainer) !== -1){
                 vm.selectedContainerRunning = true;
             } else {
