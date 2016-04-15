@@ -44,16 +44,6 @@
         }
 
         /**
-        * @name resolveId
-        * @desc
-        */
-        function resolveId(instanceKey) {
-            //make external api call here to resolve container id
-            //need to set containerConfig.externalAPI to true in app.config.js
-            return instanceKey.substring(0,12);
-        }
-
-        /**
         * @name containerIdExist
         * @desc
         */
@@ -70,6 +60,20 @@
             activeContainers = MetricListService.getOrCreateMetric('containers.cgroup');
         }
 
+        /**
+        * @name resolveId
+        * @desc
+        */
+        function resolveId(instanceKey) {
+            if (containerConfig.externalAPI) {
+                //make external api call here to resolve container id
+                //need to set containerConfig.externalAPI to true in app.config.js
+                return;
+            } else {
+                return instanceKey.substring(0,12);
+            }
+        }
+
         /**;
         * @name updateIdDictionary
         * @desc
@@ -77,11 +81,7 @@
         function updateIdDictionary(){
             //TODO: implement better logic to add and remove items from idMap. Always creating a new object and resolving all names is expensive.
             idMap = activeContainers.data.reduce(function(obj, item) {
-                if (containerConfig.externalAPI) {
-                    obj[item.key] = resolveId(item.key);
-                } else {
-                    obj[item.key] = item.key.substring(0,12);
-                }
+                obj[item.key] = resolveId(item.key);
                 return obj;
             },{});
         }
@@ -92,11 +92,7 @@
         */
         function getContainerList(){
           return activeContainers.data.reduce(function(obj, item) {
-              if (containerConfig.externalAPI) {
-                  obj.push(resolveId(item.key));
-              } else {
-                  obj.push(item.key.substring(0,12));
-              }
+              obj.push(resolveId(item.key));
               return obj;
           },[]);
         }
