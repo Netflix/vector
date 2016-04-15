@@ -50,9 +50,9 @@
 
                 angular.forEach(metrics, function (metric, key) {
                     angular.forEach(metric.data, function (instance) {
-                        //TODO: find another way of filtering disk and network container widgets without using /docker/
-                        if (instance.key.indexOf('/docker/') !==- 1) {
-                            name = instance.key.replace('/docker/', '').substring(0, 12);
+                        
+                        if (ContainerMetadataService.containerIdExist(instance.key)) {
+                            name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
                             if (instance.values.length > 0 && ContainerMetadataService.checkContainerName(name) && ContainerMetadataService.checkGlobalFilter(name)) {
                                 lastValue = instance.values[instance.values.length - 1];
                                 returnValues.push({
