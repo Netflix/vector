@@ -33,7 +33,6 @@
         function cancelInterval() {
             if (intervalPromise) {
                 $interval.cancel(intervalPromise);
-                $log.info('Interval canceled.');
             }
         }
 
@@ -61,6 +60,7 @@
         function intervalFunction() {
             MetricListService.updateMetrics(updateMetricsCallback);
             MetricListService.updateDerivedMetrics();
+            ContainerMetadataService.updateIdDictionary();
         }
 
         /**
@@ -77,7 +77,6 @@
                 } else {
                     flash.to('dashboardAlertError').error = 'Invalid context. Please update host to resume operation.';
                 }
-                $log.info('Interval updated.');
             }
         }
 
@@ -87,7 +86,6 @@
         */
         function updateHostnameSuccessCallback(data) {
           $rootScope.properties.hostname = data.values[0].instances[0].value;
-          $log.info('Hostname updated: ' + $rootScope.properties.hostname);
         }
 
         /**
@@ -123,8 +121,6 @@
         * @desc
         */
         function updateContext(host) {
-            $log.info('Context updated.');
-
             var hostspec = $rootScope.properties.hostspec,
                 hostMatch = null;
 
@@ -163,8 +159,6 @@
         * @desc
         */
         function updateHost(host) {
-            $log.info('Host updated.');
-
             $location.search('host', host);
             $location.search('hostspec', $rootScope.properties.hostspec);
 
@@ -183,7 +177,6 @@
         * @desc
         */
         function updateWindow() {
-            $log.log('Window updated.');
         }
 
         /**
@@ -230,12 +223,12 @@
             }
 
             $rootScope.flags = {
-              contextAvailable: false,
-              contextUpdating: false
+                contextAvailable: false,
+                contextUpdating: false
             };
 
             if (vectorConfig.enableContainerWidgets) {
-              ContainerMetadataService.initContainerCgroups();
+                ContainerMetadataService.initialize();
             }
         }
 

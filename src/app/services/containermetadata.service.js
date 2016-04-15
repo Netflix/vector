@@ -41,7 +41,6 @@
         */
         function clearIdDictionary(){
             idMap = {};
-            taskNames = {};
         }
 
         /**
@@ -53,7 +52,7 @@
                 //make external api call here to resolve container id
                 //need to set containerConfig.externalAPI to true in app.config.js
             } else {
-                idDictionary(instanceKey);
+                return idDictionary(instanceKey);
             }
         }
 
@@ -66,57 +65,42 @@
         }
 
         /**;
-        * @name initContainerCgroups
+        * @name initialize
         * @desc
         */
         var activeContainers;
-        function initContainerCgroups(){
+        function initialize(){
             activeContainers = MetricListService.getOrCreateMetric('containers.cgroup');
-            $interval(containerCgroupIntervalFunction, $rootScope.properties.interval * 1000);
         }
 
         /**;
-        * @name containerCgroupIntervalFunction
+        * @name updateIdDictionary
         * @desc
         */
-        function containerCgroupIntervalFunction(){
-            idMap = activeContainers.data.reduce(function(obj, item){
-                var time = item.values[item.values.length-1].x;
-                setCurrentTime(time);
-                if (isTimeCurrent(time)){
+        function updateIdDictionary(){
+            idMap = activeContainers.data.reduce(function(obj, item) {
+                if (containerConfig.externalAPI) {
+                    obj[item.key] = resolveId(item.key);
+                } else {
                     obj[item.key] = item.key.substring(0,12);
                 }
-                if (containerConfig.externalAPI){
-                    resolveId(item.key);
-                }
-                if (obj !==''){
-                    return obj;
-                }
+                return obj;
             },{});
-            if (!containerIdExist(containerName)){
-                getAllContainers();
-            }
-
         }
 
-        /**;
-        * @name getAllContainers
+        /**
+        * @name getContainerList
         * @desc
         */
-        var taskNames = {};
-        function getAllContainers(){
-            var keys = Object.keys(idMap);
-            var tempObj = idMap;
-            if (containerConfig.externalAPI){
-                keys = Object.keys(taskNames);
-                tempObj = taskNames;
-            }
-
-            var values = new Array(keys.length);
-            for(var i = 0; i < keys.length; i++) {
-                values[i] = tempObj[keys[i]];
-            }
-            return values;
+        function getContainerList(){
+          return activeContainers.data.reduce(function(obj, item) {
+              if (containerConfig.externalAPI) {
+                  obj.push(resolveId(item.key));
+              } else {
+                  obj.push(item.key.substring(0,12));
+              }
+              return obj;
+          },[]);
         }
 
         /**
@@ -142,26 +126,6 @@
         */
         function getGlobalFilter(){
             return globalFilter;
-        }
-
-        /**
-        * @name setCurrentTime
-        * @desc
-        */
-        var currentTime = 0;
-        function setCurrentTime(time){
-            if (time > currentTime){
-                currentTime = time;
-            }
-        }
-
-        /**
-        * @name isTimeCurrent
-        * @desc
-        */
-        function isTimeCurrent(time){
-            var difference = currentTime - time;
-            return difference < 6000;
         }
 
         /**
@@ -191,19 +155,18 @@
 
         return {
             idDictionary: idDictionary,
+            getContainerList: getContainerList,
+            updateIdDictionary: updateIdDictionary,
             clearIdDictionary: clearIdDictionary,
             resolveId: resolveId,
             setGlobalFilter: setGlobalFilter,
             checkGlobalFilter: checkGlobalFilter,
             getGlobalFilter : getGlobalFilter,
-            setCurrentTime: setCurrentTime,
-            isTimeCurrent: isTimeCurrent,
             containerIdExist: containerIdExist,
-            getAllContainers: getAllContainers,
-            initContainerCgroups:initContainerCgroups,
             setContainerName: setContainerName,
             getContainerName: getContainerName,
-            checkContainerName: checkContainerName
+            checkContainerName: checkContainerName,
+            initialize: initialize
         };
     }
 

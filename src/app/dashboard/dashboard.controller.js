@@ -31,7 +31,6 @@
     function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, DashboardService, vectorVersion, ContainerMetadataService, ModalService, vectorConfig) {
 
         var vm = this;
-        var path = $route.current.$$route.originalPath;
         var widgetsToLoad = widgets;
 
         /**
@@ -56,15 +55,12 @@
 
             if ($routeParams.protocol) {
                 $rootScope.properties.protocol = $routeParams.protocol;
-                $log.info('Protocol: ' + $routeParams.protocol);
             }
 
             if ($routeParams.host) {
                 vm.inputHost = $routeParams.host;
-                $log.info('Host: ' + $routeParams.host);
                 if ($routeParams.hostspec) {
                     $rootScope.properties.hostspec = $routeParams.hostspec;
-                    $log.info('Hostspec: ' + $routeParams.hostspec);
                 }
                 DashboardService.updateHost(vm.inputHost);
             }
@@ -78,8 +74,6 @@
                 .addEventListener('msvisibilitychange', visibilityChanged, false);
             $document[0]
                 .addEventListener('mozvisibilitychange', visibilityChanged, false);
-
-            $log.info('Dashboard controller initialized with ' + path + ' view.');
 
             if ($routeParams.widgets !== undefined ){
                 var widgetNameArr = $routeParams.widgets.split(',') || [];
@@ -107,7 +101,11 @@
                 ContainerMetadataService.setGlobalFilter(vm.containerFilter);
             }
 
-             vm.dashboardOptions = {
+            $rootScope.$on('updateMetrics', function () {
+                vm.containerList = ContainerMetadataService.getContainerList();
+            });
+
+            vm.dashboardOptions = {
                 hideToolbar: true,
                 widgetButtons: false,
                 hideWidgetName: true,
@@ -181,7 +179,7 @@
             });
         };
 
-        vm.updateContainerFilter = function(){
+        vm.updateContainerFilter = function() {
             ContainerMetadataService.setGlobalFilter(vm.containerFilter);
             $location.search('containerFilter', vm.containerFilter);
         };
@@ -191,20 +189,6 @@
         vm.updateHost = function() {
             DashboardService.updateHost(vm.inputHost);
             ContainerMetadataService.clearIdDictionary();
-        };
-
-        vm.containerList = function(){
-            var containerList = ContainerMetadataService.getAllContainers();
-            //TODO: need another way to reset this to nothing when all containers are killed from a server
-/*            if (containerList.length < 1){
-                vm.selectedContainer = '';
-            }*/
-            if (containerList.indexOf(vm.selectedContainer) !== -1){
-                vm.selectedContainerRunning = true;
-            } else {
-                vm.selectedContainerRunning = false;
-            }
-            return containerList.filter(Boolean);
         };
 
         vm.containerChanged = function(){
@@ -241,13 +225,12 @@
             return true;
         };
 
-        vm.firstClick = true;
         vm.updateWindow = DashboardService.updateWindow;
         vm.containerFilter ='';
+        vm.containerList = [];
         vm.isHostnameExpanded = false;
         vm.inputHost = '';
         vm.disableContainerSelectNone = false;
-        vm.selectedContainerRunning = false;
         vm.selectedContainer = '';
         vm.enableContainerWidgets = vectorConfig.enableContainerWidgets;
         vm.disableContainerFilter = vectorConfig.disableContainerFilter;

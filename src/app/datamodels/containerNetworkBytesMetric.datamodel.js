@@ -23,7 +23,7 @@
     * @name ContainerNetworkBytesMetricDataModel
     * @desc
     */
-    function ContainerNetworkBytesMetricDataModel(WidgetDataModel, MetricListService, VectorService, ContainerMetadataService) {
+    function ContainerNetworkBytesMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
         var DataModel = function () {
             return this;
         };
@@ -47,8 +47,6 @@
                     lastValue;
 
                 angular.forEach(inMetric.data, function (instance) {
-                    ContainerMetadataService.setCurrentTime(instance.previousTimestamp);
-                    
                     if (instance.values.length > 0 && instance.key.indexOf('veth') !== -1 && instance.key.indexOf(widgetDefinition.widgetScope.widget.filter) !==-1) {
                         lastValue = instance.values[instance.values.length - 1];
                         returnValues.push({

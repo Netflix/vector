@@ -49,7 +49,6 @@
                     lastValue;
 
                 var pushReturnValues = function(instance, metricName){                    
-                    ContainerMetadataService.setCurrentTime(instance.previousTimestamp);
                     if (instance.values.length > 0){
                         lastValue = instance.values[instance.values.length - 1];
 

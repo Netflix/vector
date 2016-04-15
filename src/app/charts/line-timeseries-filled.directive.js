@@ -69,7 +69,7 @@
 
             scope.$on('updateMetrics', function () {
                 angular.forEach(scope.data, function (instance) {
-                  instance['area']=true;
+                  instance.area=true;
                 });
                 chart.update();
             });
