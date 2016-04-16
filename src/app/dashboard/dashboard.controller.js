@@ -32,6 +32,7 @@
 
         var vm = this;
         var widgetsToLoad = widgets;
+        var containerNameParsed = false;
 
         /**
         * @name visibilityChanged
@@ -90,12 +91,6 @@
                 $location.search('widgets', urlArr);
             }
 
-            if ($routeParams.container !== undefined){
-                vm.selectedContainer = $routeParams.container;
-                vm.disableContainerSelectNone = true;
-                ContainerMetadataService.setContainerName(vm.selectedContainer);
-            }
-
             if ($routeParams.containerFilter !== undefined){
                 vm.containerFilter = $routeParams.containerFilter;
                 ContainerMetadataService.setGlobalFilter(vm.containerFilter);
@@ -103,10 +98,24 @@
 
             $rootScope.$on('updateMetrics', function () {
                 vm.containerList = ContainerMetadataService.getContainerList();
-                //TODO: deal with the case where all containers might stop and the list would be empty.
-                if(vm.containerList.length > 0 && vm.selectedContainer.indexOf(vm.containerList) !== -1) {
-                    vm.selectedContainer = '';
-                    ContainerMetadataService.setContainerName('');
+                console.log("update metrics");
+                if (containerNameParsed) {
+                    if(vm.containerList.indexOf($routeParams.container) !== -1) {
+                        vm.selectedContainer = '';
+                        ContainerMetadataService.setContainerName('');
+                    }
+                } else {
+                    if ($routeParams.container !== undefined){
+                        if (vm.containerList.indexOf($routeParams.container) !== -1) {
+                            vm.selectedContainer = $routeParams.container;
+                            vm.disableContainerSelectNone = true;
+                            ContainerMetadataService.setContainerName(vm.selectedContainer);
+                            console.log("setting true");
+                            containerNameParsed = true;
+                        }
+                    } else {
+                        containerNameParsed = true;
+                    }
                 }
             });
 
