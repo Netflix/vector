@@ -75,6 +75,11 @@
             });
 
             scope.$on('updateMetrics', function () {
+                if (scope.area) {
+                  angular.forEach(scope.data, function (instance) {
+                    instance.area=true;
+                  });
+                }
                 chart.update();
             });
         }
@@ -86,7 +91,8 @@
                 data: '=',
                 percentage: '=',
                 integer: '=',
-                forcey: '='
+                forcey: '=',
+                area: '='
             },
             link: link
         };

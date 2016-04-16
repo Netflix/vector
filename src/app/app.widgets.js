@@ -716,7 +716,8 @@
                     requireContainerFilter: true,
                     attrs: {
                         percentage: false,
-                        integer: true
+                        integer: true,
+                        area: true
                     }
                 }, {
                     name: 'container.memory.headroom',
