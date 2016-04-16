@@ -95,7 +95,8 @@
                     var total = 0;
                     angular.forEach(containerMemMetric.data, function (instance) {
                         var difference = tempTimestamp - instance.previousTimestamp;
-                        if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1 && difference < 5500) { //TODO: need to remove this.
+                        //TODO: need to remove this.
+                        if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1 && difference < 5500) {
                             total = total + (instance.previousValue / 1024 / 1024);
                         }
                     });
