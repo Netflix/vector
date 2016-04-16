@@ -201,8 +201,7 @@
                             iname;
 
                         if (metrics.values.length !== simpleMetrics.length) {
-                            var currentMetric,
-                                index;
+                            var currentMetric;
 
                             angular.forEach(simpleMetrics, function (metric) {
                                 currentMetric= _.find(metrics.values, function (el) {
