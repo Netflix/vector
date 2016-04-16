@@ -35,7 +35,7 @@
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
 
             var conversionFunction = function (value) {
-                    return value / 1024;
+                    return value / 1024 / 1024;
                 },
                 cachedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.cached', conversionFunction),
                 usedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.used', conversionFunction),
@@ -95,7 +95,7 @@
                     var total = 0;
                     angular.forEach(containerMemMetric.data, function (instance) {
                         var difference = tempTimestamp - instance.previousTimestamp;
-                        if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1 && difference < 5500) {
+                        if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1 && difference < 5500) { //TODO: need to remove this.
                             total = total + (instance.previousValue / 1024 / 1024);
                         }
                     });
@@ -108,7 +108,7 @@
 
                     returnValues.push({
                         timestamp: usedValue.x,
-                        key: 'System used mem',
+                        key: 'system used',
                         value: usedValue.y - containerUsedValue
                     });
 
@@ -118,7 +118,7 @@
 
                     returnValues.push({
                         timestamp: usedValue.x,
-                        key: 'System free (unused)',
+                        key: 'system free',
                         value: freeValue.y
                     });
                 }
@@ -127,7 +127,7 @@
                     angular.isDefined(usedValue)) {
                     returnValues.push({
                         timestamp: usedValue.x,
-                        key: 'Container used mem',
+                        key: 'container used',
                         value: containerUsedValue
                     });
                 }

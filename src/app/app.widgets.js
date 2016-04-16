@@ -25,12 +25,12 @@
     /* Widgets */
     function widgetDefinitions(MetricDataModel,
                                CumulativeMetricDataModel,
-                               ContainerCPUUtilizationMetricTimeSeriesDataModel,
-                               ContainerMemoryBytesMetricTimeSeriesDataModel,
+                               CgroupCPUUsageMetricTimeSeriesDataModel,
+                               CgroupMemoryUsageMetricTimeSeriesDataModel,
                                ContainerMemoryUtilizationMetricDataModel,
                                ContainerNetworkBytesMetricDataModel,
                                ContainerMultipleCumulativeMetricDataModel,
-                               ContainerMemoryHeadroomAggregateMetricDataModel,
+                               CgroupMemoryHeadroomMetricDataModel,
                                ContainerMemoryHeadroomMetricDataModel,
                                MemoryUtilizationMetricDataModel,
                                NetworkBytesMetricDataModel,
@@ -648,7 +648,7 @@
                     title: 'Container CPU Utilization',
                     directive: 'line-time-series',
                     dataAttrName: 'data',
-                    dataModelType: ContainerCPUUtilizationMetricTimeSeriesDataModel,
+                    dataModelType: CgroupCPUUsageMetricTimeSeriesDataModel,
                     dataModelOptions: {
                         name: 'cgroup.cpuacct.usage',
                     },
@@ -665,13 +665,47 @@
                         integer: false
                     }
                 }, {
-                    name: 'container.memory.headroom',
-                    title: 'Container Memory Headroom',
-                    directive: 'line-time-series-filled',
+                    name: 'cgroup.memory.usage',
+                    title: 'Per-Container Memory Usage',
+                    directive: 'line-time-series',
                     dataAttrName: 'data',
-                    dataModelType: ContainerMemoryHeadroomMetricDataModel,
+                    dataModelType: CgroupMemoryUsageMetricTimeSeriesDataModel,
                     dataModelOptions: {
-                        name: 'container.memory.headroom'
+                        name: 'cgroup.memory.usage'
+                    },
+                    size: {
+                        width: '50%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                }, {
+                    name: 'container.memory.usage',
+                    title: 'Total Container Memory Usage',
+                    directive: 'area-stacked-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: ContainerMemoryUtilizationMetricDataModel,
+                    dataModelOptions: {
+                        name: 'container.memory.usage'
+                    },
+                    size: {
+                        width: '50%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                    attrs: {
+                        percentage: false,
+                        integer: true
+                    }
+                }, {
+                    name: 'cgroup.memory.headroom',
+                    title: 'Per-Container Memory Headroom',
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: CgroupMemoryHeadroomMetricDataModel,
+                    dataModelOptions: {
+                        name: 'cgroup.memory.headroom'
                     },
                     size: {
                         width: '50%',
@@ -685,47 +719,13 @@
                         integer: true
                     }
                 }, {
-                    name: 'cgroup.memory.usage',
-                    title: 'Container Memory Usage',
-                    directive: 'line-time-series',
-                    dataAttrName: 'data',
-                    dataModelType: ContainerMemoryBytesMetricTimeSeriesDataModel,
-                    dataModelOptions: {
-                        name: 'cgroup.memory.usage'
-                    },
-                    size: {
-                        width: '50%',
-                        height: '250px'
-                    },
-                    enableVerticalResize: false,
-                    group: 'Container',
-                }, {
-                    name: 'container.memory.utilization',
-                    title: 'Container Memory Utilization',
+                    name: 'container.memory.headroom',
+                    title: 'Total Container Memory Headroom',
                     directive: 'area-stacked-time-series',
                     dataAttrName: 'data',
-                    dataModelType: ContainerMemoryUtilizationMetricDataModel,
+                    dataModelType: ContainerMemoryHeadroomMetricDataModel,
                     dataModelOptions: {
-                        name: 'container.memory.utilization'
-                    },
-                    size: {
-                        width: '50%',
-                        height: '250px'
-                    },
-                    enableVerticalResize: false,
-                    group: 'Container',
-                    attrs: {
-                        percentage: false,
-                        integer: true
-                    }
-                }, {
-                    name: 'container.memory.aggregate.headroom',
-                    title: 'Container Memory Aggregate Headroom',
-                    directive: 'area-stacked-time-series',
-                    dataAttrName: 'data',
-                    dataModelType: ContainerMemoryHeadroomAggregateMetricDataModel,
-                    dataModelOptions: {
-                        name: 'container.memory.aggregate.headroom'
+                        name: 'container.memory.headroom'
                     },
                     size: {
                         width: '50%',

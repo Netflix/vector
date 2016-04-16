@@ -6,10 +6,10 @@
      'use strict';
 
     /**
-    * @name ContainerMemoryBytesMetricTimeSeriesDataModel
+    * @name CgroupMemoryUsageMetricTimeSeriesDataModel
     * @desc
     */
-    function ContainerMemoryBytesMetricTimeSeriesDataModel(ContainerMetadataService, $rootScope, WidgetDataModel, MetricListService, VectorService) {
+    function CgroupMemoryUsageMetricTimeSeriesDataModel(ContainerMetadataService, $rootScope, WidgetDataModel, MetricListService, VectorService) {
         var DataModel = function () {
             return this;
         };
@@ -71,5 +71,5 @@
 
     angular
         .module('app.datamodels')
-        .factory('ContainerMemoryBytesMetricTimeSeriesDataModel', ContainerMemoryBytesMetricTimeSeriesDataModel);
+        .factory('CgroupMemoryUsageMetricTimeSeriesDataModel', CgroupMemoryUsageMetricTimeSeriesDataModel);
  })();

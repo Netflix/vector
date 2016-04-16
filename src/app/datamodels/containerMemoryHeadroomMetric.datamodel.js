@@ -15,7 +15,6 @@
  *     limitations under the License.
  *
  */
-
  (function () {
      'use strict';
 
@@ -35,58 +34,58 @@
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
 
-            // create create base metrics
-            var usageMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.memory.usage'),
-                limitMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.memory.limit'),
-                physicalMemMaxMetric = MetricListService.getOrCreateCumulativeMetric('mem.physmem'),
-                calculatedMaxMem,
-                maxInt = 18446744073709552000,
+            var conversionFunction = function (value) {
+                    return value / 1024 / 1024;
+                },
+                containerLimitMetric = MetricListService.getOrCreateConvertedMetric('cgroup.memory.limit', conversionFunction),
+                containerUsedMetric = MetricListService.getOrCreateConvertedMetric('cgroup.memory.usage', conversionFunction),
                 derivedFunction;
 
-            // create derived function
             derivedFunction = function () {
                 var returnValues = [],
-                    lastValue;
+                    containerLimitValue,
+                    containerUsedValue,
+                    tempTimestamp;
 
-                var pushReturnValues = function(instance, metricName){                    
-                    if (instance.values.length > 0){
-                        lastValue = instance.values[instance.values.length - 1];
 
-                        //metric used to get physical max to overwrite cgroup.memory.limit when it returns max int
-                        var value = instance.previousValue;
-                        if (metricName === ' - Physical'){
-                            calculatedMaxMem = instance.previousValue;
+                containerLimitValue = (function () {
+                    var total = 0;
+                    angular.forEach(containerLimitMetric.data, function (instance) {
+                        if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
+                            total = total + instance.previousValue / 1024 / 1204;
                         }
-                        if (instance.previousValue >= maxInt){
-                           value = calculatedMaxMem * 1024;
+                    });
+                    return total;
+                }());
+
+                containerUsedValue = (function () {
+                    var total = 0;
+                    angular.forEach(containerUsedMetric.data, function (instance) {
+                        tempTimestamp = instance.values[instance.values.length - 1].x;
+                        if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
+                            total = total + instance.previousValue / 1024 / 1204;
                         }
+                    });
 
-                        if (ContainerMetadataService.containerIdExist(instance.key)) {
-                            var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
-                            if (name.indexOf(ContainerMetadataService.getContainerName()) !== -1){
-                                returnValues.push({
-                                    timestamp: lastValue.x,
-                                    key: name + metricName,
-                                    value: value / 1024 / 1024
-                                });
-                            }
-                        }
-                    }
+                    return total;
+                }());
 
-                };
+                if (angular.isDefined(containerLimitValue)) {
 
-                angular.forEach(usageMetric.data, function (instance) {
-                    pushReturnValues(instance, ' - Usage');
-                });
+                    returnValues.push({
+                        timestamp: tempTimestamp,
+                        key: 'Container mem limit',
+                        value: containerLimitValue
+                    });
+                }
 
-                angular.forEach(limitMetric.data, function (instance) {
-                    pushReturnValues(instance, ' - Limit');
-                });
-
-                //metric used to get physical max to overwrite cgroup.memory.limit when it returns max int
-                angular.forEach(physicalMemMaxMetric.data, function (instance) {
-                    pushReturnValues(instance, ' - Physical');
-                });
+                if (angular.isDefined(containerUsedValue)) {
+                    returnValues.push({
+                        timestamp: tempTimestamp,
+                        key: 'Container mem usage',
+                        value: containerUsedValue
+                    });
+                }
 
                 return returnValues;
             };
@@ -102,9 +101,8 @@
             MetricListService.destroyDerivedMetric(this.name);
 
             // remove subscribers and delete base metrics
-            MetricListService.destroyMetric('cgroup.memory.usage');
             MetricListService.destroyMetric('cgroup.memory.limit');
-            MetricListService.destroyMetric('mem.physmem');
+            MetricListService.destroyMetric('cgroup.memory.usage');
 
             WidgetDataModel.prototype.destroy.call(this);
         };
