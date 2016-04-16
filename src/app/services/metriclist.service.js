@@ -199,6 +199,21 @@
                             metricInstance,
                             iid,
                             iname;
+
+                        if (metrics.values.length !== simpleMetrics.length) {
+                            var currentMetric,
+                                index;
+
+                            angular.forEach(simpleMetrics, function (metric) {
+                                currentMetric= _.find(metrics.values, function (el) {
+                                    return el.name === metric.name;
+                                });
+                                if (angular.isUndefined(currentMetric)) {
+                                    metric.clearData();
+                                }
+                            });
+                        }
+
                         angular.forEach(metrics.values, function (value) {
                             name = value.name;
 
