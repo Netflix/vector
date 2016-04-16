@@ -100,7 +100,7 @@
                 vm.containerList = ContainerMetadataService.getContainerList();
                 //TODO: find a better way for parsing the container name from the query string just once.
                 if (containerParsedFromQuerystring) {
-                    if(vm.containerList.indexOf($routeParams.container) !== -1) {
+                    if(vm.containerList.indexOf(vm.selectedContainer) === -1) { // can't find the selected container in the list
                         vm.selectedContainer = '';
                         ContainerMetadataService.setContainerName('');
                     }
