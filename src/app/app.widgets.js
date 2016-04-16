@@ -23,25 +23,26 @@
     'use strict';
 
     /* Widgets */
-    function widgetDefinitions(MetricDataModel,
-                               CumulativeMetricDataModel,
-                               CgroupCPUUsageMetricTimeSeriesDataModel,
-                               CgroupMemoryUsageMetricTimeSeriesDataModel,
-                               ContainerMemoryUtilizationMetricDataModel,
-                               ContainerNetworkBytesMetricDataModel,
-                               ContainerMultipleCumulativeMetricDataModel,
-                               CgroupMemoryHeadroomMetricDataModel,
-                               ContainerMemoryHeadroomMetricDataModel,
-                               MemoryUtilizationMetricDataModel,
-                               NetworkBytesMetricDataModel,
-                               CpuUtilizationMetricDataModel,
-                               PerCpuUtilizationMetricDataModel,
-                               MultipleMetricDataModel,
-                               MultipleCumulativeMetricDataModel,
-                               DummyMetricDataModel,
-                               DiskLatencyMetricDataModel,
-                               CumulativeUtilizationMetricDataModel,
-                               vectorConfig) {
+    function widgetDefinitions(
+        MetricDataModel,
+        CumulativeMetricDataModel,
+        CgroupCPUUsageMetricTimeSeriesDataModel,
+        CgroupMemoryUsageMetricTimeSeriesDataModel,
+        ContainerMemoryUtilizationMetricDataModel,
+        ContainerNetworkBytesMetricDataModel,
+        ContainerMultipleCumulativeMetricDataModel,
+        CgroupMemoryHeadroomMetricDataModel,
+        ContainerMemoryHeadroomMetricDataModel,
+        MemoryUtilizationMetricDataModel,
+        NetworkBytesMetricDataModel,
+        CpuUtilizationMetricDataModel,
+        PerCpuUtilizationMetricDataModel,
+        MultipleMetricDataModel,
+        MultipleCumulativeMetricDataModel,
+        DummyMetricDataModel,
+        DiskLatencyMetricDataModel,
+        CumulativeUtilizationMetricDataModel,
+        vectorConfig) {
 
         var onSettingsClose = function(resultFromModal, widgetModel) {
             if (typeof resultFromModal !== 'undefined'){
@@ -864,7 +865,7 @@
         }
     ];
 
-   var emptyWidgets = [];
+    var emptyWidgets = [];
     angular
         .module('app.widgets', [])
         .factory('widgetDefinitions', widgetDefinitions)

@@ -65,6 +65,7 @@
         * @desc
         */
         function resolveId(instanceKey) {
+            //TODO: this should check if a function was defined and call it instead of checking a flag.
             if (containerConfig.externalAPI) {
                 //make external api call here to resolve container id
                 //need to set containerConfig.externalAPI to true in app.config.js

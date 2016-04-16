@@ -15,13 +15,13 @@
  *     limitations under the License.
  *
  */
- (function () {
-     'use strict';
+(function () {
+    'use strict';
 
-     /**
-     * @name VectorService
-     */
-     function VectorService() {
+    /**
+    * @name VectorService
+    */
+    function VectorService() {
 
         /**
         * @name getGuid
@@ -40,4 +40,4 @@
         .module('app.services')
         .factory('VectorService', VectorService);
 
- })();
+})();

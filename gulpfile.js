@@ -4,6 +4,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var wrench = require('wrench');
 var eslint = require('gulp-eslint');
+var lintspaces = require("gulp-lintspaces");
 var git = require('gulp-git');
 var fs = require('fs');
 
@@ -47,4 +48,15 @@ gulp.task('eslint', function() {
         // .pipe(eslint.format())
         .pipe(eslint.formatEach('stylish', process.stderr))
     ;
+});
+
+gulp.task('lintspaces', function() {
+    return gulp.src(['src/**/*.js'])
+        .pipe(lintspaces({
+            editorconfig: '.editorconfig',
+            ignores: [
+                'js-comments'
+            ]
+        }))
+        .pipe(lintspaces.reporter());
 });
