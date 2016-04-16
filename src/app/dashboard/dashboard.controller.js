@@ -32,7 +32,7 @@
 
         var vm = this;
         var widgetsToLoad = widgets;
-        var containerNameParsed = false;
+        var containerParsedFromQuerystring = false;
 
         /**
         * @name visibilityChanged
@@ -98,8 +98,8 @@
 
             $rootScope.$on('updateMetrics', function () {
                 vm.containerList = ContainerMetadataService.getContainerList();
-                console.log("update metrics");
-                if (containerNameParsed) {
+                //TODO: find a better way for parsing the container name from the query string just once.
+                if (containerParsedFromQuerystring) {
                     if(vm.containerList.indexOf($routeParams.container) !== -1) {
                         vm.selectedContainer = '';
                         ContainerMetadataService.setContainerName('');
@@ -110,11 +110,10 @@
                             vm.selectedContainer = $routeParams.container;
                             vm.disableContainerSelectNone = true;
                             ContainerMetadataService.setContainerName(vm.selectedContainer);
-                            console.log("setting true");
-                            containerNameParsed = true;
+                            containerParsedFromQuerystring = true;
                         }
                     } else {
-                        containerNameParsed = true;
+                        containerParsedFromQuerystring = true;
                     }
                 }
             });
