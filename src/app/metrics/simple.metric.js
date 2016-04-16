@@ -66,6 +66,25 @@
             this.data.length = 0;
         };
 
+        Metric.prototype.deleteInvalidInstances = function (currentInstances) {
+            var iid,
+                currentInstance,
+                index,
+                self = this;
+            angular.forEach(self.data, function(instance) {
+                currentInstance = _.find(currentInstances, function (el) {
+                    iid = angular.isUndefined(el.instance) ? 1 : el.instance;
+                    return iid === instance.iid;
+                });
+                if (angular.isUndefined(currentInstance)) {
+                    index = self.data.indexOf(instance);
+                    if (index > -1) {
+                        self.data.splice(index, 1);
+                    }
+                }
+            });
+        }
+
         return Metric;
     }
 

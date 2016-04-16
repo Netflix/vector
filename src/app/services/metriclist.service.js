@@ -186,34 +186,38 @@
         */
         function updateMetrics(callback) {
             var metricArr = [],
-                url,
-                host = $rootScope.properties.host,
-                port = $rootScope.properties.port,
-                context = $rootScope.properties.context,
-                protocol = $rootScope.properties.protocol;
+                context = $rootScope.properties.context;
 
             if (context && context > 0 && simpleMetrics.length > 0) {
                 angular.forEach(simpleMetrics, function (value) {
                     metricArr.push(value.name);
                 });
 
-                url = protocol + '://' + host + ':' + port + '/pmapi/' + context + '/_fetch?names=' + metricArr.join(',');
-
                 PMAPIService.getMetrics(context, metricArr)
                     .then(function (metrics) {
+                        var name,
+                            metricInstance,
+                            iid,
+                            iname;
                         angular.forEach(metrics.values, function (value) {
-                            var name = value.name;
-                            angular.forEach(value.instances, function (instance) {
-                                var iid = angular.isUndefined(instance.instance) ? 1 : instance.instance;
-                                var iname = metrics.inames[name].inames[iid];
+                            name = value.name;
 
-                                var metricInstance = _.find(simpleMetrics, function (el) {
-                                    return el.name === name;
-                                });
-                                if (angular.isDefined(metricInstance) && metricInstance !== null) {
-                                    metricInstance.pushValue(metrics.timestamp, iid, iname, instance.value);
-                                }
+                            metricInstance = _.find(simpleMetrics, function (el) {
+                                return el.name === name;
                             });
+
+                            if(value.instances.length !== metricInstance.data.length) {
+                                metricInstance.deleteInvalidInstances(value.instances);
+                            }
+
+                            if (angular.isDefined(metricInstance) && metricInstance !== null) {
+                                angular.forEach(value.instances, function (instance) {
+                                    iid = angular.isUndefined(instance.instance) ? 1 : instance.instance;
+                                    iname = metrics.inames[name].inames[iid];
+
+                                    metricInstance.pushValue(metrics.timestamp, iid, iname, instance.value);
+                                });
+                            }
                         });
                     }).then(
                         function () { callback(true); },
@@ -241,8 +245,6 @@
             }
         }
 
-
-        ///////////
 
         return {
             getOrCreateMetric: getOrCreateMetric,
