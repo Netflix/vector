@@ -32,7 +32,6 @@
         ContainerNetworkBytesMetricDataModel,
         ContainerMultipleCumulativeMetricDataModel,
         CgroupMemoryHeadroomMetricDataModel,
-        ContainerMemoryHeadroomMetricDataModel,
         MemoryUtilizationMetricDataModel,
         NetworkBytesMetricDataModel,
         CpuUtilizationMetricDataModel,
@@ -719,25 +718,6 @@
                         percentage: false,
                         integer: false,
                         area: true
-                    }
-                }, {
-                    name: 'container.memory.headroom',
-                    title: 'Total Container Memory Headroom',
-                    directive: 'area-stacked-time-series',
-                    dataAttrName: 'data',
-                    dataModelType: ContainerMemoryHeadroomMetricDataModel,
-                    dataModelOptions: {
-                        name: 'container.memory.headroom'
-                    },
-                    size: {
-                        width: '50%',
-                        height: '250px'
-                    },
-                    enableVerticalResize: false,
-                    group: 'Container',
-                    attrs: {
-                        percentage: false,
-                        integer: true
                     }
                 },{
                     name: 'container.disk.iops',
