@@ -19,10 +19,10 @@
      'use strict';
 
     /**
-    * @name ContainerMemoryUtilizationMetricDataModel
+    * @name ContainerMemoryUsageMetricDataModel
     * @desc
     */
-    function ContainerMemoryUtilizationMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
+    function ContainerMemoryUsageMetricDataModel(WidgetDataModel, MetricListService, VectorService, ContainerMetadataService) {
         var DataModel = function () {
             return this;
         };
@@ -35,23 +35,18 @@
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
 
             var conversionFunction = function (value) {
-                    return value / 1024 / 1024;
+                    return value / 1024;
                 },
-                cachedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.cached', conversionFunction),
                 usedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.used', conversionFunction),
-                freeMemMetric = MetricListService.getOrCreateConvertedMetric('mem.freemem', conversionFunction),
-                buffersMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.bufmem', conversionFunction),
-                containerMemMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.memory.usage'),
+                freeMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.free', conversionFunction),
+                containerMemMetric = MetricListService.getOrCreateConvertedMetric('cgroup.memory.usage', conversionFunction),
                 derivedFunction;
 
             derivedFunction = function () {
                 var returnValues = [],
                     usedValue,
-                    cachedValue,
                     freeValue,
-                    buffersValue,
-                    containerUsedValue,
-                    tempTimestamp;
+                    containerValue;
 
 
                 usedValue = (function () {
@@ -63,54 +58,38 @@
                     }
                 }());
 
-                cachedValue = (function () {
-                    if (cachedMemMetric.data.length > 0) {
-                        var instance = cachedMemMetric.data[cachedMemMetric.data.length - 1];
-                        if (instance.values.length > 0) {
-                            return instance.values[instance.values.length - 1];
-                        }
-                    }
-                }());
-
                 freeValue = (function () {
                     if (freeMemMetric.data.length > 0) {
                         var instance = freeMemMetric.data[freeMemMetric.data.length - 1];
                         if (instance.values.length > 0) {
-                            tempTimestamp = instance.values[instance.values.length - 1].x;
                             return instance.values[instance.values.length - 1];
                         }
                     }
                 }());
 
-                buffersValue = (function () {
-                    if (buffersMemMetric.data.length > 0) {
-                        var instance = buffersMemMetric.data[buffersMemMetric.data.length - 1];
-                        if (instance.values.length > 0) {
-                            return instance.values[instance.values.length - 1];
+                containerValue = (function () {
+                    if (containerMemMetric.data.length > 0) {
+                        var total = 0;
+                        var timestamp = containerMemMetric.data[containerMemMetric.data.length - 1].values[containerMemMetric.data[containerMemMetric.data.length - 1].values.length - 1].x;
+                        angular.forEach(containerMemMetric.data, function (instance) {
+                            if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
+                                total = total + instance.values[instance.values.length - 1].y;
+                            }
+                        });
+                        return {
+                            x: timestamp,
+                            y: total
                         }
                     }
-                }());
-
-                containerUsedValue = (function () {
-                    var total = 0;
-                    angular.forEach(containerMemMetric.data, function (instance) {
-                        var difference = tempTimestamp - instance.previousTimestamp;
-                        //TODO: need to remove this.
-                        if (instance.values.length > 0 && instance.key.indexOf('docker/')!== -1 && difference < 5500) {
-                            total = total + (instance.previousValue / 1024 / 1024);
-                        }
-                    });
-                    return Math.round(total);
-
                 }());
 
                 if (angular.isDefined(usedValue) &&
-                    angular.isDefined(containerUsedValue)) {
+                    angular.isDefined(containerValue)) {
 
                     returnValues.push({
                         timestamp: usedValue.x,
-                        key: 'system used',
-                        value: usedValue.y - containerUsedValue
+                        key: 'host used',
+                        value: usedValue.y - containerValue.y
                     });
 
                 }
@@ -118,18 +97,18 @@
                 if (angular.isDefined(freeValue)) {
 
                     returnValues.push({
-                        timestamp: usedValue.x,
-                        key: 'system free',
+                        timestamp: freeValue.x,
+                        key: 'free (unused)',
                         value: freeValue.y
                     });
                 }
 
-                if (angular.isDefined(containerUsedValue) &&
+                if (angular.isDefined(containerValue) &&
                     angular.isDefined(usedValue)) {
                     returnValues.push({
-                        timestamp: usedValue.x,
+                        timestamp: containerValue.x,
                         key: 'container used',
-                        value: containerUsedValue
+                        value: containerValue.y
                     });
                 }
 
@@ -147,8 +126,10 @@
             MetricListService.destroyDerivedMetric(this.name);
 
             // remove subscribers and delete base metrics
+            MetricListService.destroyMetric('mem.util.cached');
             MetricListService.destroyMetric('mem.util.used');
-            MetricListService.destroyMetric('mem.freemem');
+            MetricListService.destroyMetric('mem.util.free');
+            MetricListService.destroyMetric('mem.util.bufmem');
             MetricListService.destroyMetric('cgroup.memory.usage');
 
             WidgetDataModel.prototype.destroy.call(this);
@@ -159,5 +140,5 @@
 
     angular
         .module('app.datamodels')
-        .factory('ContainerMemoryUtilizationMetricDataModel', ContainerMemoryUtilizationMetricDataModel);
+        .factory('ContainerMemoryUsageMetricDataModel', ContainerMemoryUsageMetricDataModel);
  })();

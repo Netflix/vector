@@ -28,7 +28,7 @@
         CumulativeMetricDataModel,
         CgroupCPUUsageMetricTimeSeriesDataModel,
         CgroupMemoryUsageMetricTimeSeriesDataModel,
-        ContainerMemoryUtilizationMetricDataModel,
+        ContainerMemoryUsageMetricDataModel,
         ContainerNetworkBytesMetricDataModel,
         ContainerMultipleCumulativeMetricDataModel,
         CgroupMemoryHeadroomMetricDataModel,
@@ -667,7 +667,7 @@
                     }
                 }, {
                     name: 'cgroup.memory.usage',
-                    title: 'Per-Container Memory Usage',
+                    title: 'Per-Container Memory Usage (Mb)',
                     directive: 'line-time-series',
                     dataAttrName: 'data',
                     dataModelType: CgroupMemoryUsageMetricTimeSeriesDataModel,
@@ -682,10 +682,10 @@
                     group: 'Container',
                 }, {
                     name: 'container.memory.usage',
-                    title: 'Total Container Memory Usage',
+                    title: 'Total Container Memory Usage (Mb)',
                     directive: 'area-stacked-time-series',
                     dataAttrName: 'data',
-                    dataModelType: ContainerMemoryUtilizationMetricDataModel,
+                    dataModelType: ContainerMemoryUsageMetricDataModel,
                     dataModelOptions: {
                         name: 'container.memory.usage'
                     },
@@ -697,11 +697,11 @@
                     group: 'Container',
                     attrs: {
                         percentage: false,
-                        integer: true
+                        integer: false
                     }
                 }, {
                     name: 'cgroup.memory.headroom',
-                    title: 'Per-Container Memory Headroom',
+                    title: 'Per-Container Memory Headroom (Mb)',
                     directive: 'line-time-series',
                     dataAttrName: 'data',
                     dataModelType: CgroupMemoryHeadroomMetricDataModel,
@@ -717,7 +717,7 @@
                     requireContainerFilter: true,
                     attrs: {
                         percentage: false,
-                        integer: true,
+                        integer: false,
                         area: true
                     }
                 }, {

@@ -52,7 +52,7 @@
                     var total = 0;
                     angular.forEach(containerLimitMetric.data, function (instance) {
                         if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
-                            total = total + instance.previousValue / 1024 / 1204;
+                            total = total + instance.previousValue / 1024 / 1024;
                         }
                     });
                     return total;
@@ -63,7 +63,7 @@
                     angular.forEach(containerUsedMetric.data, function (instance) {
                         tempTimestamp = instance.values[instance.values.length - 1].x;
                         if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
-                            total = total + instance.previousValue / 1024 / 1204;
+                            total = total + instance.previousValue / 1024 / 1024;
                         }
                     });
 
