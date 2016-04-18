@@ -47,7 +47,7 @@
 
         /**
         * @name containerIdExist
-        * @desc
+        * @desc returns true if id exists in the idMap
         */
         function containerIdExist(id) {
             return (idMap[parseId(id)] !== undefined && idMap[parseId(id)] !== '');
@@ -62,12 +62,12 @@
 
             //TODO: find a better way for parsing the container name from the query string just once.
             if (containerParsedFromQuerystring) {
-                if(!checkContainerName($routeParams.container)) { // can't find the selected container in the list
+                if($rootScope.properties.containerList.indexOf($routeParams.container) === -1) { // can't find the selected container in the list
                     $rootScope.properties.selectedContainer = '';
                 }
             } else {
-                if ($routeParams.container !== undefined){
-                    if (checkContainerName($routeParams.container)) {
+                if ($routeParams.container !== undefined) {
+                    if ($rootScope.properties.containerList.indexOf($routeParams.container) !== -1) {
                         $rootScope.properties.selectedContainer = $routeParams.container;
                         $rootScope.flags.disableContainerSelectNone = true;
                         containerParsedFromQuerystring = true;
@@ -119,7 +119,7 @@
         * @name getContainerList
         * @desc
         */
-        function getContainerList(){
+        function getContainerList() {
           return activeContainers.data.reduce(function(obj, item) {
               obj.push(resolveId(item.key));
               return obj;
@@ -138,13 +138,8 @@
         * @name checkContainerName
         * @desc
         */
-        function checkContainerName(name, allowNoContainerSelect = true){
-            if (allowNoContainerSelect) {
-                return ($rootScope.properties.selectedContainer === '' || name.indexOf($rootScope.properties.selectedContainer) !== -1);
-            } else {
-                return (name.indexOf($rootScope.properties.selectedContainer) !== -1);
-            }
-
+        function checkContainerName(name){
+            return ($rootScope.properties.selectedContainer === '' || name.indexOf($rootScope.properties.selectedContainer) !== -1);
         }
 
         /**

@@ -72,8 +72,8 @@
             </div>
             <div class="input-group input-group-lg target" ng-show="flags.enableContainerWidgets && !flags.disableContainerSelect"  ng-if="!flags.popContainerSelect">
                 <span class="input-group-addon" >Container Id</span>
-                <select id="selectedContainer" ng-model="properties.selectedContainer" ng-change="vm.updateContainer(); flags.disableContainerSelectNone = true;" class="form-control">
-                    <option ng-disabled="flags.disableContainerSelectNone && !flags.allowNoContainerSelect" ng-selected="properties.selectedContainer.indexOf(properties.containerList) !== -1" value="">All</option>
+                <select id="selectedContainer" ng-model="properties.selectedContainer" ng-change="vm.updateContainer()" class="form-control">
+                    <option ng-disabled="flags.disableContainerSelectNone && !flags.allowNoContainerSelect" ng-selected="properties.containerList.indexOf(properties.selectedContainer) !== -1" value="">All</option>
                     <option ng-repeat="container in properties.containerList">{{container}}</option>
                 </select>
             </div>
@@ -92,8 +92,8 @@
             </div>
             <div class="input-group input-group-lg target" ng-show="!flags.disableContainerSelect" ng-if="flags.popContainerSelect">
                 <span class="input-group-addon" >Container Id</span>
-                <select id="selectedContainer" ng-model="properties.selectedContainer" ng-change="vm.updateContainer(); flags.disableContainerSelectNone = true;" class="form-control">
-                    <option ng-disabled="flags.disableContainerSelectNone && !flags.allowNoContainerSelect" ng-selected="properties.selectedContainer.indexOf(properties.containerList) !== -1" value="">All</option>
+                <select id="selectedContainer" ng-model="properties.selectedContainer" ng-change="vm.updateContainer()" class="form-control">
+                    <option ng-disabled="flags.disableContainerSelectNone && !flags.allowNoContainerSelect" ng-selected="properties.containerList.indexOf(properties.selectedContainer) !== -1" value="">All</option>
                     <option ng-repeat="container in properties.containerList">{{container}}</option>
                 </select>
             </div>
