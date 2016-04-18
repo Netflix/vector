@@ -22,7 +22,10 @@
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
 
             // create create base metrics
-            var inMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.memory.usage'),
+            var conversionFunction = function (value) {
+                    return value / 1024 / 1024;
+                },
+                usageMetric = MetricListService.getOrCreateConvertedMetric('cgroup.memory.usage', conversionFunction),
                 derivedFunction;
 
 
@@ -32,7 +35,7 @@
                     lastValue,
                     name;
 
-                angular.forEach(inMetric.data, function (instance) {
+                angular.forEach(usageMetric.data, function (instance) {
                     if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
                         lastValue = instance.values[instance.values.length - 1];
                         name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
@@ -40,7 +43,7 @@
                             returnValues.push({
                                 timestamp: lastValue.x,
                                 key: name,
-                                value: instance.previousValue / 1024 / 1024
+                                value: lastValue.y
                             });
                         }
 
