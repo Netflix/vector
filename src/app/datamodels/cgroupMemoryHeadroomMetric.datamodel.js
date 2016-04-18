@@ -52,8 +52,6 @@
                 var returnValues = [],
                     lastUsedValue,
                     lastLimitValue,
-                    usedName,
-                    limitName,
                     lastPhysmemValue;
 
                 lastPhysmemValue = (function () {
@@ -70,11 +68,11 @@
                         lastUsedValue = instance.values[instance.values.length - 1];
 
                         if (ContainerMetadataService.containerIdExist(instance.key)) {
-                            usedName = ContainerMetadataService.idDictionary(instance.key) || instance.key;
-                            if (usedName.indexOf(ContainerMetadataService.getContainerName()) !== -1){
+                            var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
+                            if (ContainerMetadataService.checkContainerName(name, false)){
                                 returnValues.push({
                                     timestamp: lastUsedValue.x,
-                                    key: usedName + ' used',
+                                    key: name + ' used',
                                     value: lastUsedValue.y
                                 });
                             }
@@ -87,18 +85,18 @@
                         lastLimitValue = instance.values[instance.values.length - 1];
 
                         if (ContainerMetadataService.containerIdExist(instance.key)) {
-                            limitName = ContainerMetadataService.idDictionary(instance.key) || instance.key;
-                            if (limitName.indexOf(ContainerMetadataService.getContainerName()) !== -1) {
+                            var name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
+                            if (ContainerMetadataService.checkContainerName(name, false)) {
                                 if (lastLimitValue.y >= lastPhysmemValue.y) {
                                     returnValues.push({
                                         timestamp: lastPhysmemValue.x,
-                                        key: limitName + ' limit (physical)',
+                                        key: name + ' limit (physical)',
                                         value: lastPhysmemValue.y
                                     });
                                 } else {
                                     returnValues.push({
                                         timestamp: lastLimitValue.x,
-                                        key: limitName + ' limit',
+                                        key: name + ' limit',
                                         value: lastLimitValue.y
                                     });
                                 }

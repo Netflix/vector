@@ -50,10 +50,10 @@
 
                 angular.forEach(metrics, function (metric, key) {
                     angular.forEach(metric.data, function (instance) {
-                        
+
                         if (ContainerMetadataService.containerIdExist(instance.key)) {
                             name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
-                            if (instance.values.length > 0 && ContainerMetadataService.checkContainerName(name) && ContainerMetadataService.checkGlobalFilter(name)) {
+                            if (instance.values.length > 0 && ContainerMetadataService.checkContainerName(name) && ContainerMetadataService.checkContainerFilter(name)) {
                                 lastValue = instance.values[instance.values.length - 1];
                                 returnValues.push({
                                     timestamp: lastValue.x,

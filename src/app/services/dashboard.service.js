@@ -173,17 +173,10 @@
         }
 
         /**
-        * @name updateWindow
+        * @name initialize
         * @desc
         */
-        function updateWindow() {
-        }
-
-        /**
-        * @name initializeProperties
-        * @desc
-        */
-        function initializeProperties() {
+        function initialize() {
             if ($rootScope.properties) {
                 if (!$rootScope.properties.interval) {
                     $rootScope.properties.interval = vectorConfig.interval;
@@ -218,13 +211,24 @@
                     context: -1,
                     hostname: null,
                     window: vectorConfig.window,
-                    interval: vectorConfig.interval
+                    interval: vectorConfig.interval,
+                    containerFilter: '',
+                    containerList: [],
+                    selectedContainer: ''
                 };
             }
 
             $rootScope.flags = {
                 contextAvailable: false,
-                contextUpdating: false
+                contextUpdating: false,
+                isHostnameExpanded: false,
+                enableContainerWidgets: vectorConfig.enableContainerWidgets,
+                disableContainerFilter: vectorConfig.disableContainerFilter,
+                disableContainerSelect: vectorConfig.disableContainerSelect,
+                allowNoContainerSelect: vectorConfig.allowNoContainerSelect,
+                popContainerFilter: vectorConfig.popContainerFilter,
+                popContainerSelect: vectorConfig.popContainerSelect,
+                disableContainerSelectNone: false
             };
 
             if (vectorConfig.enableContainerWidgets) {
@@ -237,8 +241,7 @@
             cancelInterval: cancelInterval,
             updateInterval: updateInterval,
             updateHost: updateHost,
-            updateWindow: updateWindow,
-            initializeProperties: initializeProperties
+            initialize: initialize
         };
     }
 

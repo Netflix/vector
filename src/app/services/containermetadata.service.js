@@ -6,7 +6,9 @@
      /**
      * @name ContainerMetadataService
      */
-     function ContainerMetadataService($http, $rootScope, $q, $interval, containerConfig, MetricListService) {
+     function ContainerMetadataService($http, $rootScope, $q, $interval, $routeParams, $location, containerConfig, MetricListService) {
+
+        var containerParsedFromQuerystring = false;
 
         /**
         * @name idDictionary
@@ -51,6 +53,31 @@
             return (idMap[parseId(id)] !== undefined && idMap[parseId(id)] !== '');
         }
 
+        /**
+        * @name updateMetrics
+        * @desc
+        */
+        function updateMetrics() {
+            $rootScope.properties.containerList = getContainerList();
+
+            //TODO: find a better way for parsing the container name from the query string just once.
+            if (containerParsedFromQuerystring) {
+                if(!checkContainerName($routeParams.container)) { // can't find the selected container in the list
+                    $rootScope.properties.selectedContainer = '';
+                }
+            } else {
+                if ($routeParams.container !== undefined){
+                    if (checkContainerName($routeParams.container)) {
+                        $rootScope.properties.selectedContainer = $routeParams.container;
+                        $rootScope.flags.disableContainerSelectNone = true;
+                        containerParsedFromQuerystring = true;
+                    }
+                } else {
+                    containerParsedFromQuerystring = true;
+                }
+            }
+        }
+
         /**;
         * @name initialize
         * @desc
@@ -58,6 +85,7 @@
         var activeContainers;
         function initialize() {
             activeContainers = MetricListService.getOrCreateMetric('containers.cgroup');
+            $rootScope.$on('updateMetrics', updateMetrics);
         }
 
         /**
@@ -99,67 +127,52 @@
         }
 
         /**
-        * @name setGlobalFilter
+        * @name checkContainerFilter
         * @desc
         */
-        var globalFilter = '';
-        function setGlobalFilter(word){
-            globalFilter = word;
-        }
-
-        /**
-        * @name checkGlobalFilter
-        * @desc
-        */
-        function checkGlobalFilter(name){
-            return (globalFilter === '' || name.indexOf(globalFilter) !==-1);
-        }
-
-        /**
-        * @name getGlobalFilter
-        * @desc
-        */
-        function getGlobalFilter(){
-            return globalFilter;
-        }
-
-        /**
-        * @name setContainerName
-        * @desc
-        */
-        var containerName = '';
-        function setContainerName(name){
-            containerName = name;
-        }
-
-        /**
-        * @name getContainerName
-        * @desc
-        */
-        function getContainerName(){
-            return containerName;
+        function checkContainerFilter(name){
+            return ($rootScope.properties.containerFilter === '' || name.indexOf($rootScope.properties.containerFilter) !==-1);
         }
 
         /**
         * @name checkContainerName
         * @desc
         */
-        function checkContainerName(name){
-            return (containerName === '' || name.indexOf(containerName) !== -1);
+        function checkContainerName(name, allowNoContainerSelect = true){
+            if (allowNoContainerSelect) {
+                return ($rootScope.properties.selectedContainer === '' || name.indexOf($rootScope.properties.selectedContainer) !== -1);
+            } else {
+                return (name.indexOf($rootScope.properties.selectedContainer) !== -1);
+            }
+
         }
+
+        /**
+        * @name updateContainer
+        * @desc
+        */
+        function updateContainer(){
+            $location.search('container', $rootScope.properties.selectedContainer);
+        };
+
+        /**
+        * @name updateContainerFilter
+        * @desc
+        */
+        function updateContainerFilter() {
+            $location.search('containerFilter', $rootScope.properties.containerFilter);
+        };
 
         return {
             idDictionary: idDictionary,
             getContainerList: getContainerList,
             updateIdDictionary: updateIdDictionary,
             clearIdDictionary: clearIdDictionary,
-            setGlobalFilter: setGlobalFilter,
-            checkGlobalFilter: checkGlobalFilter,
-            getGlobalFilter : getGlobalFilter,
+            checkContainerFilter: checkContainerFilter,
             containerIdExist: containerIdExist,
-            setContainerName: setContainerName,
-            getContainerName: getContainerName,
             checkContainerName: checkContainerName,
+            updateContainer: updateContainer,
+            updateContainerFilter: updateContainerFilter,
             initialize: initialize
         };
     }

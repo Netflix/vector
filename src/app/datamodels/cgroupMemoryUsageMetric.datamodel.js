@@ -39,7 +39,7 @@
                     if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
                         lastValue = instance.values[instance.values.length - 1];
                         name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
-                        if (ContainerMetadataService.checkContainerName(name) && ContainerMetadataService.checkGlobalFilter(name)){
+                        if (ContainerMetadataService.checkContainerName(name) && ContainerMetadataService.checkContainerFilter(name)){
                             returnValues.push({
                                 timestamp: lastValue.x,
                                 key: name,

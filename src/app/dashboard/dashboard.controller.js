@@ -32,7 +32,6 @@
 
         var vm = this;
         var widgetsToLoad = widgets;
-        var containerParsedFromQuerystring = false;
 
         /**
         * @name visibilityChanged
@@ -52,7 +51,7 @@
         * @desc Initiliazes DashboardController
         */
         function activate() {
-            DashboardService.initializeProperties();
+            DashboardService.initialize();
 
             if ($routeParams.protocol) {
                 $rootScope.properties.protocol = $routeParams.protocol;
@@ -92,32 +91,8 @@
             }
 
             if ($routeParams.containerFilter !== undefined){
-                vm.containerFilter = $routeParams.containerFilter;
-                ContainerMetadataService.setGlobalFilter(vm.containerFilter);
+                $rootScope.properties.containerFilter =  $routeParams.containerFilter;
             }
-
-            $rootScope.$on('updateMetrics', function () {
-                vm.containerList = ContainerMetadataService.getContainerList();
-
-                //TODO: find a better way for parsing the container name from the query string just once.
-                if (containerParsedFromQuerystring) {
-                    if(vm.containerList.indexOf(vm.selectedContainer) === -1) { // can't find the selected container in the list
-                        vm.selectedContainer = '';
-                        ContainerMetadataService.setContainerName('');
-                    }
-                } else {
-                    if ($routeParams.container !== undefined){
-                        if (vm.containerList.indexOf($routeParams.container) !== -1) {
-                            vm.selectedContainer = $routeParams.container;
-                            vm.disableContainerSelectNone = true;
-                            ContainerMetadataService.setContainerName(vm.selectedContainer);
-                            containerParsedFromQuerystring = true;
-                        }
-                    } else {
-                        containerParsedFromQuerystring = true;
-                    }
-                }
-            });
 
             vm.dashboardOptions = {
                 hideToolbar: true,
@@ -185,29 +160,17 @@
             ModalService.showModal({}, modalOptions).then(function() {
                 $location.search('container', null);
                 $location.search('containerFilter', null);
-                vm.disableContainerSelectNone = false;
+                $rootScope.flags.disableContainerSelectNone = false;
+                $rootScope.properties.selectedContainer = '';
+                $rootScope.properties.containerFilter = '';
                 vm.dashboardOptions.loadWidgets([]);
-                vm.selectedContainer = '';
                 vm.removeAllWidgetFromURL();
-                ContainerMetadataService.setContainerName('');
             });
         };
-
-        vm.updateContainerFilter = function() {
-            ContainerMetadataService.setGlobalFilter(vm.containerFilter);
-            $location.search('containerFilter', vm.containerFilter);
-        };
-
-        vm.updateInterval = DashboardService.updateInterval;
 
         vm.updateHost = function() {
             DashboardService.updateHost(vm.inputHost);
             ContainerMetadataService.clearIdDictionary();
-        };
-
-        vm.containerChanged = function(){
-            ContainerMetadataService.setContainerName(vm.selectedContainer);
-            $location.search('container', vm.selectedContainer);
         };
 
         vm.addWidget = function(event, directive){
@@ -219,8 +182,8 @@
         };
 
         vm.checkWidgetType = function(widgetObj) {
-            if (widgetObj.requireContainerFilter !== undefined && widgetObj.requireContainerFilter === true && vm.disableContainerSelect === false && !vm.allowNoContainerSelect) {
-              if (ContainerMetadataService.getContainerName() === ''){
+            if (widgetObj.requireContainerFilter !== undefined && widgetObj.requireContainerFilter === true && $rootScope.flags.disableContainerSelect === false && !$rootScope.flags.allowNoContainerSelect) {
+              if ($rootScope.properties.selectedContainer === ''){
 
                   var modalOptions = {
                       closeButtonText: '',
@@ -239,19 +202,10 @@
             return true;
         };
 
-        vm.updateWindow = DashboardService.updateWindow;
-        vm.containerFilter ='';
-        vm.containerList = [];
-        vm.isHostnameExpanded = false;
+        vm.updateInterval = DashboardService.updateInterval;
+        vm.updateContainer = ContainerMetadataService.updateContainer;
+        vm.updateContainerFilter = ContainerMetadataService.updateContainerFilter;
         vm.inputHost = '';
-        vm.disableContainerSelectNone = false;
-        vm.selectedContainer = '';
-        vm.enableContainerWidgets = vectorConfig.enableContainerWidgets;
-        vm.disableContainerFilter = vectorConfig.disableContainerFilter;
-        vm.disableContainerSelect = vectorConfig.disableContainerSelect;
-        vm.allowNoContainerSelect = vectorConfig.allowNoContainerSelect;
-        vm.popContainerFilter = vectorConfig.popContainerFilter;
-        vm.popContainerSelect = vectorConfig.popContainerSelect;
 
         activate();
     }
