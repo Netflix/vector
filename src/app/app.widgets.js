@@ -679,6 +679,10 @@
                     },
                     enableVerticalResize: false,
                     group: 'Container',
+                    attrs: {
+                        percentage: false,
+                        integer: true
+                    }
                 }, {
                     name: 'container.memory.usage',
                     title: 'Total Container Memory Usage (Mb)',
@@ -696,7 +700,7 @@
                     group: 'Container',
                     attrs: {
                         percentage: false,
-                        integer: false
+                        integer: true
                     }
                 }, {
                     name: 'cgroup.memory.headroom',
@@ -716,7 +720,7 @@
                     requireContainerFilter: true,
                     attrs: {
                         percentage: false,
-                        integer: false,
+                        integer: true,
                         area: true
                     }
                 },{
