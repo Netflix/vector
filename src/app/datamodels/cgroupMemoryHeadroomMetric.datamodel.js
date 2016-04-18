@@ -39,9 +39,12 @@
             var conversionFunction = function (value) {
                     return value / 1024 / 1024;
                 },
+                physmemConversionFunction = function (value) {
+                    return value / 1024;
+                },
                 usageMetric = MetricListService.getOrCreateConvertedMetric('cgroup.memory.usage', conversionFunction),
                 limitMetric = MetricListService.getOrCreateConvertedMetric('cgroup.memory.limit', conversionFunction),
-                physmemMetric = MetricListService.getOrCreateConvertedMetric('mem.physmem', conversionFunction),
+                physmemMetric = MetricListService.getOrCreateConvertedMetric('mem.physmem', physmemConversionFunction),
                 derivedFunction;
 
             // create derived function
