@@ -126,10 +126,8 @@
             MetricListService.destroyDerivedMetric(this.name);
 
             // remove subscribers and delete base metrics
-            MetricListService.destroyMetric('mem.util.cached');
             MetricListService.destroyMetric('mem.util.used');
             MetricListService.destroyMetric('mem.util.free');
-            MetricListService.destroyMetric('mem.util.bufmem');
             MetricListService.destroyMetric('cgroup.memory.usage');
 
             WidgetDataModel.prototype.destroy.call(this);
