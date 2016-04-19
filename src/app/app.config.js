@@ -26,15 +26,14 @@
             'hostspec': 'localhost', // Default PMCD hostspec
             'interval': 2,  // Default update interval in seconds
             'window': 2,    // Default graph time window in minutes
-            'enableCpuFlameGraph': false,
-            'enableDiskLatencyHeatMap': false,
-            'enableContainerWidgets': true,
-            'disableContainerFilter': false,
-            'disableContainerSelect': false,
-            'allowNoContainerSelect': true,
-            'popContainerFilter': false,
-            'popContainerSelect': true
-        }).constant('containerConfig', {
-            'externalAPI': false //enable and edit containermetadata.service to call external API to resolve
+            'enableCpuFlameGraph': false, // Enable CPU flame graph (requires extra PMDA)
+            'enableDiskLatencyHeatMap': false, // Enable disk latency heatmap widget (requires extra PMDA)
+            'enableContainerWidgets': true, // Enable container widgets
+            'disableHostspecInput': false, // Disable hostspec input
+            'disableContainerFilter': false, // Disable container id filter input
+            'disableContainerSelect': false, // Disable container name drop down select
+            'containerSelectOverride': true, // Overrides requireContainerFilter widget option
+            'enableExternalContainerNameResolver': false, // Enables external container name resolver. Logic needs to be implemented in ContainerMetadataService.
+            'expandHostname': false // Automatically expand hostname input when application opens
         });
 })();

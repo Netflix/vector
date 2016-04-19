@@ -6,7 +6,7 @@
      /**
      * @name ContainerMetadataService
      */
-     function ContainerMetadataService($http, $rootScope, $q, $interval, $routeParams, $location, containerConfig, MetricListService) {
+     function ContainerMetadataService($http, $rootScope, $q, $interval, $routeParams, $location, vectorConfig, MetricListService) {
 
         var containerParsedFromQuerystring = false;
 
@@ -15,7 +15,7 @@
         * @desc
         */
         var idMap = {};
-        function idDictionary(key){
+        function idDictionary(key) {
             return idMap[parseId(key)];
         }
 
@@ -23,7 +23,7 @@
         * @name parseId
         * @desc parses different types of docker ID
         */
-        function parseId(id){
+        function parseId(id) {
             //handle regular docker
             if (id === null){
                 return false;
@@ -94,9 +94,9 @@
         */
         function resolveId(instanceKey) {
             //TODO: this should check if a function was defined and call it instead of checking a flag.
-            if (containerConfig.externalAPI) {
+            if (vectorConfig.enableExternalContainerNameResolver) {
                 //make external api call here to resolve container id
-                //need to set containerConfig.externalAPI to true in app.config.js
+                //need to set enableExternalContainerNameResolver to true in app.config.js
                 return;
             } else {
                 return instanceKey.substring(0,12);

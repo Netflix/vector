@@ -223,12 +223,12 @@
                 contextUpdating: false,
                 isHostnameExpanded: false,
                 enableContainerWidgets: vectorConfig.enableContainerWidgets,
+                disableHostspecInput: vectorConfig.disableHostspecInput,
                 disableContainerFilter: vectorConfig.disableContainerFilter,
                 disableContainerSelect: vectorConfig.disableContainerSelect,
-                allowNoContainerSelect: vectorConfig.allowNoContainerSelect,
-                popContainerFilter: vectorConfig.popContainerFilter,
-                popContainerSelect: vectorConfig.popContainerSelect,
-                disableContainerSelectNone: false
+                containerSelectOverride: vectorConfig.containerSelectOverride,
+                disableContainerSelectNone: false,
+                isHostnameExpanded: vectorConfig.expandHostname
             };
 
             if (vectorConfig.enableContainerWidgets) {

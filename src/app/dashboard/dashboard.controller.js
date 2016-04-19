@@ -182,7 +182,7 @@
         };
 
         vm.checkWidgetType = function(widgetObj) {
-            if (widgetObj.requireContainerFilter !== undefined && widgetObj.requireContainerFilter === true && $rootScope.flags.disableContainerSelect === false && !$rootScope.flags.allowNoContainerSelect) {
+            if (widgetObj.requireContainerFilter !== undefined && widgetObj.requireContainerFilter === true && $rootScope.flags.disableContainerSelect === false && !$rootScope.flags.containerSelectOverride) {
               if ($rootScope.properties.selectedContainer === ''){
 
                   var modalOptions = {
