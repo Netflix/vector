@@ -681,7 +681,8 @@
                     group: 'Container',
                     attrs: {
                         percentage: false,
-                        integer: true
+                        integer: true,
+                        forcey: 10
                     }
                 }, {
                     name: 'container.memory.usage',
