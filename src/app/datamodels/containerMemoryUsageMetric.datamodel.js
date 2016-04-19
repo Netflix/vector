@@ -79,7 +79,7 @@
                         return {
                             x: timestamp,
                             y: total
-                        }
+                        };
                     }
                 }());
 

@@ -221,14 +221,13 @@
             $rootScope.flags = {
                 contextAvailable: false,
                 contextUpdating: false,
-                isHostnameExpanded: false,
+                isHostnameExpanded: vectorConfig.expandHostname,
                 enableContainerWidgets: vectorConfig.enableContainerWidgets,
                 disableHostspecInput: vectorConfig.disableHostspecInput,
                 disableContainerFilter: vectorConfig.disableContainerFilter,
                 disableContainerSelect: vectorConfig.disableContainerSelect,
                 containerSelectOverride: vectorConfig.containerSelectOverride,
-                disableContainerSelectNone: false,
-                isHostnameExpanded: vectorConfig.expandHostname
+                disableContainerSelectNone: false
             };
 
             if (vectorConfig.enableContainerWidgets) {

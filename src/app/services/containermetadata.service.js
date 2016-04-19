@@ -148,7 +148,7 @@
         */
         function updateContainer(){
             $location.search('container', $rootScope.properties.selectedContainer);
-        };
+        }
 
         /**
         * @name updateContainerFilter
@@ -156,7 +156,7 @@
         */
         function updateContainerFilter() {
             $location.search('containerFilter', $rootScope.properties.containerFilter);
-        };
+        }
 
         return {
             idDictionary: idDictionary,
