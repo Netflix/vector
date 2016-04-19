@@ -65,6 +65,20 @@
                   return false;
                 }
             }
+        }).when('/container', {
+            templateUrl: 'app/dashboard/dashboard.html',
+            controller: 'DashboardController',
+            controllerAs: 'vm',
+            title: 'Dashboard - Vector',
+            reloadOnSearch: false,
+            resolve: {
+                'widgets': function (containerWidgets) {
+                    return containerWidgets;
+                },
+                'embed': function () {
+                  return false;
+                }
+            }
         })
         .otherwise('/');
     }

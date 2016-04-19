@@ -851,10 +851,46 @@
     ];
 
     var emptyWidgets = [];
+
+    var containerWidgets = [
+        {
+            name: 'cgroup.cpuacct.usage',
+            size: {
+                width: '50%'
+            }
+        }, {
+            name: 'container.memory.usage',
+            size: {
+                width: '50%'
+            }
+        }, {
+            name: 'cgroup.memory.usage',
+            size: {
+                width: '50%'
+            }
+        }, {
+            name: 'cgroup.memory.headroom',
+            size: {
+                width: '50%'
+            }
+        }, {
+            name: 'container.disk.iops',
+            size: {
+                width: '50%'
+            }
+        }, {
+            name: 'container.disk.bytes',
+            size: {
+                width: '50%'
+            }
+        }
+    ];
+
     angular
         .module('app.widgets', [])
         .factory('widgetDefinitions', widgetDefinitions)
         .value('defaultWidgets', defaultWidgets)
-        .value('emptyWidgets', emptyWidgets);
+        .value('emptyWidgets', emptyWidgets)
+        .value('containerWidgets', containerWidgets);
 
 })();
