@@ -733,8 +733,8 @@
                     dataModelOptions: {
                         name: 'container.disk.iops',
                         metricDefinitions: {
-                            '{key} read': 'cgroup.blkio.all.io_serviced.read',
-                            '{key} write': 'cgroup.blkio.all.io_serviced.write'
+                            '{key} read': 'cgroup.blkio.all.io_serviced.read', //TODO: use cgroup.blkio.throttled.io_serviced.read instead
+                            '{key} write': 'cgroup.blkio.all.io_serviced.write' //TODO: use cgroup.blkio.throttled.io_serviced.write instead
                         }
                     },
                     size: {
@@ -745,15 +745,15 @@
                     group: 'Container'
                 }, {
                     name: 'container.disk.bytes',
-                    title: 'Container Disk Throughput (kB)',
+                    title: 'Container Disk Throughput (Bytes)',
                     directive: 'line-time-series',
                     dataAttrName: 'data',
                     dataModelType: ContainerMultipleCumulativeMetricDataModel,
                     dataModelOptions: {
                         name: 'container.disk.bytes',
                         metricDefinitions: {
-                            '{key} read': 'cgroup.blkio.all.io_service_bytes.read',
-                            '{key} write': 'cgroup.blkio.all.io_service_bytes.write'
+                            '{key} read': 'cgroup.blkio.all.io_service_bytes.read', //TODO: use cgroup.blkio.throttled.io_service_bytes.read instead
+                            '{key} write': 'cgroup.blkio.all.io_service_bytes.write' //TODO: use cgroup.blkio.throttled.io_service_bytes.write instead
                         }
                     },
                     size: {
