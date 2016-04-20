@@ -15,6 +15,9 @@
  *     limitations under the License.
  *
  */
+
+/*global _*/
+
  (function () {
      'use strict';
 
@@ -42,6 +45,7 @@
         */
         function updateMetricsCallback(success) {
             if (!success) {
+                flash.to('dashboardAlertError').error = 'Failed fetching metrics. Trying again.';
                 loopErrors = loopErrors + 1;
             } else {
                 loopErrors = 0;
@@ -54,12 +58,94 @@
         }
 
         /**
+        * @name updateMetrics
+        * @desc
+        */
+        function updateMetrics(callback) {
+            var metricArr = [],
+                context = $rootScope.properties.context,
+                simpleMetrics = MetricListService.getSimpleMetricList();
+
+            if (context && context > 0 && simpleMetrics.length > 0) {
+                angular.forEach(simpleMetrics, function (value) {
+                    metricArr.push(value.name);
+                });
+
+                PMAPIService.getMetrics(context, metricArr)
+                    .then(function (metrics) {
+                        var name,
+                            metricInstance,
+                            iid,
+                            iname;
+
+                        if (metrics.values.length !== simpleMetrics.length) {
+                            var currentMetric;
+
+                            angular.forEach(simpleMetrics, function (metric) {
+                                currentMetric= _.find(metrics.values, function (el) {
+                                    return el.name === metric.name;
+                                });
+                                if (angular.isUndefined(currentMetric)) {
+                                    metric.clearData();
+                                }
+                            });
+                        }
+
+                        angular.forEach(metrics.values, function (value) {
+                            name = value.name;
+
+                            metricInstance = _.find(simpleMetrics, function (el) {
+                                return el.name === name;
+                            });
+
+                            if(value.instances.length !== metricInstance.data.length) {
+                                metricInstance.deleteInvalidInstances(value.instances);
+                            }
+
+                            if (angular.isDefined(metricInstance) && metricInstance !== null) {
+                                angular.forEach(value.instances, function (instance) {
+                                    iid = angular.isUndefined(instance.instance) ? 1 : instance.instance;
+                                    iname = metrics.inames[name].inames[iid];
+
+                                    metricInstance.pushValue(metrics.timestamp, iid, iname, instance.value);
+                                });
+                            }
+                        });
+                    }).then(
+                        function () {
+                            callback(true);
+                            $rootScope.$broadcast('updateMetrics');
+                        },
+                        function (response) {
+                            if(response.status === 400 && response.data.indexOf('-12376') !== -1) {
+                                updateContext();
+                            }
+                            callback(false);
+                    });
+            }
+        }
+
+        /**
+        * @name updateDerivedMetrics
+        * @desc
+        */
+        function updateDerivedMetrics() {
+            var derivedMetrics = MetricListService.getDerivedMetricList();
+            if (derivedMetrics.length > 0) {
+                angular.forEach(derivedMetrics, function (metric) {
+                    metric.updateValues();
+                });
+                $rootScope.$broadcast('updateDerivedMetrics');
+            }
+        }
+
+        /**
         * @name intervalFunction
         * @desc
         */
         function intervalFunction() {
-            MetricListService.updateMetrics(updateMetricsCallback);
-            MetricListService.updateDerivedMetrics();
+            updateMetrics(updateMetricsCallback);
+            updateDerivedMetrics();
         }
 
         /**
@@ -80,77 +166,49 @@
         }
 
         /**
-        * @name updateHostnameSuccessCallback
+        * @name parseHostInput
         * @desc
         */
-        function updateHostnameSuccessCallback(data) {
-          $rootScope.properties.hostname = data.values[0].instances[0].value;
-        }
-
-        /**
-        * @name updateHostnameErrorCallback
-        * @desc
-        */
-        function updateHostnameErrorCallback() {
-            $rootScope.properties.hostname = 'Hostname not available.';
-            $log.error('Error fetching hostname.');
-        }
-
-        /**
-        * @name updateContextSuccessCallback
-        * @desc
-        */
-        function updateContextSuccessCallback(data) {
-            $rootScope.flags.contextAvailable = true;
-            $rootScope.properties.context = data;
-            updateInterval();
-        }
-
-        /**
-        * @name updateContextErrorCallback
-        * @desc
-        */
-        function updateContextErrorCallback() {
-            $rootScope.flags.contextAvailable = false;
-            $log.error('Error fetching context.');
-        }
-
-        /**
-        * @name updateContext
-        * @desc
-        */
-        function updateContext(host) {
-            var hostspec = $rootScope.properties.hostspec,
-                hostMatch = null;
-
-            if (host && host !== '') {
-                $rootScope.flags.contextUpdating = true;
-                $rootScope.flags.contextAvailable = false;
+        function parseHostInput(host) {
+            var hostMatch = null;
+            if (host) {
                 hostMatch = host.match('(.*):([0-9]*)');
-
                 if (hostMatch !== null) {
                     $rootScope.properties.host = hostMatch[1];
                     $rootScope.properties.port = hostMatch[2];
                 } else {
                     $rootScope.properties.host = host;
                 }
-
-                PMAPIService.getHostspecContext(hostspec, 600)
-                    .then(function (data) {
-                        $rootScope.flags.contextUpdating = false;
-                        updateContextSuccessCallback(data);
-                        PMAPIService.getMetrics(data, ['pmcd.hostname'])
-                            .then(function (metrics) {
-                                updateHostnameSuccessCallback(metrics);
-                            }, function errorHandler() {
-                                updateHostnameErrorCallback();
-                            });
-                    }, function errorHandler() {
-                        flash.to('dashboardAlertError').error = 'Failed fetching context from host. Try updating the hostname.';
-                        $rootScope.flags.contextUpdating = false;
-                        updateContextErrorCallback();
-                    });
             }
+        }
+
+        /**
+        * @name updateContext
+        * @desc
+        */
+        function updateContext() {
+            $rootScope.flags.contextUpdating = true;
+            $rootScope.flags.contextAvailable = false;
+
+            PMAPIService.getHostspecContext($rootScope.properties.hostspec, 30)
+                .then(function (data) {
+                    $rootScope.flags.contextUpdating = false;
+                    $rootScope.flags.contextAvailable = true;
+                    $rootScope.properties.context = data;
+                    updateInterval();
+                    PMAPIService.getMetrics(data, ['pmcd.hostname'])
+                        .then(function (data) {
+                            $rootScope.properties.hostname = data.values[0].instances[0].value;
+                        }, function () {
+                            $rootScope.properties.hostname = 'Hostname not available.';
+                            $log.error('Error fetching hostname.');
+                        });
+                }, function () {
+                    flash.to('dashboardAlertError').error = 'Failed fetching context from host. Try updating the hostname.';
+                    $rootScope.flags.contextUpdating = false;
+                    $rootScope.flags.contextAvailable = false;
+                    $log.error('Error fetching context.');
+                });
         }
 
         /**
@@ -168,7 +226,8 @@
             MetricListService.clearMetricList();
             MetricListService.clearDerivedMetricList();
 
-            updateContext(host);
+            parseHostInput(host);
+            updateContext();
         }
 
         /**
@@ -235,10 +294,10 @@
         }
 
         return {
-            updateContext: updateContext,
             cancelInterval: cancelInterval,
             updateInterval: updateInterval,
             updateHost: updateHost,
+            updateContext: updateContext,
             initialize: initialize
         };
     }

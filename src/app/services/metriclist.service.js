@@ -26,7 +26,7 @@
     * @name MetricListService
     * @desc
     */
-    function MetricListService($rootScope, $http, $log, $q, PMAPIService, SimpleMetric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric, flash) {
+    function MetricListService($rootScope, $http, $log, $q, PMAPIService, SimpleMetric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric) {
         var simpleMetrics = [],
             derivedMetrics = [];
 
@@ -180,85 +180,13 @@
             });
         }
 
-        /**
-        * @name updateMetrics
-        * @desc
-        */
-        function updateMetrics(callback) {
-            var metricArr = [],
-                context = $rootScope.properties.context;
-
-            if (context && context > 0 && simpleMetrics.length > 0) {
-                angular.forEach(simpleMetrics, function (value) {
-                    metricArr.push(value.name);
-                });
-
-                PMAPIService.getMetrics(context, metricArr)
-                    .then(function (metrics) {
-                        var name,
-                            metricInstance,
-                            iid,
-                            iname;
-
-                        if (metrics.values.length !== simpleMetrics.length) {
-                            var currentMetric;
-
-                            angular.forEach(simpleMetrics, function (metric) {
-                                currentMetric= _.find(metrics.values, function (el) {
-                                    return el.name === metric.name;
-                                });
-                                if (angular.isUndefined(currentMetric)) {
-                                    metric.clearData();
-                                }
-                            });
-                        }
-
-                        angular.forEach(metrics.values, function (value) {
-                            name = value.name;
-
-                            metricInstance = _.find(simpleMetrics, function (el) {
-                                return el.name === name;
-                            });
-
-                            if(value.instances.length !== metricInstance.data.length) {
-                                metricInstance.deleteInvalidInstances(value.instances);
-                            }
-
-                            if (angular.isDefined(metricInstance) && metricInstance !== null) {
-                                angular.forEach(value.instances, function (instance) {
-                                    iid = angular.isUndefined(instance.instance) ? 1 : instance.instance;
-                                    iname = metrics.inames[name].inames[iid];
-
-                                    metricInstance.pushValue(metrics.timestamp, iid, iname, instance.value);
-                                });
-                            }
-                        });
-                    }).then(
-                        function () { callback(true); },
-                        function () {
-                            flash.to('dashboardAlertError').error = 'Failed fetching metrics.';
-                            // Check if context is wrong and update it if needed
-                            // PMWEBAPI error, code -12376: Attempt to use an illegal context
-                            callback(false);
-                    });
-
-                $rootScope.$broadcast('updateMetrics');
-            }
+        function getDerivedMetricList() {
+            return derivedMetrics;
         }
 
-        /**
-        * @name updateDerivedMetrics
-        * @desc
-        */
-        function updateDerivedMetrics() {
-            if (derivedMetrics.length > 0) {
-                angular.forEach(derivedMetrics, function (metric) {
-                    metric.updateValues();
-                });
-                $rootScope.$broadcast('updateDerivedMetrics');
-            }
+        function getSimpleMetricList() {
+            return simpleMetrics;
         }
-
 
         return {
             getOrCreateMetric: getOrCreateMetric,
@@ -270,8 +198,8 @@
             destroyDerivedMetric: destroyDerivedMetric,
             clearMetricList: clearMetricList,
             clearDerivedMetricList: clearDerivedMetricList,
-            updateMetrics: updateMetrics,
-            updateDerivedMetrics: updateDerivedMetrics
+            getSimpleMetricList: getSimpleMetricList,
+            getDerivedMetricList: getDerivedMetricList
         };
     }
 

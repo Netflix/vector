@@ -237,8 +237,6 @@
                     });
         }
 
-        ///////////
-
          return {
             getHostspecContext: getHostspecContext,
             getHostnameContext: getHostnameContext,
