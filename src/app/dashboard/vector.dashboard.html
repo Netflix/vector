@@ -35,7 +35,7 @@
     </div>
     <div class="col-md-2">
         <form role="form">
-            <div class="input-group input-group-lg" ng-class="{'has-error': form.window.$invalid && form.window.$dirty}">
+            <div class="input-group input-group-lg window" ng-class="{'has-error': form.window.$invalid && form.window.$dirty}">
                 <span class="input-group-addon">Window</span>
                 <select class="form-control" name="window" id="windowInput" data-content="The duration window for all charts in this dashboard." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.window" ng-change="vm.updateWindow()">
                     <option value="2">2 min</option>
@@ -47,7 +47,7 @@
     </div>
     <div class="col-md-2">
         <form role="form">
-            <div class="input-group input-group-lg" ng-class="{'has-error': form.interval.$invalid && form.interval.$dirty}">
+            <div class="input-group input-group-lg interval" ng-class="{'has-error': form.interval.$invalid && form.interval.$dirty}">
                 <span class="input-group-addon">Interval</span>
                 <select class="form-control" name="interval" id="intervalInput" data-content="The update interval used by all charts in this dashboard." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" ng-model="properties.interval" ng-change="vm.updateInterval()">
                     <option value="1">1 sec</option>

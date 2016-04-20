@@ -200,7 +200,7 @@ form div input[name="widgetFilter"] {
   padding-left: 15px;
 }
 
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1280px) {
   .widget-wrapper {
     width: 50%;
   }
@@ -210,11 +210,14 @@ form div input[name="widgetFilter"] {
   .widget-wrapper ~ .col-md-2 {
     width: 50%;
   }
-}
-
-@media screen and (max-width: 1280px) {
   .widget-container {
-    width: 33% !important;
+    width: 50% !important;
+  }
+  .window > span {
+    min-width: 150px;
+  }
+  .interval > span {
+    min-width: 150px;
   }
 }
 
@@ -236,10 +239,14 @@ form div input[name="widgetFilter"] {
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
   }
-}
-
-@media screen and (max-width: 640px) {
   .widget-container {
     width: 100% !important;
+  }
+  .window > span {
+    min-width: 150px;
+  }
+
+  .interval > span {
+    min-width: 150px;
   }
 }
