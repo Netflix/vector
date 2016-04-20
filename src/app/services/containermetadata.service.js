@@ -58,6 +58,7 @@
         * @desc
         */
         function updateMetrics() {
+            updateIdDictionary();
             $rootScope.properties.containerList = getContainerList();
 
             //TODO: find a better way for parsing the container name from the query string just once.

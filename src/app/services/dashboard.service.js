@@ -60,7 +60,6 @@
         function intervalFunction() {
             MetricListService.updateMetrics(updateMetricsCallback);
             MetricListService.updateDerivedMetrics();
-            ContainerMetadataService.updateIdDictionary();
         }
 
         /**
