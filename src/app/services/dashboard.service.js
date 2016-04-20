@@ -26,8 +26,8 @@
      * @desc
      */
      function DashboardService($rootScope, $http, $interval, $log, $location, PMAPIService, MetricListService, flash, vectorConfig, ContainerMetadataService) {
-        var loopErrors = 0;
-        var intervalPromise;
+        var loopErrors = 0,
+            intervalPromise;
 
         /**
         * @name cancelInterval
@@ -53,7 +53,8 @@
             if (loopErrors > 5) {
                 cancelInterval(intervalPromise);
                 loopErrors = 0;
-                flash.to('dashboardAlertError').error = 'Consistently failed fetching metrics from host (>5). Aborting loop. Please make sure PCP is running correctly.';
+                $rootScope.properties.context = '-1';
+                flash.to('dashboardAlertError').error = 'Consistently failed fetching metrics from host (>5). Please update the hostname to resume operation.';
             }
         }
 
@@ -160,7 +161,7 @@
                     $rootScope.properties.context > 0) {
                     intervalPromise = $interval(intervalFunction, $rootScope.properties.interval * 1000);
                 } else {
-                    flash.to('dashboardAlertError').error = 'Invalid context. Please update host to resume operation.';
+                    flash.to('dashboardAlertError').error = 'Vector is not connected to the host. Please update the hostname to resume operation.';
                 }
             }
         }
@@ -190,7 +191,7 @@
             $rootScope.flags.contextUpdating = true;
             $rootScope.flags.contextAvailable = false;
 
-            PMAPIService.getHostspecContext($rootScope.properties.hostspec, 30)
+            PMAPIService.getHostspecContext($rootScope.properties.hostspec, 600)
                 .then(function (data) {
                     $rootScope.flags.contextUpdating = false;
                     $rootScope.flags.contextAvailable = true;

@@ -30,8 +30,8 @@
     */
     function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, DashboardService, vectorVersion, ContainerMetadataService, ModalService) {
 
-        var vm = this;
-        var widgetsToLoad = widgets;
+        var vm = this,
+            widgetsToLoad = widgets;
 
         /**
         * @name visibilityChanged

@@ -54,6 +54,9 @@
         .module('app.services', []);
 
     angular
+        .module('app.decorators', []);
+
+    angular
         .module('app', [
             'app.routes',
             'ui.dashboard',
@@ -64,6 +67,7 @@
             'app.services',
             'app.filters',
             'app.metrics',
+            'app.decorators',
             'vector.config',
             'vector.version',
             'angular-flash.service',
