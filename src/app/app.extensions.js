@@ -18,6 +18,18 @@
 (function () {
     'use strict';
 
+    /*var containerNameResolver = function() {
+        var resolve = function (containerId) {
+          return containerId.substring(0,12);
+        };
+
+        return {
+          resolve: resolve
+        };
+    };*/
+
     angular
-        .module('app.extensions');
+        .module('app.extensions')
+        /*.factory('containerNameResolver', containerNameResolver)*/
+        ;
 })();

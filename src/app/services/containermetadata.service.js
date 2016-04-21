@@ -24,9 +24,16 @@
      /**
      * @name ContainerMetadataService
      */
-     function ContainerMetadataService($http, $rootScope, $q, $interval, $routeParams, $location, vectorConfig, MetricListService) {
+     function ContainerMetadataService($http, $rootScope, $q, $interval, $routeParams, $location, $injector, vectorConfig, MetricListService) {
 
-        var containerParsedFromQuerystring = false;
+        var containerParsedFromQuerystring = false,
+            containerNameResolver;
+
+        // loading containerNameResolver if it was defined
+        try {
+            containerNameResolver = $injector.get('containerNameResolver');
+        } catch(e){
+        }
 
         /**
         * @name idDictionary
@@ -114,15 +121,19 @@
         * @desc
         */
         function resolveId(instanceKey) {
-            if (!vectorConfig.useCgroupId) {
-                var instanceName = _.find(containerNames.data, function (el) {
-                    return el.key === instanceKey;
-                });
-                if (instanceName) {
-                    return instanceName.values[instanceName.values.length - 1].y;
+            if(typeof containerNameResolver === 'undefined') {
+                if (!vectorConfig.useCgroupId) {
+                    var instanceName = _.find(containerNames.data, function (el) {
+                        return el.key === instanceKey;
+                    });
+                    if (instanceName) {
+                        return instanceName.values[instanceName.values.length - 1].y;
+                    }
                 }
+                return instanceKey.substring(0,12);
+            } else {
+                return containerNameResolver.resolve(instanceKey);
             }
-            return instanceKey.substring(0,12);
         }
 
         /**;
