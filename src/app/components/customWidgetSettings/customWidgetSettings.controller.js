@@ -15,29 +15,26 @@
  *     limitations under the License.
  *
  */
+
 (function () {
     'use strict';
 
-    /**
-    * @name VectorService
-    */
-    function VectorService() {
+    function CustomWidgetSettingsCtrl($uibModalInstance, widget) {
+        var vm = this;
 
-        /**
-        * @name getGuid
-        * @desc
-        */
-        function getGuid() {
-            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-        }
+        vm.widget = widget;
+        vm.result = angular.extend({}, vm.result, widget);
 
-        return {
-            getGuid: getGuid
+        vm.ok = function () {
+          $uibModalInstance.close(vm.result);
+        };
+
+        vm.cancel = function () {
+          $uibModalInstance.dismiss('cancel');
         };
     }
 
     angular
-        .module('app.services')
-        .factory('VectorService', VectorService);
-
+        .module('app.dashboard')
+        .controller('CustomWidgetSettingsController', CustomWidgetSettingsCtrl);
 })();

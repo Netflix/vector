@@ -22,7 +22,7 @@
     * @name ContainerMemoryUsageMetricDataModel
     * @desc
     */
-    function ContainerMemoryUsageMetricDataModel(WidgetDataModel, MetricListService, VectorService, ContainerMetadataService) {
+    function ContainerMemoryUsageMetricDataModel(WidgetDataModel, MetricListService, DashboardService, ContainerMetadataService) {
         var DataModel = function () {
             return this;
         };
@@ -32,7 +32,7 @@
         DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
+            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
             var conversionFunction = function (value) {
                     return value / 1024;

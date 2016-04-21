@@ -25,7 +25,7 @@
     * @name DiskLatencyMetricDataModel
     * @desc
     */
-    function DiskLatencyMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
+    function DiskLatencyMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
         var DataModel = function () {
             return this;
         };
@@ -35,7 +35,7 @@
         DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
+            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
             var readActiveMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.read_rawactive'),
                 writeActiveMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.write_rawactive'),

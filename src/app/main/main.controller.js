@@ -25,10 +25,10 @@
     'use strict';
 
     /**
-    * @name DashboardCtrl
-    * @desc Main dashboard Controller
+    * @name MainCtrl
+    * @desc Main Controller
     */
-    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, vectorVersion, DashboardService, ContainerMetadataService, ModalService) {
+    function MainCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, vectorVersion, DashboardService, ContainerMetadataService, ModalService) {
 
         var vm = this,
             widgetsToLoad = widgets;
@@ -48,7 +48,7 @@
 
         /**
         * @name activate
-        * @desc Initiliazes DashboardController
+        * @desc Initiliazes MainCtrl
         */
         function activate() {
             DashboardService.initialize();
@@ -210,7 +210,7 @@
         activate();
     }
 
-    DashboardCtrl.$inject = [
+    MainCtrl.$inject = [
         '$document',
         '$rootScope',
         '$log',
@@ -228,5 +228,5 @@
 
     angular
         .module('app.dashboard', [])
-        .controller('DashboardController', DashboardCtrl);
+        .controller('MainController', MainCtrl);
 })();

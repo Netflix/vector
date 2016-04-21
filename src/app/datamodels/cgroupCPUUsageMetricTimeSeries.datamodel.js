@@ -8,7 +8,7 @@
     * @name CgroupCPUUsageMetricTimeSeriesDataModel
     * @desc
     */
-    function CgroupCPUUsageMetricTimeSeriesDataModel(ContainerMetadataService, WidgetDataModel, MetricListService, VectorService) {
+    function CgroupCPUUsageMetricTimeSeriesDataModel(ContainerMetadataService, WidgetDataModel, MetricListService, DashboardService) {
         var DataModel = function () {
             return this;
         };
@@ -17,7 +17,7 @@
 
         DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
+            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
             // create create base metrics
             var cpuUsageMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.cpuacct.usage'),

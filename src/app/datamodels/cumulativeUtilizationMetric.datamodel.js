@@ -22,7 +22,7 @@
     * @name CumulativeUtilizationMetricDataModel
     * @desc
     */
-    function CumulativeUtilizationMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
+    function CumulativeUtilizationMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
         var DataModel = function () {
             return this;
         };
@@ -32,7 +32,7 @@
         DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
+            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
             var rawMetric = MetricListService.getOrCreateCumulativeMetric(this.name),
                 derivedFunction;

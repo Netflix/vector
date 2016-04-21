@@ -23,7 +23,7 @@
     * @name NetworkBytesMetricDataModel
     * @desc
     */
-    function NetworkBytesMetricDataModel(WidgetDataModel, MetricListService, VectorService) {
+    function NetworkBytesMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
         var DataModel = function () {
             return this;
         };
@@ -33,7 +33,7 @@
         DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
+            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
             var widgetDefinition = this;
             // create create base metrics

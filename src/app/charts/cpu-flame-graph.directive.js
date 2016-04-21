@@ -19,7 +19,7 @@
 (function () {
     'use strict';
 
-    function cpuFlameGraph($rootScope, $timeout, FlameGraphService, VectorService) {
+    function cpuFlameGraph($rootScope, $timeout, FlameGraphService, DashboardService) {
 
         function link(scope) {
             scope.host = $rootScope.properties.host;
@@ -27,7 +27,7 @@
             scope.context = $rootScope.properties.context;
             scope.ready = false;
             scope.processing = false;
-            scope.id = VectorService.getGuid();
+            scope.id = DashboardService.getGuid();
             scope.generateFlameGraph = function(){
                 FlameGraphService.generate();
                 scope.ready = true;

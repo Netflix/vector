@@ -23,7 +23,7 @@
     * @name CgroupMemoryHeadroomMetricDataModel
     * @desc
     */
-    function CgroupMemoryHeadroomMetricDataModel(WidgetDataModel, MetricListService, VectorService, ContainerMetadataService) {
+    function CgroupMemoryHeadroomMetricDataModel(WidgetDataModel, MetricListService, DashboardService, ContainerMetadataService) {
         var DataModel = function () {
             return this;
         };
@@ -33,7 +33,7 @@
         DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + VectorService.getGuid();
+            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
             // create create base metrics
             var conversionFunction = function (value) {

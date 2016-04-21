@@ -295,11 +295,20 @@
             }
         }
 
+        /**
+        * @name getGuid
+        * @desc
+        */
+        function getGuid() {
+            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        }
+
         return {
             cancelInterval: cancelInterval,
             updateInterval: updateInterval,
             updateHost: updateHost,
             updateContext: updateContext,
+            getGuid: getGuid,
             initialize: initialize
         };
     }

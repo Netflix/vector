@@ -19,7 +19,7 @@
 (function () {
     'use strict';
 
-    function diskLatencyHeatMap($rootScope, $timeout, HeatMapService, VectorService) {
+    function diskLatencyHeatMap($rootScope, $timeout, HeatMapService, DashboardService) {
 
         function link(scope) {
             scope.host = $rootScope.properties.host;
@@ -27,7 +27,7 @@
             scope.context = $rootScope.properties.context;
             scope.ready = false;
             scope.processing = false;
-            scope.id = VectorService.getGuid();
+            scope.id = DashboardService.getGuid();
             scope.generateHeatMap = function(){
                 HeatMapService.generate();
                 scope.ready = true;

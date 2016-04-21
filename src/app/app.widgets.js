@@ -432,7 +432,7 @@
                     integer: true
                 },
                 settingsModalOptions: {
-                    templateUrl: 'app/dashboard/customWidgetSettings.html',
+                    templateUrl: 'app/components/customWidgetSettings/customWidgetSettings.html',
                     controller: 'CustomWidgetSettingsController'
                 },
                 hasLocalSettings: true,

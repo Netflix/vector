@@ -24,10 +24,10 @@
     */
     function config($routeProvider) {
         $routeProvider.when('/', {
-            templateUrl: 'app/dashboard/dashboard.html',
-            controller: 'DashboardController',
+            templateUrl: 'app/main/main.html',
+            controller: 'MainController',
             controllerAs: 'vm',
-            title: 'Dashboard - Vector',
+            title: 'Vector',
             reloadOnSearch: false,
             resolve: {
                 'widgets': function (defaultWidgets) {
@@ -38,10 +38,10 @@
                 }
             }
         }).when('/embed', {
-            templateUrl: 'app/dashboard/dashboard.html',
-            controller: 'DashboardController',
+            templateUrl: 'app/main/main.html',
+            controller: 'MainController',
             controllerAs: 'vm',
-            title: 'Dashboard - Vector',
+            title: 'Vector',
             reloadOnSearch: false,
             resolve: {
                 'widgets': function (defaultWidgets) {
@@ -52,10 +52,10 @@
                 }
             }
         }).when('/empty', {
-            templateUrl: 'app/dashboard/dashboard.html',
-            controller: 'DashboardController',
+            templateUrl: 'app/main/main.html',
+            controller: 'MainController',
             controllerAs: 'vm',
-            title: 'Dashboard - Vector',
+            title: 'Vector',
             reloadOnSearch: false,
             resolve: {
                 'widgets': function (emptyWidgets) {
@@ -66,10 +66,10 @@
                 }
             }
         }).when('/container', {
-            templateUrl: 'app/dashboard/dashboard.html',
-            controller: 'DashboardController',
+            templateUrl: 'app/main/main.html',
+            controller: 'MainController',
             controllerAs: 'vm',
-            title: 'Dashboard - Vector',
+            title: 'Vector',
             reloadOnSearch: false,
             resolve: {
                 'widgets': function (containerWidgets) {
