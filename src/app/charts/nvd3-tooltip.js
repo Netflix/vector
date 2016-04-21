@@ -16,9 +16,8 @@
  *
  */
 
-/*global d3*/
-/*global nv*/
-/*global document*/
+/*global d3, nv, document*/
+/*eslint-disable angular/document-service, angular/definedundefined*/
 
 nv.models.tooltip = function () {
 

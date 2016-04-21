@@ -2,15 +2,17 @@
 (function () {
     'use strict';
 
-    function CustomWidgetSettingsCtrl($scope, $uibModalInstance, widget) {
-        $scope.widget = widget;
-        $scope.result = angular.extend({},$scope.result, widget);
+    function CustomWidgetSettingsCtrl($uibModalInstance, widget) {
+        var vm = this;
 
-        $scope.ok = function () {
-          $uibModalInstance.close($scope.result);
+        vm.widget = widget;
+        vm.result = angular.extend({}, vm.result, widget);
+
+        vm.ok = function () {
+          $uibModalInstance.close(vm.result);
         };
 
-        $scope.cancel = function () {
+        vm.cancel = function () {
           $uibModalInstance.dismiss('cancel');
         };
     }

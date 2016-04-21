@@ -75,7 +75,7 @@
             $document[0]
                 .addEventListener('mozvisibilitychange', visibilityChanged, false);
 
-            if ($routeParams.widgets !== undefined ){
+            if (angular.isDefined($routeParams.widgets)){
                 var widgetNameArr = $routeParams.widgets.split(',') || [];
                 widgetsToLoad = widgetNameArr.reduce(function(all, name){
                     return all.concat(widgetDefinitions.filter(function(def){
@@ -90,7 +90,7 @@
                 $location.search('widgets', urlArr);
             }
 
-            if ($routeParams.containerFilter !== undefined){
+            if (angular.isDefined($routeParams.containerFilter)){
                 $rootScope.properties.containerFilter =  $routeParams.containerFilter;
             }
 
@@ -111,7 +111,7 @@
         // Export controller public functions
         vm.addWidgetToURL = function(widgetObj){
             var newUrl ='';
-            if ($routeParams.widgets === undefined) {
+            if (angular.isUndefined($routeParams.widgets)) {
                 $routeParams.widgets = '';
             } else {
                 newUrl = ',';
@@ -182,7 +182,7 @@
         };
 
         vm.checkWidgetType = function(widgetObj) {
-            if (widgetObj.requireContainerFilter !== undefined && widgetObj.requireContainerFilter === true && $rootScope.flags.disableContainerSelect === false && !$rootScope.flags.containerSelectOverride) {
+            if (angular.isDefined(widgetObj.requireContainerFilter) && widgetObj.requireContainerFilter === true && $rootScope.flags.disableContainerSelect === false && !$rootScope.flags.containerSelectOverride) {
               if ($rootScope.properties.selectedContainer === ''){
 
                   var modalOptions = {
@@ -193,7 +193,7 @@
                   };
 
                   ModalService.showModal({}, modalOptions).then(function() {
-                      document.getElementById('selectedContainer').focus();
+                      $document.getElementById('selectedContainer').focus();
                   });
 
                   return false;

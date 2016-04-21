@@ -650,7 +650,7 @@
                     dataAttrName: 'data',
                     dataModelType: CgroupCPUUsageMetricTimeSeriesDataModel,
                     dataModelOptions: {
-                        name: 'cgroup.cpuacct.usage',
+                        name: 'cgroup.cpuacct.usage'
                     },
                     size: {
                         width: '50%',

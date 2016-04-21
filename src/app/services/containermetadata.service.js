@@ -24,7 +24,7 @@
      /**
      * @name ContainerMetadataService
      */
-     function ContainerMetadataService($http, $rootScope, $q, $interval, $routeParams, $location, $injector, vectorConfig, MetricListService) {
+     function ContainerMetadataService($http, $rootScope, $q, $interval, $routeParams, $location, $injector, $log, vectorConfig, MetricListService) {
 
         var containerParsedFromQuerystring = false,
             containerNameResolver;
@@ -32,7 +32,8 @@
         // loading containerNameResolver if it was defined
         try {
             containerNameResolver = $injector.get('containerNameResolver');
-        } catch(e){
+        } catch(e) {
+            $log.debug("No external container name resolver defined.");
         }
 
         /**
@@ -75,7 +76,7 @@
         * @desc returns true if id exists in the idMap
         */
         function containerIdExist(id) {
-            return (idMap[parseId(id)] !== undefined && idMap[parseId(id)] !== '');
+            return (angular.isDefined(idMap[parseId(id)]) && idMap[parseId(id)] !== '');
         }
 
         /**
@@ -92,7 +93,7 @@
                     $rootScope.properties.selectedContainer = '';
                 }
             } else {
-                if ($routeParams.container !== undefined) {
+                if (angular.isDefined($routeParams.container)) {
                     if ($rootScope.properties.containerList.indexOf($routeParams.container) !== -1) {
                         $rootScope.properties.selectedContainer = $routeParams.container;
                         $rootScope.flags.disableContainerSelectNone = true;
@@ -108,13 +109,17 @@
         * @name initialize
         * @desc
         */
+        /*eslint-disable no-unused-vars*/
         var containerCgroups,
-            containerNames;
+            containerNames,
+            updateMetricsListener;
         function initialize() {
             containerCgroups = MetricListService.getOrCreateMetric('containers.cgroup');
             containerNames = MetricListService.getOrCreateMetric('containers.name');
-            $rootScope.$on('updateMetrics', updateMetrics);
+
+            updateMetricsListener = $rootScope.$on('updateMetrics', updateMetrics);
         }
+        /*eslint-enable no-unused-vars*/
 
         /**
         * @name resolveId
