@@ -28,7 +28,7 @@
     * @name DashboardCtrl
     * @desc Main dashboard Controller
     */
-    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, DashboardService, vectorVersion, ContainerMetadataService, ModalService) {
+    function DashboardCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, vectorVersion, DashboardService, ContainerMetadataService, ModalService) {
 
         var vm = this,
             widgetsToLoad = widgets;
@@ -220,11 +220,10 @@
         'widgetDefinitions',
         'widgets',
         'embed',
-        'DashboardService',
         'vectorVersion',
+        'DashboardService',
         'ContainerMetadataService',
-        'ModalService',
-        'vectorConfig'
+        'ModalService'
     ];
 
     angular

@@ -181,6 +181,11 @@
         */
         function updateContainer(){
             $location.search('container', $rootScope.properties.selectedContainer);
+            if ($rootScope.properties.selectedContainer !== '') {
+                $rootScope.flags.disableContainerSelectNone = true;
+            } else {
+                $rootScope.flags.disableContainerSelectNone = false;
+            }
         }
 
         /**

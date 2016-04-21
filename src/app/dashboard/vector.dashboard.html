@@ -73,7 +73,7 @@
             <div class="input-group input-group-lg target" ng-show="flags.enableContainerWidgets && !flags.disableContainerSelect">
                 <span class="input-group-addon" >Container Id</span>
                 <select id="selectedContainer" ng-model="properties.selectedContainer" ng-change="vm.updateContainer()" class="form-control">
-                    <option ng-disabled="flags.disableContainerSelectNone && !flags.containerSelectOverride" ng-selected="properties.containerList.indexOf(properties.selectedContainer) !== -1" value="">All</option>
+                    <option ng-disabled="flags.disableContainerSelectNone && !flags.containerSelectOverride" value="">All</option>
                     <option ng-repeat="container in properties.containerList">{{container}}</option>
                 </select>
             </div>
