@@ -38,8 +38,6 @@
                 });
         }
 
-        //////////
-
         return {
             generate: generate
         };

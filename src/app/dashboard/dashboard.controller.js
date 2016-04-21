@@ -192,7 +192,7 @@
                       bodyText: 'This widget requires a container to be selected. Please select a container and try again.'
                   };
 
-                  ModalService.showModal({}, modalOptions).then(function () {
+                  ModalService.showModal({}, modalOptions).then(function() {
                       document.getElementById('selectedContainer').focus();
                   });
 
@@ -228,6 +228,6 @@
     ];
 
     angular
-        .module('app.controllers', [])
+        .module('app.dashboard', [])
         .controller('DashboardController', DashboardCtrl);
 })();

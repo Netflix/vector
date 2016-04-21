@@ -54,6 +54,7 @@
                 cancelInterval(intervalPromise);
                 loopErrors = 0;
                 $rootScope.properties.context = '-1';
+                $rootScope.flags.contextAvailable = false;
                 flash.to('dashboardAlertError').error = 'Consistently failed fetching metrics from host (>5). Please update the hostname to resume operation.';
             }
         }
@@ -159,7 +160,7 @@
             if ($rootScope.properties.host) {
                 if ($rootScope.properties.context &&
                     $rootScope.properties.context > 0) {
-                    intervalPromise = $interval(intervalFunction, $rootScope.properties.interval * 1000);
+                    intervalPromise = $interval(intervalFunction, parseInt($rootScope.properties.interval) * 1000);
                 } else {
                     flash.to('dashboardAlertError').error = 'Vector is not connected to the host. Please update the hostname to resume operation.';
                 }
@@ -208,7 +209,6 @@
                     flash.to('dashboardAlertError').error = 'Failed fetching context from host. Try updating the hostname.';
                     $rootScope.flags.contextUpdating = false;
                     $rootScope.flags.contextAvailable = false;
-                    $log.error('Error fetching context.');
                 });
         }
 

@@ -7,16 +7,16 @@
      * @name ModalService
      * @desc
      */
-     function ModalService($modal) {
+     function ModalService($uibModal) {
 
-        var modalDefaults = {
+        var defaultModal = {
             backdrop: true,
             keyboard: true,
             modalFade: true,
             template: '<div class="modal-header"><h3>{{modalOptions.headerText}}</h3></div><div class="modal-body"><p>{{modalOptions.bodyText}}</p></div><div class="modal-footer"><button type="button" class="btn" data-ng-click="modalOptions.close()">{{modalOptions.closeButtonText}}</button><button class="btn btn-primary" data-ng-click="modalOptions.ok();">{{modalOptions.actionButtonText}}</button></div>'
         };
 
-        var modalOptions = {
+        var defaultModalOptions = {
             closeButtonText: 'Close',
             actionButtonText: 'OK',
             headerText: 'Proceed?',
@@ -24,51 +24,36 @@
         };
 
         /**
-        * @name showModal
-        * @desc
-        */
-        function showModal(customModalDefaults, customModalOptions) {
-            if (!customModalDefaults) {
-                customModalDefaults = {};
-            }
-            customModalDefaults.backdrop = 'static';
-            return show(customModalDefaults, customModalOptions);
-        }
-
-        /**
         * @name show
         * @desc
         */
-        function show(customModalDefaults, customModalOptions) {
+        function showModal(customModal, customModalOptions) {
             //Create temp objects to work with since we're in a singleton service
-            var tempModalDefaults = {};
-            var tempModalOptions = {};
+            var modal = {};
+            var modalOptions = {};
+
+            customModal.backdrop = 'static';
 
             //Map angular-ui modal custom defaults to modal defaults defined in service
-            angular.extend(tempModalDefaults, modalDefaults, customModalDefaults);
+            angular.extend(modal, defaultModal, customModal);
 
             //Map modal.html $scope custom properties to defaults defined in service
-            angular.extend(tempModalOptions, modalOptions, customModalOptions);
+            angular.extend(modalOptions, defaultModalOptions, customModalOptions);
 
-            if (!tempModalDefaults.controller) {
-                tempModalDefaults.controller = ['$scope','$modalInstance', function ($scope, $modalInstance) {
-                    $scope.modalOptions = tempModalOptions;
-                    $scope.modalOptions.ok = function (result) {
-                        $modalInstance.close(result);
-                    };
-                    $scope.modalOptions.close = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
-                }];
-            }
+            modal.controller = ['$scope','$uibModalInstance', function ($scope, $uibModalInstance) {
+                $scope.modalOptions = modalOptions;
+                $scope.modalOptions.ok = function (result) {
+                    $uibModalInstance.close(result);
+                };
+                $scope.modalOptions.close = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            }];
 
-            return $modal.open(tempModalDefaults).result;
+            return $uibModal.open(modal).result;
         }
 
-        ///////
-
         return {
-            show: show,
             showModal: showModal
         };
 
@@ -76,6 +61,6 @@
 
     angular
         .module('app.services')
-        .factory('ModalService', ['$modal', ModalService]);
+        .factory('ModalService', ModalService);
 
  })();

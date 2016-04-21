@@ -49,7 +49,7 @@
 
             if (angular.isDefined(instance) && instance !== null) {
                 instance.values.push({ x: timestamp, y: convertedValue });
-                overflow = instance.values.length - (($rootScope.properties.window * 60) / $rootScope.properties.interval);
+                overflow = instance.values.length - ((parseInt($rootScope.properties.window) * 60) / parseInt($rootScope.properties.interval));
                 if (overflow > 0) {
                     instance.values.splice(0, overflow);
                 }

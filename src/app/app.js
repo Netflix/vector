@@ -58,9 +58,9 @@
 
     angular
         .module('app', [
-            'app.routes',
             'ui.dashboard',
-            'app.controllers',
+            'app.routes',
+            'app.dashboard',
             'app.datamodels',
             'app.widgets',
             'app.charts',

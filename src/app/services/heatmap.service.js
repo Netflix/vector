@@ -39,8 +39,6 @@
                     });
         }
 
-        ////////
-
         return {
             generate: generate
         };
