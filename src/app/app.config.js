@@ -33,6 +33,7 @@
             'disableContainerFilter': false, // Disable container id filter input
             'disableContainerSelect': false, // Disable container name drop down select
             'containerSelectOverride': true, // Overrides requireContainerFilter widget option
+            'useCgroupId': false, // Use container cgroup id instead of container name
             'expandHostname': false // Automatically expand hostname input when application opens
         });
 })();
