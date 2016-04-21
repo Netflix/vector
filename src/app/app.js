@@ -33,10 +33,10 @@
         .module('app.routes', ['ngRoute']);
 
     angular
-        .module('vector.config', []);
+        .module('app.config', []);
 
     angular
-        .module('vector.version', []);
+        .module('app.version', []);
 
     angular
         .module('app.charts', []);
@@ -57,6 +57,9 @@
         .module('app.decorators', []);
 
     angular
+        .module('app.extensions', []);
+
+    angular
         .module('app', [
             'ui.dashboard',
             'app.routes',
@@ -68,8 +71,9 @@
             'app.filters',
             'app.metrics',
             'app.decorators',
-            'vector.config',
-            'vector.version',
+            'app.config',
+            'app.version',
+            'app.extensions',
             'angular-flash.service',
             'angular-flash.flash-alert-directive'
         ])

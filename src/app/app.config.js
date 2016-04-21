@@ -19,7 +19,7 @@
     'use strict';
 
     angular
-        .module('vector.config')
+        .module('app.config')
         .constant('vectorConfig', {
             'protocol': 'http', // PMWEBD protocol (http or https)
             'port': 44323,  // PMWEBD port
