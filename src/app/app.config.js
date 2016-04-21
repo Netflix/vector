@@ -18,6 +18,18 @@
 (function () {
     'use strict';
 
+    function toastrConfig(toastrConfig) {
+        toastrConfig.allowHtml = true;
+        toastrConfig.timeOut = 8000;
+        toastrConfig.positionClass = 'toast-top-right';
+        toastrConfig.preventDuplicates = true;
+        toastrConfig.progressBar = true;
+    }
+
+    function logProviderConfig($logProvider) {
+        $logProvider.debugEnabled(true);
+    }
+
     angular
         .module('app.config')
         .constant('vectorConfig', {
@@ -35,5 +47,7 @@
             'containerSelectOverride': true, // Overrides requireContainerFilter widget option
             'useCgroupId': false, // Use container cgroup id instead of container name
             'expandHostname': false // Automatically expand hostname input when application opens
-        });
+        })
+        .config(toastrConfig)
+        .config(logProviderConfig);
 })();
