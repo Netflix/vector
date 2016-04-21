@@ -1,5 +1,23 @@
 /**!
+ *
+ *  Copyright 2016 Netflix, Inc.
+ *
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
+ *
  */
+
+/*global _*/
+
  (function () {
      'use strict';
 
@@ -83,9 +101,11 @@
         * @name initialize
         * @desc
         */
-        var activeContainers;
+        var containerCgroups,
+            containerNames;
         function initialize() {
-            activeContainers = MetricListService.getOrCreateMetric('containers.cgroup');
+            containerCgroups = MetricListService.getOrCreateMetric('containers.cgroup');
+            containerNames = MetricListService.getOrCreateMetric('containers.name');
             $rootScope.$on('updateMetrics', updateMetrics);
         }
 
@@ -94,14 +114,13 @@
         * @desc
         */
         function resolveId(instanceKey) {
-            //TODO: this should check if a function was defined and call it instead of checking a flag.
-            if (vectorConfig.enableExternalContainerNameResolver) {
-                //make external api call here to resolve container id
-                //need to set enableExternalContainerNameResolver to true in app.config.js
-                return;
-            } else {
-                return instanceKey.substring(0,12);
+            var instanceName = _.find(containerNames.data, function (el) {
+                return el.key === instanceKey;
+            });
+            if (instanceName) {
+                return instanceName.values[instanceName.values.length - 1].y;
             }
+            return instanceKey.substring(0,12);
         }
 
         /**;
@@ -110,7 +129,7 @@
         */
         function updateIdDictionary(){
             //TODO: implement better logic to add and remove items from idMap. Always creating a new object and resolving all names is expensive.
-            idMap = activeContainers.data.reduce(function(obj, item) {
+            idMap = containerCgroups.data.reduce(function(obj, item) {
                 obj[item.key] = resolveId(item.key);
                 return obj;
             },{});
@@ -121,7 +140,7 @@
         * @desc
         */
         function getContainerList() {
-          return activeContainers.data.reduce(function(obj, item) {
+          return containerCgroups.data.reduce(function(obj, item) {
               obj.push(resolveId(item.key));
               return obj;
           },[]);

@@ -32,8 +32,7 @@
             'disableHostspecInput': false, // Disable hostspec input
             'disableContainerFilter': false, // Disable container id filter input
             'disableContainerSelect': false, // Disable container name drop down select
-            'containerSelectOverride': false, // Overrides requireContainerFilter widget option
-            'enableExternalContainerNameResolver': false, // Enables external container name resolver. Logic needs to be implemented in ContainerMetadataService.
+            'containerSelectOverride': true, // Overrides requireContainerFilter widget option
             'expandHostname': false // Automatically expand hostname input when application opens
         });
 })();
