@@ -21,7 +21,7 @@
      /**
      * @name FlameGraphService
      */
-     function FlameGraphService($log, $rootScope, $http, flash) {
+     function FlameGraphService($log, $rootScope, $http, toastr) {
 
         /**
         * @name generate
@@ -30,11 +30,9 @@
         function generate() {
             $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=generic.systack')
                 .success(function () {
-                    flash.to('alert-sysstack').success = 'generic.systack requested!';
-                    $log.info('generic.systack requested');
+                    toastr.success('generic.systack requested.', 'Success');
                 }).error(function () {
-                    flash.to('alert-sysstack').error = 'failed requesting generic.systack!';
-                    $log.error('failed requesting generic.systack');
+                    toastr.error('Failed requesting generic.systack.', 'Error');
                 });
         }
 

@@ -16,18 +16,8 @@
  *
  */
 
-/*jslint node: true */
-/*global angular*/
 (function () {
     'use strict';
-
-    /**
-    * @name flashConfig
-    * @desc Configures flashProvider to use Bootstrap 3 CSS class.
-    */
-    function flashConfig(flashProvider)  {
-        flashProvider.errorClassnames.push('alert-danger');
-    }
 
     angular
         .module('app.routes', ['ngRoute']);
@@ -65,6 +55,7 @@
     angular
         .module('vector', [
             'ui.dashboard',
+            'toastr',
             'app.routes',
             'app.dashboard',
             'app.datamodels',
@@ -77,10 +68,7 @@
             'app.config',
             'app.constants',
             'app.version',
-            'app.extensions',
-            'angular-flash.service',
-            'angular-flash.flash-alert-directive'
-        ])
-        .config(flashConfig);
+            'app.extensions'
+        ]);
 
 })();

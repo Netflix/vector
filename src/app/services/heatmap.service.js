@@ -22,7 +22,7 @@
      * @name HeatMapService
      * @desc
      */
-     function HeatMapService($log, $rootScope, $http, flash) {
+     function HeatMapService($log, $rootScope, $http, toastr) {
 
         /**
         * @name generate
@@ -31,11 +31,9 @@
         function generate() {
                 $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=generic.heatmap')
                     .success(function () {
-                        flash.to('alert-disklatency-success').success = 'generic.heatmap requested!';
-                        $log.info('generic.heatmap requested');
+                        toastr.success('generic.heatmap requested.', 'Success');
                     }).error(function () {
-                        flash.to('alert-disklatency-error').error = 'failed requesting generic.heatmap!';
-                        $log.error('failed requesting generic.heatmap');
+                        toastr.error('Failed requesting generic.heatmap.', 'Error');
                     });
         }
 

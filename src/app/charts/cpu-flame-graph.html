@@ -1,8 +1,5 @@
 <div class="col-md-12">
     <div class="row" style="text-align: center;">
-        <div id="alert-sysstack" flash-alert active-class="in alert" class="fade">
-            <span class="alert-message">{{flash.message}}</span>
-        </div>
         <p>Click on the button below to generate a CPU flame graph! (60 sec)</p>
         <button type="button" class="btn btn-primary" ng-disabled="processing" ng-click="generateFlameGraph()">Generate Flame Graph <i ng-if="processing" class="fa fa-refresh fa-spin"></i></button>
     </div>

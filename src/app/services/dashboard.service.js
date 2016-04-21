@@ -25,7 +25,7 @@
      * @name DashboardService
      * @desc
      */
-     function DashboardService($rootScope, $http, $interval, $log, $location, PMAPIService, MetricListService, flash, vectorConfig, ContainerMetadataService) {
+     function DashboardService($rootScope, $http, $interval, $log, $location, PMAPIService, MetricListService, toastr, vectorConfig, ContainerMetadataService) {
         var loopErrors = 0,
             intervalPromise;
 
@@ -45,7 +45,7 @@
         */
         function updateMetricsCallback(success) {
             if (!success) {
-                flash.to('dashboardAlertError').error = 'Failed fetching metrics. Trying again.';
+                toastr.error('Failed fetching metrics. Trying again.', 'Error');
                 loopErrors = loopErrors + 1;
             } else {
                 loopErrors = 0;
@@ -55,7 +55,7 @@
                 loopErrors = 0;
                 $rootScope.properties.context = '-1';
                 $rootScope.flags.contextAvailable = false;
-                flash.to('dashboardAlertError').error = 'Consistently failed fetching metrics from host (>5). Please update the hostname to resume operation.';
+                toastr.error('Consistently failed fetching metrics from host (>5). Please update the hostname to resume operation.', 'Error');
             }
         }
 
@@ -162,7 +162,7 @@
                     $rootScope.properties.context > 0) {
                     intervalPromise = $interval(intervalFunction, parseInt($rootScope.properties.interval) * 1000);
                 } else {
-                    flash.to('dashboardAlertError').error = 'Vector is not connected to the host. Please update the hostname to resume operation.';
+                    toastr.error('Vector is not connected to the host. Please update the hostname to resume operation.', 'Error');
                 }
             }
         }
@@ -206,7 +206,7 @@
                             $log.error('Error fetching hostname.');
                         });
                 }, function () {
-                    flash.to('dashboardAlertError').error = 'Failed fetching context from host. Try updating the hostname.';
+                    toastr.error('Failed fetching context from host. Try updating the hostname.', 'Error');
                     $rootScope.flags.contextUpdating = false;
                     $rootScope.flags.contextAvailable = false;
                 });
