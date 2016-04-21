@@ -36,6 +36,9 @@
         .module('app.config', []);
 
     angular
+        .module('app.constants', []);
+
+    angular
         .module('app.version', []);
 
     angular
@@ -60,7 +63,7 @@
         .module('app.extensions', []);
 
     angular
-        .module('app', [
+        .module('vector', [
             'ui.dashboard',
             'app.routes',
             'app.dashboard',
@@ -72,6 +75,7 @@
             'app.metrics',
             'app.decorators',
             'app.config',
+            'app.constants',
             'app.version',
             'app.extensions',
             'angular-flash.service',

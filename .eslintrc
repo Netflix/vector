@@ -1,18 +1,13 @@
 {
-  "globals": {
-    "angular": false
-  },
+  "extends": "eslint:recommended",
   "plugins": ["angular"],
-  "rules": {
-    "quotes": 0,
-    "no-shadow": 0,
-    "semi": 0,
-    "global-strict": 0,
-    "no-unused-vars": 0,
-    "no-multi-spaces": 0,
-    "consistent-return": 0,
-    "dot-notation": 0,
-    "curly": 0,
-    "no-undef": 0
+  "env": {
+    "browser": true,
+    "jasmine": true
+  },
+  "globals": {
+    "angular": true,
+    "module": true,
+    "inject": true
   }
 }

@@ -1,62 +1,52 @@
 'use strict';
 
+var path = require('path');
 var gulp = require('gulp');
+var conf = require('./conf');
 
-var $ = require('gulp-load-plugins')();
-
-var wiredep = require('wiredep');
 var karma = require('karma');
-var concat = require('concat-stream');
-var _ = require('lodash');
 
-module.exports = function(options) {
-  function listFiles(callback) {
-    var wiredepOptions = _.extend({}, options.wiredep, {
-      dependencies: true,
-      devDependencies: true
+var pathSrcHtml = [
+  path.join(conf.paths.src, '/**/*.html')
+];
+
+var pathSrcJs = [
+  path.join(conf.paths.src, '/**/!(*.spec).js')
+];
+
+function runTests (singleRun, done) {
+  var reporters = ['progress'];
+  var preprocessors = {};
+
+  pathSrcHtml.forEach(function(path) {
+    preprocessors[path] = ['ng-html2js'];
+  });
+
+  if (singleRun) {
+    pathSrcJs.forEach(function(path) {
+      preprocessors[path] = ['coverage'];
     });
-    var bowerDeps = wiredep(wiredepOptions);
-
-    var specFiles = [
-      options.src + '/**/*.spec.js',
-      options.src + '/**/*.mock.js'
-    ];
-
-    var htmlFiles = [
-      options.src + '/**/*.html'
-    ];
-
-    var srcFiles = [
-      options.src + '/app/**/*.js'
-    ].concat(specFiles.map(function(file) {
-      return '!' + file;
-    }));
-
-
-    gulp.src(srcFiles)
-      .pipe(concat(function(files) {
-        callback(bowerDeps.js
-          .concat(_.pluck(files, 'path'))
-          .concat(htmlFiles)
-          .concat(specFiles));
-      }));
+    reporters.push('coverage')
   }
 
-  function runTests (singleRun, done) {
-    listFiles(function(files) {
-      karma.server.start({
-        configFile: __dirname + '/../karma.conf.js',
-        files: files,
-        singleRun: singleRun,
-        autoWatch: !singleRun
-      }, done);
-    });
-  }
+  var localConfig = {
+    configFile: path.join(__dirname, '/../karma.conf.js'),
+    singleRun: singleRun,
+    autoWatch: !singleRun,
+    reporters: reporters,
+    preprocessors: preprocessors
+  };
 
-  gulp.task('test', ['scripts'], function(done) {
-    runTests(true, done);
-  });
-  gulp.task('test:auto', ['watch'], function(done) {
-    runTests(false, done);
-  });
-};
+  var server = new karma.Server(localConfig, function(failCount) {
+    done(failCount ? new Error("Failed " + failCount + " tests.") : null);
+  })
+  server.start();
+}
+
+gulp.task('test', ['scripts'], function(done) {
+  runTests(true, done);
+});
+
+gulp.task('test:auto', ['watch'], function(done) {
+  runTests(false, done);
+});

@@ -4,5 +4,7 @@ dist/
 .tmp/
 .idea
 *.iml
+coverage/
+.sass-cache/
 npm-debug.log
 src/app/app.version.js

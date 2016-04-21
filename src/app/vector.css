@@ -200,6 +200,10 @@ form div input[name="widgetFilter"] {
   padding-left: 15px;
 }
 
+.panel {
+  margin-bottom: 20px !important;
+}
+
 @media screen and (max-width: 1280px) {
   .widget-wrapper {
     width: 50%;
