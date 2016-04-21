@@ -286,7 +286,8 @@
                 disableContainerFilter: vectorConfig.disableContainerFilter,
                 disableContainerSelect: vectorConfig.disableContainerSelect,
                 containerSelectOverride: vectorConfig.containerSelectOverride,
-                disableContainerSelectNone: false
+                disableContainerSelectNone: false,
+                disableHostnameInputContainerSelect: vectorConfig.disableHostnameInputContainerSelect
             };
 
             if (vectorConfig.enableContainerWidgets) {
