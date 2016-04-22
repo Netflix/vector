@@ -86,7 +86,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/chart/nvd3-chart.html',
+            templateUrl: 'app/components/chart/chart.html',
             scope: {
                 data: '=',
                 percentage: '=',
