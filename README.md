@@ -9,7 +9,7 @@ Vector is an open source on-host performance monitoring framework which exposes 
 
 ## Disclaimer
 
-Vector is under constant development and new features should be released often. Bugs and issues are expected. We count on your support to find and report them! **Stick to releases for a stable versions.**
+Vector is under constant development and new features should be released often. Bugs and issues are expected. We count on your support to find and report them! **Stick to major and minor releases for stable versions.**
 
 ## Getting Started
 
@@ -22,6 +22,22 @@ For bugs, questions and discussions please use the [GitHub Issues](https://githu
 ## User Group
 
 You can ask questions to other Vector users and contributors on [Google Groups](https://groups.google.com/forum/#!forum/vector-users).
+
+## Versioning
+
+For transparency and insight into our release cycle, and for striving to maintain backward compatibility, Vector will be maintained under the Semantic Versioning guidelines as much as possible.
+
+Releases will be numbered with the following format:
+
+`<major>.<minor>.<patch>`
+
+And constructed with the following guidelines:
+
+* Breaking backward compatibility bumps the major (and resets the minor and patch)
+* New additions without breaking backward compatibility bumps the minor (and resets the patch)
+* Bug fixes and misc changes bumps the patch
+
+For more information on SemVer, please visit [http://semver.org/](http://semver.org/).
 
 ## License
 
