@@ -214,8 +214,6 @@
         .module('main', [
             'dashboard',
             'widget',
-            'datamodel',
-            'chart',
             'containermetadata',
             'modal'
         ])

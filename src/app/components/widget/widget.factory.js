@@ -887,7 +887,11 @@
     ];
 
     angular
-        .module('widget', [])
+        .module('widget', [
+            'datamodel',
+            'chart',
+            'customWidgetSettings'
+        ])
         .factory('widgetDefinitions', widgetDefinitions)
         .value('defaultWidgets', defaultWidgets)
         .value('emptyWidgets', emptyWidgets)

@@ -16,20 +16,20 @@
  *
  */
 
+/*eslint-disable angular/controller-as*/
+
 (function () {
     'use strict';
 
-    function CustomWidgetSettingsCtrl($uibModalInstance, widget) {
-        var vm = this;
+    function CustomWidgetSettingsCtrl($scope, $uibModalInstance, widget) {
+        $scope.widget = widget;
+        $scope.result = angular.extend({}, $scope.result, widget);
 
-        vm.widget = widget;
-        vm.result = angular.extend({}, vm.result, widget);
-
-        vm.ok = function () {
-          $uibModalInstance.close(vm.result);
+        $scope.ok = function () {
+          $uibModalInstance.close($scope.result);
         };
 
-        vm.cancel = function () {
+        $scope.cancel = function () {
           $uibModalInstance.dismiss('cancel');
         };
     }
