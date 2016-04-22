@@ -3,7 +3,7 @@
   'use strict';
 
   angular
-    .module('app.constants')
+    .module('vector')
     .constant('moment', moment);
 
 })();

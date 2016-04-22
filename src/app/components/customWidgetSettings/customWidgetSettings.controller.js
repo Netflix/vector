@@ -35,6 +35,6 @@
     }
 
     angular
-        .module('app.dashboard')
+        .module('customWidgetSettings', [])
         .controller('CustomWidgetSettingsController', CustomWidgetSettingsCtrl);
 })();

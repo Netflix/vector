@@ -29,7 +29,7 @@
     };*/
 
     angular
-        .module('app.extensions')
+        .module('vector')
         /*.factory('containerNameResolver', containerNameResolver)*/
         ;
 })();

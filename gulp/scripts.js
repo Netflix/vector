@@ -20,7 +20,7 @@ gulp.task('scripts-reload', function() {
 gulp.task('version', function () {
   git.exec({args : 'describe'}, function (err, stdout) {
     if (err) throw err;
-    fs.writeFile('src/app/app.version.js','(function () { \'use strict\'; angular.module(\'app.version\').constant(\'vectorVersion\', { \'id\': \'{version}\' }); })();'.replace('{version}', stdout.substring(0, stdout.length - 1)));
+    fs.writeFile('src/app/app.version.js','(function () { \'use strict\'; angular.module(\'vector\').constant(\'version\', { \'id\': \'{version}\' }); })();'.replace('{version}', stdout.substring(0, stdout.length - 1)));
   });
 });
 

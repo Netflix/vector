@@ -24,7 +24,7 @@
      /**
      * @name ContainerMetadataService
      */
-     function ContainerMetadataService($http, $rootScope, $q, $interval, $routeParams, $location, $injector, $log, vectorConfig, MetricListService) {
+     function ContainerMetadataService($http, $rootScope, $q, $interval, $routeParams, $location, $injector, $log, config, MetricListService) {
 
         var containerParsedFromQuerystring = false,
             containerNameResolver;
@@ -127,7 +127,7 @@
         */
         function resolveId(instanceKey) {
             if(typeof containerNameResolver === 'undefined') {
-                if (!vectorConfig.useCgroupId) {
+                if (!config.useCgroupId) {
                     var instanceName = _.find(containerNames.data, function (el) {
                         return el.key === instanceKey;
                     });
@@ -216,7 +216,9 @@
     }
 
     angular
-        .module('app.services')
+        .module('containermetadata', [
+            'metriclist'
+        ])
         .factory('ContainerMetadataService', ContainerMetadataService);
 
  })();

@@ -251,7 +251,7 @@
 
     // PMAPI Service factory
     angular
-        .module('app.services')
+        .module('pmapi', [])
         .factory('PMAPIService', PMAPIService);
 
     PMAPIService.$inject = ['$http', '$log', '$rootScope', '$q'];

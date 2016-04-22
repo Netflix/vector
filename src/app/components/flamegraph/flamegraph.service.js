@@ -42,7 +42,7 @@
     }
 
     angular
-        .module('app.services')
+        .module('flamegraph')
         .factory('FlameGraphService', FlameGraphService);
 
  })();

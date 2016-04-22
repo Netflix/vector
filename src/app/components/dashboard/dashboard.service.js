@@ -25,7 +25,7 @@
      * @name DashboardService
      * @desc
      */
-     function DashboardService($rootScope, $http, $interval, $log, $location, PMAPIService, MetricListService, toastr, vectorConfig, ContainerMetadataService) {
+     function DashboardService($rootScope, $http, $interval, $log, $location, toastr, config, PMAPIService, MetricListService, ContainerMetadataService) {
         var loopErrors = 0,
             intervalPromise;
 
@@ -222,7 +222,7 @@
 
             $rootScope.properties.context = -1;
             $rootScope.properties.hostname = null;
-            $rootScope.properties.port = vectorConfig.port;
+            $rootScope.properties.port = config.port;
 
             MetricListService.clearMetricList();
             MetricListService.clearDerivedMetricList();
@@ -238,22 +238,22 @@
         function initialize() {
             if ($rootScope.properties) {
                 if (!$rootScope.properties.interval) {
-                    $rootScope.properties.interval = vectorConfig.interval;
+                    $rootScope.properties.interval = config.interval;
                 }
                 if (!$rootScope.properties.window) {
-                    $rootScope.properties.window = vectorConfig.window;
+                    $rootScope.properties.window = config.window;
                 }
                 if (!$rootScope.properties.protocol) {
-                    $rootScope.properties.protocol = vectorConfig.protocol;
+                    $rootScope.properties.protocol = config.protocol;
                 }
                 if (!$rootScope.properties.host) {
                     $rootScope.properties.host = '';
                 }
                 if (!$rootScope.properties.hostspec) {
-                    $rootScope.properties.hostspec = vectorConfig.hostspec;
+                    $rootScope.properties.hostspec = config.hostspec;
                 }
                 if (!$rootScope.properties.port) {
-                    $rootScope.properties.port = vectorConfig.port;
+                    $rootScope.properties.port = config.port;
                 }
                 if (!$rootScope.properties.context ||
                     $rootScope.properties.context < 0) {
@@ -263,14 +263,14 @@
                 }
             } else {
                 $rootScope.properties = {
-                    protocol: vectorConfig.protocol,
+                    protocol: config.protocol,
                     host: '',
-                    hostspec: vectorConfig.hostspec,
-                    port: vectorConfig.port,
+                    hostspec: config.hostspec,
+                    port: config.port,
                     context: -1,
                     hostname: null,
-                    window: vectorConfig.window,
-                    interval: vectorConfig.interval,
+                    window: config.window,
+                    interval: config.interval,
                     containerFilter: '',
                     containerList: [],
                     selectedContainer: ''
@@ -280,17 +280,17 @@
             $rootScope.flags = {
                 contextAvailable: false,
                 contextUpdating: false,
-                isHostnameExpanded: vectorConfig.expandHostname,
-                enableContainerWidgets: vectorConfig.enableContainerWidgets,
-                disableHostspecInput: vectorConfig.disableHostspecInput,
-                disableContainerFilter: vectorConfig.disableContainerFilter,
-                disableContainerSelect: vectorConfig.disableContainerSelect,
-                containerSelectOverride: vectorConfig.containerSelectOverride,
+                isHostnameExpanded: config.expandHostname,
+                enableContainerWidgets: config.enableContainerWidgets,
+                disableHostspecInput: config.disableHostspecInput,
+                disableContainerFilter: config.disableContainerFilter,
+                disableContainerSelect: config.disableContainerSelect,
+                containerSelectOverride: config.containerSelectOverride,
                 disableContainerSelectNone: false,
-                disableHostnameInputContainerSelect: vectorConfig.disableHostnameInputContainerSelect
+                disableHostnameInputContainerSelect: config.disableHostnameInputContainerSelect
             };
 
-            if (vectorConfig.enableContainerWidgets) {
+            if (config.enableContainerWidgets) {
                 ContainerMetadataService.initialize();
             }
         }
@@ -314,7 +314,11 @@
     }
 
     angular
-        .module('app.services')
+        .module('dashboard', [
+            'pmapi',
+            'metriclist',
+            'containermetadata'
+        ])
         .factory('DashboardService', DashboardService);
 
  })();

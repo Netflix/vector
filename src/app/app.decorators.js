@@ -50,7 +50,7 @@
     }
 
     angular
-        .module('app.decorators')
+        .module('vector')
         .config(decorators);
 
 })();

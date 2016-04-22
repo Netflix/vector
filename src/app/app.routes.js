@@ -22,7 +22,7 @@
     * @name config
     * @desc Define valid application routes
     */
-    function config($routeProvider) {
+    function routeConfig($routeProvider) {
         $routeProvider.when('/', {
             templateUrl: 'app/main/main.html',
             controller: 'MainController',
@@ -83,10 +83,8 @@
         .otherwise('/');
     }
 
-    config.$inject = ['$routeProvider'];
-
     angular
-        .module('app.routes')
-        .config(config);
+        .module('vector')
+        .config(routeConfig);
 
 })();

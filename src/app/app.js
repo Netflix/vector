@@ -20,55 +20,11 @@
     'use strict';
 
     angular
-        .module('app.routes', ['ngRoute']);
-
-    angular
-        .module('app.config', []);
-
-    angular
-        .module('app.constants', []);
-
-    angular
-        .module('app.version', []);
-
-    angular
-        .module('app.charts', []);
-
-    angular
-        .module('app.filters', []);
-
-    angular
-        .module('app.metrics', []);
-
-    angular
-        .module('app.datamodels', []);
-
-    angular
-        .module('app.services', []);
-
-    angular
-        .module('app.decorators', []);
-
-    angular
-        .module('app.extensions', []);
-
-    angular
         .module('vector', [
+            'ngRoute',
             'ui.dashboard',
             'toastr',
-            'app.routes',
-            'app.dashboard',
-            'app.datamodels',
-            'app.widgets',
-            'app.charts',
-            'app.services',
-            'app.filters',
-            'app.metrics',
-            'app.decorators',
-            'app.config',
-            'app.constants',
-            'app.version',
-            'app.extensions'
+            'main'
         ]);
 
 })();

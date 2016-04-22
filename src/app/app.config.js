@@ -31,8 +31,8 @@
     }
 
     angular
-        .module('app.config')
-        .constant('vectorConfig', {
+        .module('vector')
+        .constant('config', {
             'protocol': 'http', // PMWEBD protocol (http or https)
             'port': 44323,  // PMWEBD port
             'hostspec': 'localhost', // Default PMCD hostspec

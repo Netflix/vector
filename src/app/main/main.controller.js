@@ -28,7 +28,7 @@
     * @name MainCtrl
     * @desc Main Controller
     */
-    function MainCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, vectorVersion, DashboardService, ContainerMetadataService, ModalService) {
+    function MainCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, version, DashboardService, ContainerMetadataService, ModalService) {
 
         var vm = this,
             widgetsToLoad = widgets;
@@ -104,7 +104,7 @@
             };
         }
 
-        vm.version = vectorVersion.id;
+        vm.version = version.id;
 
         vm.embed = embed;
 
@@ -210,23 +210,14 @@
         activate();
     }
 
-    MainCtrl.$inject = [
-        '$document',
-        '$rootScope',
-        '$log',
-        '$route',
-        '$routeParams',
-        '$location',
-        'widgetDefinitions',
-        'widgets',
-        'embed',
-        'vectorVersion',
-        'DashboardService',
-        'ContainerMetadataService',
-        'ModalService'
-    ];
-
     angular
-        .module('app.dashboard', [])
+        .module('main', [
+            'dashboard',
+            'widget',
+            'datamodel',
+            'chart',
+            'containermetadata',
+            'modal'
+        ])
         .controller('MainController', MainCtrl);
 })();

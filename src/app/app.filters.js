@@ -68,7 +68,7 @@
     }
 
     angular
-        .module('app.filters')
+        .module('vector')
         .filter('groupBy', groupBy)
         .filter('groupFilter', groupFilter);
 

@@ -43,7 +43,7 @@
     }
 
      angular
-        .module('app.services')
+        .module('heatmap')
         .factory('HeatMapService', HeatMapService);
 
  })();

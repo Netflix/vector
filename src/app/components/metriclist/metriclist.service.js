@@ -204,7 +204,10 @@
     }
 
     angular
-        .module('app.services')
+        .module('metriclist', [
+            'pmapi',
+            'metric'
+        ])
         .factory('MetricListService', MetricListService);
 
  })();

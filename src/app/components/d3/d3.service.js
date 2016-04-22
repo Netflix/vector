@@ -17,7 +17,7 @@
  */
 
  /*global d3*/
- 
+
  (function () {
      'use strict';
 
@@ -68,8 +68,6 @@
                 Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
         }
 
-        /////////
-
         return {
             xAxisTickFormat: xAxisTickFormat,
             yAxisTickFormat: yAxisTickFormat,
@@ -82,6 +80,6 @@
     }
 
     angular
-        .module('app.services')
+        .module('d3', [])
         .factory('D3Service', D3Service);
  })();

@@ -31,6 +31,6 @@
     }
 
     angular
-      .module('app.services')
+      .module('metric')
       .factory('MetricService', MetricService);
 })();

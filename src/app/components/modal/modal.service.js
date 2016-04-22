@@ -60,7 +60,7 @@
     }
 
     angular
-        .module('app.services')
+        .module('modal' , [])
         .factory('ModalService', ModalService);
 
  })();
