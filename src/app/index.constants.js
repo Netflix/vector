@@ -15,14 +15,14 @@
  *     limitations under the License.
  *
  */
+
+/* global moment:false */
+
 (function() {
   'use strict';
 
   angular
-    .module('datamodel', [
-       'containermetadata',
-       'dashboard',
-       'metriclist'
-    ]);
+    .module('vector')
+    .constant('moment', moment);
 
 })();

@@ -7,4 +7,4 @@ dist/
 coverage/
 .sass-cache/
 npm-debug.log
-src/app/app.version.js
+src/app/index.version.js
