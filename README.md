@@ -19,9 +19,9 @@ See the [GitHub Wiki](https://github.com/Netflix/vector/wiki/Getting-Started) fo
 
 For bugs, questions and discussions please use the [GitHub Issues](https://github.com/Netflix/vector/issues).
 
-## Questions and Discussions
+## Questions
 
-Join Vector on [Slack](https://vectoross.slack.com/) to discuss anything. If you don't have an invite yet, [request one](http://slack.vectoross.io/) today!
+Join Vector on [Slack](https://vectoross.slack.com/) for support and discussion. If you don't have an invite yet, [request one](http://slack.vectoross.io/) now!
 
 You can also ask questions to other Vector users and contributors on [Google Groups](https://groups.google.com/forum/#!forum/vector-users) or [Stack Overflow](http://stackoverflow.com/questions/tagged/vectoross).
 
