@@ -43,6 +43,7 @@
         DummyMetricDataModel,
         DiskLatencyMetricDataModel,
         CumulativeUtilizationMetricDataModel,
+        CgroupMemoryUtilizationMetricDataModel,
         config) {
 
         var onSettingsClose = function(resultFromModal, widgetModel) {
@@ -726,7 +727,7 @@
                         integer: true,
                         area: true
                     }
-                },{
+                }, {
                     name: 'container.disk.iops',
                     title: 'Container Disk IOPS',
                     directive: 'line-time-series',
@@ -830,6 +831,28 @@
                     attrs: {
                         percentage: false,
                         integer: true
+                    }
+                }, {
+                    name: 'cgroup.memory.utilization',
+                    title: 'Per-Container Memory Utilization',
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: CgroupMemoryUtilizationMetricDataModel,
+                    dataModelOptions: {
+                        name: 'cgroup.memory.utilization'
+                    },
+                    size: {
+                        width: '50%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                    requireContainerFilter: true,
+                    attrs: {
+                        forcey: 1,
+                        percentage: true,
+                        integer: false,
+                        area: false
                     }
                 }
 
