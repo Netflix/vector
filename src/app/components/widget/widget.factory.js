@@ -728,16 +728,16 @@
                         area: true
                     }
                 }, {
-                    name: 'container.disk.iops',
+                    name: 'cgroup.blkio.all.io_serviced',
                     title: 'Container Disk IOPS',
                     directive: 'line-time-series',
                     dataAttrName: 'data',
                     dataModelType: ContainerMultipleCumulativeMetricDataModel,
                     dataModelOptions: {
-                        name: 'container.disk.iops',
+                        name: 'cgroup.blkio.all.io_serviced',
                         metricDefinitions: {
-                            '{key} read': 'cgroup.blkio.all.io_serviced.read', //TODO: use cgroup.blkio.throttled.io_serviced.read instead
-                            '{key} write': 'cgroup.blkio.all.io_serviced.write' //TODO: use cgroup.blkio.throttled.io_serviced.write instead
+                            '{key} read': 'cgroup.blkio.all.io_serviced.read',
+                            '{key} write': 'cgroup.blkio.all.io_serviced.write'
                         }
                     },
                     size: {
@@ -745,18 +745,22 @@
                         height: '250px'
                     },
                     enableVerticalResize: false,
-                    group: 'Container'
+                    group: 'Container',
+                    attrs: {
+                        percentage: false,
+                        integer: true
+                    }
                 }, {
-                    name: 'container.disk.bytes',
+                    name: 'cgroup.blkio.all.io_service_bytes',
                     title: 'Container Disk Throughput (Bytes)',
                     directive: 'line-time-series',
                     dataAttrName: 'data',
                     dataModelType: ContainerMultipleCumulativeMetricDataModel,
                     dataModelOptions: {
-                        name: 'container.disk.bytes',
+                        name: 'cgroup.blkio.all.io_service_bytes',
                         metricDefinitions: {
-                            '{key} read': 'cgroup.blkio.all.io_service_bytes.read', //TODO: use cgroup.blkio.throttled.io_service_bytes.read instead
-                            '{key} write': 'cgroup.blkio.all.io_service_bytes.write' //TODO: use cgroup.blkio.throttled.io_service_bytes.write instead
+                            '{key} read': 'cgroup.blkio.all.io_service_bytes.read',
+                            '{key} write': 'cgroup.blkio.all.io_service_bytes.write'
                         }
                     },
                     size: {
@@ -764,7 +768,57 @@
                         height: '250px'
                     },
                     enableVerticalResize: false,
-                    group: 'Container'
+                    group: 'Container',
+                    attrs: {
+                        percentage: false,
+                        integer: true
+                    }
+                }, {
+                    name: 'cgroup.blkio.all.throttle.io_serviced',
+                    title: 'Container Disk IOPS (Throttled)',
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: ContainerMultipleCumulativeMetricDataModel,
+                    dataModelOptions: {
+                        name: 'cgroup.blkio.all.throttle.io_serviced',
+                        metricDefinitions: {
+                            '{key} read': 'cgroup.blkio.all.throttle.io_serviced.read',
+                            '{key} write': 'cgroup.blkio.all.throttle.io_serviced.write'
+                        }
+                    },
+                    size: {
+                        width: '50%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                    attrs: {
+                        percentage: false,
+                        integer: true
+                    }
+                }, {
+                    name: 'cgroup.blkio.all.throttle.io_service_bytes',
+                    title: 'Container Disk Throughput (Throttled) (Bytes)',
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: ContainerMultipleCumulativeMetricDataModel,
+                    dataModelOptions: {
+                        name: 'cgroup.blkio.all.throttle.io_service_bytes',
+                        metricDefinitions: {
+                            '{key} read': 'cgroup.blkio.all.throttle.io_service_bytes.read',
+                            '{key} write': 'cgroup.blkio.all.throttle.io_service_bytes.write'
+                        }
+                    },
+                    size: {
+                        width: '50%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                    attrs: {
+                        percentage: false,
+                        integer: true
+                    }
                 }, {
                     name: 'cgroup.cpusched',
                     title: 'Per-Container CPU Scheduler',
