@@ -26,10 +26,12 @@
     function widgetDefinitions(
         MetricDataModel,
         CumulativeMetricDataModel,
-        CgroupCPUUsageMetricTimeSeriesDataModel,
+        CgroupCPUUsageMetricDataModel,
+        CgroupCPUHeadroomMetricDataModel,
         CgroupMemoryUsageMetricTimeSeriesDataModel,
         ContainerMemoryUsageMetricDataModel,
         ContainerNetworkBytesMetricDataModel,
+        ContainerMultipleMetricDataModel,
         ContainerMultipleCumulativeMetricDataModel,
         CgroupMemoryHeadroomMetricDataModel,
         MemoryUtilizationMetricDataModel,
@@ -645,10 +647,10 @@
             definitions.push(
                 {
                     name: 'cgroup.cpuacct.usage',
-                    title: 'Container CPU Utilization',
+                    title: 'Per-Container CPU Utilization',
                     directive: 'line-time-series',
                     dataAttrName: 'data',
-                    dataModelType: CgroupCPUUsageMetricTimeSeriesDataModel,
+                    dataModelType: CgroupCPUUsageMetricDataModel,
                     dataModelOptions: {
                         name: 'cgroup.cpuacct.usage'
                     },
@@ -762,6 +764,51 @@
                     },
                     enableVerticalResize: false,
                     group: 'Container'
+                }, {
+                    name: 'cgroup.cpusched',
+                    title: 'Per-Container CPU Scheduler',
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: ContainerMultipleMetricDataModel,
+                    dataModelOptions: {
+                        name: 'cgroup.cpusched',
+                        metricDefinitions: {
+                            '{key} shares': 'cgroup.cpusched.shares',
+                            '{key} periods': 'cgroup.cpusched.periods'
+                        }
+                    },
+                    size: {
+                        width: '50%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                    attrs: {
+                        percentage: false,
+                        integer: true
+                    }
+                }, {
+                    name: 'cgroup.cpuacct.headroom',
+                    title: 'Per-Container CPU Headroom',
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: CgroupCPUHeadroomMetricDataModel,
+                    dataModelOptions: {
+                        name: 'cgroup.cpuacct.headroom'
+                    },
+                    size: {
+                        width: '50%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                    requireContainerFilter: true,
+                    attrs: {
+                        forcey: 1,
+                        percentage: true,
+                        integer: false,
+                        area: true
+                    }
                 }
 
             );

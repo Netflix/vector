@@ -19,10 +19,10 @@
      'use strict';
 
     /**
-    * @name CgroupCPUUsageMetricTimeSeriesDataModel
+    * @name CgroupCPUUsageMetricDataModel
     * @desc
     */
-    function CgroupCPUUsageMetricTimeSeriesDataModel(ContainerMetadataService, WidgetDataModel, MetricListService, DashboardService) {
+    function CgroupCPUUsageMetricDataModel(ContainerMetadataService, WidgetDataModel, MetricListService, DashboardService) {
         var DataModel = function () {
             return this;
         };
@@ -84,5 +84,5 @@
 
     angular
         .module('datamodel')
-        .factory('CgroupCPUUsageMetricTimeSeriesDataModel', CgroupCPUUsageMetricTimeSeriesDataModel);
+        .factory('CgroupCPUUsageMetricDataModel', CgroupCPUUsageMetricDataModel);
  })();
