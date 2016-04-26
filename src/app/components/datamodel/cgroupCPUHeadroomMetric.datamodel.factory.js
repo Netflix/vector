@@ -15,6 +15,9 @@
  *     limitations under the License.
  *
  */
+
+/*global _*/
+
  (function () {
      'use strict';
 
@@ -85,13 +88,13 @@
                                     }
                                 } else {
                                     if (ncpuMetric.data.length > 0) {
-                                        var instance = ncpuMetric.data[ncpuMetric.data.length - 1];
-                                        if (instance.values.length > 0) {
-                                            var lastValue = instance.values[instance.values.length - 1];
+                                        var ncpuInstance = ncpuMetric.data[ncpuMetric.data.length - 1];
+                                        if (ncpuInstance.values.length > 0) {
+                                            var ncpuValue = ncpuInstance.values[ncpuInstance.values.length - 1];
                                             returnValues.push({
-                                                timestamp: lastValue.x,
+                                                timestamp: ncpuValue.x,
                                                 key: name + ' (physical)',
-                                                value: lastValue.y
+                                                value: ncpuValue.y
                                             });
                                         }
                                     }

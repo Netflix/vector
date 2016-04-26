@@ -809,6 +809,28 @@
                         integer: false,
                         area: true
                     }
+                }, {
+                    name: 'cgroup.cpusched.throttled',
+                    title: 'Per-Container Throttled CPU',
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: ContainerMultipleCumulativeMetricDataModel,
+                    dataModelOptions: {
+                        name: 'cgroup.cpusched.throttled',
+                        metricDefinitions: {
+                            '{key}': 'cgroup.cpusched.throttled'
+                        }
+                    },
+                    size: {
+                        width: '50%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Container',
+                    attrs: {
+                        percentage: false,
+                        integer: true
+                    }
                 }
 
             );
