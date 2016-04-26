@@ -73,8 +73,6 @@
                                 var lastLimitValue = limitInstance.values[limitInstance.values.length - 1];
 
                                 if (lastLimitValue.y >= lastPhysmemValue.y) {
-                                    console.log(lastLimitValue.y);
-                                    console.log(lastPhysmemValue.y);
                                     returnValues.push({
                                         timestamp: lastValue.x,
                                         key: name,
