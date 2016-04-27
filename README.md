@@ -9,7 +9,7 @@ Vector is an open source on-host performance monitoring framework which exposes 
 
 ## Disclaimer
 
-Vector is under constant development and new features should be released often. Bugs and issues are expected. We count on your support to find and report them! **Use major and minor releases for stable versions.**
+Vector is under development and new features are added constantly. Bugs and issues are expected. We count on your support to find and report them! **Use releases for stable code.**
 
 ## Getting Started
 
