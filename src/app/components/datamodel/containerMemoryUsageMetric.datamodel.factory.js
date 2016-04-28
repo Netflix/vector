@@ -34,12 +34,15 @@
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
-            var conversionFunction = function (value) {
+            var cgroupConversionFunction = function (value) {
+                    return value / 1024 / 1024;
+                },
+                memConversionFunction = function (value) {
                     return value / 1024;
                 },
-                usedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.used', conversionFunction),
-                freeMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.free', conversionFunction),
-                containerMemMetric = MetricListService.getOrCreateConvertedMetric('cgroup.memory.usage', conversionFunction),
+                usedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.used', memConversionFunction),
+                freeMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.free', memConversionFunction),
+                containerMemMetric = MetricListService.getOrCreateConvertedMetric('cgroup.memory.usage', cgroupConversionFunction),
                 derivedFunction;
 
             derivedFunction = function () {
