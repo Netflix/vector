@@ -158,10 +158,13 @@
         * @desc
         */
         function getContainerList() {
-          return containerCgroups.data.reduce(function(obj, item) {
-              obj.push(resolveId(item.key));
-              return obj;
-          },[]);
+            return containerCgroups.data.reduce(function(obj, item) {
+                var resolved = resolveId(item.key);
+                if (angular.isDefined(resolved)){
+                    obj.push(resolved);
+                }
+                return obj;
+            },[]);
         }
 
         /**
