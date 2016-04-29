@@ -17,7 +17,9 @@
  */
 (function () {
     'use strict';
-
+    
+    //return resolved name in string to update from id to resolved names. 
+    //Or don't return to exclude them from the charts and dropdown.
     /*var containerNameResolver = function() {
         var resolve = function (containerId) {
           return containerId.substring(0,12);
