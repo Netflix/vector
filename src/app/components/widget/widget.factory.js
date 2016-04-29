@@ -563,7 +563,14 @@
                 attrs: {
                     percentage: false,
                     integer: true
-                }
+                },
+                settingsModalOptions: {
+                    templateUrl: 'app/components/customWidgetSettings/customWidgetSettings.html',
+                    controller: 'CustomWidgetSettingsController'
+                },
+                hasLocalSettings: true,
+                onSettingsClose: onSettingsClose,
+                filter: ''
             }, {
                 name: 'network.tcp.retrans',
                 title: 'Network Retransmits',
