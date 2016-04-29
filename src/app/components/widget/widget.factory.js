@@ -730,6 +730,7 @@
                     group: 'Container',
                     requireContainerFilter: true,
                     attrs: {
+                        forcey: 1,
                         percentage: false,
                         integer: true,
                         area: true
