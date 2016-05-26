@@ -25,6 +25,7 @@
     /* Widgets */
     function widgetDefinitions(
         MetricDataModel,
+        ConversionMetricDataModel,
         CumulativeMetricDataModel,
         CgroupCPUUsageMetricDataModel,
         CgroupCPUHeadroomMetricDataModel,
@@ -211,7 +212,7 @@
                 title: 'Memory Utilization (Free)',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: MetricDataModel,
+                dataModelType: ConversionMetricDataModel,
                 dataModelOptions: {
                     name: 'mem.freemem'
                 },
@@ -226,7 +227,7 @@
                 title: 'Memory Utilization (Used)',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: MetricDataModel,
+                dataModelType: ConversionMetricDataModel,
                 dataModelOptions: {
                     name: 'mem.util.used'
                 },
@@ -241,7 +242,7 @@
                 title: 'Memory Utilization (Cached)',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: MetricDataModel,
+                dataModelType: ConversionMetricDataModel,
                 dataModelOptions: {
                     name: 'mem.util.cached'
                 },
