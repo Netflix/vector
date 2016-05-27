@@ -17,21 +17,23 @@
  */
 (function () {
     'use strict';
-    
-    //return resolved name in string to update from id to resolved names. 
-    //Or don't return to exclude them from the charts and dropdown.
-    /*var containerNameResolver = function() {
-        var resolve = function (containerId) {
-          return containerId.substring(0,12);
-        };
 
-        return {
-          resolve: resolve
-        };
-    };*/
+    // Container Name Resolver
+    // Return resolved name as a strng to be used in chart and container selection
+    // Return null to exclude the container from charts and container selection.
+
+    // var containerNameResolver = function() {
+    //     var resolve = function (containerId) {
+    //       return containerId.substring(0,12);
+    //     };
+    //
+    //     return {
+    //       resolve: resolve
+    //     };
+    // };
 
     angular
         .module('vector')
-        /*.factory('containerNameResolver', containerNameResolver)*/
+        // .factory('containerNameResolver', containerNameResolver)
         ;
 })();
