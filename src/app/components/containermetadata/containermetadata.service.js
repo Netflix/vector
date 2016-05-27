@@ -126,17 +126,20 @@
         * @desc
         */
         function resolveId(instanceKey) {
-            var instanceName = _.find(containerNames.data, function (el) {
-                return el.key === instanceKey;
-            });
             if(typeof containerNameResolver === 'undefined') {
                 if (!config.useCgroupId) {
+                    var instanceName = _.find(containerNames.data, function (el) {
+                        return el.key === instanceKey;
+                    });
                     if (instanceName) {
                         return instanceName.values[instanceName.values.length - 1].y;
                     }
                 }
                 return instanceKey.substring(0,12);
             } else {
+                var instanceName = _.find(containerNames.data, function (el) {
+                    return el.key === instanceKey;
+                });
                 return containerNameResolver.resolve(instanceKey, instanceName);
             }
         }
