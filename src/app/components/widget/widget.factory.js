@@ -25,7 +25,7 @@
     /* Widgets */
     function widgetDefinitions(
         MetricDataModel,
-        ConversionMetricDataModel,
+        ConvertedMetricDataModel,
         CumulativeMetricDataModel,
         CgroupCPUUsageMetricDataModel,
         CgroupCPUHeadroomMetricDataModel,
@@ -208,13 +208,16 @@
                     integer: false
                 }
             }, {
-                name: 'mem.freemem',
+                name: 'mem.util.free',
                 title: 'Memory Utilization (Free)',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: ConversionMetricDataModel,
+                dataModelType: ConvertedMetricDataModel,
                 dataModelOptions: {
-                    name: 'mem.freemem'
+                    name: 'mem.util.free',
+                    conversionFunction: function (value) {
+                        return value / 1024 / 1024;
+                    }
                 },
                 size: {
                     width: '50%',
@@ -227,9 +230,12 @@
                 title: 'Memory Utilization (Used)',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: ConversionMetricDataModel,
+                dataModelType: ConvertedMetricDataModel,
                 dataModelOptions: {
-                    name: 'mem.util.used'
+                    name: 'mem.util.used',
+                    conversionFunction: function (value) {
+                        return value / 1024 / 1024;
+                    }
                 },
                 size: {
                     width: '50%',
@@ -242,9 +248,12 @@
                 title: 'Memory Utilization (Cached)',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: ConversionMetricDataModel,
+                dataModelType: ConvertedMetricDataModel,
                 dataModelOptions: {
-                    name: 'mem.util.cached'
+                    name: 'mem.util.cached',
+                    conversionFunction: function (value) {
+                        return value / 1024 / 1024;
+                    }
                 },
                 size: {
                     width: '50%',

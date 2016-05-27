@@ -35,7 +35,7 @@
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
             var conversionFunction = function (value) {
-                    return value / 1024 / 1024;
+                    return value / 1024;
                 },
                 cachedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.cached', conversionFunction),
                 usedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.used', conversionFunction),

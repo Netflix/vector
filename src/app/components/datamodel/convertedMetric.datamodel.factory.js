@@ -22,7 +22,7 @@
     * @name SimpleMetricDataModel
     * @desc
     */
-    function ConversionMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
+    function ConvertedMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
         var DataModel = function () {
             return this;
         };
@@ -35,11 +35,9 @@
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
 
-            var conversionFunction = function (value) {
-                    return value / 1024 / 1024;
-                };
+            this.conversionFunction = this.dataModelOptions.conversionFunction;
 
-            this.metric = MetricListService.getOrCreateConvertedMetric(this.name, conversionFunction);
+            this.metric = MetricListService.getOrCreateConvertedMetric(this.name, this.conversionFunction);
 
             this.updateScope(this.metric.data);
 
@@ -56,5 +54,5 @@
 
     angular
         .module('datamodel')
-        .factory('ConversionMetricDataModel', ConversionMetricDataModel);
+        .factory('ConvertedMetricDataModel', ConvertedMetricDataModel);
  })();
