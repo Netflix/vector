@@ -646,21 +646,6 @@
           });
         }
 
-        if (config.enableDiskLatencyHeatMap) {
-          definitions.push({
-            name: 'graph.heatmap.disk',
-            title: 'Disk Latency Heat Map',
-            directive: 'disk-latency-heat-map',
-            dataModelType: DummyMetricDataModel,
-            size: {
-              width: '50%',
-              height: '250px'
-            },
-            enableVerticalResize: false,
-            group: 'Disk'
-          });
-        }
-
         if (config.enableContainerWidgets) {
             definitions.push(
                 {

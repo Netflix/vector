@@ -39,7 +39,6 @@
             'interval': '2', // Default update interval in seconds
             'window': '2', // Default graph time window in minutes
             'enableCpuFlameGraph': false, // Enable CPU flame graph (requires extra PMDA)
-            'enableDiskLatencyHeatMap': false, // Enable disk latency heatmap widget (requires extra PMDA)
             'enableContainerWidgets': true, // Enable container widgets
             'disableHostspecInput': false, // Disable hostspec input
             'disableContainerFilter': false, // Disable container id filter input
