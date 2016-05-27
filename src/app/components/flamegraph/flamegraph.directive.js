@@ -39,7 +39,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/charts/cpu-flame-graph.html',
+            templateUrl: 'app/components/flamegraph/flamegraph.html',
             link: link
         };
     }

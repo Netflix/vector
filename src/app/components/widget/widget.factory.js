@@ -1040,6 +1040,7 @@
         .module('widget', [
             'datamodel',
             'chart',
+            'flamegraph',
             'customWidgetSettings'
         ])
         .factory('widgetDefinitions', widgetDefinitions)
