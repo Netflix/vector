@@ -36,9 +36,10 @@
 
             this.metricDefinitions = this.dataModelOptions.metricDefinitions;
 
-            var widgetProperties = this.widgetScope.widget;
-            var derivedFunction,
-                metrics = {};
+
+            var widgetDefinition = this,
+                metrics = {},
+                derivedFunction;
 
             angular.forEach(this.metricDefinitions, function (definition, key) {
                 metrics[key] = MetricListService.getOrCreateCumulativeMetric(definition);
@@ -50,7 +51,7 @@
 
                 angular.forEach(metrics, function (metric, key) {
                     angular.forEach(metric.data, function (instance) {
-                        if (instance.values.length > 0  && ( angular.isUndefined(widgetProperties.filter) || instance.key.indexOf(widgetProperties.filter) !==-1)) {
+                        if (instance.values.length > 0  && ( angular.isUndefined(widgetDefinition.widgetScope.widget.filter) || instance.key.indexOf(widgetDefinition.widgetScope.widget.filter) !==-1)) {
                             lastValue = instance.values[instance.values.length - 1];
                             returnValues.push({
                                 timestamp: lastValue.x,
