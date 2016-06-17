@@ -13,7 +13,7 @@ Vector is under development and new features are added constantly. Bugs and issu
 
 ## Getting Started
 
-See the [GitHub Wiki](https://github.com/Netflix/vector/wiki/Getting-Started) for documentation on how to get started.
+See the [Getting Started Guide](http://vectoross.io/docs/getting-started.html) for documentation on how to get started.
 
 ## Issues
 
