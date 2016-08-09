@@ -83,15 +83,20 @@
             settings.method = 'GET';
             settings.url = baseURI + '/pmapi/' + context + '/_fetch';
             settings.params = {};
+            pmids = [];
 
-            if (angular.isDefined(names) && names !== null) {
+            angular.forEach(names, function(response) {
+                if (angular.isDefined(PMID[response])){
+                    pmids.push(PMID[response]);
+                }
+            });
+
+            if (angular.isDefined(pmids) && pmids !== null && pmids.length > 0)  {
+                settings.params.pmids = pmids.join(',');
+            } else if (angular.isDefined(names) && names !== null) {
                 settings.params.names = names.join(',');
             }
-
-            if (angular.isDefined(pmids) && pmids !== null)  {
-                settings.params.pmids = pmids.join(',');
-            }
-
+ 
             return $http(settings)
                 .then(function (response) {
                     if (angular.isUndefined(response.data.timestamp) ||
@@ -100,6 +105,9 @@
                         angular.isUndefined(response.data.values)) {
                         return $q.reject('metric values is empty');
                     }
+                        
+                    cachePMIDs(response.data.values);
+                    
                     return response;
                 });
 
@@ -235,6 +243,12 @@
                     .then(function(data) {
                         return appendInstanceDomains(context, data);
                     });
+        }
+        var PMID = {};
+        function cachePMIDs(data) {
+            angular.forEach(data, function (d) {
+                PMID[d.name]=d.pmid;
+            });
         }
 
          return {
