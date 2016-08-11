@@ -595,7 +595,7 @@
                         'listendrops': 'network.tcp.listendrops',
                         'fastretrans': 'network.tcp.fastretrans',
                         'slowstartretrans': 'network.tcp.slowstartretrans',
-                        'syncretrans': 'network.tcp.syncretrans'
+                        'synretrans': 'network.tcp.synretrans'
                     }
                 },
                 size: {
