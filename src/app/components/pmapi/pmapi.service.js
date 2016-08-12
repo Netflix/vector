@@ -83,20 +83,13 @@
             settings.method = 'GET';
             settings.url = baseURI + '/pmapi/' + context + '/_fetch';
             settings.params = {};
-            pmids = [];
 
-            angular.forEach(names, function(response) {
-                if (angular.isDefined(PMID[response])){
-                    pmids.push(PMID[response]);
-                }
-            });
-
-            if (angular.isDefined(pmids) && pmids !== null && pmids.length > 0)  {
+            if (angular.isDefined(pmids) && pmids !== null && pmids.length >= names.length-1)  {
                 settings.params.pmids = pmids.join(',');
             } else if (angular.isDefined(names) && names !== null) {
                 settings.params.names = names.join(',');
             }
- 
+
             return $http(settings)
                 .then(function (response) {
                     if (angular.isUndefined(response.data.timestamp) ||
@@ -105,9 +98,6 @@
                         angular.isUndefined(response.data.values)) {
                         return $q.reject('metric values is empty');
                     }
-                        
-                    cachePMIDs(response.data.values);
-                    
                     return response;
                 });
 
@@ -237,18 +227,12 @@
             return deferred.promise;
         }
 
-        function getMetrics(context, metrics) {
-            return getMetricsValues(context, metrics)
+        function getMetrics(context, metrics, pmids) {
+            return getMetricsValues(context, metrics, pmids)
                     .then(convertTimestampToMillis)
                     .then(function(data) {
                         return appendInstanceDomains(context, data);
                     });
-        }
-        var PMID = {};
-        function cachePMIDs(data) {
-            angular.forEach(data, function (d) {
-                PMID[d.name]=d.pmid;
-            });
         }
 
          return {
