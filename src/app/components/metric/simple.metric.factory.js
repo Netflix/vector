@@ -31,6 +31,7 @@
             this.name = name || null;
             this.data = [];
             this.subscribers = 1;
+            this.pmid = null;
         };
 
         Metric.prototype.toString = function () {

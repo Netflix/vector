@@ -1,6 +1,6 @@
 /**!
  *
- *  Copyright 2015 Netflix, Inc.
+ *  Copyright 2016 Netflix, Inc.
  *
  *     Licensed under the Apache License, Version 2.0 (the "License");
  *     you may not use this file except in compliance with the License.
@@ -65,20 +65,20 @@
         */
         function updateMetrics(callback) {
             var metricArr = [],
-                pmids = [],
+                pmidArr = [],
                 context = $rootScope.properties.context,
                 simpleMetrics = MetricListService.getSimpleMetricList();
 
             if (context && context > 0 && simpleMetrics.length > 0) {
                 angular.forEach(simpleMetrics, function (value) {
-                    metricArr.push(value.name);
-                    var pmid = MetricListService.getPmid(value.name);
-                    if (pmid !== "" && angular.isDefined(pmid)){
-                        pmids.push(pmid);
+                    if (angular.isDefined(value.pmid) && value.pmid !== null) {
+                        pmidArr.push(value.pmid);
+                    } else {
+                        metricArr.push(value.name);
                     }
                 });
 
-                PMAPIService.getMetrics(context, metricArr, pmids)
+                PMAPIService.getMetrics(context, metricArr, pmidArr)
                     .then(function (metrics) {
                         var name,
                             metricInstance,
@@ -110,12 +110,15 @@
                             }
 
                             if (angular.isDefined(metricInstance) && metricInstance !== null) {
+                                if(!angular.isNumber(metricInstance.pmid)) {
+                                    metricInstance.pmid = value.pmid;
+                                }
+
                                 angular.forEach(value.instances, function (instance) {
                                     iid = angular.isUndefined(instance.instance) ? 1 : instance.instance;
                                     iname = metrics.inames[name].inames[iid];
 
                                     metricInstance.pushValue(metrics.timestamp, iid, iname, instance.value);
-                                    MetricListService.addPmid(name,value.pmid);
                                 });
                             }
                         });
