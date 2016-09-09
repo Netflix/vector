@@ -65,15 +65,20 @@
         */
         function updateMetrics(callback) {
             var metricArr = [],
+                pmids = [],
                 context = $rootScope.properties.context,
                 simpleMetrics = MetricListService.getSimpleMetricList();
 
             if (context && context > 0 && simpleMetrics.length > 0) {
                 angular.forEach(simpleMetrics, function (value) {
                     metricArr.push(value.name);
+                    var pmid = MetricListService.getPmid(value.name);
+                    if (pmid !== "" && angular.isDefined(pmid)){
+                        pmids.push(pmid);
+                    }
                 });
 
-                PMAPIService.getMetrics(context, metricArr)
+                PMAPIService.getMetrics(context, metricArr, pmids)
                     .then(function (metrics) {
                         var name,
                             metricInstance,
@@ -110,6 +115,7 @@
                                     iname = metrics.inames[name].inames[iid];
 
                                     metricInstance.pushValue(metrics.timestamp, iid, iname, instance.value);
+                                    MetricListService.addPmid(name,value.pmid);
                                 });
                             }
                         });

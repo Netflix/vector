@@ -84,12 +84,10 @@
             settings.url = baseURI + '/pmapi/' + context + '/_fetch';
             settings.params = {};
 
-            if (angular.isDefined(names) && names !== null) {
-                settings.params.names = names.join(',');
-            }
-
-            if (angular.isDefined(pmids) && pmids !== null)  {
+            if (angular.isDefined(pmids) && pmids !== null && pmids.length >= names.length-1)  {
                 settings.params.pmids = pmids.join(',');
+            } else if (angular.isDefined(names) && names !== null) {
+                settings.params.names = names.join(',');
             }
 
             return $http(settings)
@@ -229,8 +227,8 @@
             return deferred.promise;
         }
 
-        function getMetrics(context, metrics) {
-            return getMetricsValues(context, metrics)
+        function getMetrics(context, metrics, pmids) {
+            return getMetricsValues(context, metrics, pmids)
                     .then(convertTimestampToMillis)
                     .then(function(data) {
                         return appendInstanceDomains(context, data);

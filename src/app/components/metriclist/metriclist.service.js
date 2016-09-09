@@ -28,7 +28,8 @@
     */
     function MetricListService($rootScope, $http, $log, $q, PMAPIService, SimpleMetric, CumulativeMetric, ConvertedMetric, CumulativeConvertedMetric, DerivedMetric) {
         var simpleMetrics = [],
-            derivedMetrics = [];
+            derivedMetrics = [],
+            pmidsCache = {};
 
         /**
         * @name getOrCreateMetric
@@ -167,6 +168,7 @@
         function clearMetricList() {
             angular.forEach(simpleMetrics, function (metric) {
                 metric.clearData();
+                delete pmidsCache[metric];
             });
         }
 
@@ -188,6 +190,14 @@
             return simpleMetrics;
         }
 
+        function getPmid(metric) {
+            return pmidsCache[metric];
+        }
+
+        function addPmid(metric, pmid) {
+             pmidsCache[metric]=pmid;
+        }
+
         return {
             getOrCreateMetric: getOrCreateMetric,
             getOrCreateCumulativeMetric: getOrCreateCumulativeMetric,
@@ -199,7 +209,9 @@
             clearMetricList: clearMetricList,
             clearDerivedMetricList: clearDerivedMetricList,
             getSimpleMetricList: getSimpleMetricList,
-            getDerivedMetricList: getDerivedMetricList
+            getDerivedMetricList: getDerivedMetricList,
+            getPmid: getPmid,
+            addPmid: addPmid
         };
     }
 
