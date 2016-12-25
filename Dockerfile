@@ -16,7 +16,7 @@ FROM alpine:latest
 MAINTAINER Martin Spier <mspier@netflix.com>
 
 # version = git branch/tag, e.g. master, stable, tags/1.1.0, ...
-ENV VECTOR_VERSION=tags/v1.1.0
+ENV VECTOR_VERSION=tags/v1.1.1
 
 RUN apk add --update git nodejs curl && \
     cd /tmp && \
