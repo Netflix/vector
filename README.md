@@ -1,9 +1,11 @@
 ![Vector](vector.png)
 
+[![TravisCI](https://img.shields.io/travis/Netflix/vector.svg)](https://travis-ci.org/Netflix/vector)
 [![Slack Status](https://vectoross.test.netflix.net/badge.svg)](https://vectoross.test.netflix.net/)
 ![NetflixOSS Status](https://img.shields.io/badge/NetflixOSS-active-brightgreen.svg)
 [![License](https://img.shields.io/github/license/Netflix/vector.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Docker Pulls](https://img.shields.io/docker/pulls/netflixoss/vector.svg)](https://hub.docker.com/r/netflixoss/vector/)
+
 
 Vector is an open source on-host performance monitoring framework which exposes hand picked high resolution system and application metrics to every engineer’s browser. Having the right metrics available on-demand and at a high resolution is key to understand how a system behaves and correctly troubleshoot performance issues.
 
