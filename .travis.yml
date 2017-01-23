@@ -1,9 +1,15 @@
 language: node_js
 node_js:
-  - "0.10"
+  - "4.7.2"
 before_script:
   - npm install -g gulp
   - npm install -g bower
   - npm install
   - bower install
-script: gulp clean build
+script: make build
+services:
+  - docker
+env:
+  global:
+    - secure: "VBGA/BGX7MPQ+h0OyAssRvIpyMN4rWk8CyBxvL1mgw43iLZYEo6PYEGtXWnMBxgh9NMT5oymkU6PsvRfVbCbpAIdJHGe7fbM1xK7wRd8OS6VpRJWFcwVeyE56qat+I/KSnYrQ4eJTZ6Ii3h3otoDRfW5RLrw2VHRZ+//Hr6sgVY="
+    - secure: "FDsSnzJEwnYJ6OQEA8MuxFuWMAcAI6pR6hRCWIpSzDK1gk2xx3tG0m39WijAUiLmUF8GxrpB1h0dmXpvbG1OHNLC97m273Qr8jAXIzHU3HqJ0BhL4sT+gPIDYf2stbYTZMieGQM8yC/OQWIckpJThEqtoGWHSJAzmQyEJmNbidg="
