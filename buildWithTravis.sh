@@ -1,10 +1,8 @@
 #!/bin/bash
 
-if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+if [ "$TRAVIS_PULL_REQUEST" == "false" ] && if [ "$TRAVIS_TAG" != "" ]; then
     docker build -t netflixoss/vector .
-    if [ "$TRAVIS_TAG" != "" ]; then
-        docker tag netflixoss/vector:latest netflixoss/vector:$TRAVIS_TAG
-    fi
+    docker tag netflixoss/vector:latest netflixoss/vector:$TRAVIS_TAG
     docker images
     docker login -u=${dockerhubUsername} -p=${dockerhubPassword}
     docker push netflixoss/vector
