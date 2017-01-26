@@ -2,7 +2,7 @@
 
 [![TravisCI](https://img.shields.io/travis/Netflix/vector.svg)](https://travis-ci.org/Netflix/vector)
 [![Slack Status](https://vectoross.test.netflix.net/badge.svg)](https://vectoross.test.netflix.net/)
-![NetflixOSS Status](https://img.shields.io/badge/NetflixOSS-active-brightgreen.svg)
+[![NetflixOSS Lifecycle](https://img.shields.io/osslifecycle/Netflix/vector.svg)]()
 [![License](https://img.shields.io/github/license/Netflix/vector.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Docker Pulls](https://img.shields.io/docker/pulls/netflixoss/vector.svg)](https://hub.docker.com/r/netflixoss/vector/)
 
