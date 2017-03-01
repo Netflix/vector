@@ -47,12 +47,32 @@
         CgroupMemoryUtilizationMetricDataModel,
         config) {
 
-        var onSettingsClose = function(resultFromModal, widgetModel) {
-            if (typeof resultFromModal !== 'undefined'){
+        var onSettingsClose = function (resultFromModal, widgetModel) {
+            if (typeof resultFromModal !== 'undefined') {
                 widgetModel.filter = resultFromModal.filter;
             }
         };
         var definitions = [
+            {
+                name: 'nfs4.client',
+                title: 'NFS4',
+                directive: 'line-integer-time-series',
+                dataAttrName: 'data',
+                dataModelType: CgroupMemoryUtilizationMetricDataModel,
+                dataModelOptions: {
+                    name: 'nfs4.client',
+                    metricDefinitions: {
+                        "calls": "nfs4.client.calls",
+                        "reqs": "nfs4.client.reqs"
+                    }
+                },
+                size: {
+                    width: '25%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: "NFS4"
+            },
             {
                 name: 'kernel.all.load',
                 title: 'Load Average',
@@ -632,18 +652,18 @@
         ];
 
         if (config.enableCpuFlameGraph) {
-          definitions.push({
-            name: 'graph.flame.cpu',
-            title: 'CPU Flame Graph',
-            directive: 'cpu-flame-graph',
-            dataModelType: DummyMetricDataModel,
-            size: {
-              width: '50%',
-              height: '250px'
-            },
-            enableVerticalResize: false,
-            group: 'CPU'
-          });
+            definitions.push({
+                name: 'graph.flame.cpu',
+                title: 'CPU Flame Graph',
+                directive: 'cpu-flame-graph',
+                dataModelType: DummyMetricDataModel,
+                size: {
+                    width: '50%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'CPU'
+            });
         }
 
         if (config.enableContainerWidgets) {
