@@ -21,7 +21,8 @@
     "d3": "3.5.16",
     "nvd3": "1.8.2",
     "font-awesome": "4.6.1",
-    "angular": "~1.4.10"
+    "angular": "~1.4.10",
+    "angular-resizable": "1.2.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.10"

@@ -74,7 +74,23 @@
               return chart;
             });
 
+            $rootScope.$on("angular-resizable.resizeEnd", function (event, args) {
+                var element = document.getElementById(args.id);
+                var child = element.childNodes[3].childNodes[0].childNodes[0].childNodes[3];
+                scope.updatedID = child.id;
+
+                scope.height = args.height;
+            });
+
             scope.$on('updateMetrics', function () {
+                if(scope.updatedID && scope.updatedID==scope.id){
+                    d3.select('#' + scope.id + ' svg')
+                        .datum(scope.data)
+                        .style('height', scope.height-50 + 'px')
+                        .transition().duration(0)
+                        .call(chart);
+                    chart.height(scope.height-50);
+                }
                 if (scope.area) {
                   angular.forEach(scope.data, function (instance) {
                     instance.area=true;

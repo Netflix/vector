@@ -68,7 +68,7 @@
                 },
                 size: {
                     width: '25%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: "NFS4"
@@ -84,7 +84,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'CPU'
@@ -99,7 +99,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'CPU',
@@ -118,7 +118,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'CPU',
@@ -138,7 +138,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'CPU',
@@ -158,7 +158,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'CPU',
@@ -178,7 +178,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'CPU',
@@ -198,7 +198,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'CPU',
@@ -218,7 +218,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'CPU',
@@ -241,7 +241,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Memory'
@@ -259,7 +259,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Memory'
@@ -277,7 +277,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Memory'
@@ -292,7 +292,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Memory',
@@ -311,7 +311,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Network',
@@ -331,7 +331,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Network',
@@ -355,7 +355,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Network',
@@ -375,7 +375,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Network',
@@ -395,7 +395,7 @@
                 enableVerticalResize: false,
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 group: 'Network',
                 attrs: {
@@ -413,7 +413,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Network',
@@ -437,7 +437,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Network',
@@ -456,7 +456,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Network',
@@ -486,7 +486,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Disk'
@@ -505,7 +505,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Disk'
@@ -520,7 +520,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Disk',
@@ -540,7 +540,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'CPU',
@@ -563,7 +563,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Memory',
@@ -586,7 +586,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Network',
@@ -620,7 +620,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Network',
@@ -640,7 +640,7 @@
                 },
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'Disk',
@@ -659,7 +659,7 @@
                 dataModelType: DummyMetricDataModel,
                 size: {
                     width: '50%',
-                    height: '250px'
+                    height: 'auto'
                 },
                 enableVerticalResize: false,
                 group: 'CPU'
@@ -679,7 +679,7 @@
                     },
                     size: {
                         width: '50%',
-                        height: '250px'
+                        height: 'auto'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
@@ -700,7 +700,7 @@
                     },
                     size: {
                         width: '50%',
-                        height: '250px'
+                        height: 'auto'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
@@ -720,7 +720,7 @@
                     },
                     size: {
                         width: '50%',
-                        height: '250px'
+                        height: 'auto'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
@@ -739,7 +739,7 @@
                     },
                     size: {
                         width: '50%',
-                        height: '250px'
+                        height: 'auto'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
@@ -765,7 +765,7 @@
                     },
                     size: {
                         width: '50%',
-                        height: '250px'
+                        height: 'auto'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
@@ -788,7 +788,7 @@
                     },
                     size: {
                         width: '50%',
-                        height: '250px'
+                        height: 'auto'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
@@ -811,7 +811,7 @@
                     },
                     size: {
                         width: '50%',
-                        height: '250px'
+                        height: 'auto'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
@@ -834,7 +834,7 @@
                     },
                     size: {
                         width: '50%',
-                        height: '250px'
+                        height: 'auto'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
@@ -857,7 +857,7 @@
                     },
                     size: {
                         width: '50%',
-                        height: '250px'
+                        height: 'auto'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
@@ -876,7 +876,7 @@
                     },
                     size: {
                         width: '50%',
-                        height: '250px'
+                        height: 'auto'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
@@ -901,7 +901,7 @@
                     },
                     size: {
                         width: '50%',
-                        height: '250px'
+                        height: 'auto'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
@@ -921,7 +921,7 @@
                     },
                     size: {
                         width: '50%',
-                        height: '250px'
+                        height: 'auto'
                     },
                     enableVerticalResize: false,
                     group: 'Container',
