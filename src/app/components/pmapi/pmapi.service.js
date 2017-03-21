@@ -102,7 +102,6 @@
                     }
                     return response;
                 });
-
         }
 
         function getInstanceDomainsByIndom(context, indom, instances, inames) {
@@ -161,11 +160,34 @@
                 });
         }
 
-        function convertTimestampToMillis(response) {
-            // timestamp is in milliseconds
+        function convertTimestampToMillisOrMicros(response) {
             var timestamp = (response.data.timestamp.s * 1000) +
                 (response.data.timestamp.us / 1000);
             var values = response.data.values;
+			
+			if ($rootScope.metadata == undefined) {
+				return {
+                timestamp: timestamp,
+                values: values
+            	};
+			}
+			
+			var units = [];
+			response.data.values.forEach(function(ele) {
+				units.push($rootScope.metadata.find(function(element) {
+					return element.name == ele.name;
+				}).units);
+			})
+			
+			units.forEach(function(ele) {
+				if (ele == "millisec" || ele == "");
+				else if (ele == "microsec" || ele == "") {
+					timestamp = (response.data.timestamp.s * 1000000) +
+                	(response.data.timestamp.us / 1000000);
+				}
+			})
+			
+            // timestamp is in milliseconds
 
             return {
                 timestamp: timestamp,
@@ -228,10 +250,26 @@
 
             return deferred.promise;
         }
+      
+        function getMetricsMetadata(context) {
+            var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
+               $rootScope.properties.port;
+            var metadata = {};
+            metadata.method = 'GET';
+            metadata.url = baseURI + '/pmapi/' + context + '/_metric';
+			
+			$http(metadata).then(function(response) {
+				$rootScope.metadata = response.data.metrics;
+			});
 
+        }  
+      
         function getMetrics(context, metrics, pmids) {
-            return getMetricsValues(context, metrics, pmids)
-                    .then(convertTimestampToMillis)
+          if ($rootScope.metadata == undefined) {
+              getMetricsMetadata(context);
+          }
+          return getMetricsValues(context, metrics, pmids)
+                    .then(convertTimestampToMillisOrMicros)
                     .then(function(data) {
                         return appendInstanceDomains(context, data);
                     });
