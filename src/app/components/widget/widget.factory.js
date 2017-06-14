@@ -53,6 +53,26 @@
             }
         };
         var definitions = [
+			{
+				name: 'disk.dev',
+				title: 'Disk',
+				directive: 'line-time-series',
+				dataAttrName: 'data',
+				dataModelType: MultipleCumulativeMetricDataModel,
+				dataModelOptions: {
+					name: 'disk.dev',
+					metricDefinitions: {
+						"read": "disk.dev.read",
+//						"write": "disk.dev.write"
+					}
+				},
+				size: {
+					width: '25%',
+					height: '250px'
+				},
+				enableVerticalResize: false,
+				group: "Disk"
+			},
             {
                 name: 'kernel.all.load',
                 title: 'Load Average',

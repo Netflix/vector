@@ -214,6 +214,7 @@
                             $rootScope.properties.hostname = 'Hostname not available.';
                             $log.error('Error fetching hostname.');
                         });
+					$rootScope.metricsMetadata = PMAPIService.getMetricsMetadata(data);
                 }, function () {
                     toastr.error('Failed fetching context from host. Try updating the hostname.', 'Error');
                     $rootScope.flags.contextUpdating = false;
