@@ -201,6 +201,29 @@
             }
             return true;
         };
+      
+        vm.openCustomWidgetModal = function(){
+          
+            console.log('hey');
+          
+            var customWidgetModal = {
+                backdrop: true,
+                keyboard: true,
+                modalFade: true,
+                templateUrl: 'app/components/modal/customWidgetModal.html'
+            };
+
+            var customWidgetModalOptions = {
+                closeButtonText: 'Cancel',
+                actionButtonText: 'Ok',
+                headerText: 'Reset Dashboard',
+                bodyText: 'Are you sure you want to reset the dashboard?'
+            };
+
+            ModalService.showModal(customWidgetModal, customWidgetModalOptions).then(function() {
+                
+            });
+        };
 
         vm.updateInterval = DashboardService.updateInterval;
         vm.updateContainer = ContainerMetadataService.updateContainer;
