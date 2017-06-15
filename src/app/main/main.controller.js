@@ -28,7 +28,7 @@
     * @name MainCtrl
     * @desc Main Controller
     */
-    function MainCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, version, DashboardService, ContainerMetadataService, ModalService) {
+    function MainCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, version, DashboardService, ContainerMetadataService, ModalService, CustomWidgetService) {
 
         var vm = this,
             widgetsToLoad = widgets;
@@ -202,15 +202,22 @@
             return true;
         };
       
+      // Custom Widget Code Starts here
+        
         vm.openCustomWidgetModal = function(){
-          
-            console.log('hey');
           
             var customWidgetModal = {
                 backdrop: true,
                 keyboard: true,
                 modalFade: true,
-                templateUrl: 'app/components/modal/customWidgetModal.html'
+                scope: $rootScope,
+                templateUrl: 'app/components/modal/customWidgetModal.html',
+                controller: 'MainCtrl',
+                resolve: {
+                  metricsMetadata: function() {
+                    return $rootScope.metricsMetadata
+                  }
+                }
             };
 
             var customWidgetModalOptions = {
@@ -220,10 +227,35 @@
                 bodyText: 'Are you sure you want to reset the dashboard?'
             };
 
-            ModalService.showModal(customWidgetModal, customWidgetModalOptions).then(function() {
+            ModalService.showModal(customWidgetModal, {}).then(function() {
                 
             });
         };
+      
+        vm.customWidget = {};
+      
+        vm.customWidget.customWidgetOptions = {
+                name: 'kernell.all.load',
+                title: 'Load Average',
+                directive: 'line-time-series',
+                dataAttrName: 'data',
+                dataModelType: 'MetricDataModel',
+                dataModelOptions: {
+                    name: 'kernel.all.load'
+                },
+                size: {
+                    width: '50%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'CPU'
+            }
+        
+        vm.customWidget.addCustomWidget = function () {
+          
+        };
+      
+      // Custom Widget Code Ends here
 
         vm.updateInterval = DashboardService.updateInterval;
         vm.updateContainer = ContainerMetadataService.updateContainer;
@@ -238,7 +270,8 @@
             'dashboard',
             'widget',
             'containermetadata',
-            'modal'
+            'modal',
+            'customwidget'
         ])
         .controller('MainController', MainCtrl);
 })();

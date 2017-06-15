@@ -8,16 +8,19 @@
     <form role="form" name="form">
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Name</span>
-            <input type="text" class="form-control" id="widgetNameInput" name="widgetName" data-content="Please enter the name of the custom widget." rel="popover" data-placement="bottom" data-trigger="hover" data-container="body" required>
+            <input type="text" class="form-control" id="widgetNameInput" name="widgetName" data-content="Please enter the name of the custom widget." rel="popover" data-placement="bottom" ng-model="vm.customWidget.customWidgetOptions.title" required>
         </div>
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Select Metric</span>
             <!-- ng-repeat to be added to generate metric list and typeahead to be included -->
+            <select class="form-control" ng-options="metricMetadata.name for metricMetadata in metricsMetadata" ng-model=""></select>
+<!--
             <select id="metricList" class="form-control">
                 <option>Metric 1</option>
                 <option>Metric 2</option>
                 <option>Metric 3</option>
             </select>
+-->
         </div>
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Data Model Type</span>

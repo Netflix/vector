@@ -28,7 +28,7 @@
             backdrop: true,
             keyboard: true,
             modalFade: true,
-            templateUrl: 'app/components/modal/defaultModal.html'
+            templateUrl: 'app/components/modal/defaultModal.html',
         };
 
         var defaultModalOptions = {

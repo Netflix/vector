@@ -246,7 +246,7 @@
  			
  			$http(metadata).then(function(response) {
 				if (angular.isDefined(response.data.metrics)) {
-                      return response.data.metrics;
+                     $rootScope.metricsMetadata = response.data.metrics;
                     }
                     return $q.reject('metricsData is undefined');
  			});
