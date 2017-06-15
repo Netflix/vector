@@ -215,26 +215,7 @@
                             $log.error('Error fetching hostname.');
                         });
               
-					$rootScope.metricsMetadata = [{
-                        "name": "jbd2.njournals",
-                        "text-oneline": "Count of active JBD2 (Journal Block Device v2) devices",
-                        "text-help": "Count of active JBD2 (Journal Block Device v2) devices",
-                        "pmid": 511705088,
-                        "sem": "instant",
-                        "units": "count",
-                        "type": "U32"
-                        },
-                        {
-                        "name": "jbd2.transaction.count",
-                        "text-oneline": "Total transactions committed per journal",
-                        "text-help": "This metric is sourced from the per-device /proc/fs/jbd2 info file.",
-                        "pmid": 511705089,
-                        "indom": 511705088,
-                        "sem": "counter",
-                        "units": "count",
-                        "type": "U64"
-                        }];
-					 PMAPIService.getMetricsMetadata(data);
+					PMAPIService.getMetricsMetadata(data);
                 }, function () {
                     toastr.error('Failed fetching context from host. Try updating the hostname.', 'Error');
                     $rootScope.flags.contextUpdating = false;

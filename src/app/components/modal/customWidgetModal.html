@@ -8,31 +8,27 @@
     <form role="form" name="form">
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Name</span>
-            <input type="text" class="form-control" id="widgetNameInput" name="widgetName" data-content="Please enter the name of the custom widget." rel="popover" data-placement="bottom" ng-model="vm.customWidget.customWidgetOptions.title" required>
+            <input type="text" class="form-control" id="widgetNameInput" name="widgetTitle" data-content="Please enter the name of the custom widget." rel="popover" data-placement="bottom" ng-model="widgetTitle" required>
         </div>
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Select Metric</span>
             <!-- ng-repeat to be added to generate metric list and typeahead to be included -->
-            <select class="form-control" ng-options="metricMetadata.name for metricMetadata in metricsMetadata" ng-model=""></select>
-<!--
-            <select id="metricList" class="form-control">
-                <option>Metric 1</option>
-                <option>Metric 2</option>
-                <option>Metric 3</option>
-            </select>
--->
+            <select class="form-control" name="metricName" ng-options="metricMetadata.name for metricMetadata in metricsMetadata track by metricMetadata.name" ng-model="metricName" required></select>
+<!--            <input class="form-control" uib-typeahead="metricMetadata.name for metricMetadata in metricsMetadata" class="form-control"></select>-->
         </div>
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Data Model Type</span>
             <!-- to be linked -->
-            <select id="metricList" class="form-control">
-                <option>Simple Metric</option>
-                <option>Multiple Metric</option>
-                <option>Cumulative Metric</option>
-                <option>Multiple Cumulative Metric</option>
-                <option>Cumulative Utilisation Metric</option>
-                <option>Converted Metric</option>
+            <select id="metricList" ng-model="selectedDataModel" class="form-control" required>
+                <option value="MetricDataModel">MetricDataModel</option>
+                <option value="CumulativeMetricDataModel">CumulativeMetricDataModel</option>
+                <option value="MultipleMetricDataModel">MultipleMetricDataModel</option>
+                <option value="MultipleCumulativeMetricDataModel">MultipleCumulativeMetricDataModel</option>
             </select>
+        </div>
+        <div class="input-group input-group-lg target">
+            <span class="input-group-addon">Group</span>
+            <input type="text" class="form-control" id="widgetNameInput" name="groupName" data-content="Please enter the name of the group." rel="popover" data-placement="bottom" ng-model="groupName" value="Custom" required>
         </div>
         <div class="input-group input-group-lg">
         <button type="button" class="btn btn-lg btn-default">Advanced Options &nbsp; <i class="fa fa-plus-square-o"></i></button>
@@ -42,5 +38,5 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-lg btn-default" data-ng-click="modalOptions.close()">Cancel</button>
-    <button type="button" class="btn btn-lg btn-default btn-primary" delay="2000" data-ng-click="modalOptions.ok();">Add</button>
+    <button type="button" class="btn btn-lg btn-default btn-primary" ng-disabled="form.$invalid" ng-class="{ 'disabled': form.$invalid }" delay="2000" data-ng-click="modalOptions.ok();">Add</button>
 </div>
