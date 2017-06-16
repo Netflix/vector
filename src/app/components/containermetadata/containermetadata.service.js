@@ -98,6 +98,7 @@
                         $rootScope.properties.selectedContainer = $routeParams.container;
                         $rootScope.flags.disableContainerSelectNone = true;
                         containerParsedFromQuerystring = true;
+                        updateContainer();        // calls pmapi to set the container
                     }
                 } else {
                     containerParsedFromQuerystring = true;
