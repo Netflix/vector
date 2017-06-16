@@ -24,7 +24,7 @@
      /**
      * @name ContainerMetadataService
      */
-     function ContainerMetadataService($http, $rootScope, $q, $interval, $routeParams, $location, $injector, $log, config, MetricListService) {
+     function ContainerMetadataService($http, $rootScope, $q, $interval, $routeParams, $location, $injector, $log, PMAPIService, config, MetricListService) {
 
         var containerParsedFromQuerystring = false,
             containerNameResolver;
@@ -198,6 +198,7 @@
             } else {
                 $rootScope.flags.disableContainerSelectNone = false;
             }
+            PMAPIService.setContainer($rootScope.properties.context, $rootScope.properties.selectedContainer);
         }
 
         /**

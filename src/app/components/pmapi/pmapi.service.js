@@ -105,6 +105,24 @@
 
         }
 
+        function setContainer(context, name) {
+            var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
+                $rootScope.properties.port;
+            var settings = {};
+            settings.method = 'GET';
+            settings.url = baseURI + '/pmapi/' + context + '/_store';
+            settings.params = {name: "pmcd.client.container"};
+            settings.params["value"] = name;
+
+            return $http(settings)
+                .then(function (response) {
+                    if (angular.isUndefined(response.data.success) || response.data.success != 1) {
+                        return $q.reject('set container failed');
+                    }
+                    return response;
+                });
+        }
+
         function getInstanceDomainsByIndom(context, indom, instances, inames) {
             var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
                 $rootScope.properties.port;
@@ -245,7 +263,8 @@
             getMetricsValues: getMetricsValues,
             getMetrics: getMetrics,
             getInstanceDomainsByIndom: getInstanceDomainsByIndom,
-            getInstanceDomainsByName: getInstanceDomainsByName
+            getInstanceDomainsByName: getInstanceDomainsByName,
+            setContainer: setContainer
         };
     }
 
