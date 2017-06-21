@@ -8,18 +8,18 @@
     <form role="form" name="form">
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Name</span>
-            <input type="text" class="form-control" id="widgetNameInput" name="widgetTitle" data-content="Please enter the name of the custom widget." rel="popover" data-placement="bottom" ng-model="widgetTitle" required>
+            <input type="text" class="form-control" id="widgetNameInput" name="widgetTitle" data-content="Please enter the name of the custom widget." rel="popover" data-placement="bottom" ng-model="customWidgetOptions.title" required>
         </div>
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Select Metric</span>
             <!-- ng-repeat to be added to generate metric list and typeahead to be included -->
-            <select class="form-control" name="metricName" ng-options="metricMetadata.name for metricMetadata in metricsMetadata track by metricMetadata.name" ng-model="metricName" required></select>
+            <select class="form-control" name="metricName" ng-options="metricMetadata.name for metricMetadata in metricsMetadata track by metricMetadata.name" ng-model="customWidgetOptions.name" required></select>
 <!--            <input class="form-control" uib-typeahead="metricMetadata.name for metricMetadata in metricsMetadata" class="form-control"></select>-->
         </div>
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Data Model Type</span>
             <!-- to be linked -->
-            <select id="metricList" ng-model="selectedDataModel" class="form-control" required>
+            <select id="metricList" ng-model="customWidgetOptions.dataModelType" class="form-control" required>
                 <option value="MetricDataModel">MetricDataModel</option>
                 <option value="CumulativeMetricDataModel">CumulativeMetricDataModel</option>
                 <option value="MultipleMetricDataModel">MultipleMetricDataModel</option>
@@ -28,7 +28,7 @@
         </div>
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Group</span>
-            <input type="text" class="form-control" id="widgetNameInput" name="groupName" data-content="Please enter the name of the group." rel="popover" data-placement="bottom" ng-model="groupName" value="Custom" required>
+            <input type="text" class="form-control" id="widgetNameInput" name="groupName" data-content="Please enter the name of the group." rel="popover" data-placement="bottom" ng-model="customWidgetOptions.group" value="Custom" required>
         </div>
         <div class="input-group input-group-lg">
         <button type="button" class="btn btn-lg btn-default">Advanced Options &nbsp; <i class="fa fa-plus-square-o"></i></button>

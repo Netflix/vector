@@ -212,10 +212,10 @@
                 modalFade: true,
                 scope: $rootScope,
                 templateUrl: 'app/components/modal/customWidgetModal.html',
-                controller: 'MainCtrl',
+                controller: 'controller',
                 resolve: {
-                  metricsMetadata: function() {
-                    return $rootScope.metricsMetadata
+                  data: function() {
+                    return vm.customWidget.customWidgetOptions
                   }
                 }
             };
@@ -235,11 +235,11 @@
         vm.customWidget = {};
       
         vm.customWidget.customWidgetOptions = {
-                name: 'kernell.all.load',
-                title: 'Load Average',
+                name: '',
+                title: '',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: 'MetricDataModel',
+                dataModelType: '',
                 dataModelOptions: {
                     name: 'kernel.all.load'
                 },
@@ -248,7 +248,7 @@
                     height: '250px'
                 },
                 enableVerticalResize: false,
-                group: 'CPU'
+                group: 'Custom'
             }
         
         vm.customWidget.addCustomWidget = function () {

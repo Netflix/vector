@@ -55,9 +55,12 @@
             //Map modal.html $scope custom properties to defaults defined in service
             angular.extend(modalOptions, defaultModalOptions, customModalOptions);
 
-            modal.controller = ['$scope','$uibModalInstance', function ($scope, $uibModalInstance) {
+            modal.controller = ['$scope','$uibModalInstance', function ($scope, $uibModalInstance, data) {
+                console.log(data);
+                $scope.customWidgetOptions = data;
                 $scope.modalOptions = modalOptions;
                 $scope.modalOptions.ok = function (result) {
+                    console.log();
                     $uibModalInstance.close(result);
                 };
                 $scope.modalOptions.close = function () {

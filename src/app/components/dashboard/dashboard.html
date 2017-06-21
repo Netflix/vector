@@ -9,7 +9,7 @@
 			</div>
 		</form>
 	</div>
-	<div class="btn-group btn-group-lg col-md-1" id="widgetWrapper">
+	<div class="col-md-2" id="widgetWrapper">
 		<div class="btn-group btn-group-lg widget-wrapper">
 		<button id="widgetButton" type="button" class="dropdown-toggle btn btn-lg btn-default" data-toggle="dropdown">Widget <span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu">
@@ -23,6 +23,9 @@
 			</li>
 			<li role="presentation" class="divider"></li>
 			<li>
+				<a href="javascript:void(0);" ng-click="vm.openCustomWidgetModal()">Ad-Hoc Metric</a>
+			</li>
+            <li>
 				<a href="javascript:void(0);" ng-click="loadWidgets(defaultWidgets); vm.addWidgetToURL(defaultWidgets);">Default Widgets</a>
 			</li>
 			<li>
@@ -34,9 +37,6 @@
 			</li>
 		</ul>
 		</div>
-	</div>
-	<div class="btn col-md-1">
-		<button id="customWidgetButton" type="button" class="btn btn-lg btn-default" ng-click="vm.openCustomWidgetModal()"><i class="fa fa-plus"></i></button>
 	</div>
 	<div class="col-md-2">
 		<form role="form">
