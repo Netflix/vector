@@ -27,11 +27,13 @@
             scope.ready = false;
             scope.processing = false;
             scope.id = DashboardService.getGuid();
+            scope.svgname = "notready.svg";
             scope.generateFlameGraph = function(){
                 FlameGraphService.generate();
                 scope.ready = true;
                 scope.processing = true;
                 $timeout(function () {
+                    scope.svgname = FlameGraphService.getSvgName();
                     scope.processing = false;
                 }, 65000);
             };
