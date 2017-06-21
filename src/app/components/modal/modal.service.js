@@ -28,7 +28,7 @@
             backdrop: true,
             keyboard: true,
             modalFade: true,
-            templateUrl: 'app/components/modal/defaultModal.html',
+            templateUrl: 'app/components/modal/defaultModal.html'
         };
 
         var defaultModalOptions = {
@@ -56,11 +56,9 @@
             angular.extend(modalOptions, defaultModalOptions, customModalOptions);
 
             modal.controller = ['$scope','$uibModalInstance', function ($scope, $uibModalInstance, data) {
-                console.log(data);
                 $scope.customWidgetOptions = data;
                 $scope.modalOptions = modalOptions;
                 $scope.modalOptions.ok = function (result) {
-                    console.log();
                     $uibModalInstance.close(result);
                 };
                 $scope.modalOptions.close = function () {

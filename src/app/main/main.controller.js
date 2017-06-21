@@ -270,8 +270,8 @@
             'dashboard',
             'widget',
             'containermetadata',
-            'modal',
-            'customwidget'
+            'customwidget',
+            'modal'
         ])
         .controller('MainController', MainCtrl);
 })();
