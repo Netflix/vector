@@ -22,22 +22,39 @@
      * @name FlameGraphService
      */
      function FlameGraphService($log, $rootScope, $http, toastr) {
+        var svgname = "";
 
         /**
         * @name generate
         * @desc
         */
         function generate() {
-            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=generic.systack')
-                .success(function () {
-                    toastr.success('generic.systack requested.', 'Success');
+            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=generic.cpuflamegraph')
+                .success(function (data) {
+                    if (angular.isDefined(data.values[0])) {
+                        var message = data.values[0].instances[0].value;
+                        var fields = message.split(" ");
+                        if (fields[0] == "REQUESTED") {
+                            svgname = fields[1];
+                            toastr.success('generic.cpuflamegraph requested.', 'Success');
+                        } else {
+                            toastr.success('generic.cpuflamegraph already in progress (' + message + '), please wait.', 'Success');
+                        }
+                    } else {
+                        toastr.error('Failed requesting generic.cpuflamegraph.', 'Error');
+                    }
                 }).error(function () {
-                    toastr.error('Failed requesting generic.systack.', 'Error');
+                    toastr.error('Failed requesting generic.cpuflamegraph.', 'Error');
                 });
         }
 
+        function getSvgName() {
+            return svgname;
+       }
+
         return {
-            generate: generate
+            generate: generate,
+            getSvgName: getSvgName
         };
     }
 
