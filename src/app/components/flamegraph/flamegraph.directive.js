@@ -28,14 +28,32 @@
             scope.processing = false;
             scope.id = DashboardService.getGuid();
             scope.svgname = "notready.svg";
+            scope.statusmsg = "";
+            scope.waited = 0;
+            scope.pollms = 2000;
+            scope.waitedmax = 90000;   // max poll milliseconds
+
+            scope.pollStatus = function() {
+                FlameGraphService.pollStatus(function(statusmsg){
+                    scope.statusmsg = statusmsg;
+                    scope.waited += scope.pollms;
+                    if (statusmsg == "DONE" || scope.waited > scope.waitedmax) {
+                        if (scope.waited > scope.waitedmax)
+                            scope.statusmsg = "Error, timed out";
+                        scope.svgname = FlameGraphService.getSvgName();
+                        scope.processing = false;
+                    } else {
+                        $timeout(function () { scope.pollStatus(); }, scope.pollms);
+                    }
+                });
+            };
+
             scope.generateFlameGraph = function(){
                 FlameGraphService.generate();
                 scope.ready = true;
                 scope.processing = true;
-                $timeout(function () {
-                    scope.svgname = FlameGraphService.getSvgName();
-                    scope.processing = false;
-                }, 65000);
+                scope.waited = 0;
+                $timeout(function () { scope.pollStatus(); }, scope.pollms);
             };
         }
 

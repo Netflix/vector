@@ -56,13 +56,24 @@
                 });
         }
 
+        function pollStatus(refresh) {
+            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=generic.cpuflamegraph')
+                .success(function (data) {
+                    if (angular.isDefined(data.values[0])) {
+                        var message = data.values[0].instances[0].value;
+                        refresh(message);
+                    }
+                });
+        }
+
         function getSvgName() {
             return svgname;
         }
 
         return {
             generate: generate,
-            getSvgName: getSvgName
+            getSvgName: getSvgName,
+            pollStatus: pollStatus
         };
     }
 

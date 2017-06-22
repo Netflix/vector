@@ -3,6 +3,7 @@
         <p>Click on the button below to generate a CPU flame graph! (60 sec)</p>
         <button type="button" class="btn btn-primary" ng-disabled="processing" ng-click="generateFlameGraph()">Generate Flame Graph <i ng-if="processing" class="fa fa-refresh fa-spin"></i></button>
     </div>
+    <div class="row">Status: {{statusmsg}}</div>
     <div class="row" ng-if="!processing && ready" style="text-align: center; margin-top: 15px;">
         <p>The CPU flame graph is ready. Please click on the button below to open it.</p>
         <a class="btn btn-default" href="http://{{host}}:{{port}}/cpuflamegraph/{{svgname}}" target="_blank">Open Flame Graph</a>
