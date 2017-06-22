@@ -23,12 +23,14 @@
      */
      function FlameGraphService($log, $rootScope, $http, toastr) {
         var svgname = "";
+        var canretry = true;
 
         /**
         * @name generate
         * @desc
         */
         function generate() {
+            canretry = true;
             $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=generic.cpuflamegraph')
                 .success(function (data) {
                     if (angular.isDefined(data.values[0])) {
@@ -37,6 +39,12 @@
                         if (fields[0] == "REQUESTED") {
                             svgname = fields[1];
                             toastr.success('generic.cpuflamegraph requested.', 'Success');
+                        } else if (fields[0] == "DONE") {
+                            // since this is a generate call, retry
+                            if (canretry) {
+                                generate();
+                                canretry = false;	// avoid infinite recursion
+                            }
                         } else {
                             toastr.success('generic.cpuflamegraph already in progress (' + message + '), please wait.', 'Success');
                         }
@@ -48,13 +56,24 @@
                 });
         }
 
+        function pollStatus(refresh) {
+            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=generic.cpuflamegraph')
+                .success(function (data) {
+                    if (angular.isDefined(data.values[0])) {
+                        var message = data.values[0].instances[0].value;
+                        refresh(message);
+                    }
+                });
+        }
+
         function getSvgName() {
             return svgname;
-       }
+        }
 
         return {
             generate: generate,
-            getSvgName: getSvgName
+            getSvgName: getSvgName,
+            pollStatus: pollStatus
         };
     }
 
