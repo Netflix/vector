@@ -59,30 +59,19 @@
                 $scope.selected = {
                   name: ''
                 }
-//                $scope.
                 $scope.widgetOptions = {
-                  name: $scope.selected.name,
-                  title: $scope.selected.name,
-//                  directive: 'line-time-series',
-//                  dataAttrName: 'data',
-                  dataModelType: '',
-                  dataModelOptions: {
-                      name: $scope.selected.name
-                  }
-//                  size: {
-//                      width: '50%',
-//                      height: '250px'
-//                  },
-//                  enableVerticalResize: false,
-//                  group: 'Custom'
+//                  name: $scope.selected.name,
+//                  title: $scope.selected.name,
+//                  dataModelOptions: {
+//                      name: $scope.selected.name
+//                  }
                 }
-                console.log(1, $scope.widgetOptions);
                 angular.extend($scope.widgetOptions, widgetOptions);
-//                $scope.widgetOptions = widgetOptions;
-//                $scope.widgetOptions = 
-                console.log(2, $scope.widgetOptions);
                 $scope.modalOptions = modalOptions;
                 $scope.modalOptions.ok = function (result) {
+                    widgetOptions.name = $scope.selected.name;
+                    widgetOptions.title = $scope.selected.name;
+                    widgetOptions.dataModelOptions.name = $scope.selected.name;
                     $uibModalInstance.close(result);
                 };
                 $scope.modalOptions.close = function () {

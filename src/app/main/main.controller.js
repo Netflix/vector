@@ -213,35 +213,27 @@
                 templateUrl: 'app/components/customWidget/customWidgetModal.html',
                 resolve: {
                   widgetOptions: function() {
-                    console.log(vm.customWidget.customWidgetOptions);
                     return vm.customWidget.customWidgetOptions
                   }
                 }
             };
 
-            var customWidgetModalOptions = {
-                closeButtonText: 'Cancel',
-                actionButtonText: 'Ok',
-                headerText: 'Reset Dashboard',
-                bodyText: 'Are you sure you want to reset the dashboard?'
-            };
-
             CustomWidgetService.showCustomWidgetModal(customWidgetModal, {}).then(function() {
-                
+                console.log(vm.customWidget.customWidgetOptions);
             });
         };
       
         vm.customWidget = {};
       
         vm.customWidget.customWidgetOptions = {
-//                name: '',
-//                title: '',
+                name: '',
+                title: '',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-//                dataModelType: '',
-//                dataModelOptions: {
-//                    name: 'kernel.all.load'
-//                },
+                dataModelType: 'MetricDataModel',
+                dataModelOptions: {
+                    name: 'kernel.all.load'
+                },
                 size: {
                     width: '50%',
                     height: '250px'
