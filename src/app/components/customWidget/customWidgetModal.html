@@ -6,10 +6,12 @@
 <div class="modal-body">
     <!-- Add ng-model, ng-show, ng-disabled, ng-class, ng-change and delay accordingly -->
     <form role="form" name="form">
+<!--
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Name</span>
             <input type="text" class="form-control" id="widgetNameInput" name="widgetTitle" data-content="Please enter the name of the custom widget." rel="popover" data-placement="bottom" ng-model="customWidgetOptions.title" required>
         </div>
+-->
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Select Metric</span>
             <!-- ng-repeat to be added to generate metric list and typeahead to be included -->
@@ -17,7 +19,7 @@
 <!--            <input class="form-control" uib-typeahead="metricMetadata.name for metricMetadata in metricsMetadata" class="form-control"></select>-->
         </div>
         <div class="input-group input-group-lg target">
-            <span class="input-group-addon">Data Model Type</span>
+            <span class="input-group-addon">Type</span>
             <!-- to be linked -->
             <select id="metricList" ng-model="customWidgetOptions.dataModelType" class="form-control" required>
                 <option value="MetricDataModel">MetricDataModel</option>

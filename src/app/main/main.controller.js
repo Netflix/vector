@@ -211,7 +211,7 @@
                 keyboard: true,
                 modalFade: true,
                 scope: $rootScope,
-                templateUrl: 'app/components/modal/customWidgetModal.html',
+                templateUrl: 'app/components/customWidget/customWidgetModal.html',
                 controller: 'controller',
                 resolve: {
                   data: function() {
