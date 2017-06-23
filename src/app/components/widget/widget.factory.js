@@ -54,6 +54,7 @@
         };
         var definitions = [
 			
+            
             {
                 name: 'kernel.all.load',
                 title: 'Load Average',
