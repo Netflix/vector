@@ -58,14 +58,8 @@
             modal.controller = ['$scope','$uibModalInstance', 'widgetOptions', function ($scope, $uibModalInstance, widgetOptions) {
                 $scope.selected = {
                   name: ''
-                }
-                $scope.widgetOptions = {
-//                  name: $scope.selected.name,
-//                  title: $scope.selected.name,
-//                  dataModelOptions: {
-//                      name: $scope.selected.name
-//                  }
-                }
+                };
+                $scope.widgetOptions = {};
                 angular.extend($scope.widgetOptions, widgetOptions);
                 $scope.modalOptions = modalOptions;
                 $scope.modalOptions.ok = function (result) {

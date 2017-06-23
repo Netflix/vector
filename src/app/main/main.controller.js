@@ -204,6 +204,8 @@
       
       // Custom Widget Code Starts here
         
+        vm.reload = false;
+      
         vm.openCustomWidgetModal = function(){
           
             var customWidgetModal = {
@@ -213,25 +215,24 @@
                 templateUrl: 'app/components/customWidget/customWidgetModal.html',
                 resolve: {
                   widgetOptions: function() {
-                    return vm.customWidget.customWidgetOptions
+                    return vm.customWidgetOptions
                   }
                 }
             };
 
             CustomWidgetService.showCustomWidgetModal(customWidgetModal, {}).then(function() {
-                widgetDefinitions.push(vm.customWidget.customWidgetOptions);
+                widgetDefinitions.push(vm.customWidgetOptions);
+                widgetsToLoad.push(vm.customWidgetOptions);
                 vm.reload = true;
+                console.log(widgetsToLoad);
                 $timeout(function() {
                   vm.reload = false;
                 }, 200);
+                
             });
         };
       
-        vm.customWidget = {};
-      
-        vm.reload = false;
-      
-        vm.customWidget.customWidgetOptions = {
+        vm.customWidgetOptions = {
                 name: 'disk.dev.read',
                 title: 'disk.dev.read',
                 directive: 'line-time-series',
@@ -248,9 +249,6 @@
                 group: 'Custom'
             }
         
-        vm.customWidget.addCustomWidget = function () {
-        };
-      
       // Custom Widget Code Ends here
 
         vm.updateInterval = DashboardService.updateInterval;
