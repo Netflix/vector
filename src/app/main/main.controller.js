@@ -224,7 +224,6 @@
                 widgetDefinitions.push(vm.customWidgetOptions);
                 widgetsToLoad.push(vm.customWidgetOptions);
                 vm.reload = true;
-                console.log(widgetsToLoad);
                 $timeout(function() {
                   vm.reload = false;
                 }, 200);
