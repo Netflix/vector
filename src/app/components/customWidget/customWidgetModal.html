@@ -1,7 +1,7 @@
 
 <div class="modal-header">
 <!--    <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-    <h4 class="modal-title">Add Custom Widget</h4>
+    <h4 class="modal-title">Add Custom Widget {{widget.selected.name}}, {{widgetOptions.directive}}</h4>
 </div>
 <div class="modal-body">
     <!-- Add ng-model, ng-show, ng-disabled, ng-class, ng-change and delay accordingly -->
@@ -15,23 +15,34 @@
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Select Metric</span>
             <!-- ng-repeat to be added to generate metric list and typeahead to be included -->
-            <select class="form-control" name="metricName" ng-options="metricMetadata.name for metricMetadata in metricsMetadata track by metricMetadata.name" ng-model="customWidgetOptions.name" required></select>
+            <select class="form-control" name="metricName" ng-options="metricMetadata.name for metricMetadata in metricsMetadata track by metricMetadata.name" ng-model="widget.selected" required></select>
 <!--            <input class="form-control" uib-typeahead="metricMetadata.name for metricMetadata in metricsMetadata" class="form-control"></select>-->
         </div>
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Type</span>
-            <!-- to be linked -->
-            <select id="metricList" ng-model="customWidgetOptions.dataModelType" class="form-control" required>
+            <select id="metricList" ng-model="widgetOptions.dataModelType" class="form-control" required>
                 <option value="MetricDataModel">MetricDataModel</option>
                 <option value="CumulativeMetricDataModel">CumulativeMetricDataModel</option>
-                <option value="MultipleMetricDataModel">MultipleMetricDataModel</option>
-                <option value="MultipleCumulativeMetricDataModel">MultipleCumulativeMetricDataModel</option>
+<!--                <option value="MultipleMetricDataModel">MultipleMetricDataModel</option>-->
+<!--                <option value="MultipleCumulativeMetricDataModel">MultipleCumulativeMetricDataModel</option>-->
             </select>
         </div>
+<!--
+      <div class="input-group input-group-lg target">
+        <div class="checkbox checkbox-primary">
+            <input name="dataModelType" type="checkbox">
+            <label for="dataModelType">
+                CumulativeMetricDataModel
+            </label>
+        </div>
+      </div>
+-->
+<!--
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Group</span>
-            <input type="text" class="form-control" id="widgetNameInput" name="groupName" data-content="Please enter the name of the group." rel="popover" data-placement="bottom" ng-model="customWidgetOptions.group" value="Custom" required>
+            <input type="text" class="form-control" id="widgetNameInput" name="groupName" data-content="Please enter the name of the group." rel="popover" data-placement="bottom" ng-model="widgetOptions.group" value="Custom" required>
         </div>
+-->
         <div class="input-group input-group-lg">
         <button type="button" class="btn btn-lg btn-default">Advanced Options &nbsp; <i class="fa fa-plus-square-o"></i></button>
         <button type="button" class="btn btn-lg btn-default">UI Options &nbsp; <i class="fa fa-plus-square-o"></i></button>

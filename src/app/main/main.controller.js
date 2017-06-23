@@ -210,11 +210,10 @@
                 backdrop: true,
                 keyboard: true,
                 modalFade: true,
-                scope: $rootScope,
                 templateUrl: 'app/components/customWidget/customWidgetModal.html',
-                controller: 'controller',
                 resolve: {
-                  data: function() {
+                  widgetOptions: function() {
+                    console.log(vm.customWidget.customWidgetOptions);
                     return vm.customWidget.customWidgetOptions
                   }
                 }
@@ -227,7 +226,7 @@
                 bodyText: 'Are you sure you want to reset the dashboard?'
             };
 
-            ModalService.showModal(customWidgetModal, {}).then(function() {
+            CustomWidgetService.showCustomWidgetModal(customWidgetModal, {}).then(function() {
                 
             });
         };
@@ -235,14 +234,14 @@
         vm.customWidget = {};
       
         vm.customWidget.customWidgetOptions = {
-                name: '',
-                title: '',
+//                name: '',
+//                title: '',
                 directive: 'line-time-series',
                 dataAttrName: 'data',
-                dataModelType: '',
-                dataModelOptions: {
-                    name: 'kernel.all.load'
-                },
+//                dataModelType: '',
+//                dataModelOptions: {
+//                    name: 'kernel.all.load'
+//                },
                 size: {
                     width: '50%',
                     height: '250px'
