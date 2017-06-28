@@ -27,33 +27,51 @@
             scope.ready = false;
             scope.processing = false;
             scope.id = DashboardService.getGuid();
-            scope.svgname = "notready.svg";
+            scope.svgname = "error.svg";
             scope.statusmsg = "";
             scope.waited = 0;
             scope.pollms = 2000;
             scope.waitedmax = 90000;   // max poll milliseconds
 
             scope.pollStatus = function() {
-                FlameGraphService.pollStatus(function(statusmsg){
+                FlameGraphService.pollStatus(function(statusmsg) {
                     scope.statusmsg = statusmsg;
                     scope.waited += scope.pollms;
-                    if (statusmsg == "DONE" || scope.waited > scope.waitedmax) {
+                    var fields = statusmsg.split(" ");
+                    if (fields[0] == "DONE" || statusmsg == "ERROR" || scope.waited > scope.waitedmax) {
                         if (scope.waited > scope.waitedmax)
                             scope.statusmsg = "Error, timed out";
-                        scope.svgname = FlameGraphService.getSvgName();
-                        scope.processing = false;
+                        if (fields[0] == "DONE") {
+                            scope.statusmsg = "DONE";
+                            scope.svgname = fields[1];
+                            scope.processing = false;
+                        }
+                        if (statusmsg == "ERROR") {
+                            scope.ready = false;
+                            scope.processing = false;
+                        }
                     } else {
                         $timeout(function () { scope.pollStatus(); }, scope.pollms);
                     }
                 });
             };
 
-            scope.generateFlameGraph = function(){
-                FlameGraphService.generate();
-                scope.ready = true;
-                scope.processing = true;
-                scope.waited = 0;
-                $timeout(function () { scope.pollStatus(); }, scope.pollms);
+            scope.generateFlameGraph = function() {
+                FlameGraphService.generate(function(statusmsg) {
+                    var fields = statusmsg.split(" ");
+                    if (fields[0] == "ERROR") {
+                        scope.statusmsg = statusmsg;
+                        scope.ready = false;
+                        scope.processing = false;
+                        // don't launch poll
+                    } else {
+                        scope.statusmsg = statusmsg;
+                        scope.ready = true;
+                        scope.processing = true;
+                        scope.waited = 0;
+                        $timeout(function () { scope.pollStatus(); }, scope.pollms);
+                    }
+                });
             };
         }
 
