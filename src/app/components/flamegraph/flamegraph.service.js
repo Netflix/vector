@@ -22,57 +22,36 @@
      * @name FlameGraphService
      */
      function FlameGraphService($log, $rootScope, $http, toastr) {
-        var svgname = "";
-        var canretry = true;
 
         /**
         * @name generate
         * @desc
         */
-        function generate() {
-            canretry = true;
-            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=generic.cpuflamegraph')
-                .success(function (data) {
-                    if (angular.isDefined(data.values[0])) {
-                        var message = data.values[0].instances[0].value;
-                        var fields = message.split(" ");
-                        if (fields[0] == "REQUESTED") {
-                            svgname = fields[1];
-                            toastr.success('generic.cpuflamegraph requested.', 'Success');
-                        } else if (fields[0] == "DONE") {
-                            // since this is a generate call, retry
-                            if (canretry) {
-                                generate();
-                                canretry = false;	// avoid infinite recursion
-                            }
-                        } else {
-                            toastr.success('generic.cpuflamegraph already in progress (' + message + '), please wait.', 'Success');
-                        }
-                    } else {
-                        toastr.error('Failed requesting generic.cpuflamegraph.', 'Error');
-                    }
-                }).error(function () {
-                    toastr.error('Failed requesting generic.cpuflamegraph.', 'Error');
+        function generate(poll) {
+            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_store?name=vector.task.cpuflamegraph&value=60')
+                .success(function () {
+                    toastr.success('vector.task.cpuflamegraph requested.', 'Success');
+                    poll("REQUESTED");
+                }).error(function (err) {
+                    toastr.error('Failed requesting vector.task.cpuflamegraph: ' + err, 'Error');
+                    poll("ERROR " + err);
                 });
         }
 
         function pollStatus(refresh) {
-            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=generic.cpuflamegraph')
+            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=vector.task.cpuflamegraph')
                 .success(function (data) {
                     if (angular.isDefined(data.values[0])) {
                         var message = data.values[0].instances[0].value;
                         refresh(message);
                     }
+                }).error(function () {
+                        refresh("ERROR");
                 });
-        }
-
-        function getSvgName() {
-            return svgname;
         }
 
         return {
             generate: generate,
-            getSvgName: getSvgName,
             pollStatus: pollStatus
         };
     }
