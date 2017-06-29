@@ -46,7 +46,7 @@
                         refresh(message);
                     }
                 }).error(function () {
-                        refresh("ERROR");
+                        refresh("ERROR fetching status");
                 });
         }
 

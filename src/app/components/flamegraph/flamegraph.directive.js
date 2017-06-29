@@ -40,7 +40,7 @@
                     scope.statusmsg = statusmsg;
                     scope.waited += scope.pollms;
                     var fields = statusmsg.split(" ");
-                    if (fields[0] == "DONE" || statusmsg == "ERROR" || scope.waited > scope.waitedmax) {
+                    if (fields[0] == "DONE" || fields[0] == "ERROR" || scope.waited > scope.waitedmax) {
                         if (scope.waited > scope.waitedmax)
                             scope.statusmsg = "Error, timed out";
                         if (fields[0] == "DONE") {
@@ -48,7 +48,7 @@
                             scope.svgname = fields[1];
                             scope.processing = false;
                         }
-                        if (statusmsg == "ERROR") {
+                        if (fields[0] == "ERROR") {
                             scope.ready = false;
                             scope.processing = false;
                         }
