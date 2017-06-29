@@ -32,6 +32,8 @@
             scope.waited = 0;
             scope.pollms = 2000;
             scope.waitedmax = 90000;   // max poll milliseconds
+            scope.secondoptions = ["5", "30", "60", "120"];
+            scope.secondselected = "60";
 
             scope.pollStatus = function() {
                 FlameGraphService.pollStatus(function(statusmsg) {
@@ -57,7 +59,7 @@
             };
 
             scope.generateFlameGraph = function() {
-                FlameGraphService.generate(function(statusmsg) {
+                FlameGraphService.generate(scope.secondselected, function(statusmsg) {
                     var fields = statusmsg.split(" ");
                     if (fields[0] == "ERROR") {
                         scope.statusmsg = statusmsg;

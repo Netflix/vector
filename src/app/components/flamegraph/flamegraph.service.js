@@ -27,8 +27,8 @@
         * @name generate
         * @desc
         */
-        function generate(poll) {
-            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_store?name=vector.task.cpuflamegraph&value=60')
+        function generate(seconds, poll) {
+            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_store?name=vector.task.cpuflamegraph&value=' + seconds)
                 .success(function () {
                     toastr.success('vector.task.cpuflamegraph requested.', 'Success');
                     poll("REQUESTED");
