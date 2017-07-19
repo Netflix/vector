@@ -28,7 +28,7 @@
     * @name MainCtrl
     * @desc Main Controller
     */
-    function MainCtrl($document, $rootScope, $log, $route, $routeParams, $location, $timeout, widgetDefinitions, widgets, embed, version, DashboardService, ContainerMetadataService, ModalService, CustomWidgetService) {
+    function MainCtrl($document, $rootScope, $log, $route, $routeParams, $location, $timeout, widgetDefinitions, widgets, embed, version, DashboardService, ContainerMetadataService, ModalService, CustomWidgetService, config) {
 
         var vm = this,
             widgetsToLoad = widgets;
@@ -234,22 +234,24 @@
             });
         };
       
-        vm.customWidgetOptions = {
-                name: 'disk.dev.read',
-                title: 'disk.dev.read',
-                directive: 'line-time-series',
-                dataAttrName: 'data',
-                dataModelType: 'MetricDataModel',
-                dataModelOptions: {
-                    name: 'disk.dev.read'
-                },
-                size: {
-                    width: '50%',
-                    height: '250px'
-                },
-                enableVerticalResize: false,
-                group: 'Custom'
-            }
+      
+      
+//        vm.customWidgetOptions = {
+//                name: 'disk.dev.read',
+//                title: 'disk.dev.read',
+//                directive: 'line-time-series',
+//                dataAttrName: 'data',
+//                dataModelType: 'MetricDataModel',
+//                dataModelOptions: {
+//                    name: 'disk.dev.read'
+//                },
+//                size: {
+//                    width: '50%',
+//                    height: '250px'
+//                },
+//                enableVerticalResize: false,
+//                group: 'Custom'
+//            }
         
       // Custom Widget Code Ends here
 

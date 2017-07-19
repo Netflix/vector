@@ -298,7 +298,8 @@
                 disableContainerSelect: config.disableContainerSelect,
                 containerSelectOverride: config.containerSelectOverride,
                 disableContainerSelectNone: false,
-                disableHostnameInputContainerSelect: config.disableHostnameInputContainerSelect
+                disableHostnameInputContainerSelect: config.disableHostnameInputContainerSelect,
+                enableCustomWidgetFeature: config.enableCustomWidgetFeature
             };
 
             if (config.enableContainerWidgets) {

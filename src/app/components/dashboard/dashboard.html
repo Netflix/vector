@@ -21,7 +21,7 @@
                 </ul>
             </li>
             <li role="presentation" class="divider"></li>
-            <li ng-if="flags.contextAvailable">
+            <li ng-if="flags.contextAvailable && flags.enableCustomWidgetFeature">
                 <a href="javascript:void(0);" ng-click="vm.openCustomWidgetModal()">Ad-Hoc Metric</a>
             </li>
             <li>
