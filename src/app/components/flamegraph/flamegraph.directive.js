@@ -31,7 +31,7 @@
             scope.statusmsg = "";
             scope.waited = 0;
             scope.pollms = 2000;
-            scope.waitedmax = 90000;   // max poll milliseconds
+            scope.waitedmax = 10 * 60 * 1000;   // max poll milliseconds
             scope.secondoptions = ["5", "30", "60", "120"];
             scope.secondselected = "60";
 
