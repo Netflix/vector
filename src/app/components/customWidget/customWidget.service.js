@@ -19,7 +19,7 @@
      'use strict';
 
      /**
-     * @name CustomWidgetService
+     * @name CustomWidgetServices
      * @desc
      */
      function CustomWidgetService($uibModal) {
@@ -56,14 +56,17 @@
             angular.extend(modalOptions, defaultModalOptions, customModalOptions);
 
             modal.controller = ['$scope','$uibModalInstance', 'widgetOptions', function ($scope, $uibModalInstance, widgetOptions) {
-                $scope.selected = '';
+                $scope.selected = {
+                  name: '',
+                  'text-oneline':''
+                };
                 $scope.widgetOptions = {};
                 angular.extend($scope.widgetOptions, widgetOptions);
                 $scope.modalOptions = modalOptions;
                 $scope.modalOptions.ok = function (result) {
-                    widgetOptions.name = $scope.selected;
-                    widgetOptions.title = $scope.selected;
-                    widgetOptions.dataModelOptions.name = $scope.selected;
+                    widgetOptions.name = $scope.selected.name;
+                    widgetOptions.title = $scope.selected.name;
+                    widgetOptions.dataModelOptions.name = $scope.selected.name;
                     $uibModalInstance.close(result);
                 };
                 $scope.modalOptions.close = function () {

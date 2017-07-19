@@ -221,7 +221,7 @@
             };
 
             CustomWidgetService.showCustomWidgetModal(customWidgetModal, {}).then(function() {
-//                console.log('customwidgetoptions', vm.customWidgetOptions);
+                console.log('customwidgetoptions', vm.customWidgetOptions);
                 widgetDefinitions.push(vm.customWidgetOptions);
 //                console.log('widgetdefs', widgetDefinitions);
                 widgetsToLoad.push(vm.customWidgetOptions);
