@@ -47,7 +47,7 @@
             'useCgroupId': false, // Use container cgroup id instead of container name
             'expandHostname': false, // Automatically expand hostname input when application opens
             'disableHostnameInputContainerSelect': false, // Disable hostname and hostspec input when container is selected
-            'enableCustomWidgetFeature': false // Enable the custom widget feature to add ad-hoc widgets
+            'enableCustomWidgetFeature': true // Enable the custom widget feature to add ad-hoc widgets
       
         })
         .config(toastrConfig)

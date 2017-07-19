@@ -28,7 +28,7 @@
     * @name MainCtrl
     * @desc Main Controller
     */
-    function MainCtrl($document, $rootScope, $log, $route, $routeParams, $location, $timeout, widgetDefinitions, widgets, embed, version, DashboardService, ContainerMetadataService, ModalService, CustomWidgetService, config) {
+    function MainCtrl($document, $rootScope, $log, $route, $routeParams, $location, $timeout, widgetDefinitions, widgets, embed, version, DashboardService, ContainerMetadataService, ModalService, CustomWidgetService) {
 
         var vm = this,
             widgetsToLoad = widgets;
@@ -221,11 +221,11 @@
             };
 
             CustomWidgetService.showCustomWidgetModal(customWidgetModal, {}).then(function() {
-                console.log('customwidgetoptions', vm.customWidgetOptions);
+//                console.log('customwidgetoptions', vm.customWidgetOptions);
                 widgetDefinitions.push(vm.customWidgetOptions);
-                console.log('widgetdefs', widgetDefinitions);
+//                console.log('widgetdefs', widgetDefinitions);
                 widgetsToLoad.push(vm.customWidgetOptions);
-                console.log('widgetstoload', widgetsToLoad);
+//                console.log('widgetstoload', widgetsToLoad);
                 vm.reload = true;
                 $timeout(function() {
                   vm.reload = false;
@@ -234,24 +234,22 @@
             });
         };
       
-      
-      
-//        vm.customWidgetOptions = {
-//                name: 'disk.dev.read',
-//                title: 'disk.dev.read',
-//                directive: 'line-time-series',
-//                dataAttrName: 'data',
-//                dataModelType: 'MetricDataModel',
-//                dataModelOptions: {
-//                    name: 'disk.dev.read'
-//                },
-//                size: {
-//                    width: '50%',
-//                    height: '250px'
-//                },
-//                enableVerticalResize: false,
-//                group: 'Custom'
-//            }
+        vm.customWidgetOptions = {
+                name: '',
+                title: '',
+                directive: 'line-time-series',
+                dataAttrName: 'data',
+                dataModelType: 'MetricDataModel',
+                dataModelOptions: {
+                    name: ''
+                },
+                size: {
+                    width: '50%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'Custom'
+            }
         
       // Custom Widget Code Ends here
 
