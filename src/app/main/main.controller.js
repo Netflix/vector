@@ -221,11 +221,24 @@
             };
 
             CustomWidgetService.showCustomWidgetModal(customWidgetModal, {}).then(function() {
-                console.log('customwidgetoptions', vm.customWidgetOptions);
-                widgetDefinitions.push(vm.customWidgetOptions);
-//                console.log('widgetdefs', widgetDefinitions);
-                widgetsToLoad.push(vm.customWidgetOptions);
-//                console.log('widgetstoload', widgetsToLoad);
+              var widget = {
+                  name: vm.customWidgetOptions.name,
+                  title: vm.customWidgetOptions.title,
+                  directive: 'line-time-series',
+                  dataAttrName: 'data',
+                  dataModelType: 'MetricDataModel',
+                  dataModelOptions: {
+                      name: vm.customWidgetOptions.dataModelOptions.name
+                  },
+                  size: {
+                      width: '50%',
+                      height: '250px'
+                  },
+                  enableVerticalResize: false,
+                  group: 'Custom'
+              }
+                widgetDefinitions.push(widget);
+                widgetsToLoad.push(widget);
                 vm.reload = true;
                 $timeout(function() {
                   vm.reload = false;
