@@ -1,7 +1,7 @@
 
 <div class="modal-header">
 <!--    <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-    <h4 class="modal-title">Add Custom Widget {{selected.name}}, {{widgetOptions.directive}}</h4>
+    <h4 class="modal-title">Add Custom Widget {{selected}}</h4>
 </div>
 <div class="modal-body">
     <!-- Add ng-model, ng-show, ng-disabled, ng-class, ng-change and delay accordingly -->
@@ -15,8 +15,8 @@
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Select Metric</span>
             <!-- ng-repeat to be added to generate metric list and typeahead to be included -->
-            <select class="form-control" name="metricName" ng-options="metricMetadata.name for metricMetadata in metricsMetadata track by metricMetadata.name" ng-model="selected" required></select>
-<!--            <input class="form-control" uib-typeahead="metricMetadata.name for metricMetadata in metricsMetadata" class="form-control"></select>-->
+<!--            <select class="form-control" name="metricName" ng-options="metricMetadata.name for metricMetadata in metricsMetadata track by metricMetadata.name" ng-model="selected" required></select>-->
+            <input type="text" name="metricName" class="form-control" uib-typeahead="metricMetadata.name for metricMetadata in metricsMetadata  | filter:$viewValue | limitTo:8" autocomplete="off" ng-model="selected" required>
         </div>
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Type</span>
