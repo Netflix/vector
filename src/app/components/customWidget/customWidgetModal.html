@@ -18,16 +18,26 @@
 <!--            <select class="form-control" name="metricName" ng-options="metricMetadata.name for metricMetadata in metricsMetadata track by metricMetadata.name" ng-model="selected" required></select>-->
             <input type="text" name="metricName" class="form-control" uib-typeahead="metricMetadata as metricMetadata.name for metricMetadata in metricsMetadata | filter:{name:$viewValue} | limitTo:8" autocomplete="off" ng-model="selected" required>
         </div>
-      <div class="input-group input-group-lg target"><h4>{{ selected['text-oneline'] }}</h4></div>
         <div class="input-group input-group-lg target">
-            <span class="input-group-addon">Type</span>
+          <h4>{{ selected['text-oneline'] }}</h4>
+        </div>
+          <div class="cumulative-checkbox">
+          <label>
+            <input type="checkbox" ng-model="isCumulative">
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Cumulative Data Model
+          </label>
+        </div>
+<!--        <div class="input-group input-group-lg target">-->
+      <!--
             <select id="metricList" ng-model="widgetOptions.dataModelType" class="form-control" required>
                 <option value="MetricDataModel">MetricDataModel</option>
                 <option value="CumulativeMetricDataModel">CumulativeMetricDataModel</option>
-<!--                <option value="MultipleMetricDataModel">MultipleMetricDataModel</option>-->
-<!--                <option value="MultipleCumulativeMetricDataModel">MultipleCumulativeMetricDataModel</option>-->
+                <option value="MultipleMetricDataModel">MultipleMetricDataModel</option>
+                <option value="MultipleCumulativeMetricDataModel">MultipleCumulativeMetricDataModel</option>
             </select>
-        </div>
+      -->
+<!--        </div>-->
 <!--
       <div class="input-group input-group-lg target">
         <div class="checkbox checkbox-primary">

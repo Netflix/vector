@@ -226,7 +226,7 @@
                   title: vm.customWidgetOptions.title,
                   directive: 'line-time-series',
                   dataAttrName: 'data',
-                  dataModelType: 'MetricDataModel',
+                  dataModelType: vm.customWidgetOptions.dataModelType,
                   dataModelOptions: {
                       name: vm.customWidgetOptions.dataModelOptions.name
                   },

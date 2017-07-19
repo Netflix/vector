@@ -60,6 +60,7 @@
                   name: '',
                   'text-oneline':''
                 };
+                $scope.isCumulative = false;
                 $scope.widgetOptions = {};
                 angular.extend($scope.widgetOptions, widgetOptions);
                 $scope.modalOptions = modalOptions;
@@ -67,6 +68,12 @@
                     widgetOptions.name = $scope.selected.name;
                     widgetOptions.title = $scope.selected.name;
                     widgetOptions.dataModelOptions.name = $scope.selected.name;
+                    if($scope.isCumulative) {
+                      widgetOptions.dataModelType = 'CumulativeMetricDataModel';
+                    }
+                    else{
+                      widgetOptions.dataModelType = 'MetricDataModel';
+                    }
                     $uibModalInstance.close(result);
                 };
                 $scope.modalOptions.close = function () {
