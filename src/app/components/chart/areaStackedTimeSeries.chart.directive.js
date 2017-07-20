@@ -29,11 +29,18 @@
             scope.legend = true;
 
             var chart;
+            
+            $rootScope.$on("angular-resizable.resizeEnd", function (event, args) {
+                var element = document.getElementById(args.id);
+                var child = element.childNodes[3].childNodes[0].childNodes[0].childNodes[3];
+                scope.updatedID = child.id;
 
+                scope.height = args.height;
+            });
             nv.addGraph(function () {
 
-              var yAxisTickFormat = D3Service.yAxisTickFormat(),
-                  height = 250;
+              var yAxisTickFormat = D3Service.yAxisTickFormat();
+              scope.height = 250;
 
               chart = nv.models.stackedAreaChart().options({
                   duration: 0,
@@ -47,7 +54,7 @@
 
               chart.margin({'left': 35, 'right': 35});
 
-              chart.height(height);
+              chart.height(scope.height);
 
               if (scope.forcey) {
                   chart.yDomain([0, scope.forcey]);
@@ -72,7 +79,7 @@
 
               d3.select('#' + scope.id + ' svg')
                 .datum(scope.data)
-                .style('height', height + 'px')
+                .style('height', scope.height + 'px')
                 .transition().duration(0)
                 .call(chart);
 
@@ -80,6 +87,15 @@
             });
 
             scope.$on('updateMetrics', function () {
+                if(scope.updatedID && scope.updatedID==scope.id){
+                    d3.select('#' + scope.id + ' svg')
+                        .datum(scope.data)
+                        .style('height', scope.height-50 + 'px')
+                        .transition().duration(0)
+                        .call(chart);
+                    chart.height(scope.height-50);
+                }
+                
                 chart.update();
             });
         }

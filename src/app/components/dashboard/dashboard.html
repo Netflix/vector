@@ -112,7 +112,7 @@
 
         <div ui-sortable="sortableOptions" ng-model="widgets" class="dashboard-widget-area">
             <div ng-repeat="widget in widgets" ng-style="widget.containerStyle" class="widget-container" widget>
-                <div class="widget panel panel-default">
+                <div id="{{widget.name}}" class="widget panel panel-default" resizable r-directions="['bottom']">
                     <div class="widget-header panel-heading">
                         <h3 class="panel-title">
                             <span class="widget-title">{{widget.title}}</span>

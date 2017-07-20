@@ -311,7 +311,6 @@
         function getGuid() {
             return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
         }
-
         return {
             cancelInterval: cancelInterval,
             updateInterval: updateInterval,
@@ -326,7 +325,8 @@
         .module('dashboard', [
             'pmapi',
             'metriclist',
-            'containermetadata'
+            'containermetadata',
+            'angularResizable'
         ])
         .factory('DashboardService', DashboardService);
 
