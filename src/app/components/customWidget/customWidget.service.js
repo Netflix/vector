@@ -61,6 +61,12 @@
                   'text-oneline':''
                 };
                 $scope.isCumulative = false;
+                $scope.updateCumulative = function(param) {
+                  if (param)
+                    $scope.isCumulative = true;
+                  else
+                    $scope.isCumulative = false;
+                }
                 $scope.widgetOptions = {};
                 angular.extend($scope.widgetOptions, widgetOptions);
                 $scope.modalOptions = modalOptions;

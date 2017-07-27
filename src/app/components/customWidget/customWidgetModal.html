@@ -5,7 +5,8 @@
 </div>
 <div class="modal-body">
     <!-- Add ng-model, ng-show, ng-disabled, ng-class, ng-change and delay accordingly -->
-    <form role="form" name="form">
+    <form role="form" name="customWidgetForm">
+      {{isCumulative}} n {{selected.sem}}
 <!--
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Name</span>
@@ -16,7 +17,7 @@
             <span class="input-group-addon">Select Metric</span>
             <!-- ng-repeat to be added to generate metric list and typeahead to be included -->
 <!--            <select class="form-control" name="metricName" ng-options="metricMetadata.name for metricMetadata in metricsMetadata track by metricMetadata.name" ng-model="selected" required></select>-->
-            <input type="text" name="metricName" class="form-control" uib-typeahead="metricMetadata as metricMetadata.name for metricMetadata in metricsMetadata | filter:{name:$viewValue} | limitTo:8" autocomplete="off" ng-model="selected" required>
+            <input type="text" name="metricName" class="form-control" uib-typeahead="metricMetadata as metricMetadata.name for metricMetadata in metricsMetadata | filter:{name:$viewValue} | limitTo:8" autocomplete="off" ng-model="selected" ng-keyup="(selected.sem=='counter')?updateCumulative(true):updateCumulative(false)" required>
         </div>
         <div class="input-group input-group-lg target">
           <h4>{{ selected['text-oneline'] }}</h4>
