@@ -23,7 +23,7 @@
         </div>
         <div class="customwidget-checkbox">
           <label>
-            <input type="checkbox" ng-model="isCumulative">
+            <input type="checkbox" ng-model="advOptions.isCumulative">
             <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
             Cumulative Data Model
           </label>
@@ -55,29 +55,57 @@
         </div>
 -->
         <div class="input-group input-group-lg">
-        <button type="button" class="btn btn-lg btn-default" ng-click="toggleAdv()">Advanced Options &nbsp; <i ng-class="{'fa fa-plus-square-o': !advancedOptions, 'fa fa-minus-square-o': advancedOptions}"></i></button>
-        <button type="button" class="btn btn-lg btn-default">UI Options &nbsp; <i class="fa fa-plus-square-o"></i></button>
+          <button type="button" class="btn pull-right btn-lg btn-default" ng-click="toggleAdv()">Advanced Options &nbsp; <i ng-class="{'fa fa-plus-square-o': !enableAdvOptions, 'fa fa-minus-square-o': enableAdvOptions}"></i></button>
         </div>
-        <div ng-if="advancedOptions">
+        <div ng-if="enableAdvOptions">
           <div class="input-group input-group-lg target">
               <span class="input-group-addon">ForceY</span>
-              <input type="text" class="form-control" name="forcey" data-content="" rel="popover" data-placement="bottom" ng-model="attrs.forcey" required>
+              <input type="text" class="form-control" name="forcey" data-content="" rel="popover" data-placement="bottom" ng-model="advOptions.forcey" required>
           </div>
           <div class="row">
             <div class="customwidget-checkbox col-md-6">
               <label>
-                <input type="checkbox" ng-model="attrs.percentage">
+                <input type="checkbox" ng-model="advOptions.percentage">
                 <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                 Percentage
               </label>
             </div>
             <div class="customwidget-checkbox col-md-6">
               <label>
-                <input type="checkbox" ng-model="attrs.area">
+                <input type="checkbox" ng-model="advOptions.area">
                 <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                 Area
               </label>
             </div>
+          </div>
+          <div class="row">
+            <div class="customwidget-checkbox col-md-6">
+              <label>
+                <input type="checkbox" ng-model="advOptions.isConverted">
+                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                Converted Data Model
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="input-group input-group-lg">
+          <button type="button" class="btn pull-right btn-lg btn-default" ng-click="toggleUI()">UI Options &nbsp; <i ng-class="{'fa fa-plus-square-o': !enableUIOptions, 'fa fa-minus-square-o': enableUIOptions}"></i></button>
+        </div>
+        <div ng-if="enableUIOptions">
+          <div class="input-group input-group-lg target">
+              <span class="input-group-addon">Width</span>
+              <input type="text" class="form-control" name="width" data-content="" rel="popover" data-placement="bottom" ng-model="UIOptions.width" required>
+          </div>
+          <div class="input-group input-group-lg target">
+              <span class="input-group-addon">Height</span>
+              <input type="text" class="form-control" name="width" data-content="" rel="popover" data-placement="bottom" ng-model="UIOptions.height" required>
+          </div>
+          <div class="customwidget-checkbox">
+            <label>
+              <input type="checkbox" ng-model="UIOptions.enableVerticalResize">
+              <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+              Enable Vertical Resize
+            </label>
           </div>
         </div>
     </form>

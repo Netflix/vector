@@ -245,6 +245,14 @@
                     area: vm.customWidgetOptions.attrs.area
                   }
                 }
+                if (vm.customWidgetOptions.size!=undefined) {
+                  widget.size = {
+                    width: vm.customWidgetOptions.size.width,
+                    height: vm.customWidgetOptions.size.height
+                  }
+                }
+                if (vm.customWidgetOptions.enableVerticalResize!=undefined)
+                  widget.enableVerticalResize = vm.customWidgetOptions.enableVerticalResize;
                 widgetDefinitions.push(widget);
                 widgetsToLoad.push(widget);
                 vm.reload = true;

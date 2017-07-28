@@ -56,25 +56,35 @@
             angular.extend(modalOptions, defaultModalOptions, customModalOptions);
 
             modal.controller = ['$scope','$uibModalInstance', 'widgetOptions', function ($scope, $uibModalInstance, widgetOptions) {
-                $scope.advancedOptions = false;
+                $scope.enableAdvOptions = false;
                 $scope.toggleAdv = function() {
-                  $scope.advancedOptions = !$scope.advancedOptions;
+                  $scope.enableAdvOptions = !$scope.enableAdvOptions;
+                }
+                $scope.enableUIOptions = false;
+                $scope.toggleUI = function() {
+                  $scope.enableUIOptions = !$scope.enableUIOptions;
                 }
                 $scope.selected = {
                   name: '',
                   'text-oneline':''
                 };
-                $scope.isCumulative = false;
-                $scope.attrs = {
+                $scope.advOptions = {
+                  isCumulative: false,
+                  isConverted: false,
                   forcey: '1',
-                  percentage: true,
-                  area: true
+                  percentage: false,
+                  area: false
                 };
+                $scope.UIOptions = {
+                  width: '50%',
+                  height: '250px',
+                  enableVerticalResize: false
+                }
                 $scope.updateCumulative = function(param) {
                   if (param)
-                    $scope.isCumulative = true;
+                    $scope.advOptions.isCumulative = true;
                   else
-                    $scope.isCumulative = false;
+                    $scope.advOptions.isCumulative = false;
                 }
                 $scope.widgetOptions = {};
                 angular.extend($scope.widgetOptions, widgetOptions);
@@ -83,20 +93,29 @@
                     widgetOptions.name = $scope.selected.name;
                     widgetOptions.title = $scope.selected.name;
                     widgetOptions.dataModelOptions.name = $scope.selected.name;
-                    if($scope.isCumulative) {
+                    if($scope.advOptions.isCumulative) {
                       widgetOptions.dataModelType = 'CumulativeMetricDataModel';
                     }
                     else{
                       widgetOptions.dataModelType = 'MetricDataModel';
                     }
-                    if ($scope.advancedOptions) {
-                      
+                    if ($scope.enableAdvOptions) {
                       widgetOptions.attrs = {
-                        forcey: $scope.attrs.forcey,
-                        integer: !$scope.attrs.percentage,
-                        percentage: $scope.attrs.percentage,
-                        area: $scope.attrs.area
+                        forcey: $scope.advOptions.forcey,
+                        integer: !$scope.advOptions.percentage,
+                        percentage: $scope.advOptions.percentage,
+                        area: $scope.advOptions.area
                       }
+                      if ($scope.advOptions.isConverted) {
+                        widgetOptions.dataModelType = 'ConvertedMetricDataModel';
+                      }
+                    }
+                    if ($scope.enableUIOptions) {
+                      widgetOptions.size = {
+                        width: $scope.UIOptions.width,
+                        height: $scope.UIOptions.height
+                      };
+                      widgetOptions.enableVerticalResize = $scope.UIOptions.enableVerticalResize;
                     }
                     $uibModalInstance.close(result);
                 };
