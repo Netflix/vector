@@ -21,7 +21,7 @@
         <div class="input-group input-group-lg target">
           <h4>{{ selected['text-oneline'] }}</h4>
         </div>
-          <div class="cumulative-checkbox">
+        <div class="customwidget-checkbox">
           <label>
             <input type="checkbox" ng-model="isCumulative">
             <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
@@ -55,8 +55,30 @@
         </div>
 -->
         <div class="input-group input-group-lg">
-        <button type="button" class="btn btn-lg btn-default">Advanced Options &nbsp; <i class="fa fa-plus-square-o"></i></button>
+        <button type="button" class="btn btn-lg btn-default" ng-click="toggleAdv()">Advanced Options &nbsp; <i ng-class="{'fa fa-plus-square-o': !advancedOptions, 'fa fa-minus-square-o': advancedOptions}"></i></button>
         <button type="button" class="btn btn-lg btn-default">UI Options &nbsp; <i class="fa fa-plus-square-o"></i></button>
+        </div>
+        <div ng-if="advancedOptions">
+          <div class="input-group input-group-lg target">
+              <span class="input-group-addon">ForceY</span>
+              <input type="text" class="form-control" name="forcey" data-content="" rel="popover" data-placement="bottom" ng-model="attrs.forcey" required>
+          </div>
+          <div class="row">
+            <div class="customwidget-checkbox col-md-6">
+              <label>
+                <input type="checkbox" ng-model="attrs.percentage">
+                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                Percentage
+              </label>
+            </div>
+            <div class="customwidget-checkbox col-md-6">
+              <label>
+                <input type="checkbox" ng-model="attrs.area">
+                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                Area
+              </label>
+            </div>
+          </div>
         </div>
     </form>
 </div>

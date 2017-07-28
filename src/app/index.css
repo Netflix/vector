@@ -261,14 +261,14 @@ form div input[name="widgetFilter"] {
 .checkbox-primary input[type="checkbox"]:checked + label::after {
   color: #fff; }
 
-.cumulative-checkbox label:after, 
+.customwidget-checkbox label:after, 
 .radio label:after {
     content: '';
     display: table;
     clear: both;
 }
 
-.cumulative-checkbox .cr,
+.customwidget-checkbox .cr,
 .radio .cr {
     position: relative;
     display: inline-block;
@@ -284,7 +284,7 @@ form div input[name="widgetFilter"] {
     border-radius: 50%;
 }
 
-.cumulative-checkbox .cr .cr-icon,
+.customwidget-checkbox .cr .cr-icon,
 .radio .cr .cr-icon {
     position: absolute;
     font-size: .8em;
@@ -297,25 +297,25 @@ form div input[name="widgetFilter"] {
     margin-left: 0.04em;
 }
 
-.cumulative-checkbox label input[type="checkbox"],
+.customwidget-checkbox label input[type="checkbox"],
 .radio label input[type="radio"] {
     display: none;
 }
 
-.cumulative-checkbox label input[type="checkbox"] + .cr > .cr-icon,
+.customwidget-checkbox label input[type="checkbox"] + .cr > .cr-icon,
 .radio label input[type="radio"] + .cr > .cr-icon {
     transform: scale(3) rotateZ(-20deg);
     opacity: 0;
     transition: all .3s ease-in;
 }
 
-.cumulative-checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+.customwidget-checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
 .radio label input[type="radio"]:checked + .cr > .cr-icon {
     transform: scale(1) rotateZ(0deg);
     opacity: 1;
 }
 
-.cumulative-checkbox label input[type="checkbox"]:disabled + .cr,
+.customwidget-checkbox label input[type="checkbox"]:disabled + .cr,
 .radio label input[type="radio"]:disabled + .cr {
     opacity: .5;
 }

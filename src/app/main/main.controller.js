@@ -221,22 +221,30 @@
             };
 
             CustomWidgetService.showCustomWidgetModal(customWidgetModal, {}).then(function() {
-              var widget = {
-                  name: vm.customWidgetOptions.name,
-                  title: vm.customWidgetOptions.title,
-                  directive: 'line-time-series',
-                  dataAttrName: 'data',
-                  dataModelType: vm.customWidgetOptions.dataModelType,
-                  dataModelOptions: {
-                      name: vm.customWidgetOptions.dataModelOptions.name
-                  },
-                  size: {
-                      width: '50%',
-                      height: '250px'
-                  },
-                  enableVerticalResize: false,
-                  group: 'Custom'
-              }
+                var widget = {
+                    name: vm.customWidgetOptions.name,
+                    title: vm.customWidgetOptions.title,
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: vm.customWidgetOptions.dataModelType,
+                    dataModelOptions: {
+                        name: vm.customWidgetOptions.dataModelOptions.name
+                    },
+                    size: {
+                        width: '50%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Custom'
+                };
+                if (vm.customWidgetOptions.attrs!=undefined) {
+                  widget.attrs = {
+                    forcey: parseInt(vm.customWidgetOptions.attrs.forcey),
+                    integer: vm.customWidgetOptions.attrs.integer,
+                    percentage: vm.customWidgetOptions.attrs.percentage,
+                    area: vm.customWidgetOptions.attrs.area
+                  }
+                }
                 widgetDefinitions.push(widget);
                 widgetsToLoad.push(widget);
                 vm.reload = true;

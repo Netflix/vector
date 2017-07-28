@@ -56,11 +56,20 @@
             angular.extend(modalOptions, defaultModalOptions, customModalOptions);
 
             modal.controller = ['$scope','$uibModalInstance', 'widgetOptions', function ($scope, $uibModalInstance, widgetOptions) {
+                $scope.advancedOptions = false;
+                $scope.toggleAdv = function() {
+                  $scope.advancedOptions = !$scope.advancedOptions;
+                }
                 $scope.selected = {
                   name: '',
                   'text-oneline':''
                 };
                 $scope.isCumulative = false;
+                $scope.attrs = {
+                  forcey: '1',
+                  percentage: true,
+                  area: true
+                };
                 $scope.updateCumulative = function(param) {
                   if (param)
                     $scope.isCumulative = true;
@@ -79,6 +88,15 @@
                     }
                     else{
                       widgetOptions.dataModelType = 'MetricDataModel';
+                    }
+                    if ($scope.advancedOptions) {
+                      
+                      widgetOptions.attrs = {
+                        forcey: $scope.attrs.forcey,
+                        integer: !$scope.attrs.percentage,
+                        percentage: $scope.attrs.percentage,
+                        area: $scope.attrs.area
+                      }
                     }
                     $uibModalInstance.close(result);
                 };
