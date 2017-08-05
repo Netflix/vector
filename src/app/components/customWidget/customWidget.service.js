@@ -73,7 +73,8 @@
                   isConverted: false,
                   forcey: '1',
                   percentage: false,
-                  area: false
+                  area: false,
+                  conversionFunc: 'value/1024/1024'
                 };
                 $scope.UIOptions = {
                   width: '50%',
@@ -108,6 +109,10 @@
                       }
                       if ($scope.advOptions.isConverted) {
                         widgetOptions.dataModelType = 'ConvertedMetricDataModel';
+                        widgetOptions.dataModelOptions = {
+                            name: $scope.selected.name,
+                            conversionFunction: $scope.advOptions.conversionFunc
+                        }
                       }
                     }
                     if ($scope.enableUIOptions) {

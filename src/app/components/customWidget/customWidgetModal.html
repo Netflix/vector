@@ -87,6 +87,11 @@
               </label>
             </div>
           </div>
+            <div class="input-group target" ng-if="advOptions.isConverted">
+                <span class="input-group-addon">Conversion Function</span>
+                <input type="text" class="form-control" name="convFunc" data-content="" rel="popover" data-placement="bottom" ng-model="advOptions.conversionFunc" ng-pattern="/^(.*?(\bvalue\b)[^$]*)$/" required>
+            </div>
+            <span ng-if="advOptions.isConverted">Input the variable 'value' and corresponding conversion function</span>
         </div>
         <div class="input-group input-group-lg">
           <button type="button" class="btn pull-right btn-lg btn-default" ng-click="toggleUI()">UI Options &nbsp; <i ng-class="{'fa fa-plus-square-o': !enableUIOptions, 'fa fa-minus-square-o': enableUIOptions}"></i></button>

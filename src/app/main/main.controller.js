@@ -253,6 +253,16 @@
                 }
                 if (vm.customWidgetOptions.enableVerticalResize!=undefined)
                   widget.enableVerticalResize = vm.customWidgetOptions.enableVerticalResize;
+                if (vm.customWidgetOptions.dataModelType=='ConvertedMetricDataModel') {
+                  var pstring = vm.customWidgetOptions.dataModelOptions.conversionFunction;
+                  widget.dataModelOptions = {
+                      name: vm.customWidgetOptions.dataModelOptions.name,
+                      conversionFunction: function (value) {
+                              var return_var = value/eval(pstring.substr(6));
+                              return return_var;
+                            }
+                  }
+                }
                 widgetDefinitions.push(widget);
                 widgetsToLoad.push(widget);
                 vm.reload = true;
