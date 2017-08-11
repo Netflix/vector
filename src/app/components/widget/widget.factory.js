@@ -642,7 +642,12 @@
               height: '250px'
             },
             enableVerticalResize: false,
-            group: 'CPU'
+            group: 'CPU',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true
           });
         }
 
@@ -1041,7 +1046,8 @@
             'datamodel',
             'chart',
             'flamegraph',
-            'customWidgetSettings'
+            'customWidgetSettings',
+            'customWidgetHelp'
         ])
         .factory('widgetDefinitions', widgetDefinitions)
         .value('defaultWidgets', defaultWidgets)
