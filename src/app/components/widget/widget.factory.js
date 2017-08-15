@@ -697,6 +697,22 @@
                 controller: 'CustomWidgetHelpController'
             },
             hasLocalHelp: true
+          }, {
+            name: 'graph.flame.pagefault.task',
+            title: 'Page Fault Flame Graph (task)',
+            directive: 'pagefault-flame-graph',
+            dataModelType: DummyMetricDataModel,
+            size: {
+              width: '50%',
+              height: '250px'
+            },
+            enableVerticalResize: false,
+            group: 'Task',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true
           });
         }
 
@@ -1097,6 +1113,7 @@
             'flamegraph',
             'pnamecpuflamegraphtask',
             'uninlinedcpuflamegraphtask',
+            'pagefaultflamegraphtask',
             'customWidgetSettings',
             'customWidgetHelp'
         ])
