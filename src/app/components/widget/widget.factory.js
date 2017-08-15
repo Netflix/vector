@@ -633,8 +633,9 @@
 
         if (config.enableCpuFlameGraph) {
           definitions.push({
+            /* for legacy, CPU flame graphs are in the CPU menu as well */
             name: 'graph.flame.cpu',
-            title: 'CPU Flame Graph',
+            title: 'CPU Flame Graph (task)',
             directive: 'cpu-flame-graph',
             dataModelType: DummyMetricDataModel,
             size: {
@@ -643,6 +644,38 @@
             },
             enableVerticalResize: false,
             group: 'CPU',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true
+          }, {
+            name: 'graph.flame.cpu.task',
+            title: 'CPU Flame Graph (task)',
+            directive: 'cpu-flame-graph',
+            dataModelType: DummyMetricDataModel,
+            size: {
+              width: '50%',
+              height: '250px'
+            },
+            enableVerticalResize: false,
+            group: 'Task',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true
+          }, {
+            name: 'graph.flame.pnamecpu.task',
+            title: 'Package Name CPU Flame Graph (task)',
+            directive: 'p-name-cpu-flame-graph',
+            dataModelType: DummyMetricDataModel,
+            size: {
+              width: '50%',
+              height: '250px'
+            },
+            enableVerticalResize: false,
+            group: 'Task',
             settingsModalOptions: {
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
@@ -1046,6 +1079,7 @@
             'datamodel',
             'chart',
             'flamegraph',
+            'pnamecpuflamegraphtask',
             'customWidgetSettings',
             'customWidgetHelp'
         ])

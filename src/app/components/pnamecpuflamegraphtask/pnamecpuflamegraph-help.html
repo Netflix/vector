@@ -1,0 +1,27 @@
+<h4>Summary</h4>
+
+<p>Package name flame graphs visualize code that is directly consuming CPUs, and visualizes this as a hierarchy from the package name (currently only supports Java package names). This widget works using a profiler that does timed sampling of the instruction pointer at 49 Hertz, on all running CPUs. It runs as a background task until the profile is completed.<p>
+
+<h4>Overhead</h4>
+
+<p>This should have negligible overhead while profiling, and then a short period (seconds) of a single CPU runtime at the end as symbols are collected and the flame graph generated.</p>
+
+<h4>CPU IP Profiling</h4>
+
+<p>Timed sampling of the instruction pointer (aka program counter) is a common industry method for understanding CPU usage with very low overhead. This is different to tracing of all functions/methods, which is performed by some CPU profilers and costs high overhead and often skews results (observer effect). This is also different to profiling stack traces, as is typical with flame graphs. In this case, the stack trace is not collected, so code ancestry is not known or shown. The advantage is a different view of CPU consumption, that can be used in addition to normal flame graphs.</p>
+
+<h4>Flame Graph Visualization</h4>
+
+<p>The x-axis shows the stack profile population, sorted alphabetically (it is not the passage of time), and the y-axis in this case traverses components of the function or method package name. Each rectangle represents a component of the function or method name. The wider a frame is is, the more often it was present in the profile. The top edge shows the functions that are on-CPu, and beneath them are the larger package groups that they belong to. Different color hues are used for different code types, and the saturation is randomized to differentiate between frames.</p>
+
+<h4>Common Issues</h4>
+
+<p><b>Missing symbols:</b> JIT runtimes need to export a symbol file for the profiler to use. This depends on the runtime. Java should be handled automatically by Vector, making use of perf-map-agent. Node.js currently needs to run with --perf_basic_prof_only_funcitons or --perf_basic_prof.</p>
+
+<h4>Externel Resources</h4>
+
+<ul>
+<li>A post on <a href="http://www.brendangregg.com/blog/2017-06-30/package-flame-graph.html">Package Name Flame Graphs</a>.</li>
+<li>The <a href="http://www.brendangregg.com/flamegraphs.html">Flame Graphs homepage</a>.</li>
+<li>An ACMQ article <a href="http://queue.acm.org/detail.cfm?id=2927301">The Flame Graph</a>, also published in <a href="http://cacm.acm.org/magazines/2016/6/202665-the-flame-graph/abstract">CACM</a>.</li>
+</ul>
