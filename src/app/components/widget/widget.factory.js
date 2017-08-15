@@ -681,6 +681,22 @@
                 controller: 'CustomWidgetHelpController'
             },
             hasLocalHelp: true
+          }, {
+            name: 'graph.flame.uninlined.task',
+            title: 'Uninlined CPU Flame Graph (task)',
+            directive: 'uninlined-cpu-flame-graph',
+            dataModelType: DummyMetricDataModel,
+            size: {
+              width: '50%',
+              height: '250px'
+            },
+            enableVerticalResize: false,
+            group: 'Task',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true
           });
         }
 
@@ -1080,6 +1096,7 @@
             'chart',
             'flamegraph',
             'pnamecpuflamegraphtask',
+            'uninlinedcpuflamegraphtask',
             'customWidgetSettings',
             'customWidgetHelp'
         ])
