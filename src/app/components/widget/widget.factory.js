@@ -713,6 +713,22 @@
                 controller: 'CustomWidgetHelpController'
             },
             hasLocalHelp: true
+          }, {
+            name: 'graph.flame.diskio.task',
+            title: 'Disk I/O Flame Graph (task)',
+            directive: 'diskio-flame-graph',
+            dataModelType: DummyMetricDataModel,
+            size: {
+              width: '50%',
+              height: '250px'
+            },
+            enableVerticalResize: false,
+            group: 'Task',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true
           });
         }
 
@@ -1114,6 +1130,7 @@
             'pnamecpuflamegraphtask',
             'uninlinedcpuflamegraphtask',
             'pagefaultflamegraphtask',
+            'diskioflamegraphtask',
             'customWidgetSettings',
             'customWidgetHelp'
         ])
