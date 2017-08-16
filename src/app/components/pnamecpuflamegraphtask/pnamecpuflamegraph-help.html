@@ -1,6 +1,6 @@
 <h4>Summary</h4>
 
-<p>Package name flame graphs visualize code that is directly consuming CPUs, and visualizes this as a hierarchy from the package name (currently only supports Java package names). This widget works using a profiler that does timed sampling of the instruction pointer at 49 Hertz, on all running CPUs. It runs as a background task until the profile is completed.<p>
+<p>Package name flame graphs visualize code that is directly consuming CPUs, and visualizes this as a hierarchy based on the package name (currently only supports Java package names). This widget works using a profiler that does timed sampling of the instruction pointer at 49 Hertz, on all running CPUs. This does not need the application to support stack traces, as it only measures the running function (ie, for Java, this does not need -XX:+PreserveFramePointer, so this can be useful for analyzing applications that are running without it). It runs as a background task until the profile is completed.<p>
 
 <h4>Overhead</h4>
 
