@@ -18,6 +18,7 @@
 
 /*jslint node: true*/
 /*global angular*/
+/*global _*/
 /*jslint browser: true*/
 /*jslint nomen: true */
 
@@ -99,6 +100,10 @@
                 widgetButtons: false,
                 hideWidgetName: true,
                 hideWidgetSettings: false,
+//				storage: localStorage,
+//				storageId: "test",
+//				storageHash: '85cb866c-af95-4145-a61a-7e3f93690687',
+//				stringifyStorage: true,
                 widgetDefinitions: widgetDefinitions,
                 defaultWidgets: widgetsToLoad
             };
@@ -143,6 +148,10 @@
                 $location.search('widgets', widgetNameArr.toString());
             }
         };
+		
+		vm.removeWidgetFromWidgetsToLoad = function(widgetObj) {
+			_.remove(widgetsToLoad, _.find(widgetsToLoad, {name: widgetObj.name}));
+		}
 
         vm.removeAllWidgetFromURL = function(){
             $location.search('widgets', null);
@@ -180,6 +189,16 @@
                 vm.addWidgetToURL(directive);
             }
         };
+		
+		vm.addWigetToWidgetsToLoad = function(event, widget) {
+			event.preventDefault();
+			if (_.find(widgetsToLoad, {name: widget.name})==undefined) {
+				widgetsToLoad.push({
+					name: widget.name,
+					size: widget.size
+				})
+			}
+		}
 
         vm.checkWidgetType = function(widgetObj) {
             if (angular.isDefined(widgetObj.requireContainerFilter) && widgetObj.requireContainerFilter === true && $rootScope.flags.disableContainerSelect === false && !$rootScope.flags.containerSelectOverride) {
@@ -264,7 +283,11 @@
                   }
                 }
                 widgetDefinitions.push(widget);
-                widgetsToLoad.push(widget);
+				vm.addWidgetToURL(widget);
+                widgetsToLoad.push({
+					name: widget.name,
+					size: widget.size
+				})
                 vm.reload = true;
                 $timeout(function() {
                   vm.reload = false;
