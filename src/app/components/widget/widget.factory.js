@@ -919,6 +919,10 @@
             );
 
         }
+		
+		if (config.enableSavingWidgets) {
+			definitions = definitions.concat((angular.fromJson(localStorage.getItem("test"))!=null?angular.fromJson(localStorage.getItem("test")).widgets:[]));
+		}
 
         return definitions;
     }

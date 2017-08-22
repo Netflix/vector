@@ -33,6 +33,8 @@
 
         var vm = this,
             widgetsToLoad = widgets;
+		console.log(widgetDefinitions);
+		
 
         /**
         * @name visibilityChanged
@@ -100,10 +102,11 @@
                 widgetButtons: false,
                 hideWidgetName: true,
                 hideWidgetSettings: false,
-//				storage: localStorage,
-//				storageId: "test",
-//				storageHash: '85cb866c-af95-4145-a61a-7e3f93690687',
-//				stringifyStorage: true,
+				storage: localStorage,
+				storageId: "test",
+				storageHash: '85cb866c-af95-4145-a61a-7e3f93690687',
+				stringifyStorage: true,
+				explicitSave: true,
                 widgetDefinitions: widgetDefinitions,
                 defaultWidgets: widgetsToLoad
             };
@@ -150,7 +153,9 @@
         };
 		
 		vm.removeWidgetFromWidgetsToLoad = function(widgetObj) {
+			console.log(_.find(widgetsToLoad, {name: widgetObj.name}), 'is removed!');
 			_.remove(widgetsToLoad, _.find(widgetsToLoad, {name: widgetObj.name}));
+			console.log(widgetsToLoad);
 		}
 
         vm.removeAllWidgetFromURL = function(){
@@ -282,17 +287,27 @@
                             }
                   }
                 }
+                console.log("New widget:", widget);
                 widgetDefinitions.push(widget);
 				vm.addWidgetToURL(widget);
                 widgetsToLoad.push({
 					name: widget.name,
 					size: widget.size
 				})
+				var tempArray = [];
+				tempArray.push(widget);
+				var tempStore = ((angular.fromJson(localStorage.getItem("test"))!=null?angular.fromJson(localStorage.getItem("test")).widgets:[]).concat([widget]));
+				console.log(tempStore);
+				localStorage.setItem("test", JSON.stringify({
+					widgets: tempStore,
+					hash: "85cb866c-af95-4145-a61a-7e3f93690687"
+				}));
                 vm.reload = true;
                 $timeout(function() {
                   vm.reload = false;
                 }, 100);
-                
+				console.log(widgetDefinitions);
+//                vm.dashboardOptions.saveDashboard();
             });
         };
       
