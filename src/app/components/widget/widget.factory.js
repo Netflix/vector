@@ -648,7 +648,8 @@
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
             },
-            hasLocalHelp: true
+            hasLocalHelp: true,
+            isContainerAware: true
           }, {
             name: 'graph.flame.cpu.task',
             title: 'CPU Flame Graph (task)',
@@ -664,7 +665,8 @@
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
             },
-            hasLocalHelp: true
+            hasLocalHelp: true,
+            isContainerAware: true
           }, {
             name: 'graph.flame.pnamecpu.task',
             title: 'Package Name CPU Flame Graph (task)',
@@ -680,7 +682,8 @@
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
             },
-            hasLocalHelp: true
+            hasLocalHelp: true,
+            isContainerAware: true
           }, {
             name: 'graph.flame.uninlined.task',
             title: 'Uninlined CPU Flame Graph (task)',
@@ -696,7 +699,8 @@
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
             },
-            hasLocalHelp: true
+            hasLocalHelp: true,
+            isContainerAware: true
           }, {
             name: 'graph.flame.pagefault.task',
             title: 'Page Fault Flame Graph (task)',
@@ -712,7 +716,8 @@
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
             },
-            hasLocalHelp: true
+            hasLocalHelp: true,
+            isContainerAware: true
           }, {
             name: 'graph.flame.diskio.task',
             title: 'Disk I/O Flame Graph (task)',
@@ -728,7 +733,8 @@
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
             },
-            hasLocalHelp: true
+            hasLocalHelp: true,
+            isContainerAware: true
           }, {
             name: 'graph.flame.ipc.task',
             title: 'IPC Flame Graph (task)',
@@ -744,7 +750,8 @@
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
             },
-            hasLocalHelp: true
+            hasLocalHelp: true,
+            isContainerAware: true
           });
         }
 
