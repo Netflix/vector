@@ -729,6 +729,22 @@
                 controller: 'CustomWidgetHelpController'
             },
             hasLocalHelp: true
+          }, {
+            name: 'graph.flame.ipc.task',
+            title: 'IPC Flame Graph (task)',
+            directive: 'ipc-flame-graph',
+            dataModelType: DummyMetricDataModel,
+            size: {
+              width: '50%',
+              height: '250px'
+            },
+            enableVerticalResize: false,
+            group: 'Task',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true
           });
         }
 
@@ -1131,6 +1147,7 @@
             'uninlinedcpuflamegraphtask',
             'pagefaultflamegraphtask',
             'diskioflamegraphtask',
+            'ipcflamegraphtask',
             'customWidgetSettings',
             'customWidgetHelp'
         ])
