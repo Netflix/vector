@@ -753,6 +753,24 @@
             hasLocalHelp: true,
             isContainerAware: true
           }, {
+            name: 'graph.flame.csw.task',
+            title: 'Context Switch Flame Graph (task)',
+            directive: 'csw-flame-graph',
+            dataModelType: DummyMetricDataModel,
+            size: {
+              width: '50%',
+              height: '250px'
+            },
+            enableVerticalResize: false,
+            group: 'Task',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true,
+            hasHighOverhead: true,
+            isContainerAware: false
+          }, {
             name: 'graph.flame.offcpu.task',
             title: 'Off-CPU Time Flame Graph (task)',
             directive: 'off-c-p-u-flame-graph',
@@ -1173,6 +1191,7 @@
             'pagefaultflamegraphtask',
             'diskioflamegraphtask',
             'ipcflamegraphtask',
+            'cswflamegraphtask',
             'offcpuflamegraphtask',
             'customWidgetSettings',
             'customWidgetHelp'
