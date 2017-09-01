@@ -752,6 +752,24 @@
             },
             hasLocalHelp: true,
             isContainerAware: true
+          }, {
+            name: 'graph.flame.offcpu.task',
+            title: 'Off-CPU Time Flame Graph (task)',
+            directive: 'off-c-p-u-flame-graph',
+            dataModelType: DummyMetricDataModel,
+            size: {
+              width: '50%',
+              height: '250px'
+            },
+            enableVerticalResize: false,
+            group: 'Task',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true,
+            hasHighOverhead: true,
+            isContainerAware: false
           });
         }
 
@@ -1155,6 +1173,7 @@
             'pagefaultflamegraphtask',
             'diskioflamegraphtask',
             'ipcflamegraphtask',
+            'offcpuflamegraphtask',
             'customWidgetSettings',
             'customWidgetHelp'
         ])
