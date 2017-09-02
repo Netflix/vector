@@ -788,6 +788,24 @@
             hasLocalHelp: true,
             hasHighOverhead: true,
             isContainerAware: false
+          }, {
+            name: 'graph.flame.offwake.task',
+            title: 'Off-Wake Time Flame Graph (task)',
+            directive: 'off-wake-flame-graph',
+            dataModelType: DummyMetricDataModel,
+            size: {
+              width: '50%',
+              height: '250px'
+            },
+            enableVerticalResize: false,
+            group: 'Task',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true,
+            hasHighOverhead: true,
+            isContainerAware: false
           });
         }
 
@@ -1193,6 +1211,7 @@
             'ipcflamegraphtask',
             'cswflamegraphtask',
             'offcpuflamegraphtask',
+            'offwakeflamegraphtask',
             'customWidgetSettings',
             'customWidgetHelp'
         ])
