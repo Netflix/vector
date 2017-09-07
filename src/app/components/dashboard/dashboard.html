@@ -121,9 +121,11 @@
                                 <input type="text" ng-model="widget.title" class="form-control">
                             </form> -->
                             <span class="label label-primary" ng-if="!options.hideWidgetName">{{widget.name}}</span>
-                            <span ng-click="removeWidget(widget);  vm.removeWidgetFromURL(widget);" class="glyphicon glyphicon-remove" ng-if="!options.hideWidgetClose"></span>
-                            <span ng-click="openWidgetSettings(widget);" class="glyphicon glyphicon-cog" ng-if="!options.hideWidgetSettings && widget.hasLocalSettings"></span>
-                            <span ng-click="openWidgetSettings(widget);" class="glyphicon glyphicon-question-sign" ng-if="widget.hasLocalHelp"></span>
+                            <span title="Close widget" ng-click="removeWidget(widget);  vm.removeWidgetFromURL(widget);" class="glyphicon glyphicon-remove" ng-if="!options.hideWidgetClose"></span>
+                            <span title="Settings" ng-click="openWidgetSettings(widget);" class="glyphicon glyphicon-cog" ng-if="!options.hideWidgetSettings && widget.hasLocalSettings"></span>
+                            <span title="Help documentation" ng-click="openWidgetSettings(widget);" class="glyphicon glyphicon-question-sign" ng-if="widget.hasLocalHelp"></span>
+                            <span title="May cost high overhead, see help" onclick="alert('WARNING: May cost high overhead. See the Overhead section in the help documentation for details.');" class="glyphicon glyphicon-alert" ng-if="widget.hasHighOverhead"></span>
+                            <span title="Container aware" onclick="alert('If a container is selected, this widget will instrument that container only (container aware).');" class="glyphicon glyphicon glyphicon-ok-circle" ng-if="widget.isContainerAware"></span>
                         </h3>
                     </div>
                     <div class="panel-body widget-content" ng-style="widget.contentStyle"></div>

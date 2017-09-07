@@ -648,7 +648,8 @@
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
             },
-            hasLocalHelp: true
+            hasLocalHelp: true,
+            isContainerAware: true
           }, {
             name: 'graph.flame.cpu.task',
             title: 'CPU Flame Graph (task)',
@@ -664,7 +665,8 @@
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
             },
-            hasLocalHelp: true
+            hasLocalHelp: true,
+            isContainerAware: true
           }, {
             name: 'graph.flame.pnamecpu.task',
             title: 'Package Name CPU Flame Graph (task)',
@@ -680,7 +682,8 @@
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
             },
-            hasLocalHelp: true
+            hasLocalHelp: true,
+            isContainerAware: true
           }, {
             name: 'graph.flame.uninlined.task',
             title: 'Uninlined CPU Flame Graph (task)',
@@ -696,7 +699,8 @@
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
             },
-            hasLocalHelp: true
+            hasLocalHelp: true,
+            isContainerAware: true
           }, {
             name: 'graph.flame.pagefault.task',
             title: 'Page Fault Flame Graph (task)',
@@ -712,7 +716,8 @@
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
             },
-            hasLocalHelp: true
+            hasLocalHelp: true,
+            isContainerAware: true
           }, {
             name: 'graph.flame.diskio.task',
             title: 'Disk I/O Flame Graph (task)',
@@ -728,7 +733,79 @@
                 templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
                 controller: 'CustomWidgetHelpController'
             },
-            hasLocalHelp: true
+            hasLocalHelp: true,
+            isContainerAware: true
+          }, {
+            name: 'graph.flame.ipc.task',
+            title: 'IPC Flame Graph (task)',
+            directive: 'ipc-flame-graph',
+            dataModelType: DummyMetricDataModel,
+            size: {
+              width: '50%',
+              height: '250px'
+            },
+            enableVerticalResize: false,
+            group: 'Task',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true,
+            isContainerAware: true
+          }, {
+            name: 'graph.flame.csw.task',
+            title: 'Context Switch Flame Graph (task)',
+            directive: 'csw-flame-graph',
+            dataModelType: DummyMetricDataModel,
+            size: {
+              width: '50%',
+              height: '250px'
+            },
+            enableVerticalResize: false,
+            group: 'Task',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true,
+            hasHighOverhead: true,
+            isContainerAware: false
+          }, {
+            name: 'graph.flame.offcpu.task',
+            title: 'Off-CPU Time Flame Graph (task)',
+            directive: 'off-c-p-u-flame-graph',
+            dataModelType: DummyMetricDataModel,
+            size: {
+              width: '50%',
+              height: '250px'
+            },
+            enableVerticalResize: false,
+            group: 'Task',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true,
+            hasHighOverhead: true,
+            isContainerAware: false
+          }, {
+            name: 'graph.flame.offwake.task',
+            title: 'Off-Wake Time Flame Graph (task)',
+            directive: 'off-wake-flame-graph',
+            dataModelType: DummyMetricDataModel,
+            size: {
+              width: '50%',
+              height: '250px'
+            },
+            enableVerticalResize: false,
+            group: 'Task',
+            settingsModalOptions: {
+                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                controller: 'CustomWidgetHelpController'
+            },
+            hasLocalHelp: true,
+            hasHighOverhead: true,
+            isContainerAware: false
           });
         }
 
@@ -1131,6 +1208,10 @@
             'uninlinedcpuflamegraphtask',
             'pagefaultflamegraphtask',
             'diskioflamegraphtask',
+            'ipcflamegraphtask',
+            'cswflamegraphtask',
+            'offcpuflamegraphtask',
+            'offwakeflamegraphtask',
             'customWidgetSettings',
             'customWidgetHelp'
         ])
