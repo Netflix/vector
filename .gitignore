@@ -8,3 +8,4 @@ coverage/
 .sass-cache/
 npm-debug.log
 src/app/index.version.js
+package-lock.json
