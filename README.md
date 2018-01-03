@@ -1,7 +1,7 @@
 ![Vector](vector.png)
 
 [![TravisCI](https://img.shields.io/travis/Netflix/vector.svg)](https://travis-ci.org/Netflix/vector)
-[![Slack Status](https://slack.getvector.io/badge.svg)](https://slack.getvector.io/)
+[![Slack Status](http://slack.getvector.io/badge.svg)](http://slack.getvector.io/)
 [![NetflixOSS Lifecycle](https://img.shields.io/osslifecycle/Netflix/vector.svg)]()
 [![License](https://img.shields.io/github/license/Netflix/vector.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Docker Pulls](https://img.shields.io/docker/pulls/netflixoss/vector.svg)](https://hub.docker.com/r/netflixoss/vector/)
