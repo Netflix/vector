@@ -254,6 +254,20 @@
                         return appendInstanceDomains(context, data);
                     });
         }
+		
+		function getMetricsMetadata(context) {
+            var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
+                $rootScope.properties.port;
+            var metadata = {};
+            metadata.method = 'GET';
+            metadata.url = baseURI + '/pmapi/' + context + '/_metric';
+            $http(metadata).then(function(response) {
+              if (angular.isDefined(response.data.metrics)) {
+                $rootScope.metricsMetadata = response.data.metrics;
+              }
+                return $q.reject('metricsData is undefined');
+            });
+        }
 
          return {
             getHostspecContext: getHostspecContext,
@@ -262,6 +276,7 @@
             getArchiveContext: getArchiveContext,
             getMetricsValues: getMetricsValues,
             getMetrics: getMetrics,
+			getMetricsMetadata: getMetricsMetadata,
             getInstanceDomainsByIndom: getInstanceDomainsByIndom,
             getInstanceDomainsByName: getInstanceDomainsByName,
             setContainer: setContainer

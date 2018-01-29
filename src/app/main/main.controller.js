@@ -18,6 +18,7 @@
 
 /*jslint node: true*/
 /*global angular*/
+/*global _*/
 /*jslint browser: true*/
 /*jslint nomen: true */
 
@@ -28,7 +29,7 @@
     * @name MainCtrl
     * @desc Main Controller
     */
-    function MainCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, version, DashboardService, ContainerMetadataService, ModalService) {
+    function MainCtrl($document, $rootScope, $log, $route, $routeParams, $location, $timeout, widgetDefinitions, widgets, embed, version, DashboardService, ContainerMetadataService, ModalService, CustomWidgetService) {
 
         var vm = this,
             widgetsToLoad = widgets;
@@ -99,6 +100,10 @@
                 widgetButtons: false,
                 hideWidgetName: true,
                 hideWidgetSettings: false,
+//				storage: localStorage,
+//				storageId: "test",
+//				storageHash: '85cb866c-af95-4145-a61a-7e3f93690687',
+//				stringifyStorage: true,
                 widgetDefinitions: widgetDefinitions,
                 defaultWidgets: widgetsToLoad
             };
@@ -143,6 +148,10 @@
                 $location.search('widgets', widgetNameArr.toString());
             }
         };
+		
+		vm.removeWidgetFromWidgetsToLoad = function(widgetObj) {
+			_.remove(widgetsToLoad, _.find(widgetsToLoad, {name: widgetObj.name}));
+		}
 
         vm.removeAllWidgetFromURL = function(){
             $location.search('widgets', null);
@@ -180,6 +189,16 @@
                 vm.addWidgetToURL(directive);
             }
         };
+		
+		vm.addWigetToWidgetsToLoad = function(event, widget) {
+			event.preventDefault();
+			if (_.find(widgetsToLoad, {name: widget.name})==undefined) {
+				widgetsToLoad.push({
+					name: widget.name,
+					size: widget.size
+				})
+			}
+		}
 
         vm.checkWidgetType = function(widgetObj) {
             if (angular.isDefined(widgetObj.requireContainerFilter) && widgetObj.requireContainerFilter === true && $rootScope.flags.disableContainerSelect === false && !$rootScope.flags.containerSelectOverride) {
@@ -201,6 +220,100 @@
             }
             return true;
         };
+      
+      // Custom Widget Code Starts here
+        
+        vm.reload = false;
+      
+        vm.openCustomWidgetModal = function(){
+          
+            var customWidgetModal = {
+                backdrop: true,
+                keyboard: true,
+                modalFade: true,
+                templateUrl: 'app/components/customWidget/customWidgetModal.html',
+                resolve: {
+                  widgetOptions: function() {
+                    return vm.customWidgetOptions
+                  }
+                }
+            };
+
+            CustomWidgetService.showCustomWidgetModal(customWidgetModal, {}).then(function() {
+                var widget = {
+                    name: vm.customWidgetOptions.name,
+                    title: vm.customWidgetOptions.title,
+                    directive: 'line-time-series',
+                    dataAttrName: 'data',
+                    dataModelType: vm.customWidgetOptions.dataModelType,
+                    dataModelOptions: {
+                        name: vm.customWidgetOptions.dataModelOptions.name
+                    },
+                    size: {
+                        width: '50%',
+                        height: '250px'
+                    },
+                    enableVerticalResize: false,
+                    group: 'Custom'
+                };
+                if (vm.customWidgetOptions.attrs!=undefined) {
+                  widget.attrs = {
+                    forcey: parseInt(vm.customWidgetOptions.attrs.forcey),
+                    integer: vm.customWidgetOptions.attrs.integer,
+                    percentage: vm.customWidgetOptions.attrs.percentage,
+                    area: vm.customWidgetOptions.attrs.area
+                  }
+                }
+                if (vm.customWidgetOptions.size!=undefined) {
+                  widget.size = {
+                    width: vm.customWidgetOptions.size.width,
+                    height: vm.customWidgetOptions.size.height
+                  }
+                }
+                if (vm.customWidgetOptions.enableVerticalResize!=undefined)
+                  widget.enableVerticalResize = vm.customWidgetOptions.enableVerticalResize;
+                if (vm.customWidgetOptions.dataModelType=='ConvertedMetricDataModel') {
+                  var pstring = vm.customWidgetOptions.dataModelOptions.conversionFunction;
+                  widget.dataModelOptions = {
+                      name: vm.customWidgetOptions.dataModelOptions.name,
+                      conversionFunction: function (value) {
+                              var return_var = value/eval(pstring.substr(6));
+                              return return_var;
+                            }
+                  }
+                }
+                widgetDefinitions.push(widget);
+				vm.addWidgetToURL(widget);
+                widgetsToLoad.push({
+					name: widget.name,
+					size: widget.size
+				})
+                vm.reload = true;
+                $timeout(function() {
+                  vm.reload = false;
+                }, 100);
+                
+            });
+        };
+      
+        vm.customWidgetOptions = {
+                name: '',
+                title: '',
+                directive: 'line-time-series',
+                dataAttrName: 'data',
+                dataModelType: 'MetricDataModel',
+                dataModelOptions: {
+                    name: ''
+                },
+                size: {
+                    width: '50%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'Custom'
+            }
+        
+      // Custom Widget Code Ends here
 
         vm.updateInterval = DashboardService.updateInterval;
         vm.updateContainer = ContainerMetadataService.updateContainer;
@@ -215,6 +328,7 @@
             'dashboard',
             'widget',
             'containermetadata',
+            'customwidget',
             'modal'
         ])
         .controller('MainController', MainCtrl);

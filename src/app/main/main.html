@@ -7,17 +7,17 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-      <a class="navbar-brand" href="#/">
-         <img ng-src="assets/images/vector_owl.png" alt="Vector Owl" height="20"></a>
-      <a class="navbar-brand" href="javascript:window.location.reload(true);history.pushState(null, '', location.href.split('?')[0]);">Vector</a>
+			<a class="navbar-brand" href="#/">
+				<img ng-src="assets/images/vector_owl.png" alt="Vector Owl" height="20"></a>
+			<a class="navbar-brand" href="javascript:window.location.reload(true);history.pushState(null, '', location.href.split('?')[0]);">Vector</a>
 		</div>
 	</div>
 </div>
 
 <div class="dashboard-container " ng-class="{ 'main-container': !vm.embed }">
-  <div class="row">
-      <div class="col-md-12">
-          <div dashboard="vm.dashboardOptions" template-url="app/components/dashboard/dashboard.html" class="dashboard-container"></div>
-      </div>
-  </div>
+	<div class="row">
+		<div class="col-md-12">
+			<div ng-if="!vm.reload" dashboard="vm.dashboardOptions" template-url="app/components/dashboard/dashboard.html" class="dashboard-container"></div>
+		</div>
+	</div>
 </div>
