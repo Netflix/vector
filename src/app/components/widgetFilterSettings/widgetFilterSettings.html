@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+  <h3>Widget Options <small>{{widget.title}}</small></h3>
+</div>
+
+<div class="modal-body">
+    <form name="form" novalidate class="form-horizontal">
+        <div class="input-group">
+            <span class="input-group-addon">Filter</span>
+            <input class="widgetInput form-control" name="widgetFilter" ng-model="result.filter" ng-change="vm.updateFilterWidget(this.widget, result)" ng-keydown="$event.which === 13 && ok()">
+        </div>
+
+    </form>
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancel(); vm.clearFilterWidget(this.widget);">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ok()">OK</button>
+</div>

@@ -19,22 +19,49 @@
 /*eslint-disable angular/controller-as*/
 
 (function () {
-    'use strict';
+  'use strict';
+  
+  function CustomWidgetSettingsCtrl($scope, $uibModalInstance, widget) {
+    // add widget to scope
+    $scope.widget = widget;
+    
+    $scope.selected = {
+      'name': '',
+      'text-oneline': ''
+    };
 
-    function CustomWidgetSettingsCtrl($scope, $uibModalInstance, widget) {
-        $scope.widget = widget;
-        $scope.result = angular.extend({}, $scope.result, widget);
+    $scope.isCumulative = false;
 
-        $scope.ok = function () {
-          $uibModalInstance.close($scope.result);
-        };
-
-        $scope.cancel = function () {
-          $uibModalInstance.dismiss('cancel');
-        };
+    $scope.updateMetric = function() {
+      if ($scope.selected) {
+        $scope.isCumulative = $scope.selected.sem === 'counter' ? true : false;
+      }
     }
 
-    angular
-        .module('customWidgetSettings', [])
-        .controller('CustomWidgetSettingsController', CustomWidgetSettingsCtrl);
+    $scope.ok = function() {
+      widget.name = $scope.selected.name;
+      widget.title = $scope.selected.name;
+      widget.dataModelOptions.name = $scope.selected.name;
+      widget.dataModelType = 'MetricDataModel';
+
+      if ($scope.isCumulative) {
+        widget.dataModelType = 'CumulativeMetricDataModel';
+      }
+
+      widget.dataModel.update($scope.selected.name, $scope.isCumulative);
+
+      // set up result object
+      $scope.result = angular.extend({}, $scope.result, widget);
+
+      $uibModalInstance.close($scope.result);
+    };
+
+    $scope.cancel = function() {
+      $uibModalInstance.dismiss('cancel');
+    };
+  }
+
+  angular
+    .module('customWidgetSettings', [])
+    .controller('CustomWidgetSettingsController', CustomWidgetSettingsCtrl);
 })();

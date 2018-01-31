@@ -45,16 +45,26 @@
         DiskLatencyMetricDataModel,
         CumulativeUtilizationMetricDataModel,
         CgroupMemoryUtilizationMetricDataModel,
+        CustomMetricDataModel,
         config) {
 
-        var onSettingsClose = function(resultFromModal, widgetModel) {
-            if (typeof resultFromModal !== 'undefined'){
+        var handleWidgetFilterSettingsClose = function(resultFromModal, widgetModel) {
+            if (typeof resultFromModal !== 'undefined') {
                 widgetModel.filter = resultFromModal.filter;
             }
         };
+
+        var handleCustomWidgetSettingsClose = function(resultFromModal, widgetModel) {
+            if (typeof resultFromModal !== 'undefined') {
+                widgetModel.filter = resultFromModal.filter;
+                widgetModel.name = resultFromModal.name;
+                widgetModel.title = resultFromModal.name;
+                widgetModel.dataModelOptions.name = resultFromModal.dataModelOptions.name;
+                widgetModel.dataModelType = resultFromModal.dataModelType;
+            }
+        };
+
         var definitions = [
-			
-            
             {
                 name: 'kernel.all.load',
                 title: 'Load Average',
@@ -447,11 +457,11 @@
                     integer: true
                 },
                 settingsModalOptions: {
-                    templateUrl: 'app/components/customWidgetSettings/customWidgetSettings.html',
-                    controller: 'CustomWidgetSettingsController'
+                    templateUrl: 'app/components/widgetFilterSettings/widgetFilterSettings.html',
+                    controller: 'WidgetFilterSettingsController'
                 },
                 hasLocalSettings: true,
-                onSettingsClose: onSettingsClose,
+                onSettingsClose: handleWidgetFilterSettingsClose,
                 filter: ''
             }, {
                 name: 'disk.iops',
@@ -577,11 +587,11 @@
                     integer: true
                 },
                 settingsModalOptions: {
-                    templateUrl: 'app/components/customWidgetSettings/customWidgetSettings.html',
-                    controller: 'CustomWidgetSettingsController'
+                    templateUrl: 'app/components/widgetFilterSettings/widgetFilterSettings.html',
+                    controller: 'WidgetFilterSettingsController'
                 },
                 hasLocalSettings: true,
-                onSettingsClose: onSettingsClose,
+                onSettingsClose: handleWidgetFilterSettingsClose,
                 filter: ''
             }, {
                 name: 'network.tcp.retrans',
@@ -646,6 +656,31 @@
             enableVerticalResize: false,
             group: 'CPU'
           });
+        }
+
+        if (config.enableCustomWidgetFeature) {
+            definitions.push({
+                name: 'custom.metric',
+                title: 'Custom Metric',
+                directive: 'line-time-series',
+                dataAttrName: 'data',
+                dataModelType: CustomMetricDataModel,
+                dataModelOptions: {
+                    name: null
+                },
+                size: {
+                    width: '50%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'Custom',
+                settingsModalOptions: {
+                    templateUrl: 'app/components/customWidgetSettings/customWidgetSettings.html',
+                    controller: 'CustomWidgetSettingsController'
+                },
+                hasLocalSettings: true,
+                onSettingsClose: handleCustomWidgetSettingsClose
+            })
         }
 
         if (config.enableContainerWidgets) {
@@ -1043,6 +1078,7 @@
             'datamodel',
             'chart',
             'flamegraph',
+            'widgetFilterSettings',
             'customWidgetSettings'
         ])
         .factory('widgetDefinitions', widgetDefinitions)

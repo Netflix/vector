@@ -16,14 +16,11 @@
                 <a ng-click="void(0)"  data-toggle="dropdown">{{group}}</a>
                 <ul class="dropdown-menu">
                     <li ng-repeat="widget in widgetDefs | groupFilter: group">
-                        <a ng-click="vm.addWidget($event, widget); vm.addWigetToWidgetsToLoad($event, widget)">{{widget.title}}</a>
+                        <a ng-click="vm.addWidget($event, widget);">{{widget.title}}</a>
                     </li>
                 </ul>
             </li>
             <li role="presentation" class="divider"></li>
-            <li ng-if="flags.contextAvailable && flags.enableCustomWidgetFeature">
-                <a href="javascript:void(0);" ng-click="vm.openCustomWidgetModal()">Ad-Hoc Metric</a>
-            </li>
             <li>
                 <a href="javascript:void(0);" ng-click="loadWidgets(defaultWidgets); vm.addWidgetToURL(defaultWidgets);">Default Widgets</a>
             </li>
@@ -124,7 +121,7 @@
                                 <input type="text" ng-model="widget.title" class="form-control">
                             </form> -->
                             <span class="label label-primary" ng-if="!options.hideWidgetName">{{widget.name}}</span>
-                            <span ng-click="removeWidget(widget);  vm.removeWidgetFromURL(widget); vm.removeWidgetFromWidgetsToLoad(widget);" class="glyphicon glyphicon-remove" ng-if="!options.hideWidgetClose"></span>
+                            <span ng-click="removeWidget(widget);  vm.removeWidgetFromURL(widget);" class="glyphicon glyphicon-remove" ng-if="!options.hideWidgetClose"></span>
                             <span ng-click="openWidgetSettings(widget);" class="glyphicon glyphicon-cog" ng-if="!options.hideWidgetSettings && widget.hasLocalSettings"></span>
                         </h3>
                     </div>

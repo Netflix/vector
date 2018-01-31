@@ -29,10 +29,9 @@
 
             var chart;
 
+            var height = 250;
+
             nv.addGraph(function () {
-
-              var height = 250;
-
               chart = nv.models.lineChart().options({
                   duration: 0,
                   useInteractiveGuideline: true,
@@ -80,7 +79,12 @@
                     instance.area=true;
                   });
                 }
-                chart.update();
+                // TODO: check if updating datum on every refresh affects performance
+                d3.select('#' + scope.id + ' svg')
+                    .datum(scope.data)
+                    .style('height', height + 'px')
+                    .transition().duration(0)
+                    .call(chart);
             });
         }
 
