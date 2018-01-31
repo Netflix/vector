@@ -33,6 +33,65 @@
             Cumulative Data Model
           </label>
         </div>
+        <div class="input-group input-group-lg">
+            <button type="button" class="btn pull-right btn-lg btn-default" ng-click="toggleAdvancedOptions()">Advanced Options &nbsp; <i ng-class="{'fa fa-plus-square-o': !advancedOptions, 'fa fa-minus-square-o': advancedOptions}"></i></button>
+          </div>
+          <div ng-if="advancedOptions">
+            <div class="input-group input-group-lg target">
+                <span class="input-group-addon">ForceY</span>
+                <input type="text" class="form-control" name="forcey" data-content="" rel="popover" data-placement="bottom" ng-model="forcey" required>
+            </div>
+            <div class="row">
+              <div class="customwidget-checkbox col-md-6">
+                <label>
+                  <input type="checkbox" ng-model="percentage">
+                  <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                  Percentage
+                </label>
+              </div>
+              <div class="customwidget-checkbox col-md-6">
+                <label>
+                  <input type="checkbox" ng-model="area">
+                  <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                  Area
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="customwidget-checkbox col-md-6">
+                <label>
+                  <input type="checkbox" ng-model="isConverted">
+                  <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                  Converted Data Model
+                </label>
+              </div>
+            </div>
+              <div class="input-group target" ng-if="isConverted">
+                  <span class="input-group-addon">Conversion Function</span>
+                  <input type="text" class="form-control" name="convFunc" data-content="" rel="popover" data-placement="bottom" ng-model="conversionFunc" ng-pattern="/^(.*?(\bvalue\b)[^$]*)$/" required>
+              </div>
+              <span ng-if="isConverted">Input the variable 'value' and corresponding conversion function</span>
+          </div>
+          <div class="input-group input-group-lg">
+            <button type="button" class="btn pull-right btn-lg btn-default" ng-click="toggleUiOptions()">UI Options &nbsp; <i ng-class="{'fa fa-plus-square-o': !uiOptions, 'fa fa-minus-square-o': uiOptions}"></i></button>
+          </div>
+          <div ng-if="uiOptions">
+            <div class="input-group input-group-lg target">
+                <span class="input-group-addon">Width</span>
+                <input type="text" class="form-control" name="width" data-content="" rel="popover" data-placement="bottom" ng-model="width" required>
+            </div>
+            <div class="input-group input-group-lg target">
+                <span class="input-group-addon">Height</span>
+                <input type="text" class="form-control" name="width" data-content="" rel="popover" data-placement="bottom" ng-model="height" required>
+            </div>
+            <div class="customwidget-checkbox">
+              <label>
+                <input type="checkbox" ng-model="enableVerticalResize">
+                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                Enable Vertical Resize
+              </label>
+            </div>
+          </div>
     </form>
 </div>
 

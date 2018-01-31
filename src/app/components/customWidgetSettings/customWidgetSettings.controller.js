@@ -31,6 +31,25 @@
     };
 
     $scope.isCumulative = false;
+    $scope.isConverted = false;
+    $scope.forcey = '1';
+    $scope.percentage = false;
+    $scope.area = false;
+    $scope.conversionFunction = 'value/1024/1024';
+    $scope.width = '50%';
+    $scope.height = '250px';
+    $scope.enableVerticalResize = false;
+
+    $scope.advancedOptions = false;
+    $scope.uiOptions = false;
+
+    $scope.toggleAdvancedOptions = function() {
+      $scope.advancedOptions = !$scope.advancedOptions;
+    }
+
+    $scope.toggleUiOptions = function() {
+      $scope.uiOptions = !$scope.uiOptions;
+    }
 
     $scope.updateMetric = function() {
       if ($scope.selected) {
@@ -42,15 +61,40 @@
       widget.name = $scope.selected.name;
       widget.title = $scope.selected.name;
       widget.dataModelOptions.name = $scope.selected.name;
-      widget.dataModelType = 'MetricDataModel';
+      widget.dataModelType = 'CustomMetricDataModel';
 
       if ($scope.isCumulative) {
-        widget.dataModelType = 'CumulativeMetricDataModel';
+        // TODO: take cumulative metrics into account on custom metric data model
+        widget.dataModelType = 'CustomMetricDataModel';
       }
+
+      if ($scope.isConverted) {
+        // TODO: take converted metrics into account on custom metric data model
+        widget.dataModelType = 'CustomMetricDataModel';
+        widget.dataModelOptions = {
+          conversionFunction: function (value) {
+            return value/eval($scope.conversionFunction.substr(6));
+          }
+        }
+      }
+
+      widget.attrs = {
+        forcey: $scope.forcey,
+        integer: !$scope.percentage,
+        percentage: $scope.percentage,
+        area: $scope.area
+      }
+
+      widget.size = {
+        width: $scope.width,
+        height: $scope.height
+      };
+      widget.enableVerticalResize = $scope.enableVerticalResize;
 
       widget.dataModel.update($scope.selected.name, $scope.isCumulative);
 
       // set up result object
+      // TODO: check if this is really required
       $scope.result = angular.extend({}, $scope.result, widget);
 
       $uibModalInstance.close($scope.result);
