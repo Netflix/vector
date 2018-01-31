@@ -43,7 +43,9 @@
             this.name = name;
 
             // destroy metric before updating
-            MetricListService.destroyMetric(this.name);
+            if (this.metric) {
+                MetricListService.destroyMetric(this.name);
+            }
 
             if (!cumulative) {
                 this.metric = MetricListService.getOrCreateMetric(name);
