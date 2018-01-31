@@ -4,7 +4,10 @@
 </div>
 
 <div class="modal-body">
-    <form role="form" name="customWidgetForm">
+    <form role="form" name="customWidgetSettingsForm" novalidate>
+        <div class="input-group input-group-lg" nf-if="!metricsMetadata">
+            <h4>Vector is not connected to a host. Can't update metric list.</h4>
+        </div>
         <div class="input-group input-group-lg target">
             <span class="input-group-addon">Select Metric</span>
             <input
@@ -15,10 +18,12 @@
               autocomplete="off"
               ng-model="selected"
               ng-change="updateMetric()"
+              ng-disabled="!metricsMetadata"
+              ng-class="{ 'disabled': !metricsMetadata }"
               required
             >
         </div>
-        <div class="input-group input-group-lg target">
+        <div class="input-group input-group-lg">
           <h4>{{ selected['text-oneline'] }}</h4>
         </div>
         <div class="customwidget-checkbox">
@@ -33,5 +38,5 @@
 
 <div class="modal-footer">
   <button type="button" class="btn btn-default" ng-click="cancel();">Cancel</button>
-  <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-class="{ 'disabled': form.$invalid }" ng-click="ok()">OK</button>
+  <button type="button" class="btn btn-primary" ng-disabled="customWidgetSettingsForm.$invalid" ng-class="{ 'disabled': customWidgetSettingsForm.$invalid }" ng-click="ok()">OK</button>
 </div>
