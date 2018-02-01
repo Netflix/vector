@@ -1,12 +1,12 @@
 <div class="col-md-12">
     <div class="row" style="text-align: center;">
-        <p>Timed CPU stack sampling</p>
-        <button type="button" class="btn btn-primary" ng-disabled="processing" ng-click="generateFlameGraph()">Generate CPU Flame Graph<i ng-if="processing" class="fa fa-refresh fa-spin"></i></button>
+        <p>Off-CPU time stack tracing</p>
+        <button type="button" class="btn btn-primary" ng-disabled="processing" ng-click="generateOffCPUFlameGraph()">Generate Off-CPU Time Flame Graph<i ng-if="processing" class="fa fa-refresh fa-spin"></i></button>
     seconds: <select class="select" ng-model="secondselected" style="margin-top:7px"><option ng-repeat="x in secondoptions">{{x}}</option></select>
     </div>
     <div class="row" style="margin-top: 10px;">Status: {{statusmsg}}</div>
     <div class="row" ng-if="!processing && ready" style="text-align: center; margin-top: 15px;">
-        <p>The CPU flame graph is ready. Please click on the button below to open it.</p>
+        <p>The flame graph is ready. Please click on the button below to open it.</p>
         <a class="btn btn-default" href="http://{{host}}:{{port}}/{{svgname}}" target="_blank">Open Flame Graph</a>
     </div>
 

@@ -18,7 +18,7 @@
 (function () {
     'use strict';
 
-    function cpuFlameGraph($rootScope, $timeout, FlameGraphService, DashboardService) {
+    function pagefaultFlameGraph($rootScope, $timeout, PagefaultFlameGraphService, DashboardService) {
 
         function link(scope) {
             scope.host = $rootScope.properties.host;
@@ -34,10 +34,10 @@
             scope.waitedmax = 10 * 60 * 1000;   // max poll milliseconds
             scope.secondoptions = ["5", "30", "60", "120"];
             scope.secondselected = "60";
-            scope.widget.help_url = "app/components/flamegraph/flamegraph-help.html";
+            scope.widget.help_url = "app/components/pagefaultflamegraphtask/pagefaultflamegraph-help.html";
 
             scope.pollStatus = function() {
-                FlameGraphService.pollStatus(function(statusmsg) {
+                PagefaultFlameGraphService.pollStatus(function(statusmsg) {
                     scope.statusmsg = statusmsg;
                     scope.waited += scope.pollms;
                     var fields = statusmsg.split(" ");
@@ -59,8 +59,8 @@
                 });
             };
 
-            scope.generateFlameGraph = function() {
-                FlameGraphService.generate(scope.secondselected, function(statusmsg) {
+            scope.generatePagefaultFlameGraph = function() {
+                PagefaultFlameGraphService.generate(scope.secondselected, function(statusmsg) {
                     var fields = statusmsg.split(" ");
                     if (fields[0] == "ERROR") {
                         scope.statusmsg = statusmsg;
@@ -80,13 +80,13 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/flamegraph/flamegraph.html',
+            templateUrl: 'app/components/pagefaultflamegraphtask/pagefaultflamegraph.html',
             link: link
         };
     }
 
     angular
-        .module('flamegraph')
-        .directive('cpuFlameGraph', cpuFlameGraph);
+        .module('pagefaultflamegraphtask')
+        .directive('pagefaultFlameGraph', pagefaultFlameGraph);
 
 })();

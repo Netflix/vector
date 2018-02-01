@@ -1,7 +1,7 @@
 ![Vector](vector.png)
 
 [![TravisCI](https://img.shields.io/travis/Netflix/vector.svg)](https://travis-ci.org/Netflix/vector)
-[![Slack Status](https://vectoross.test.netflix.net/badge.svg)](https://vectoross.test.netflix.net/)
+[![Slack Status](http://slack.getvector.io/badge.svg)](http://slack.getvector.io/)
 [![NetflixOSS Lifecycle](https://img.shields.io/osslifecycle/Netflix/vector.svg)]()
 [![License](https://img.shields.io/github/license/Netflix/vector.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Docker Pulls](https://img.shields.io/docker/pulls/netflixoss/vector.svg)](https://hub.docker.com/r/netflixoss/vector/)
@@ -15,7 +15,7 @@ Vector is under development and new features are added constantly. Bugs and issu
 
 ## Getting Started
 
-See the [Getting Started Guide](http://vectoross.io/docs/getting-started.html) for documentation on how to get started.
+See the [Getting Started Guide](http://getvector.io/docs/getting-started.html) for documentation on how to get started.
 
 ## Issues
 
@@ -23,7 +23,7 @@ For bugs, questions and discussions please use the [GitHub Issues](https://githu
 
 ## Questions
 
-Join Vector on [Slack](https://vectoross.slack.com/) for support and discussion. If you don't have an invite yet, [request one](http://slack.vectoross.io/) now!
+Join Vector on [Slack](https://vectoross.slack.com/) for support and discussion. If you don't have an invite yet, [request one](http://slack.getvector.io/) now!
 
 You can also ask questions to other Vector users and contributors on [Google Groups](https://groups.google.com/forum/#!forum/vector-users) or [Stack Overflow](http://stackoverflow.com/questions/tagged/vectoross).
 

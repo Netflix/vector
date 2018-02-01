@@ -32,6 +32,7 @@
             settings.params = {};
             settings.params[params.contextType] = params.contextValue;
             settings.params.polltimeout = params.pollTimeout.toString();
+            settings.params.exclusive = 1;	// clients have exclusive contexts; default in later pcp versiosn
             settings.timeout = 5000;
 
             return $http(settings)

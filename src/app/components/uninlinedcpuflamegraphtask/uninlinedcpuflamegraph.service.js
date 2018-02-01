@@ -19,27 +19,27 @@
      'use strict';
 
      /**
-     * @name FlameGraphService
+     * @name UninlinedCPUFlameGraphService
      */
-     function FlameGraphService($log, $rootScope, $http, toastr) {
+     function UninlinedCPUFlameGraphService($log, $rootScope, $http, toastr) {
 
         /**
         * @name generate
         * @desc
         */
         function generate(seconds, poll) {
-            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_store?name=vector.task.cpuflamegraph&value=' + seconds)
+            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_store?name=vector.task.uninlinedcpuflamegraph&value=' + seconds)
                 .success(function () {
-                    toastr.success('vector.task.cpuflamegraph requested.', 'Success');
+                    toastr.success('vector.task.uninlinedcpuflamegraph requested.', 'Success');
                     poll("REQUESTED");
                 }).error(function (err) {
-                    toastr.error('Failed requesting vector.task.cpuflamegraph: ' + err, 'Error');
+                    toastr.error('Failed requesting vector.task.uninlinedcpuflamegraph: ' + err, 'Error');
                     poll("ERROR " + err);
                 });
         }
 
         function pollStatus(refresh) {
-            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=vector.task.cpuflamegraph')
+            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=vector.task.uninlinedcpuflamegraph')
                 .success(function (data) {
                     if (angular.isDefined(data.values[0])) {
                         var message = data.values[0].instances[0].value;
@@ -57,7 +57,7 @@
     }
 
     angular
-        .module('flamegraph')
-        .factory('FlameGraphService', FlameGraphService);
+        .module('uninlinedcpuflamegraphtask')
+        .factory('UninlinedCPUFlameGraphService', UninlinedCPUFlameGraphService);
 
  })();

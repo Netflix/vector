@@ -18,7 +18,7 @@
 (function () {
     'use strict';
 
-    function cpuFlameGraph($rootScope, $timeout, FlameGraphService, DashboardService) {
+    function offCPUFlameGraph($rootScope, $timeout, OffCPUFlameGraphService, DashboardService) {
 
         function link(scope) {
             scope.host = $rootScope.properties.host;
@@ -32,12 +32,12 @@
             scope.waited = 0;
             scope.pollms = 2000;
             scope.waitedmax = 10 * 60 * 1000;   // max poll milliseconds
-            scope.secondoptions = ["5", "30", "60", "120"];
-            scope.secondselected = "60";
-            scope.widget.help_url = "app/components/flamegraph/flamegraph-help.html";
+            scope.secondoptions = ["1", "5", "10", "60"];
+            scope.secondselected = "10";
+            scope.widget.help_url = "app/components/offcpuflamegraphtask/offcpuflamegraph-help.html";
 
             scope.pollStatus = function() {
-                FlameGraphService.pollStatus(function(statusmsg) {
+                OffCPUFlameGraphService.pollStatus(function(statusmsg) {
                     scope.statusmsg = statusmsg;
                     scope.waited += scope.pollms;
                     var fields = statusmsg.split(" ");
@@ -59,8 +59,8 @@
                 });
             };
 
-            scope.generateFlameGraph = function() {
-                FlameGraphService.generate(scope.secondselected, function(statusmsg) {
+            scope.generateOffCPUFlameGraph = function() {
+                OffCPUFlameGraphService.generate(scope.secondselected, function(statusmsg) {
                     var fields = statusmsg.split(" ");
                     if (fields[0] == "ERROR") {
                         scope.statusmsg = statusmsg;
@@ -80,13 +80,13 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/flamegraph/flamegraph.html',
+            templateUrl: 'app/components/offcpuflamegraphtask/offcpuflamegraph.html',
             link: link
         };
     }
 
     angular
-        .module('flamegraph')
-        .directive('cpuFlameGraph', cpuFlameGraph);
+        .module('offcpuflamegraphtask')
+        .directive('offCPUFlameGraph', offCPUFlameGraph);
 
 })();
