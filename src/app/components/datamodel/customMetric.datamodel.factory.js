@@ -31,30 +31,36 @@
 
         DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
-            this.updateScope([]);
+            this.name = null;
+            this.metric = null;
+            if (this.dataModelOptions) {
+                this.name = this.dataModelOptions.name;
+                this.isCumulative = this.dataModelOptions.isCumulative;
+                this.isConverted = this.dataModelOptions.isConverted;
+                this.strConversionFunction = this.dataModelOptions.strConversionFunction;
+            }
+            if (this.name) {
+                if (!this.isCumulative && !this.isConverted) {
+                    this.metric = MetricListService.getOrCreateMetric(this.name);
+                } else if (this.isCumulative && !this.isConverted) {
+                    this.metric = MetricListService.getOrCreateCumulativeMetric(this.name);
+                } else if (!this.isCumulative && this.isConverted) {
+                    var conversionFunction = new Function('value', 'return ' + this.strConversionFunction + ';');
+                    this.metric = MetricListService.getOrCreateConvertedMetric(this.name, conversionFunction);
+                } 
+                this.updateScope(this.metric.data);
+            } else {
+                this.updateScope([]);
+            }
         };
 
         DataModel.prototype.destroy = function () {
-            MetricListService.destroyMetric(this.name);
-            WidgetDataModel.prototype.destroy.call(this);
-        };
-
-        DataModel.prototype.update = function (name, cumulative) {
-            this.name = name;
-
-            // destroy metric before updating
             if (this.metric) {
                 MetricListService.destroyMetric(this.name);
+                this.metric = null;
             }
-
-            if (!cumulative) {
-                this.metric = MetricListService.getOrCreateMetric(name);
-            } else {
-                this.metric = MetricListService.getOrCreateCumulativeMetric(name);
-            }
-            
-            this.updateScope(this.metric.data);
-        }
+            WidgetDataModel.prototype.destroy.call(this);
+        };
 
         return DataModel;
     }

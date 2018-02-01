@@ -54,16 +54,6 @@
             }
         };
 
-        var handleCustomWidgetSettingsClose = function(resultFromModal, widgetModel) {
-            if (typeof resultFromModal !== 'undefined') {
-                widgetModel.filter = resultFromModal.filter;
-                widgetModel.name = resultFromModal.name;
-                widgetModel.title = resultFromModal.name;
-                widgetModel.dataModelOptions.name = resultFromModal.dataModelOptions.name;
-                widgetModel.dataModelType = resultFromModal.dataModelType;
-            }
-        };
-
         var definitions = [
             {
                 name: 'kernel.all.load',
@@ -658,6 +648,26 @@
           });
         }
 
+        var handleCustomWidgetSettingsClose = function(resultFromModal, widgetModel) {
+            if (typeof resultFromModal !== 'undefined') {
+                widgetModel.dataModel.destroy();
+                widgetModel.name = resultFromModal.name;
+                widgetModel.title = resultFromModal.title;
+                widgetModel.dataModelType = resultFromModal.dataModelType;
+                widgetModel.dataModelOptions.name = resultFromModal.dataModelOptions.name;
+                widgetModel.dataModelOptions.isCumulative = resultFromModal.dataModelOptions.isCumulative;
+                widgetModel.dataModelOptions.isConverted = resultFromModal.dataModelOptions.isConverted;
+                widgetModel.dataModelOptions.strConversionFunction = resultFromModal.dataModelOptions.strConversionFunction;
+                widgetModel.attrs.forcey = resultFromModal.attrs.forcey;
+                widgetModel.attrs.integer = resultFromModal.attrs.integer;
+                widgetModel.attrs.percentage = resultFromModal.attrs.percentage;
+                widgetModel.attrs.area = resultFromModal.attrs.area;
+                widgetModel.enableVerticalResize = resultFromModal.enableVerticalResize;
+                widgetModel.dataModel.init();
+                widgetModel.dataModel.widgetScope.compileTemplate();
+            }
+        };
+
         if (config.enableCustomWidgetFeature) {
             definitions.push({
                 name: 'custom.metric',
@@ -666,11 +676,20 @@
                 dataAttrName: 'data',
                 dataModelType: CustomMetricDataModel,
                 dataModelOptions: {
-                    name: null
+                    name: '',
+                    isCumulative: false,
+                    isConverted: false,
+                    strConversionFunction: 'value'
                 },
                 size: {
                     width: '50%',
                     height: '250px'
+                },
+                attrs: {
+                    forcey: null,
+                    percentage: false,
+                    integer: true,
+                    area: false
                 },
                 enableVerticalResize: false,
                 group: 'Custom',

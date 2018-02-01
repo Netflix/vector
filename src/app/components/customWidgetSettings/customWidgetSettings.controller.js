@@ -24,80 +24,60 @@
   function CustomWidgetSettingsCtrl($scope, $uibModalInstance, widget) {
     // add widget to scope
     $scope.widget = widget;
-    
-    $scope.selected = {
-      'name': '',
-      'text-oneline': ''
-    };
 
-    $scope.isCumulative = false;
-    $scope.isConverted = false;
-    $scope.forcey = '1';
-    $scope.percentage = false;
-    $scope.area = false;
-    $scope.conversionFunction = 'value/1024/1024';
-    $scope.width = '50%';
-    $scope.height = '250px';
-    $scope.enableVerticalResize = false;
-
-    $scope.advancedOptions = false;
-    $scope.uiOptions = false;
-
-    $scope.toggleAdvancedOptions = function() {
-      $scope.advancedOptions = !$scope.advancedOptions;
+    $scope.customWidgetSettings = {
+      selected: {
+        'name': widget.dataModelOptions.name,
+        'text-oneline': ''
+      },
+      isCumulative: widget.dataModelOptions.isCumulative,
+      isConverted: widget.dataModelOptions.isConverted,
+      strConversionFunction: widget.dataModelOptions.strConversionFunction,
+      forcey: widget.attrs.forcey ? widget.attrs.forcey : '',
+      percentage: widget.attrs.percentage,
+      area: widget.attrs.area,
+      enableVerticalResize: widget.enableVerticalResize
     }
 
-    $scope.toggleUiOptions = function() {
-      $scope.uiOptions = !$scope.uiOptions;
+    $scope.state = {
+      advancedOptions: $scope.customWidgetSettings.isConverted || $scope.customWidgetSettings.isCumulative || $scope.customWidgetSettings.forcey || $scope.customWidgetSettings.percentage || $scope.customWidgetSettings.area || $scope.customWidgetSettings.enableVerticalResize
+    }
+
+    $scope.toggleAdvancedOptions = function() {
+      $scope.state.advancedOptions = !$scope.state.advancedOptions;
     }
 
     $scope.updateMetric = function() {
-      if ($scope.selected) {
-        $scope.isCumulative = $scope.selected.sem === 'counter' ? true : false;
+      if ($scope.customWidgetSettings.selected) {
+        $scope.customWidgetSettings.isCumulative = $scope.customWidgetSettings.selected.sem === 'counter' ? true : false;
       }
     }
 
     $scope.ok = function() {
-      widget.name = $scope.selected.name;
-      widget.title = $scope.selected.name;
-      widget.dataModelOptions.name = $scope.selected.name;
-      widget.dataModelType = 'CustomMetricDataModel';
+      $scope.widget.name = $scope.customWidgetSettings.selected.name;
+      $scope.widget.title = $scope.customWidgetSettings.selected.name;
+      $scope.widget.dataModelOptions.name = $scope.customWidgetSettings.selected.name;
+      $scope.widget.dataModelOptions.isCumulative = $scope.customWidgetSettings.isCumulative;
+      $scope.widget.dataModelOptions.isConverted = $scope.customWidgetSettings.isConverted;
+      $scope.widget.dataModelType = 'CustomMetricDataModel';
 
-      if ($scope.isCumulative) {
-        // TODO: take cumulative metrics into account on custom metric data model
-        widget.dataModelType = 'CustomMetricDataModel';
+      if ($scope.customWidgetSettings.isConverted) {
+        $scope.widget.dataModelOptions.strConversionFunction = $scope.customWidgetSettings.strConversionFunction;
       }
 
-      if ($scope.isConverted) {
-        // TODO: take converted metrics into account on custom metric data model
-        widget.dataModelType = 'CustomMetricDataModel';
-        widget.dataModelOptions = {
-          conversionFunction: function (value) {
-            return value/eval($scope.conversionFunction.substr(6));
-          }
-        }
+      $scope.widget.attrs = {
+        forcey: $scope.customWidgetSettings.forcey === '' ? null : $scope.customWidgetSettings.forcey,
+        integer: !$scope.customWidgetSettings.percentage,
+        percentage: $scope.customWidgetSettings.percentage,
+        area: $scope.customWidgetSettings.area
       }
 
-      widget.attrs = {
-        forcey: $scope.forcey,
-        integer: !$scope.percentage,
-        percentage: $scope.percentage,
-        area: $scope.area
-      }
-
-      widget.size = {
-        width: $scope.width,
-        height: $scope.height
-      };
-      widget.enableVerticalResize = $scope.enableVerticalResize;
-
-      widget.dataModel.update($scope.selected.name, $scope.isCumulative);
+      $scope.widget.enableVerticalResize = $scope.customWidgetSettings.enableVerticalResize;
 
       // set up result object
-      // TODO: check if this is really required
-      $scope.result = angular.extend({}, $scope.result, widget);
+      // $scope.result = angular.extend({}, $scope.result, widget);
 
-      $uibModalInstance.close($scope.result);
+      $uibModalInstance.close($scope.widget);
     };
 
     $scope.cancel = function() {

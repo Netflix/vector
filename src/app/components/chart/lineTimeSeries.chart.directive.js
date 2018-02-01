@@ -21,7 +21,7 @@
 (function () {
     'use strict';
 
-    function lineTimeSeries($rootScope, $log, D3Service) {
+    function lineTimeSeries($rootScope, D3Service) {
 
         function link(scope) {
             scope.id = D3Service.getId();
@@ -93,9 +93,9 @@
             templateUrl: 'app/components/chart/chart.html',
             scope: {
                 data: '=',
+                forcey: '=',
                 percentage: '=',
                 integer: '=',
-                forcey: '=',
                 area: '='
             },
             link: link
