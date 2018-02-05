@@ -42,25 +42,35 @@
         */
         var idMap = {};
         function idDictionary(key) {
-            return idMap[parseId(key)];
+            return idMap[parseIname(key)];
         }
 
         /**
-        * @name parseId
-        * @desc parses different types of docker ID
+        * @name parseIname
+        * @desc parses different types of container metric inames
         */
-        function parseId(id) {
-            //handle regular docker
-            if (id === null){
-                return false;
+        function parseIname(iname) {
+            // TODO: find a better way of matching the metric inames to the cgroup ids
+            
+            var cgroupId = null;
+            
+            if (iname === null){
+                return null;
             }
-            if (id.indexOf('docker/') !==-1){
-                id = id.split('/')[2];
-            //handle systemd
-            } else if (id.indexOf('/docker-') !==-1){
-                id = id.split('-')[1].split('.')[0];
+
+            // handle regular docker
+            // docker/<cgroup_id>
+            if (iname.indexOf('/docker/') !== -1) {
+                cgroupId = iname.split('/')[2];
+            // handle systemd
+            // /docker-<cgroup_id>.scope
+            } else if (iname.indexOf('/docker-') !== -1) {
+                cgroupId = iname.split('-')[1].split('.')[0];
+            // handle /container.slice/<cgroup_id>
+            } else if (iname.indexOf('/containers.slice/') !== -1) {
+                cgroupId = iname.split('/')[2];
             }
-            return id;
+            return cgroupId;
         }
 
         /**
@@ -75,8 +85,8 @@
         * @name containerIdExist
         * @desc returns true if id exists in the idMap
         */
-        function containerIdExist(id) {
-            return (angular.isDefined(idMap[parseId(id)]) && idMap[parseId(id)] !== '');
+        function containerIdExist(iname) {
+            return (angular.isDefined(idMap[parseIname(iname)]) && idMap[parseIname(iname)] !== '');
         }
 
         /**
@@ -130,6 +140,7 @@
             var instanceName;
             if(typeof containerNameResolver === 'undefined') {
                 if (!config.useCgroupId) {
+                    // look for a matching containers.name and use the latest value
                     instanceName = _.find(containerNames.data, function (el) {
                         return el.key === instanceKey;
                     });
@@ -137,7 +148,7 @@
                         return instanceName.values[instanceName.values.length - 1].y;
                     }
                 }
-                return instanceKey.substring(0,12);
+                return instanceKey.substring(0,12); // return the first 12 characters of the instance key
             } else {
                 instanceName = _.find(containerNames.data, function (el) {
                     return el.key === instanceKey;
