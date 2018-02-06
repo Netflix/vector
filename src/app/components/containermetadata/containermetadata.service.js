@@ -51,6 +51,7 @@
         */
         function parseIname(iname) {
             // TODO: find a better way of matching the metric inames to the cgroup ids
+            // This should be resolved once PCP 4.0.0 is out and the new cgroup.id.container metric is available
             
             var cgroupId = null;
             
