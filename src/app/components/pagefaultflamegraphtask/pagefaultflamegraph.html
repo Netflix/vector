@@ -7,7 +7,7 @@
     <div class="row" style="margin-top: 10px;">Status: {{statusmsg}}</div>
     <div class="row" ng-if="!processing && ready" style="text-align: center; margin-top: 15px;">
         <p>The flame graph is ready. Please click on the button below to open it.</p>
-        <a class="btn btn-default" href="http://{{host}}:{{port}}/{{svgname}}" target="_blank">Open Flame Graph</a>
+        <a class="btn btn-default" href="{{protocol}}://{{host}}:{{port}}/{{svgname}}" target="_blank">Open Flame Graph</a>
     </div>
 
 </div>

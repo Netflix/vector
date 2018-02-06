@@ -21,6 +21,7 @@
     function pagefaultFlameGraph($rootScope, $timeout, PagefaultFlameGraphService, DashboardService) {
 
         function link(scope) {
+            scope.protocol = $rootScope.properties.protocol;
             scope.host = $rootScope.properties.host;
             scope.port = $rootScope.properties.port;
             scope.context = $rootScope.properties.context;
