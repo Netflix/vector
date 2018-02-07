@@ -20,7 +20,7 @@ COPY /dist /usr/share/nginx/html
 RUN apk add --update curl && \
     curl --silent --show-error --fail --location \
       --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" -o - \
-      "https://caddyserver.com/download/build?os=linux&arch=amd64" \
+      "https://caddyserver.com/download/linux/amd64?license=personal" \
       | tar --no-same-owner -C /usr/bin/ -xz caddy && \
     chmod 0755 /usr/bin/caddy && \
     /usr/bin/caddy -version && \
