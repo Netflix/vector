@@ -635,26 +635,8 @@
 
         if (config.enableCpuFlameGraph) {
           definitions.push({
-            /* for legacy, CPU flame graphs are in the CPU menu as well */
-            name: 'graph.flame.cpu',
-            title: 'CPU Flame Graph (task)',
-            directive: 'cpu-flame-graph',
-            dataModelType: DummyMetricDataModel,
-            size: {
-              width: '50%',
-              height: '250px'
-            },
-            enableVerticalResize: false,
-            group: 'CPU',
-            settingsModalOptions: {
-                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
-                controller: 'CustomWidgetHelpController'
-            },
-            hasLocalHelp: true,
-            isContainerAware: true
-          }, {
             name: 'graph.flame.cpu.task',
-            title: 'CPU Flame Graph (task)',
+            title: 'CPU Flame Graph (Task)',
             directive: 'cpu-flame-graph',
             dataModelType: DummyMetricDataModel,
             size: {
@@ -671,7 +653,7 @@
             isContainerAware: true
           }, {
             name: 'graph.flame.pnamecpu.task',
-            title: 'Package Name CPU Flame Graph (task)',
+            title: 'Package Name CPU Flame Graph (Task)',
             directive: 'p-name-cpu-flame-graph',
             dataModelType: DummyMetricDataModel,
             size: {
@@ -688,7 +670,7 @@
             isContainerAware: true
           }, {
             name: 'graph.flame.uninlined.task',
-            title: 'Uninlined CPU Flame Graph (task)',
+            title: 'Uninlined CPU Flame Graph (Task)',
             directive: 'uninlined-cpu-flame-graph',
             dataModelType: DummyMetricDataModel,
             size: {
@@ -705,7 +687,7 @@
             isContainerAware: true
           }, {
             name: 'graph.flame.pagefault.task',
-            title: 'Page Fault Flame Graph (task)',
+            title: 'Page Fault Flame Graph (Task)',
             directive: 'pagefault-flame-graph',
             dataModelType: DummyMetricDataModel,
             size: {
@@ -722,7 +704,7 @@
             isContainerAware: true
           }, {
             name: 'graph.flame.diskio.task',
-            title: 'Disk I/O Flame Graph (task)',
+            title: 'Disk I/O Flame Graph (Task)',
             directive: 'diskio-flame-graph',
             dataModelType: DummyMetricDataModel,
             size: {
@@ -739,7 +721,7 @@
             isContainerAware: true
           }, {
             name: 'graph.flame.ipc.task',
-            title: 'IPC Flame Graph (task)',
+            title: 'IPC Flame Graph (Task)',
             directive: 'ipc-flame-graph',
             dataModelType: DummyMetricDataModel,
             size: {
@@ -756,7 +738,7 @@
             isContainerAware: true
           }, {
             name: 'graph.flame.csw.task',
-            title: 'Context Switch Flame Graph (task)',
+            title: 'Context Switch Flame Graph (Task)',
             directive: 'csw-flame-graph',
             dataModelType: DummyMetricDataModel,
             size: {
@@ -774,7 +756,7 @@
             isContainerAware: false
           }, {
             name: 'graph.flame.offcpu.task',
-            title: 'Off-CPU Time Flame Graph (task)',
+            title: 'Off-CPU Time Flame Graph (Task)',
             directive: 'off-c-p-u-flame-graph',
             dataModelType: DummyMetricDataModel,
             size: {
@@ -792,7 +774,7 @@
             isContainerAware: false
           }, {
             name: 'graph.flame.offwake.task',
-            title: 'Off-Wake Time Flame Graph (task)',
+            title: 'Off-Wake Time Flame Graph (Task)',
             directive: 'off-wake-flame-graph',
             dataModelType: DummyMetricDataModel,
             size: {
