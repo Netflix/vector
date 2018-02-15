@@ -13,7 +13,6 @@
 # limitations under the License.
 
 FROM alpine:latest
-MAINTAINER Martin Spier <mspier@netflix.com>
 
 RUN mkdir -p /usr/share/nginx/html
 COPY /dist /usr/share/nginx/html
