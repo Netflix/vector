@@ -633,7 +633,7 @@
             }
         ];
 
-        if (config.enableCpuFlameGraph) {
+        if (config.enableFlameGraphs) {
           definitions.push({
             name: 'graph.flame.cpu.task',
             title: 'CPU Flame Graph (Task)',
@@ -736,61 +736,67 @@
             },
             hasLocalHelp: true,
             isContainerAware: true
-          }, {
-            name: 'graph.flame.csw.task',
-            title: 'Context Switch Flame Graph (Task)',
-            directive: 'csw-flame-graph',
-            dataModelType: DummyMetricDataModel,
-            size: {
-              width: '50%',
-              height: '250px'
-            },
-            enableVerticalResize: false,
-            group: 'Task',
-            settingsModalOptions: {
-                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
-                controller: 'CustomWidgetHelpController'
-            },
-            hasLocalHelp: true,
-            hasHighOverhead: true,
-            isContainerAware: false
-          }, {
-            name: 'graph.flame.offcpu.task',
-            title: 'Off-CPU Time Flame Graph (Task)',
-            directive: 'off-c-p-u-flame-graph',
-            dataModelType: DummyMetricDataModel,
-            size: {
-              width: '50%',
-              height: '250px'
-            },
-            enableVerticalResize: false,
-            group: 'Task',
-            settingsModalOptions: {
-                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
-                controller: 'CustomWidgetHelpController'
-            },
-            hasLocalHelp: true,
-            hasHighOverhead: true,
-            isContainerAware: false
-          }, {
-            name: 'graph.flame.offwake.task',
-            title: 'Off-Wake Time Flame Graph (Task)',
-            directive: 'off-wake-flame-graph',
-            dataModelType: DummyMetricDataModel,
-            size: {
-              width: '50%',
-              height: '250px'
-            },
-            enableVerticalResize: false,
-            group: 'Task',
-            settingsModalOptions: {
-                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
-                controller: 'CustomWidgetHelpController'
-            },
-            hasLocalHelp: true,
-            hasHighOverhead: true,
-            isContainerAware: false
           });
+        }
+
+        if (config.enableBpfFlameGraphs) {
+          definitions.push(
+            {
+                name: 'graph.flame.csw.task',
+                title: 'Context Switch Flame Graph (Task)',
+                directive: 'csw-flame-graph',
+                dataModelType: DummyMetricDataModel,
+                size: {
+                    width: '50%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'Task',
+                settingsModalOptions: {
+                    templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                    controller: 'CustomWidgetHelpController'
+                },
+                hasLocalHelp: true,
+                hasHighOverhead: true,
+                isContainerAware: false
+            }, {
+                name: 'graph.flame.offcpu.task',
+                title: 'Off-CPU Time Flame Graph (Task)',
+                directive: 'off-c-p-u-flame-graph',
+                dataModelType: DummyMetricDataModel,
+                size: {
+                    width: '50%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'Task',
+                settingsModalOptions: {
+                    templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                    controller: 'CustomWidgetHelpController'
+                },
+                hasLocalHelp: true,
+                hasHighOverhead: true,
+                isContainerAware: false
+            }, {
+                name: 'graph.flame.offwake.task',
+                title: 'Off-Wake Time Flame Graph (Task)',
+                directive: 'off-wake-flame-graph',
+                dataModelType: DummyMetricDataModel,
+                size: {
+                    width: '50%',
+                    height: '250px'
+                },
+                enableVerticalResize: false,
+                group: 'Task',
+                settingsModalOptions: {
+                    templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                    controller: 'CustomWidgetHelpController'
+                },
+                hasLocalHelp: true,
+                hasHighOverhead: true,
+                isContainerAware: false
+            }
+          );
         }
 
         var handleCustomWidgetSettingsClose = function(resultFromModal, widgetModel) {
