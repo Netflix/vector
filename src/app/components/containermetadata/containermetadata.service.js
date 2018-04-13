@@ -54,6 +54,7 @@
             // This should be resolved once PCP 4.0.0 is out and the new cgroup.id.container metric is available
             
             var cgroupId = null;
+            var iNameArr = null;
             
             if (iname === null){
                 return null;
@@ -67,9 +68,10 @@
             // /docker-<cgroup_id>.scope
             } else if (iname.indexOf('/docker-') !== -1) {
                 cgroupId = iname.split('-')[1].split('.')[0];
-            // handle /container.slice/<cgroup_id>
+            // handle /container.slice/<cgroup_id> and /container.slice/???/<cgroup_id>
             } else if (iname.indexOf('/containers.slice/') !== -1) {
-                cgroupId = iname.split('/')[2];
+                iNameArr = iname.split('/')
+                cgroupId = iNameArr[iNameArr.length - 1];
             }
             return cgroupId;
         }
@@ -197,7 +199,7 @@
         * @desc
         */
         function checkContainerName(name){
-            return ($rootScope.properties.selectedContainer === '' || name.indexOf($rootScope.properties.selectedContainer) !== -1);
+            return ($rootScope.properties.selectedContainer === '' || name === $rootScope.properties.selectedContainer);
         }
 
         /**
