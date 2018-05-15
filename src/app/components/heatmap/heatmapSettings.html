@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+  <h3>Widget Options <small>{{widget.title}}</small></h3>
+</div>
+
+<div class="modal-body">
+    <form name="form" novalidate class="form-horizontal">
+        <div class="input-group target">
+            <span class="input-group-addon">Max Row</span>
+            <input type="number" class="form-control" name="heatmapMaxRow" ng-model="result.heatmapMaxRow" ng-keydown="$event.which === 13 && ok()">
+        </div>
+        <div class="input-group target">
+            <span class="input-group-addon">Max Value</span>
+            <input type="number" class="form-control" name="heatmapMaxValue" ng-model="result.heatmapMaxValue" ng-keydown="$event.which === 13 && ok()">
+        </div>
+    </form>
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancel();">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ok()">OK</button>
+</div>

@@ -43,6 +43,7 @@
         MultipleCumulativeMetricDataModel,
         DummyMetricDataModel,
         DiskLatencyMetricDataModel,
+        BccDiskLatencyMetricDataModel,
         CumulativeUtilizationMetricDataModel,
         CgroupMemoryUtilizationMetricDataModel,
         CustomMetricDataModel,
@@ -1125,6 +1126,35 @@
 
         }
 
+        if (config.enableBcc) {
+            definitions.push({
+                name: 'bcc.disk.dev.latency',
+                title: 'BCC Disk Latency',
+                directive: 'heatmap',
+                dataAttrName: 'data',
+                dataModelType: BccDiskLatencyMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.disk.dev.latency'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BCC',
+                attrs: {
+                    unit: "'us'"
+                },
+                settingsModalOptions: {
+                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    controller: 'HeatmapSettingsController'
+                },
+                hasLocalSettings: true,
+                heatmapMaxRow: 4095,
+                heatmapMaxValue: 1000
+            });
+        }
+
         return definitions;
     }
 
@@ -1256,6 +1286,7 @@
             'cswflamegraphtask',
             'offcpuflamegraphtask',
             'offwakeflamegraphtask',
+            'heatmap',
             'customWidgetSettings',
             'customWidgetHelp',
             'widgetFilterSettings'
