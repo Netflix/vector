@@ -6,7 +6,9 @@ before_script:
   - npm install -g bower
   - npm install
   - bower install
-script: make build
+script:
+  - make test
+  - make build
 services:
   - docker
 env:
