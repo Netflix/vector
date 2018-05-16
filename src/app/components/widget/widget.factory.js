@@ -44,6 +44,7 @@
         DummyMetricDataModel,
         DiskLatencyMetricDataModel,
         BccDiskLatencyMetricDataModel,
+        BccRunQueueLatencyMetricDataModel,
         CumulativeUtilizationMetricDataModel,
         CgroupMemoryUtilizationMetricDataModel,
         CustomMetricDataModel,
@@ -1152,6 +1153,33 @@
                 hasLocalSettings: true,
                 heatmapMaxRow: 4095,
                 heatmapMaxValue: 1000
+            });
+
+            definitions.push({
+                name: 'bcc.kernel.all.runnable',
+                title: 'BCC Run Queue Latency',
+                directive: 'heatmap',
+                dataAttrName: 'data',
+                dataModelType: BccRunQueueLatencyMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.kernel.all.runnable'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BCC',
+                attrs: {
+                    unit: "'us'"
+                },
+                settingsModalOptions: {
+                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    controller: 'HeatmapSettingsController'
+                },
+                hasLocalSettings: true,
+                heatmapMaxRow: 2097151,
+                heatmapMaxValue: 10
             });
         }
 
