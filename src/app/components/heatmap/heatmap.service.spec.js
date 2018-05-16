@@ -92,9 +92,9 @@ describe('Service: Heatmap', function() {
         expect(hmData.columns).toEqual([1525791273, 1525791275, 1525791277, 1525791279]);
         expect(hmData.values).toEqual([
             [null, null, null, null],
-            [null, 11*2, 7*2, 3*2],
-            [null, 12*2, 8*2, 4*2],
-            [null, 13*2, 9*2, 5*2]
+            [0, 11*2, 7*2, 3*2],
+            [0, 12*2, 8*2, 4*2],
+            [0, 13*2, 9*2, 5*2]
         ]);
     });
 
@@ -132,35 +132,33 @@ describe('Service: Heatmap', function() {
         ]);
     });
 
-    it('should parse heatmap data with updated interval', function() {
+    it('should use null values when all values for a timestamp are missing', function() {
         $rootScope.properties = {
-            interval: 4,
-            window: 14/60
+            interval: 2,
+            window: 8/60
         };
 
         var rawData = [
             {"key":"0-1","values":[
                 {"x":1525791277175.622,"y":2},
                 {"x":1525791279159.262,"y":3},
-                {"x":1525791281157.147,"y":4},
                 {"x":1525791283163.355,"y":5}
             ]},
             {"key":"2-3","values":[
                 {"x":1525791277175.622,"y":6},
                 {"x":1525791279159.262,"y":7},
-                {"x":1525791281157.147,"y":8},
                 {"x":1525791283163.355,"y":9}
             ]}
         ];
 
         var hmData = HeatmapService.generate(rawData, 3);
         expect(hmData.rows).toEqual([Infinity, 3, 1]);
-        expect(hmData.columns).toEqual([1525791271, 1525791275, 1525791279, 1525791283]);
+        expect(hmData.columns).toEqual([1525791277, 1525791279, 1525791281, 1525791283]);
         expect(hmData.values).toEqual([
+            [0, 6*2, 2*2],
+            [0, 7*2, 3*2],
             [null, null, null],
-            [null, null, null],
-            [null, 7*4, 3*4],
-            [null, 9*4, 5*4]
+            [0, 9*2, 5*2]
         ]);
     });
 

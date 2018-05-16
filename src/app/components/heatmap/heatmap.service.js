@@ -49,7 +49,7 @@
             var numCols = Math.ceil(window * 60 / interval);
             for (var ts = lastTimestamp - interval * (numCols - 1); ts <= lastTimestamp; ts += interval) {
                 data.columns.push(ts);
-                data.values.push(new Array(data.rows.length).fill(null));
+                data.values.push(new Array(data.rows.length).fill(0));
             }
 
             return data;
@@ -58,6 +58,7 @@
         function generate(rawData, maxRow) {
             var interval = parseInt($rootScope.properties.interval);
             var data = analyzeMetadata(rawData, maxRow, data);
+            var columnFilled = new Array(data.columns.length).fill(false);
 
             for (var i = 0; i < rawData.length; i++) {
                 var instance = rawData[i];
@@ -72,12 +73,22 @@
                     if (timestamp < data.columns[0]) {
                         continue;
                     }
-                    var column = Math.ceil((timestamp - data.columns[0]) / interval);
+
+                    var columnIdx = Math.ceil((timestamp - data.columns[0]) / interval);
                     if (row === Infinity) {
-                        data.values[column][rowIdx] += instance.values[j].y * interval;
+                        data.values[columnIdx][rowIdx] += instance.values[j].y * interval;
                     }
                     else {
-                        data.values[column][rowIdx] = instance.values[j].y * interval;
+                        data.values[columnIdx][rowIdx] = instance.values[j].y * interval;
+                    }
+                    columnFilled[columnIdx] = true;
+                }
+            }
+
+            for (var colIdx = 0; colIdx < columnFilled.length; colIdx++) {
+                if (!columnFilled[colIdx]) {
+                    for (var k = 0; k < data.values[colIdx].length; k++) {
+                        data.values[colIdx][k] = null;
                     }
                 }
             }
