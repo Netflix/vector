@@ -43,8 +43,8 @@
         MultipleCumulativeMetricDataModel,
         DummyMetricDataModel,
         DiskLatencyMetricDataModel,
-        BccDiskLatencyMetricDataModel,
-        BccRunQueueLatencyMetricDataModel,
+        BccBiolatencyMetricDataModel,
+        BccRunqlatMetricDataModel,
         CumulativeUtilizationMetricDataModel,
         CgroupMemoryUtilizationMetricDataModel,
         CustomMetricDataModel,
@@ -1130,10 +1130,10 @@
         if (config.enableBcc) {
             definitions.push({
                 name: 'bcc.disk.dev.latency',
-                title: 'BCC Disk Latency',
+                title: 'BCC biolatency (block device I/O latency)',
                 directive: 'heatmap',
                 dataAttrName: 'data',
-                dataModelType: BccDiskLatencyMetricDataModel,
+                dataModelType: BccBiolatencyMetricDataModel,
                 dataModelOptions: {
                     name: 'bcc.disk.dev.latency'
                 },
@@ -1157,10 +1157,10 @@
 
             definitions.push({
                 name: 'bcc.kernel.all.runnable',
-                title: 'BCC Run Queue Latency',
+                title: 'BCC runqlat (run queue latency)',
                 directive: 'heatmap',
                 dataAttrName: 'data',
-                dataModelType: BccRunQueueLatencyMetricDataModel,
+                dataModelType: BccRunqlatMetricDataModel,
                 dataModelOptions: {
                     name: 'bcc.kernel.all.runnable'
                 },

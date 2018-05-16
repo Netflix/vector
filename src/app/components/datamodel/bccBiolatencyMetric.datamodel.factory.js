@@ -20,10 +20,10 @@
      'use strict';
 
     /**
-    * @name BccDiskLatencyMetricDataModel
+    * @name BccBiolatencyMetricDataModel
     * @desc
     */
-    function BccDiskLatencyMetricDataModel(WidgetDataModel, MetricListService, DashboardService, $rootScope) {
+    function BccBiolatencyMetricDataModel(WidgetDataModel, MetricListService, DashboardService, $rootScope) {
         var DataModel = function () {
             return this;
         };
@@ -56,5 +56,5 @@
 
     angular
         .module('datamodel')
-        .factory('BccDiskLatencyMetricDataModel', BccDiskLatencyMetricDataModel);
+        .factory('BccBiolatencyMetricDataModel', BccBiolatencyMetricDataModel);
  })();

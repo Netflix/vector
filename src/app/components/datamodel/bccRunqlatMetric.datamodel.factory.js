@@ -20,10 +20,10 @@
      'use strict';
 
     /**
-    * @name BccRunQueueLatencyMetricDataModel
+    * @name BccRunqlatMetricDataModel
     * @desc
     */
-    function BccRunQueueLatencyMetricDataModel(WidgetDataModel, MetricListService, DashboardService, $rootScope) {
+    function BccRunqlatMetricDataModel(WidgetDataModel, MetricListService, DashboardService, $rootScope) {
         var DataModel = function () {
             return this;
         };
@@ -56,5 +56,5 @@
 
     angular
         .module('datamodel')
-        .factory('BccRunQueueLatencyMetricDataModel', BccRunQueueLatencyMetricDataModel);
+        .factory('BccRunqlatMetricDataModel', BccRunqlatMetricDataModel);
  })();
