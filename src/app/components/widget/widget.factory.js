@@ -43,6 +43,8 @@
         MultipleCumulativeMetricDataModel,
         DummyMetricDataModel,
         DiskLatencyMetricDataModel,
+        BccBiolatencyMetricDataModel,
+        BccRunqlatMetricDataModel,
         CumulativeUtilizationMetricDataModel,
         CgroupMemoryUtilizationMetricDataModel,
         CustomMetricDataModel,
@@ -1125,6 +1127,62 @@
 
         }
 
+        if (config.enableBcc) {
+            definitions.push({
+                name: 'bcc.disk.dev.latency',
+                title: 'BCC biolatency (block device I/O latency)',
+                directive: 'heatmap',
+                dataAttrName: 'data',
+                dataModelType: BccBiolatencyMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.disk.dev.latency'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BCC',
+                attrs: {
+                    unit: "'us'"
+                },
+                settingsModalOptions: {
+                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    controller: 'HeatmapSettingsController'
+                },
+                hasLocalSettings: true,
+                heatmapMaxRow: 4095,
+                heatmapMaxValue: 1000
+            });
+
+            definitions.push({
+                name: 'bcc.kernel.all.runnable',
+                title: 'BCC runqlat (run queue latency)',
+                directive: 'heatmap',
+                dataAttrName: 'data',
+                dataModelType: BccRunqlatMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.kernel.all.runnable'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BCC',
+                attrs: {
+                    unit: "'us'"
+                },
+                settingsModalOptions: {
+                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    controller: 'HeatmapSettingsController'
+                },
+                hasLocalSettings: true,
+                heatmapMaxRow: 2097151,
+                heatmapMaxValue: 10
+            });
+        }
+
         return definitions;
     }
 
@@ -1256,6 +1314,7 @@
             'cswflamegraphtask',
             'offcpuflamegraphtask',
             'offwakeflamegraphtask',
+            'heatmap',
             'customWidgetSettings',
             'customWidgetHelp',
             'widgetFilterSettings'

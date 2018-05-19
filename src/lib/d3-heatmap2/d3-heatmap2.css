@@ -1,0 +1,34 @@
+.columnLabel, .rowLabel {
+    font-size: 1.0rem;
+    fill: #AAAAAA;
+    font-weight: 300;
+}
+
+.title {
+    font-size: 2.8rem;
+    fill: #4F4F4F;
+    font-weight: 300;
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    fill: #AAAAAA;
+    font-weight: 300;
+}
+
+.axis path, .axis tick, .axis line {
+      fill: none;
+      stroke: none;
+  }
+
+text {
+      font-size: 1.2rem;
+      fill: #AAAAAA;
+      font-weight: 400;
+}
+
+.legendTitle {
+      font-size: 1.3rem;
+      fill: #4F4F4F;
+      font-weight: 400;
+}

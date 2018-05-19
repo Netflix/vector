@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="lib/d3-heatmap2/d3-heatmap2.css">
 
     <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
     <!-- bower:css -->
@@ -44,5 +45,13 @@
     <!-- endinject -->
     <!-- endbuild -->
 
+    <script type="text/javascript">
+        // wrapper for d3-heatmap2.js to use d3 v4 API with d3 v3
+        d3.scaleLinear = d3.scale.linear;
+        d3.axisLeft = function(x) { return d3.svg.axis().scale(x).orient('left'); }
+        d3.axisTop =  function(x) { return d3.svg.axis().scale(x).orient('top'); }
+        d3.axisBottom = function(x) { return d3.svg.axis().scale(x).orient('bottom'); }
+    </script>
+    <script src="lib/d3-heatmap2/d3-heatmap2.js"></script>
 </body>
 </html>
