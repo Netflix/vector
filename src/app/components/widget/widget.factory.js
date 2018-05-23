@@ -45,6 +45,7 @@
         DiskLatencyMetricDataModel,
         BccBiolatencyMetricDataModel,
         BccRunqlatMetricDataModel,
+        BccFsDistMetricDataModel,
         CumulativeUtilizationMetricDataModel,
         CgroupMemoryUtilizationMetricDataModel,
         CustomMetricDataModel,
@@ -1180,6 +1181,90 @@
                 hasLocalSettings: true,
                 heatmapMaxRow: 2097151,
                 heatmapMaxValue: 10
+            });
+
+            definitions.push({
+                name: 'bcc.ext4.latency',
+                title: 'BCC ext4dist (ext4 operation latencies)',
+                directive: 'heatmap',
+                dataAttrName: 'data',
+                dataModelType: BccFsDistMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.ext4.latency',
+                    operation: 'open'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BCC',
+                attrs: {
+                    unit: "'us'"
+                },
+                settingsModalOptions: {
+                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    controller: 'HeatmapSettingsController'
+                },
+                hasLocalSettings: true,
+                heatmapMaxRow: 2097151,
+                heatmapMaxValue: 100
+            });
+
+            definitions.push({
+                name: 'bcc.xfs.latency',
+                title: 'BCC xfsdist (xfs operation latencies)',
+                directive: 'heatmap',
+                dataAttrName: 'data',
+                dataModelType: BccFsDistMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.xfs.latency',
+                    operation: 'open'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BCC',
+                attrs: {
+                    unit: "'us'"
+                },
+                settingsModalOptions: {
+                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    controller: 'HeatmapSettingsController'
+                },
+                hasLocalSettings: true,
+                heatmapMaxRow: 2097151,
+                heatmapMaxValue: 100
+            });
+
+            definitions.push({
+                name: 'bcc.zfs.latency',
+                title: 'BCC zfsdist (zfs operation latencies)',
+                directive: 'heatmap',
+                dataAttrName: 'data',
+                dataModelType: BccFsDistMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.zfs.latency',
+                    operation: 'open'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BCC',
+                attrs: {
+                    unit: "'us'"
+                },
+                settingsModalOptions: {
+                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    controller: 'HeatmapSettingsController'
+                },
+                hasLocalSettings: true,
+                heatmapMaxRow: 2097151,
+                heatmapMaxValue: 100
             });
         }
 

@@ -24,8 +24,11 @@
     function HeatmapSettingsCtrl($scope, $uibModalInstance, widget) {
         $scope.widget = widget;
         $scope.result = angular.extend({}, $scope.result, widget);
+        $scope.dataModelOptions = angular.extend({}, $scope.dataModelOptions, widget.dataModelOptions);
 
         $scope.ok = function () {
+          // change the underlying values only if the OK button was pressed
+          $scope.result.dataModelOptions = $scope.dataModelOptions;
           $uibModalInstance.close($scope.result);
         };
 

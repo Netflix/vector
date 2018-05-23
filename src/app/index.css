@@ -72,6 +72,17 @@ form div input[name="widgetFilter"] {
   margin-left: -1px !important;
 }
 
+.target label {
+  margin-top: 0 !important;
+  margin-left: -1px !important;
+  margin-right: 0 !important;
+}
+
+.btn-primary.active {
+  /* overwrite overwrite of _reboot.min.css */
+  background-color: #337ab7 !important;
+}
+
 .target > span {
   min-width: 150px;
 }
