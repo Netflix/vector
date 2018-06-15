@@ -46,6 +46,8 @@
         BccBiolatencyMetricDataModel,
         BccRunqlatMetricDataModel,
         BccFsDistMetricDataModel,
+        BccTcplifeMetricDataModel,
+        BccExecsnoopMetricDataModel,
         CumulativeUtilizationMetricDataModel,
         CgroupMemoryUtilizationMetricDataModel,
         CustomMetricDataModel,
@@ -1157,13 +1159,13 @@
             });
 
             definitions.push({
-                name: 'bcc.kernel.all.runnable',
+                name: 'bcc.runq.latency',
                 title: 'BCC runqlat (run queue latency)',
                 directive: 'heatmap',
                 dataAttrName: 'data',
                 dataModelType: BccRunqlatMetricDataModel,
                 dataModelOptions: {
-                    name: 'bcc.kernel.all.runnable'
+                    name: 'bcc.runq.latency'
                 },
                 size: {
                     width: '50%',
@@ -1184,13 +1186,13 @@
             });
 
             definitions.push({
-                name: 'bcc.ext4.latency',
+                name: 'bcc.fs.ext4.latency',
                 title: 'BCC ext4dist (ext4 operation latencies)',
                 directive: 'heatmap',
                 dataAttrName: 'data',
                 dataModelType: BccFsDistMetricDataModel,
                 dataModelOptions: {
-                    name: 'bcc.ext4.latency',
+                    name: 'bcc.fs.ext4.latency',
                     operation: 'open'
                 },
                 size: {
@@ -1212,13 +1214,13 @@
             });
 
             definitions.push({
-                name: 'bcc.xfs.latency',
+                name: 'bcc.fs.xfs.latency',
                 title: 'BCC xfsdist (xfs operation latencies)',
                 directive: 'heatmap',
                 dataAttrName: 'data',
                 dataModelType: BccFsDistMetricDataModel,
                 dataModelOptions: {
-                    name: 'bcc.xfs.latency',
+                    name: 'bcc.fs.xfs.latency',
                     operation: 'open'
                 },
                 size: {
@@ -1240,13 +1242,13 @@
             });
 
             definitions.push({
-                name: 'bcc.zfs.latency',
+                name: 'bcc.fs.zfs.latency',
                 title: 'BCC zfsdist (zfs operation latencies)',
                 directive: 'heatmap',
                 dataAttrName: 'data',
                 dataModelType: BccFsDistMetricDataModel,
                 dataModelOptions: {
-                    name: 'bcc.zfs.latency',
+                    name: 'bcc.fs.zfs.latency',
                     operation: 'open'
                 },
                 size: {
@@ -1265,6 +1267,44 @@
                 hasLocalSettings: true,
                 heatmapMaxRow: 2097151,
                 heatmapMaxValue: 100
+            });
+
+            definitions.push({
+                name: 'bcc.proc.io.net.tcp',
+                title: 'BCC tcplife (TCP sessions)',
+                directive: 'table',
+                dataAttrName: 'data',
+                dataModelType: BccTcplifeMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.proc.io.net.tcp'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BCC',
+                attrs: {
+                }
+            });
+
+            definitions.push({
+                name: 'bcc.proc.exec',
+                title: 'BCC execsnoop (traces new processes)',
+                directive: 'table',
+                dataAttrName: 'data',
+                dataModelType: BccExecsnoopMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.proc.exec'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BCC',
+                attrs: {
+                }
             });
         }
 
@@ -1400,6 +1440,7 @@
             'offcpuflamegraphtask',
             'offwakeflamegraphtask',
             'heatmap',
+            'table',
             'customWidgetSettings',
             'customWidgetHelp',
             'widgetFilterSettings'

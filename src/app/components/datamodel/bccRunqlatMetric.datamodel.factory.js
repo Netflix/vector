@@ -34,7 +34,7 @@
             WidgetDataModel.prototype.init.call(this);
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
-            this.metric = MetricListService.getOrCreateCumulativeMetric('bcc.kernel.all.runnable');
+            this.metric = MetricListService.getOrCreateCumulativeMetric('bcc.runq.latency');
             this.updateScope(this.metric.data);
 
             this.removeIntervalWatcher = $rootScope.$watch('properties.interval', function() {
@@ -46,7 +46,7 @@
             this.removeIntervalWatcher();
 
             // remove subscribers and delete base metrics
-            MetricListService.destroyMetric('bcc.kernel.all.runnable');
+            MetricListService.destroyMetric('bcc.runq.latency');
 
             WidgetDataModel.prototype.destroy.call(this);
         };
