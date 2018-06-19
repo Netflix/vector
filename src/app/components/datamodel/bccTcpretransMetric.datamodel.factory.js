@@ -20,10 +20,10 @@
      'use strict';
 
     /**
-    * @name BccExecsnoopMetricDataModel
+    * @name BccTcpretransMetricDataModel
     * @desc
     */
-    function BccExecsnoopMetricDataModel(WidgetDataModel, MetricListService, DashboardService, TableDataModel) {
+    function BccTcpretransMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
         var DataModel = function () {
             return this;
         };
@@ -34,32 +34,25 @@
             WidgetDataModel.prototype.init.call(this);
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
-
             this.tableDefinition = {
                 columns: [
-                    {label: 'COMM', metric: MetricListService.getOrCreateMetric('bcc.proc.exec.comm'), css_class: 'text-nowrap'},
-                    {label: 'PID', metric: MetricListService.getOrCreateMetric('bcc.proc.exec.pid'), css_class: 'text-nowrap'},
-                    {label: 'PPID', metric: MetricListService.getOrCreateMetric('bcc.proc.exec.ppid'), css_class: 'text-nowrap'},
-                    {label: 'RET', metric: MetricListService.getOrCreateMetric('bcc.proc.exec.ret'), css_class: 'text-nowrap'},
-                    {label: 'ARGS', metric: MetricListService.getOrCreateMetric('bcc.proc.exec.args')}
+                    {label: 'LADDR:LPORT'},
+                    {label: 'DADDR:DPORT'},
+                    {label: 'RETRANSMITS'}
                 ],
-                isMultiMetricsTable: true
-            };
+                rowFn: function(instance, value) {
+                    var spl = instance.split('::');
+                    return [spl[0], spl[1], value];
+                }
+            }
 
-            // create derived metric
-            this.metric = MetricListService.getOrCreateDerivedMetric(this.name, TableDataModel.derivedFunction.bind(null, this.tableDefinition));
-
+            this.metric = MetricListService.getOrCreateMetric('bcc.io.net.tcp.retrans.count');
             this.updateScope(this.metric.data);
         };
 
         DataModel.prototype.destroy = function () {
-            // remove subscribers and delete derived metric
-            MetricListService.destroyDerivedMetric(this.name);
-
             // remove subscribers and delete base metrics
-            for (var i = 0; i < this.tableDefinition.columns.length; i++) {
-                MetricListService.destroyMetric(this.tableDefinition.columns[i].metric.name);
-            }
+            MetricListService.destroyMetric(this.metric.name);
 
             WidgetDataModel.prototype.destroy.call(this);
         };
@@ -69,5 +62,5 @@
 
     angular
         .module('datamodel')
-        .factory('BccExecsnoopMetricDataModel', BccExecsnoopMetricDataModel);
+        .factory('BccTcpretransMetricDataModel', BccTcpretransMetricDataModel);
  })();

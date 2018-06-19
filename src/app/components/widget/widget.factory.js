@@ -48,6 +48,7 @@
         BccFsDistMetricDataModel,
         BccTcplifeMetricDataModel,
         BccExecsnoopMetricDataModel,
+        BccTcpretransMetricDataModel,
         CumulativeUtilizationMetricDataModel,
         CgroupMemoryUtilizationMetricDataModel,
         CustomMetricDataModel,
@@ -1285,6 +1286,9 @@
                 enableVerticalResize: true,
                 group: 'BCC',
                 attrs: {
+                },
+                contentStyle: {
+                    overflow: 'auto'
                 }
             });
 
@@ -1304,6 +1308,31 @@
                 enableVerticalResize: true,
                 group: 'BCC',
                 attrs: {
+                },
+                contentStyle: {
+                    overflow: 'auto'
+                }
+            });
+
+            definitions.push({
+                name: 'bcc.io.net.tcp.retrans.count',
+                title: 'BCC tcpretrans (counts TCP retransmits)',
+                directive: 'table',
+                dataAttrName: 'data',
+                dataModelType: BccTcpretransMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.io.net.tcp.retrans.count'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BCC',
+                attrs: {
+                },
+                contentStyle: {
+                    overflow: 'auto'
                 }
             });
         }

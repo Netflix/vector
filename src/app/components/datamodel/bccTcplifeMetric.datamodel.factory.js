@@ -43,20 +43,23 @@
                 return (x / 1000).toFixed(2);
             }
 
-            this.metrics = [
-                {label: 'PID', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.pid')},
-                {label: 'COMM', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.comm')},
-                {label: 'LADDR', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.laddr')},
-                {label: 'LPORT', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.lport')},
-                {label: 'DADDR', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.daddr')},
-                {label: 'DPORT', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.dport')},
-                {label: 'TX_KB', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.tx'), format: bytes_to_kb},
-                {label: 'RX_KB', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.rx'), format: bytes_to_kb},
-                {label: 'MS', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.duration'), format: us_to_ms}
-            ];
+            this.tableDefinition = {
+                columns: [
+                    {label: 'PID', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.pid')},
+                    {label: 'COMM', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.comm')},
+                    {label: 'LADDR', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.laddr')},
+                    {label: 'LPORT', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.lport')},
+                    {label: 'DADDR', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.daddr')},
+                    {label: 'DPORT', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.dport')},
+                    {label: 'TX_KB', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.tx'), format: bytes_to_kb},
+                    {label: 'RX_KB', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.rx'), format: bytes_to_kb},
+                    {label: 'MS', metric: MetricListService.getOrCreateMetric('bcc.proc.io.net.tcp.duration'), format: us_to_ms}
+                ],
+                isMultiMetricsTable: true
+            };
 
             // create derived metric
-            this.metric = MetricListService.getOrCreateDerivedMetric(this.name, TableDataModel.derivedFunction.bind(null, this.metrics));
+            this.metric = MetricListService.getOrCreateDerivedMetric(this.name, TableDataModel.derivedFunction.bind(null, this.tableDefinition));
 
             this.updateScope(this.metric.data);
         };
@@ -66,8 +69,8 @@
             MetricListService.destroyDerivedMetric(this.name);
 
             // remove subscribers and delete base metrics
-            for (var i=0; i<this.metrics.length; i++) {
-                MetricListService.destroyMetric(this.metrics[i].metric.name);
+            for (var i = 0; i < this.tableDefinition.columns.length; i++) {
+                MetricListService.destroyMetric(this.tableDefinition.columns[i].metric.name);
             }
 
             WidgetDataModel.prototype.destroy.call(this);

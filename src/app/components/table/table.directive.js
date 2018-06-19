@@ -26,10 +26,12 @@
             scope.flags = $rootScope.flags;
 
             var dataModel = scope.$parent.widget.dataModel;
-            var metrics = dataModel.metrics;
+            var tableDefinition = dataModel.tableDefinition;
 
-            scope.tableHeader = metrics.map(function(metric) { return metric.label; });
-            scope.tableCssClass = metrics.map(function(metric) { return metric.css_class || ''; });
+            scope.tableHeader = tableDefinition.columns.map(function(column) { return column.label; });
+            scope.tableCssClass = tableDefinition.columns.map(function(column) { return column.css_class || ''; });
+            scope.tableRows = [];
+            var rowFn = tableDefinition.rowFn || function(i, v) { return v; };
 
             scope.$on('updateMetrics', function () {
                 scope.tableRows = [];
@@ -38,7 +40,7 @@
                     var instance = scope.data[i];
                     if (instance.values.length > 0) {
                         var lastValue = instance.values[instance.values.length - 1].y;
-                        scope.tableRows.push(lastValue);
+                        scope.tableRows.push(rowFn(instance.key, lastValue));
                     }
                 }
             });
