@@ -3,9 +3,11 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
+var mainNodeFiles = require('gulp-main-node-files');
+var sort = require('gulp-angular-filesort');
 
 var $ = require('gulp-load-plugins')({
-  pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
+  pattern: ['gulp-*', 'uglify-save-license', 'del']
 });
 
 gulp.task('partials', function () {
@@ -70,11 +72,31 @@ gulp.task('html', ['inject', 'partials'], function () {
 // Only applies for fonts from bower dependencies
 // Custom fonts are handled by the "other" task
 gulp.task('fonts', function () {
-  return gulp.src($.mainBowerFiles())
+  return gulp.src(mainNodeFiles(conf.fontNodeFiles))
     .pipe($.filter('**/*.{eot,otf,svg,ttf,woff,woff2}'))
     .pipe($.flatten())
     .pipe(gulp.dest(path.join(conf.paths.dist, '/fonts/')));
 });
+
+gulp.task('vendor-css', function() {
+  return gulp.src(conf.vendorFiles)
+    .pipe($.filter('**/*.css'))
+    .pipe($.cssnano())
+    .pipe($.concat('vendor.css'))
+    .pipe($.rev())
+    .pipe(gulp.dest(path.join(conf.paths.dist, '/styles/')))
+})
+
+gulp.task('vendor-js', function() {
+  return gulp.src(conf.vendorFiles)
+    .pipe($.filter('**/*.js'))
+    .pipe($.sourcemaps.init())
+    .pipe($.uglify({ preserveComments: $.uglifySaveLicense })).on('error', conf.errorHandler('Uglify'))
+    .pipe($.concat('vendor.js'))
+    .pipe($.rev())
+    .pipe($.sourcemaps.write('../maps/scripts'))
+    .pipe(gulp.dest(path.join(conf.paths.dist, '/scripts/')))
+})
 
 gulp.task('other', function () {
   var fileFilter = $.filter(function (file) {
@@ -93,4 +115,4 @@ gulp.task('clean', function () {
   return $.del([path.join(conf.paths.dist, '/'), path.join(conf.paths.tmp, '/')]);
 });
 
-gulp.task('build', ['html', 'fonts', 'other']);
+gulp.task('build', ['html', 'fonts', 'other', 'vendor-js', 'vendor-css']);

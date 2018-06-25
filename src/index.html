@@ -9,11 +9,9 @@
     <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="lib/d3-heatmap2/d3-heatmap2.css">
 
-    <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
-    <!-- bower:css -->
-    <!-- run `gulp inject` to automatically populate bower styles dependencies -->
-    <!-- endbower -->
-    <!-- endbuild -->
+    <!-- inject:vendor:css -->
+    <!-- vendor js will be inserted here -->
+    <!-- endinject -->
 
     <!-- build:css({.tmp/serve,src}) styles/app.css -->
     <!-- inject:css -->
@@ -29,11 +27,9 @@
 
     <div ng-view></div>
 
-    <!-- build:js(src) scripts/vendor.js -->
-    <!-- bower:js -->
-    <!-- run `gulp inject` to automatically populate bower script dependencies -->
-    <!-- endbower -->
-    <!-- endbuild -->
+    <!-- inject:vendor:js -->
+    <!-- vendor js will be inserted here -->
+    <!-- endinject -->
 
     <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
     <!-- inject:js -->
