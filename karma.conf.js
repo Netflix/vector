@@ -10,12 +10,13 @@ var pathSrcHtml = [
 ];
 
 function listFiles() {
-  var patterns = [
+  var patterns = conf.vendorJs.concat([
+      'node_modules/angular-mocks/angular-mocks.js',
       path.join(conf.paths.src, '/app/**/*.module.js'),
       path.join(conf.paths.src, '/app/**/*.js'),
       path.join(conf.paths.src, '/**/*.spec.js'),
       path.join(conf.paths.src, '/**/*.mock.js'),
-    ].concat(pathSrcHtml);
+    ]).concat(pathSrcHtml);
 
   var files = patterns.map(function(pattern) {
     return {

@@ -8,6 +8,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "angular": "~1.4.10",
+    "angular-mocks": "~1.4.10",
     "angular-route": "~1.4.10",
     "angular-sanitize": "~1.4.10",
     "angular-toastr": "~1.5.0",
