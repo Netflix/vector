@@ -1,14 +1,12 @@
 language: node_js
 node_js:
-  - "4.7.2"
+  - "8.11.3"
 before_script:
-  - npm install -g gulp
-  - npm install -g bower
+  - npm install -y npm
   - npm install
-  - bower install
 script:
-  - make test
-  - make build
+  - npm run test
+  - npm run build
 services:
   - docker
 env:
