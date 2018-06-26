@@ -19,8 +19,8 @@ gulp.task('inject', ['scripts', 'vendor-js', 'vendor-css'], function () {
     path.join(conf.paths.src, '/app/**/*.css')
   ], { read: false });
 
-  var vendorScripts = gulp.src(conf.vendorFiles).pipe($.filter('*.js'))
-  var vendorStyles = gulp.src(conf.vendorFiles).pipe($.filter('*.css'))
+  var vendorScripts = gulp.src(conf.vendorJs)
+  var vendorStyles = gulp.src(conf.vendorCss)
 
   var appScripts = gulp.src([
     path.join(conf.paths.src, '/app/**/*.module.js'),

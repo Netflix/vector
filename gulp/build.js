@@ -3,7 +3,6 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
-var mainNodeFiles = require('gulp-main-node-files');
 var sort = require('gulp-angular-filesort');
 
 var $ = require('gulp-load-plugins')({
@@ -72,15 +71,13 @@ gulp.task('html', ['inject', 'partials'], function () {
 // Only applies for fonts from bower dependencies
 // Custom fonts are handled by the "other" task
 gulp.task('fonts', function () {
-  return gulp.src(mainNodeFiles(conf.fontNodeFiles))
-    .pipe($.filter('**/*.{eot,otf,svg,ttf,woff,woff2}'))
+  return gulp.src(conf.vendorFonts)
     .pipe($.flatten())
     .pipe(gulp.dest(path.join(conf.paths.dist, '/fonts/')));
 });
 
 gulp.task('vendor-css', function() {
-  return gulp.src(conf.vendorFiles)
-    .pipe($.filter('**/*.css'))
+  return gulp.src(conf.vendorCss)
     .pipe($.cssnano())
     .pipe($.concat('vendor.css'))
     .pipe($.rev())
@@ -88,8 +85,7 @@ gulp.task('vendor-css', function() {
 })
 
 gulp.task('vendor-js', function() {
-  return gulp.src(conf.vendorFiles)
-    .pipe($.filter('**/*.js'))
+  return gulp.src(conf.vendorJs)
     .pipe($.sourcemaps.init())
     .pipe($.uglify({ preserveComments: $.uglifySaveLicense })).on('error', conf.errorHandler('Uglify'))
     .pipe($.concat('vendor.js'))
