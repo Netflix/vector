@@ -49,6 +49,7 @@
         BccTcplifeMetricDataModel,
         BccExecsnoopMetricDataModel,
         BccTcpretransMetricDataModel,
+        BccBiotopMetricDataModel,
         CumulativeUtilizationMetricDataModel,
         CgroupMemoryUtilizationMetricDataModel,
         CustomMetricDataModel,
@@ -1322,6 +1323,28 @@
                 dataModelType: BccTcpretransMetricDataModel,
                 dataModelOptions: {
                     name: 'bcc.io.net.tcp.retrans.count'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BCC',
+                attrs: {
+                },
+                contentStyle: {
+                    overflow: 'auto'
+                }
+            });
+
+            definitions.push({
+                name: 'bcc.proc.io.perdev',
+                title: 'BCC biotop (block device I/O top)',
+                directive: 'table',
+                dataAttrName: 'data',
+                dataModelType: BccBiotopMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.proc.io.perdev'
                 },
                 size: {
                     width: '50%',
