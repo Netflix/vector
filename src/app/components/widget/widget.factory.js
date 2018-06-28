@@ -45,6 +45,11 @@
         DiskLatencyMetricDataModel,
         BccBiolatencyMetricDataModel,
         BccRunqlatMetricDataModel,
+        BccFsDistMetricDataModel,
+        BccTcplifeMetricDataModel,
+        BccExecsnoopMetricDataModel,
+        BccTcpretransMetricDataModel,
+        BccBiotopMetricDataModel,
         CumulativeUtilizationMetricDataModel,
         CgroupMemoryUtilizationMetricDataModel,
         CustomMetricDataModel,
@@ -1142,7 +1147,7 @@
                     height: '500px'
                 },
                 enableVerticalResize: true,
-                group: 'BCC',
+                group: 'BPF/BCC',
                 attrs: {
                     unit: "'us'"
                 },
@@ -1156,20 +1161,20 @@
             });
 
             definitions.push({
-                name: 'bcc.kernel.all.runnable',
+                name: 'bcc.runq.latency',
                 title: 'BCC runqlat (run queue latency)',
                 directive: 'heatmap',
                 dataAttrName: 'data',
                 dataModelType: BccRunqlatMetricDataModel,
                 dataModelOptions: {
-                    name: 'bcc.kernel.all.runnable'
+                    name: 'bcc.runq.latency'
                 },
                 size: {
                     width: '50%',
                     height: '500px'
                 },
                 enableVerticalResize: true,
-                group: 'BCC',
+                group: 'BPF/BCC',
                 attrs: {
                     unit: "'us'"
                 },
@@ -1180,6 +1185,178 @@
                 hasLocalSettings: true,
                 heatmapMaxRow: 2097151,
                 heatmapMaxValue: 10
+            });
+
+            definitions.push({
+                name: 'bcc.fs.ext4.latency',
+                title: 'BCC ext4dist (ext4 operation latencies)',
+                directive: 'heatmap',
+                dataAttrName: 'data',
+                dataModelType: BccFsDistMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.fs.ext4.latency',
+                    operation: 'open'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BPF/BCC',
+                attrs: {
+                    unit: "'us'"
+                },
+                settingsModalOptions: {
+                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    controller: 'HeatmapSettingsController'
+                },
+                hasLocalSettings: true,
+                heatmapMaxRow: 2097151,
+                heatmapMaxValue: 100
+            });
+
+            definitions.push({
+                name: 'bcc.fs.xfs.latency',
+                title: 'BCC xfsdist (xfs operation latencies)',
+                directive: 'heatmap',
+                dataAttrName: 'data',
+                dataModelType: BccFsDistMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.fs.xfs.latency',
+                    operation: 'open'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BPF/BCC',
+                attrs: {
+                    unit: "'us'"
+                },
+                settingsModalOptions: {
+                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    controller: 'HeatmapSettingsController'
+                },
+                hasLocalSettings: true,
+                heatmapMaxRow: 2097151,
+                heatmapMaxValue: 100
+            });
+
+            definitions.push({
+                name: 'bcc.fs.zfs.latency',
+                title: 'BCC zfsdist (zfs operation latencies)',
+                directive: 'heatmap',
+                dataAttrName: 'data',
+                dataModelType: BccFsDistMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.fs.zfs.latency',
+                    operation: 'open'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BPF/BCC',
+                attrs: {
+                    unit: "'us'"
+                },
+                settingsModalOptions: {
+                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    controller: 'HeatmapSettingsController'
+                },
+                hasLocalSettings: true,
+                heatmapMaxRow: 2097151,
+                heatmapMaxValue: 100
+            });
+
+            definitions.push({
+                name: 'bcc.proc.io.net.tcp',
+                title: 'BCC tcplife (TCP sessions)',
+                directive: 'table',
+                dataAttrName: 'data',
+                dataModelType: BccTcplifeMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.proc.io.net.tcp'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BPF/BCC',
+                attrs: {
+                },
+                contentStyle: {
+                    overflow: 'auto'
+                }
+            });
+
+            definitions.push({
+                name: 'bcc.proc.exec',
+                title: 'BCC execsnoop (traces new processes)',
+                directive: 'table',
+                dataAttrName: 'data',
+                dataModelType: BccExecsnoopMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.proc.exec'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BPF/BCC',
+                attrs: {
+                },
+                contentStyle: {
+                    overflow: 'auto'
+                }
+            });
+
+            definitions.push({
+                name: 'bcc.io.net.tcp.retrans.count',
+                title: 'BCC tcpretrans (counts TCP retransmits)',
+                directive: 'table',
+                dataAttrName: 'data',
+                dataModelType: BccTcpretransMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.io.net.tcp.retrans.count'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BPF/BCC',
+                attrs: {
+                },
+                contentStyle: {
+                    overflow: 'auto'
+                }
+            });
+
+            definitions.push({
+                name: 'bcc.proc.io.perdev',
+                title: 'BCC biotop (block device I/O top)',
+                directive: 'table',
+                dataAttrName: 'data',
+                dataModelType: BccBiotopMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.proc.io.perdev'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BPF/BCC',
+                attrs: {
+                },
+                contentStyle: {
+                    overflow: 'auto'
+                }
             });
         }
 
@@ -1315,6 +1492,7 @@
             'offcpuflamegraphtask',
             'offwakeflamegraphtask',
             'heatmap',
+            'table',
             'customWidgetSettings',
             'customWidgetHelp',
             'widgetFilterSettings'

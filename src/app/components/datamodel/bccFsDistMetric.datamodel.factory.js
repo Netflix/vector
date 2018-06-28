@@ -20,10 +20,10 @@
      'use strict';
 
     /**
-    * @name BccRunqlatMetricDataModel
-    * @desc
+    * @name BccFsDistMetricDataModel
+    * @desc generic data model for ext4dist, xfsdist and zfsdist
     */
-    function BccRunqlatMetricDataModel(WidgetDataModel, MetricListService, DashboardService, $rootScope) {
+    function BccFsDistMetricDataModel(WidgetDataModel, MetricListService, DashboardService, $rootScope) {
         var DataModel = function () {
             return this;
         };
@@ -33,9 +33,16 @@
         DataModel.prototype.init = function () {
             WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
-            this.metric = MetricListService.getOrCreateCumulativeMetric('bcc.runq.latency');
-            this.updateScope(this.metric.data);
+            this.name = 'metric_' + DashboardService.getGuid();
+
+            this.removeOperationWatcher = this.widgetScope.$watch('widget.dataModelOptions.operation', function(newValue) {
+                if (this.metric) {
+                    MetricListService.destroyMetric(this.metric.name);
+                }
+
+                this.metric = MetricListService.getOrCreateCumulativeMetric(this.dataModelOptions.name + '.' + newValue);
+                this.updateScope(this.metric.data);
+            }.bind(this));
 
             this.removeIntervalWatcher = $rootScope.$watch('properties.interval', function() {
                 this.metric.clearData();
@@ -43,11 +50,10 @@
         };
 
         DataModel.prototype.destroy = function () {
+            this.removeOperationWatcher();
             this.removeIntervalWatcher();
 
-            // remove subscribers and delete base metrics
-            MetricListService.destroyMetric('bcc.runq.latency');
-
+            MetricListService.destroyMetric(this.metric.name);
             WidgetDataModel.prototype.destroy.call(this);
         };
 
@@ -56,5 +62,5 @@
 
     angular
         .module('datamodel')
-        .factory('BccRunqlatMetricDataModel', BccRunqlatMetricDataModel);
+        .factory('BccFsDistMetricDataModel', BccFsDistMetricDataModel);
  })();

@@ -13,6 +13,15 @@
             <span class="input-group-addon">Max Value</span>
             <input type="number" class="form-control" name="heatmapMaxValue" ng-model="result.heatmapMaxValue" ng-keydown="$event.which === 13 && ok()">
         </div>
+        <div class="input-group target" ng-show="dataModelOptions.operation">
+            <span class="input-group-addon">Operation</span>
+            <div class="btn-group">
+                <label class="btn btn-primary" ng-model="dataModelOptions.operation" uib-btn-radio="'open'">open</label>
+                <label class="btn btn-primary" ng-model="dataModelOptions.operation" uib-btn-radio="'read'">read</label>
+                <label class="btn btn-primary" ng-model="dataModelOptions.operation" uib-btn-radio="'write'">write</label>
+                <label class="btn btn-primary" ng-model="dataModelOptions.operation" uib-btn-radio="'fsync'">fsync</label>
+            </div>
+        </div>
     </form>
 
 </div>

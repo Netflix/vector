@@ -20,10 +20,10 @@
      'use strict';
 
     /**
-    * @name BccRunqlatMetricDataModel
+    * @name BccTcpretransMetricDataModel
     * @desc
     */
-    function BccRunqlatMetricDataModel(WidgetDataModel, MetricListService, DashboardService, $rootScope) {
+    function BccTcpretransMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
         var DataModel = function () {
             return this;
         };
@@ -34,19 +34,25 @@
             WidgetDataModel.prototype.init.call(this);
 
             this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
-            this.metric = MetricListService.getOrCreateCumulativeMetric('bcc.runq.latency');
-            this.updateScope(this.metric.data);
+            this.tableDefinition = {
+                columns: [
+                    {label: 'LADDR:LPORT'},
+                    {label: 'DADDR:DPORT'},
+                    {label: 'RETRANSMITS'}
+                ],
+                rowFn: function(instance, value) {
+                    var spl = instance.split('::');
+                    return [spl[0], spl[1], value];
+                }
+            }
 
-            this.removeIntervalWatcher = $rootScope.$watch('properties.interval', function() {
-                this.metric.clearData();
-            }.bind(this));
+            this.metric = MetricListService.getOrCreateMetric('bcc.io.net.tcp.retrans.count');
+            this.updateScope(this.metric.data);
         };
 
         DataModel.prototype.destroy = function () {
-            this.removeIntervalWatcher();
-
             // remove subscribers and delete base metrics
-            MetricListService.destroyMetric('bcc.runq.latency');
+            MetricListService.destroyMetric(this.metric.name);
 
             WidgetDataModel.prototype.destroy.call(this);
         };
@@ -56,5 +62,5 @@
 
     angular
         .module('datamodel')
-        .factory('BccRunqlatMetricDataModel', BccRunqlatMetricDataModel);
+        .factory('BccTcpretransMetricDataModel', BccTcpretransMetricDataModel);
  })();
