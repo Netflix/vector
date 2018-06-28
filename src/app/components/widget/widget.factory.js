@@ -1147,7 +1147,7 @@
                     height: '500px'
                 },
                 enableVerticalResize: true,
-                group: 'BCC',
+                group: 'BPF/BCC',
                 attrs: {
                     unit: "'us'"
                 },
@@ -1174,7 +1174,7 @@
                     height: '500px'
                 },
                 enableVerticalResize: true,
-                group: 'BCC',
+                group: 'BPF/BCC',
                 attrs: {
                     unit: "'us'"
                 },
@@ -1202,7 +1202,7 @@
                     height: '500px'
                 },
                 enableVerticalResize: true,
-                group: 'BCC',
+                group: 'BPF/BCC',
                 attrs: {
                     unit: "'us'"
                 },
@@ -1230,7 +1230,7 @@
                     height: '500px'
                 },
                 enableVerticalResize: true,
-                group: 'BCC',
+                group: 'BPF/BCC',
                 attrs: {
                     unit: "'us'"
                 },
@@ -1258,7 +1258,7 @@
                     height: '500px'
                 },
                 enableVerticalResize: true,
-                group: 'BCC',
+                group: 'BPF/BCC',
                 attrs: {
                     unit: "'us'"
                 },
@@ -1285,7 +1285,7 @@
                     height: '500px'
                 },
                 enableVerticalResize: true,
-                group: 'BCC',
+                group: 'BPF/BCC',
                 attrs: {
                 },
                 contentStyle: {
@@ -1307,7 +1307,7 @@
                     height: '500px'
                 },
                 enableVerticalResize: true,
-                group: 'BCC',
+                group: 'BPF/BCC',
                 attrs: {
                 },
                 contentStyle: {
@@ -1329,7 +1329,7 @@
                     height: '500px'
                 },
                 enableVerticalResize: true,
-                group: 'BCC',
+                group: 'BPF/BCC',
                 attrs: {
                 },
                 contentStyle: {
@@ -1351,7 +1351,7 @@
                     height: '500px'
                 },
                 enableVerticalResize: true,
-                group: 'BCC',
+                group: 'BPF/BCC',
                 attrs: {
                 },
                 contentStyle: {
