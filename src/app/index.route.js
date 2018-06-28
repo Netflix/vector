@@ -24,7 +24,7 @@
     */
     function routeConfig($routeProvider) {
         $routeProvider.when('/', {
-            templateUrl: 'app/main/main.html',
+            template: require('./main/main.html'),
             controller: 'MainController',
             controllerAs: 'vm',
             title: 'Vector',
@@ -38,7 +38,7 @@
                 }
             }
         }).when('/embed', {
-            templateUrl: 'app/main/main.html',
+            template: require('./main/main.html'),
             controller: 'MainController',
             controllerAs: 'vm',
             title: 'Vector',
@@ -52,7 +52,7 @@
                 }
             }
         }).when('/empty', {
-            templateUrl: 'app/main/main.html',
+            template: require('./main/main.html'),
             controller: 'MainController',
             controllerAs: 'vm',
             title: 'Vector',
@@ -66,7 +66,7 @@
                 }
             }
         }).when('/container', {
-            templateUrl: 'app/main/main.html',
+            template: require('./main/main.html'),
             controller: 'MainController',
             controllerAs: 'vm',
             title: 'Vector',

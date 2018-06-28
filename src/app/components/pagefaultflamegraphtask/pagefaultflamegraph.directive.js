@@ -81,7 +81,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/pagefaultflamegraphtask/pagefaultflamegraph.html',
+            template: require('./pagefaultflamegraph.html'),
             link: link
         };
     }

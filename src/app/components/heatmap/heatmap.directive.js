@@ -88,7 +88,7 @@
 
     return {
       restrict: 'A',
-      templateUrl: 'app/components/heatmap/heatmap.html',
+      template: require('./heatmap.html'),
       scope: {
         data: '=',
         unit: '='

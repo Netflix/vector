@@ -28,7 +28,7 @@
       backdrop: true,
       keyboard: true,
       modalFade: true,
-      templateUrl: 'app/components/modal/defaultModal.html'
+      template: require('./defaultModal.html')
     };
 
     var defaultModalOptions = {

@@ -81,7 +81,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/diskioflamegraphtask/diskioflamegraph.html',
+            template: require('./diskioflamegraph.html'),
             link: link
         };
     }

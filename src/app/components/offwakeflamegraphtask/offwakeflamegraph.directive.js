@@ -81,7 +81,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/offwakeflamegraphtask/offwakeflamegraph.html',
+            template: require('./offwakeflamegraph.html'),
             link: link
         };
     }

@@ -81,7 +81,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/uninlinedcpuflamegraphtask/uninlinedcpuflamegraph.html',
+            template: require('./uninlinedcpuflamegraph.html'),
             link: link
         };
     }

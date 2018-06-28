@@ -81,7 +81,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/offcpuflamegraphtask/offcpuflamegraph.html',
+            template: require('./offcpuflamegraph.html'),
             link: link
         };
     }

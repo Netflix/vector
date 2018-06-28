@@ -16,7 +16,7 @@
  *
  */
 
-/*global _*/
+import _ from 'lodash'
 
 (function () {
   'use strict';

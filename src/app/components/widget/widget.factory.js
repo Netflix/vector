@@ -454,7 +454,7 @@
                     integer: true
                 },
                 settingsModalOptions: {
-                    templateUrl: 'app/components/widgetFilterSettings/widgetFilterSettings.html',
+                    template: require('../widgetFilterSettings/widgetFilterSettings.html'),
                     controller: 'WidgetFilterSettingsController'
                 },
                 hasLocalSettings: true,
@@ -584,7 +584,7 @@
                     integer: true
                 },
                 settingsModalOptions: {
-                    templateUrl: 'app/components/widgetFilterSettings/widgetFilterSettings.html',
+                    template: require('../widgetFilterSettings/widgetFilterSettings.html'),
                     controller: 'WidgetFilterSettingsController'
                 },
                 hasLocalSettings: true,
@@ -653,7 +653,7 @@
             enableVerticalResize: false,
             group: 'Task',
             settingsModalOptions: {
-                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                template: require('../customWidgetHelp/customWidgetHelp.html'),
                 controller: 'CustomWidgetHelpController'
             },
             hasLocalHelp: true,
@@ -670,7 +670,7 @@
             enableVerticalResize: false,
             group: 'Task',
             settingsModalOptions: {
-                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                template: require('../customWidgetHelp/customWidgetHelp.html'),
                 controller: 'CustomWidgetHelpController'
             },
             hasLocalHelp: true,
@@ -687,7 +687,7 @@
             enableVerticalResize: false,
             group: 'Task',
             settingsModalOptions: {
-                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                template: require('../customWidgetHelp/customWidgetHelp.html'),
                 controller: 'CustomWidgetHelpController'
             },
             hasLocalHelp: true,
@@ -704,7 +704,7 @@
             enableVerticalResize: false,
             group: 'Task',
             settingsModalOptions: {
-                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                template: require('../customWidgetHelp/customWidgetHelp.html'),
                 controller: 'CustomWidgetHelpController'
             },
             hasLocalHelp: true,
@@ -721,7 +721,7 @@
             enableVerticalResize: false,
             group: 'Task',
             settingsModalOptions: {
-                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                template: require('../customWidgetHelp/customWidgetHelp.html'),
                 controller: 'CustomWidgetHelpController'
             },
             hasLocalHelp: true,
@@ -738,7 +738,7 @@
             enableVerticalResize: false,
             group: 'Task',
             settingsModalOptions: {
-                templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                template: require('../customWidgetHelp/customWidgetHelp.html'),
                 controller: 'CustomWidgetHelpController'
             },
             hasLocalHelp: true,
@@ -760,7 +760,7 @@
                 enableVerticalResize: false,
                 group: 'Task',
                 settingsModalOptions: {
-                    templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                    template: require('../customWidgetHelp/customWidgetHelp.html'),
                     controller: 'CustomWidgetHelpController'
                 },
                 hasLocalHelp: true,
@@ -778,7 +778,7 @@
                 enableVerticalResize: false,
                 group: 'Task',
                 settingsModalOptions: {
-                    templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                    template: require('../customWidgetHelp/customWidgetHelp.html'),
                     controller: 'CustomWidgetHelpController'
                 },
                 hasLocalHelp: true,
@@ -796,7 +796,7 @@
                 enableVerticalResize: false,
                 group: 'Task',
                 settingsModalOptions: {
-                    templateUrl: 'app/components/customWidgetHelp/customWidgetHelp.html',
+                    template: require('../customWidgetHelp/customWidgetHelp.html'),
                     controller: 'CustomWidgetHelpController'
                 },
                 hasLocalHelp: true,
@@ -852,7 +852,7 @@
                 enableVerticalResize: false,
                 group: 'Custom',
                 settingsModalOptions: {
-                    templateUrl: 'app/components/customWidgetSettings/customWidgetSettings.html',
+                    template: require('../customWidgetSettings/customWidgetSettings.html'),
                     controller: 'CustomWidgetSettingsController'
                 },
                 hasLocalSettings: true,
@@ -1152,7 +1152,7 @@
                     unit: "'us'"
                 },
                 settingsModalOptions: {
-                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    template: require('../heatmap/heatmapSettings.html'),
                     controller: 'HeatmapSettingsController'
                 },
                 hasLocalSettings: true,
@@ -1179,7 +1179,7 @@
                     unit: "'us'"
                 },
                 settingsModalOptions: {
-                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    template: require('../heatmap/heatmapSettings.html'),
                     controller: 'HeatmapSettingsController'
                 },
                 hasLocalSettings: true,
@@ -1207,7 +1207,7 @@
                     unit: "'us'"
                 },
                 settingsModalOptions: {
-                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    template: require('../heatmap/heatmapSettings.html'),
                     controller: 'HeatmapSettingsController'
                 },
                 hasLocalSettings: true,
@@ -1235,7 +1235,7 @@
                     unit: "'us'"
                 },
                 settingsModalOptions: {
-                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    template: require('../heatmap/heatmapSettings.html'),
                     controller: 'HeatmapSettingsController'
                 },
                 hasLocalSettings: true,
@@ -1263,7 +1263,7 @@
                     unit: "'us'"
                 },
                 settingsModalOptions: {
-                    templateUrl: 'app/components/heatmap/heatmapSettings.html',
+                    template: require('../heatmap/heatmapSettings.html'),
                     controller: 'HeatmapSettingsController'
                 },
                 hasLocalSettings: true,

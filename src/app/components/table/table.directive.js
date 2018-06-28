@@ -48,7 +48,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/table/table.html',
+            template: require('./table.html'),
             scope: {
                 data: '='
             },

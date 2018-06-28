@@ -86,7 +86,7 @@
 
     return {
       restrict: 'A',
-      templateUrl: 'app/components/chart/chart.html',
+      template: require('./chart.html'),
       scope: {
         data: '=',
         percentage: '=',

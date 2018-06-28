@@ -81,7 +81,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/pnamecpuflamegraphtask/pnamecpuflamegraph.html',
+            template: require('./pnamecpuflamegraph.html'),
             link: link
         };
     }

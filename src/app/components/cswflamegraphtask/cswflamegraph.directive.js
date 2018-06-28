@@ -81,7 +81,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/cswflamegraphtask/cswflamegraph.html',
+            template: require('./cswflamegraph.html'),
             link: link
         };
     }
