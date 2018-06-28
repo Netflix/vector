@@ -15,88 +15,88 @@
  *     limitations under the License.
  *
  */
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name CpuUtilizationMetricDataModel
-    * @desc
-    */
-    function CpuUtilizationMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
-        var DataModel = function () {
-            return this;
-        };
+  /**
+   * @name CpuUtilizationMetricDataModel
+   * @desc
+   */
+  function CpuUtilizationMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
+    var DataModel = function () {
+      return this;
+    };
 
-        DataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        DataModel.prototype.init = function () {
-            WidgetDataModel.prototype.init.call(this);
+    DataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
+      this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
-            // create create base metrics
-            var cpuSysMetric = MetricListService.getOrCreateCumulativeMetric('kernel.all.cpu.sys'),
-                cpuUserMetric = MetricListService.getOrCreateCumulativeMetric('kernel.all.cpu.user'),
-                ncpuMetric = MetricListService.getOrCreateMetric('hinv.ncpu'),
-                derivedFunction;
+      // create create base metrics
+      var cpuSysMetric = MetricListService.getOrCreateCumulativeMetric('kernel.all.cpu.sys'),
+        cpuUserMetric = MetricListService.getOrCreateCumulativeMetric('kernel.all.cpu.user'),
+        ncpuMetric = MetricListService.getOrCreateMetric('hinv.ncpu'),
+        derivedFunction;
 
-            derivedFunction = function () {
-                var returnValues = [],
-                    cpuInstance,
-                    cpuCount;
+      derivedFunction = function () {
+        var returnValues = [],
+          cpuInstance,
+          cpuCount;
 
-                if (ncpuMetric.data.length > 0) {
-                    cpuInstance = ncpuMetric.data[ncpuMetric.data.length - 1];
+        if (ncpuMetric.data.length > 0) {
+          cpuInstance = ncpuMetric.data[ncpuMetric.data.length - 1];
 
-                    if (cpuInstance.values.length > 0) {
-                        cpuCount = cpuInstance.values[cpuInstance.values.length - 1].y;
+          if (cpuInstance.values.length > 0) {
+            cpuCount = cpuInstance.values[cpuInstance.values.length - 1].y;
 
-                        var pushReturnValues = function(instance, keyName) {
-                            if (instance.values.length > 0) {
-                                var lastValue = instance.values[instance.values.length - 1];
-                                returnValues.push({
-                                    timestamp: lastValue.x,
-                                    key: keyName,
-                                    value: lastValue.y / (cpuCount * 1000)
-                                });
-                            }
-                        };
-
-                        angular.forEach(cpuSysMetric.data, function (instance) {
-                            pushReturnValues(instance, 'sys');
-                        });
-
-                        angular.forEach(cpuUserMetric.data, function (instance) {
-                            pushReturnValues(instance, 'user');
-                        });
-                    }
-                }
-
-                return returnValues;
+            var pushReturnValues = function(instance, keyName) {
+              if (instance.values.length > 0) {
+                var lastValue = instance.values[instance.values.length - 1];
+                returnValues.push({
+                  timestamp: lastValue.x,
+                  key: keyName,
+                  value: lastValue.y / (cpuCount * 1000)
+                });
+              }
             };
 
-            // create derived metric
-            this.metric = MetricListService.getOrCreateDerivedMetric(this.name, derivedFunction);
+            angular.forEach(cpuSysMetric.data, function (instance) {
+              pushReturnValues(instance, 'sys');
+            });
 
-            this.updateScope(this.metric.data);
-        };
+            angular.forEach(cpuUserMetric.data, function (instance) {
+              pushReturnValues(instance, 'user');
+            });
+          }
+        }
 
-        DataModel.prototype.destroy = function () {
-            // remove subscribers and delete derived metric
-            MetricListService.destroyDerivedMetric(this.name);
+        return returnValues;
+      };
 
-            // remove subscribers and delete base metrics
-            MetricListService.destroyMetric('kernel.all.cpu.sys');
-            MetricListService.destroyMetric('kernel.all.cpu.user');
-            MetricListService.destroyMetric('hinv.ncpu');
+      // create derived metric
+      this.metric = MetricListService.getOrCreateDerivedMetric(this.name, derivedFunction);
 
-            WidgetDataModel.prototype.destroy.call(this);
-        };
+      this.updateScope(this.metric.data);
+    };
 
-        return DataModel;
-    }
+    DataModel.prototype.destroy = function () {
+      // remove subscribers and delete derived metric
+      MetricListService.destroyDerivedMetric(this.name);
 
-    angular
-        .module('datamodel')
-        .factory('CpuUtilizationMetricDataModel', CpuUtilizationMetricDataModel);
- })();
+      // remove subscribers and delete base metrics
+      MetricListService.destroyMetric('kernel.all.cpu.sys');
+      MetricListService.destroyMetric('kernel.all.cpu.user');
+      MetricListService.destroyMetric('hinv.ncpu');
+
+      WidgetDataModel.prototype.destroy.call(this);
+    };
+
+    return DataModel;
+  }
+
+  angular
+    .module('datamodel')
+    .factory('CpuUtilizationMetricDataModel', CpuUtilizationMetricDataModel);
+})();

@@ -16,279 +16,279 @@
  *
  */
 
- /*global _*/
+/*global _*/
 
 (function () {
-    'use strict';
+  'use strict';
 
-    function PMAPIService($http, $log, $rootScope, $q) {
+  function PMAPIService($http, $log, $rootScope, $q) {
 
-        function getContext(params) {
-            var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
-               $rootScope.properties.port;
-            var settings = {};
-            settings.method = 'GET';
-            settings.url = baseURI + '/pmapi/context';
-            settings.params = {};
-            settings.params[params.contextType] = params.contextValue;
-            settings.params.polltimeout = params.pollTimeout.toString();
-            settings.params.exclusive = 1;	// clients have exclusive contexts; default in later pcp versiosn
-            settings.timeout = 5000;
+    function getContext(params) {
+      var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
+        $rootScope.properties.port;
+      var settings = {};
+      settings.method = 'GET';
+      settings.url = baseURI + '/pmapi/context';
+      settings.params = {};
+      settings.params[params.contextType] = params.contextValue;
+      settings.params.polltimeout = params.pollTimeout.toString();
+      settings.params.exclusive = 1;	// clients have exclusive contexts; default in later pcp versiosn
+      settings.timeout = 5000;
 
-            return $http(settings)
-                .then(function (response) {
-                    if (response.data.context) {
-                        return response.data.context;
-                    }
+      return $http(settings)
+        .then(function (response) {
+          if (response.data.context) {
+            return response.data.context;
+          }
 
-                    return $q.reject('context is undefined');
-                });
-        }
-
-        function getHostspecContext(hostspec, pollTimeout) {
-            var params = {};
-            params.contextType = 'hostspec';
-            params.contextValue = hostspec;
-            params.pollTimeout = pollTimeout;
-            return getContext(params);
-        }
-
-        function getHostnameContext(hostname, pollTimeout) {
-            var params = {};
-            params.contextType = 'hostname';
-            params.contextValue = hostname;
-            params.pollTimeout = pollTimeout;
-            return getContext(params);
-        }
-
-        function getLocalContext(pollTimeout) {
-            var params = {};
-            params.contextType = 'local';
-            params.contextValue = 'ANYTHING';
-            params.pollTimeout = pollTimeout;
-            return getContext(params);
-        }
-
-        function getArchiveContext(archiveFile, pollTimeout) {
-            var params = {};
-            params.contextType = 'archivefile';
-            params.contextValue = archiveFile;
-            params.pollTimeout = pollTimeout;
-            return getContext(params);
-        }
-
-        function getMetricsValues(context, names, pmids) {
-            var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
-               $rootScope.properties.port;
-            var settings = {};
-            settings.method = 'GET';
-            settings.url = baseURI + '/pmapi/' + context + '/_fetch';
-            settings.params = {};
-
-            if (angular.isDefined(pmids) && pmids !== null && pmids.length > 0)  {
-                settings.params.pmids = pmids.join(',');
-            }
-
-            if (angular.isDefined(names) && names !== null && names.length > 0) {
-                settings.params.names = names.join(',');
-            }
-
-            return $http(settings)
-                .then(function (response) {
-                    if (angular.isUndefined(response.data.timestamp) ||
-                        angular.isUndefined(response.data.timestamp.s) ||
-                        angular.isUndefined(response.data.timestamp.us) ||
-                        angular.isUndefined(response.data.values)) {
-                        return $q.reject('metric values is empty');
-                    }
-                    return response;
-                });
-
-        }
-
-        function setContainer(context, name) {
-            var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
-                $rootScope.properties.port;
-            var settings = {};
-            settings.method = 'GET';
-            settings.url = baseURI + '/pmapi/' + context + '/_store';
-            settings.params = {name: "pmcd.client.container"};
-            settings.params["value"] = name;
-
-            return $http(settings)
-                .then(function (response) {
-                    if (angular.isUndefined(response.data.success) || response.data.success != 1) {
-                        return $q.reject('set container failed');
-                    }
-                    return response;
-                });
-        }
-
-        function getInstanceDomainsByIndom(context, indom, instances, inames) {
-            var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
-                $rootScope.properties.port;
-            var settings = {};
-            settings.method = 'GET';
-            settings.url = baseURI + '/pmapi/' + context + '/_indom';
-            settings.params = {indom: indom}; // required
-
-            if (angular.isDefined(instances) && instances !== null) {
-                settings.params.instance = instances.join(',');
-            }
-
-            if (angular.isDefined(inames) && inames !== null) {
-                settings.params.inames = inames.join(',');
-            }
-
-            settings.cache = true;
-
-            return $http(settings)
-                .then(function (response) {
-                    if (angular.isDefined(response.data.indom) ||
-                        angular.isDefined(response.data.instances)) {
-                       return response;
-                    }
-
-                    return $q.reject('instances is undefined');
-                });
-        }
-
-        function getInstanceDomainsByName(context, name, instances, inames) {
-            var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
-                $rootScope.properties.port;
-            var settings = {};
-            settings.method = 'GET';
-            settings.url = baseURI + '/pmapi/' + context + '/_indom';
-            settings.params = {name: name};
-
-            if (angular.isDefined(instances) && instances !== null) {
-                settings.params.instance = instances.join(',');
-            }
-
-            if (angular.isDefined(inames) && inames !== null) {
-                settings.params.inames = inames.join(',');
-            }
-
-            settings.cache = true;
-
-            return $http(settings)
-                .then(function (response) {
-                    if (angular.isDefined(response.data.instances)) {
-                      return response;
-                    }
-                    return $q.reject('instances is undefined');
-                });
-        }
-
-        function convertTimestampToMillis(response) {
-            // timestamp is in milliseconds
-            var timestamp = (response.data.timestamp.s * 1000) +
-                (response.data.timestamp.us / 1000);
-            var values = response.data.values;
-
-            return {
-                timestamp: timestamp,
-                values: values
-            };
-
-        }
-
-        function mapMetricNamesToInstanceDomains(responses) {
-            var instanceDomains = {};
-            angular.forEach(responses, function (response)  {
-                var indom = response.data.indom;
-                var name = response.config.params.name;
-                var inames = {};
-                angular.forEach(response.data.instances, function (inst) {
-                    inames[inst.instance.toString()] = inst.name;
-                });
-                instanceDomains[name.toString()] = {
-                    indom: indom,
-                    name: name,
-                    inames: inames
-                };
-            });
-
-            return instanceDomains;
-        }
-
-        function appendInstanceDomains(context, data) {
-            var deferred = $q.defer();
-            var instanceDomainPromises = [];
-            angular.forEach(data.values, function (value) {
-                var ids = _.map(value.instances, function (inst) {
-                    if (angular.isDefined(inst.instance) &&
-                        inst.instance !== null) {
-                        return inst.instance;
-                    } else {
-                        return -1;
-                    }
-                });
-                instanceDomainPromises.push(
-                    getInstanceDomainsByName(context, value.name, ids));
-            });
-
-            $q.all(instanceDomainPromises)
-                .then(function (responses) {
-                    var dict = mapMetricNamesToInstanceDomains(responses);
-
-                    var result = {
-                        timestamp: data.timestamp,
-                        values: data.values,
-                        inames: dict
-                    };
-
-                    deferred.resolve(result);
-                }, function (errors) {
-                    deferred.reject(errors);
-                }, function (updates) {
-                    deferred.update(updates);
-                });
-
-            return deferred.promise;
-        }
-
-        function getMetrics(context, metrics, pmids) {
-            return getMetricsValues(context, metrics, pmids)
-                    .then(convertTimestampToMillis)
-                    .then(function(data) {
-                        return appendInstanceDomains(context, data);
-                    });
-        }
-		
-		function getMetricsMetadata(context) {
-            var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
-                $rootScope.properties.port;
-            var metadata = {};
-            metadata.method = 'GET';
-            metadata.url = baseURI + '/pmapi/' + context + '/_metric';
-            $http(metadata).then(function(response) {
-              if (angular.isDefined(response.data.metrics)) {
-                $rootScope.metricsMetadata = response.data.metrics;
-              }
-                return $q.reject('metricsData is undefined');
-            });
-        }
-
-         return {
-            getHostspecContext: getHostspecContext,
-            getHostnameContext: getHostnameContext,
-            getLocalContext: getLocalContext,
-            getArchiveContext: getArchiveContext,
-            getMetricsValues: getMetricsValues,
-            getMetrics: getMetrics,
-			getMetricsMetadata: getMetricsMetadata,
-            getInstanceDomainsByIndom: getInstanceDomainsByIndom,
-            getInstanceDomainsByName: getInstanceDomainsByName,
-            setContainer: setContainer
-        };
+          return $q.reject('context is undefined');
+        });
     }
 
-    // PMAPI Service factory
-    angular
-        .module('pmapi', [])
-        .factory('PMAPIService', PMAPIService);
+    function getHostspecContext(hostspec, pollTimeout) {
+      var params = {};
+      params.contextType = 'hostspec';
+      params.contextValue = hostspec;
+      params.pollTimeout = pollTimeout;
+      return getContext(params);
+    }
 
-    PMAPIService.$inject = ['$http', '$log', '$rootScope', '$q'];
+    function getHostnameContext(hostname, pollTimeout) {
+      var params = {};
+      params.contextType = 'hostname';
+      params.contextValue = hostname;
+      params.pollTimeout = pollTimeout;
+      return getContext(params);
+    }
+
+    function getLocalContext(pollTimeout) {
+      var params = {};
+      params.contextType = 'local';
+      params.contextValue = 'ANYTHING';
+      params.pollTimeout = pollTimeout;
+      return getContext(params);
+    }
+
+    function getArchiveContext(archiveFile, pollTimeout) {
+      var params = {};
+      params.contextType = 'archivefile';
+      params.contextValue = archiveFile;
+      params.pollTimeout = pollTimeout;
+      return getContext(params);
+    }
+
+    function getMetricsValues(context, names, pmids) {
+      var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
+        $rootScope.properties.port;
+      var settings = {};
+      settings.method = 'GET';
+      settings.url = baseURI + '/pmapi/' + context + '/_fetch';
+      settings.params = {};
+
+      if (angular.isDefined(pmids) && pmids !== null && pmids.length > 0)  {
+        settings.params.pmids = pmids.join(',');
+      }
+
+      if (angular.isDefined(names) && names !== null && names.length > 0) {
+        settings.params.names = names.join(',');
+      }
+
+      return $http(settings)
+        .then(function (response) {
+          if (angular.isUndefined(response.data.timestamp) ||
+            angular.isUndefined(response.data.timestamp.s) ||
+            angular.isUndefined(response.data.timestamp.us) ||
+            angular.isUndefined(response.data.values)) {
+            return $q.reject('metric values is empty');
+          }
+          return response;
+        });
+
+    }
+
+    function setContainer(context, name) {
+      var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
+        $rootScope.properties.port;
+      var settings = {};
+      settings.method = 'GET';
+      settings.url = baseURI + '/pmapi/' + context + '/_store';
+      settings.params = {name: "pmcd.client.container"};
+      settings.params["value"] = name;
+
+      return $http(settings)
+        .then(function (response) {
+          if (angular.isUndefined(response.data.success) || response.data.success != 1) {
+            return $q.reject('set container failed');
+          }
+          return response;
+        });
+    }
+
+    function getInstanceDomainsByIndom(context, indom, instances, inames) {
+      var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
+        $rootScope.properties.port;
+      var settings = {};
+      settings.method = 'GET';
+      settings.url = baseURI + '/pmapi/' + context + '/_indom';
+      settings.params = {indom: indom}; // required
+
+      if (angular.isDefined(instances) && instances !== null) {
+        settings.params.instance = instances.join(',');
+      }
+
+      if (angular.isDefined(inames) && inames !== null) {
+        settings.params.inames = inames.join(',');
+      }
+
+      settings.cache = true;
+
+      return $http(settings)
+        .then(function (response) {
+          if (angular.isDefined(response.data.indom) ||
+            angular.isDefined(response.data.instances)) {
+            return response;
+          }
+
+          return $q.reject('instances is undefined');
+        });
+    }
+
+    function getInstanceDomainsByName(context, name, instances, inames) {
+      var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
+        $rootScope.properties.port;
+      var settings = {};
+      settings.method = 'GET';
+      settings.url = baseURI + '/pmapi/' + context + '/_indom';
+      settings.params = {name: name};
+
+      if (angular.isDefined(instances) && instances !== null) {
+        settings.params.instance = instances.join(',');
+      }
+
+      if (angular.isDefined(inames) && inames !== null) {
+        settings.params.inames = inames.join(',');
+      }
+
+      settings.cache = true;
+
+      return $http(settings)
+        .then(function (response) {
+          if (angular.isDefined(response.data.instances)) {
+            return response;
+          }
+          return $q.reject('instances is undefined');
+        });
+    }
+
+    function convertTimestampToMillis(response) {
+      // timestamp is in milliseconds
+      var timestamp = (response.data.timestamp.s * 1000) +
+        (response.data.timestamp.us / 1000);
+      var values = response.data.values;
+
+      return {
+        timestamp: timestamp,
+        values: values
+      };
+
+    }
+
+    function mapMetricNamesToInstanceDomains(responses) {
+      var instanceDomains = {};
+      angular.forEach(responses, function (response)  {
+        var indom = response.data.indom;
+        var name = response.config.params.name;
+        var inames = {};
+        angular.forEach(response.data.instances, function (inst) {
+          inames[inst.instance.toString()] = inst.name;
+        });
+        instanceDomains[name.toString()] = {
+          indom: indom,
+          name: name,
+          inames: inames
+        };
+      });
+
+      return instanceDomains;
+    }
+
+    function appendInstanceDomains(context, data) {
+      var deferred = $q.defer();
+      var instanceDomainPromises = [];
+      angular.forEach(data.values, function (value) {
+        var ids = _.map(value.instances, function (inst) {
+          if (angular.isDefined(inst.instance) &&
+            inst.instance !== null) {
+            return inst.instance;
+          } else {
+            return -1;
+          }
+        });
+        instanceDomainPromises.push(
+          getInstanceDomainsByName(context, value.name, ids));
+      });
+
+      $q.all(instanceDomainPromises)
+        .then(function (responses) {
+          var dict = mapMetricNamesToInstanceDomains(responses);
+
+          var result = {
+            timestamp: data.timestamp,
+            values: data.values,
+            inames: dict
+          };
+
+          deferred.resolve(result);
+        }, function (errors) {
+          deferred.reject(errors);
+        }, function (updates) {
+          deferred.update(updates);
+        });
+
+      return deferred.promise;
+    }
+
+    function getMetrics(context, metrics, pmids) {
+      return getMetricsValues(context, metrics, pmids)
+        .then(convertTimestampToMillis)
+        .then(function(data) {
+          return appendInstanceDomains(context, data);
+        });
+    }
+
+    function getMetricsMetadata(context) {
+      var baseURI = $rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' +
+        $rootScope.properties.port;
+      var metadata = {};
+      metadata.method = 'GET';
+      metadata.url = baseURI + '/pmapi/' + context + '/_metric';
+      $http(metadata).then(function(response) {
+        if (angular.isDefined(response.data.metrics)) {
+          $rootScope.metricsMetadata = response.data.metrics;
+        }
+        return $q.reject('metricsData is undefined');
+      });
+    }
+
+    return {
+      getHostspecContext: getHostspecContext,
+      getHostnameContext: getHostnameContext,
+      getLocalContext: getLocalContext,
+      getArchiveContext: getArchiveContext,
+      getMetricsValues: getMetricsValues,
+      getMetrics: getMetrics,
+      getMetricsMetadata: getMetricsMetadata,
+      getInstanceDomainsByIndom: getInstanceDomainsByIndom,
+      getInstanceDomainsByName: getInstanceDomainsByName,
+      setContainer: setContainer
+    };
+  }
+
+  // PMAPI Service factory
+  angular
+    .module('pmapi', [])
+    .factory('PMAPIService', PMAPIService);
+
+  PMAPIService.$inject = ['$http', '$log', '$rootScope', '$q'];
 
 })();

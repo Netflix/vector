@@ -16,64 +16,64 @@
  *
  */
 
- /*global _*/
+/*global _*/
 
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name DerivedMetric
-    * @desc
-    */
-    function DerivedMetric($rootScope) {
+  /**
+   * @name DerivedMetric
+   * @desc
+   */
+  function DerivedMetric($rootScope) {
 
-        var Metric = function (name, derivedFunction) {
-            this.name = name;
-            this.data = [];
-            this.subscribers = 1;
-            this.derivedFunction = derivedFunction;
-        };
+    var Metric = function (name, derivedFunction) {
+      this.name = name;
+      this.data = [];
+      this.subscribers = 1;
+      this.derivedFunction = derivedFunction;
+    };
 
-        Metric.prototype.updateValues = function () {
-            var self = this,
-                values;
+    Metric.prototype.updateValues = function () {
+      var self = this,
+        values;
 
-            values = self.derivedFunction(); // timestamp, key, data
+      values = self.derivedFunction(); // timestamp, key, data
 
-            if (values.length !== self.data.length) {
-                self.data.length = 0;
-            }
+      if (values.length !== self.data.length) {
+        self.data.length = 0;
+      }
 
-            angular.forEach(values, function (data) {
-                var overflow,
-                    instance = _.find(self.data, function (el) {
-                        return el.key === data.key;
-                    });
+      angular.forEach(values, function (data) {
+        var overflow,
+          instance = _.find(self.data, function (el) {
+            return el.key === data.key;
+          });
 
-                if (angular.isUndefined(instance)) {
-                    instance = {
-                        key: data.key,
-                        values: [{x: data.timestamp, y: data.value}, {x: data.timestamp + 1, y: data.value}]
-                    };
-                    self.data.push(instance);
-                } else {
-                    instance.values.push({x: data.timestamp, y: data.value});
-                    overflow = instance.values.length - ((parseInt($rootScope.properties.window) * 60) / parseInt($rootScope.properties.interval));
-                    if (overflow > 0) {
-                        instance.values.splice(0, overflow);
-                    }
-                }
-            });
-        };
+        if (angular.isUndefined(instance)) {
+          instance = {
+            key: data.key,
+            values: [{x: data.timestamp, y: data.value}, {x: data.timestamp + 1, y: data.value}]
+          };
+          self.data.push(instance);
+        } else {
+          instance.values.push({x: data.timestamp, y: data.value});
+          overflow = instance.values.length - ((parseInt($rootScope.properties.window) * 60) / parseInt($rootScope.properties.interval));
+          if (overflow > 0) {
+            instance.values.splice(0, overflow);
+          }
+        }
+      });
+    };
 
-        Metric.prototype.clearData = function () {
-            this.data.length = 0;
-        };
+    Metric.prototype.clearData = function () {
+      this.data.length = 0;
+    };
 
-        return Metric;
-    }
+    return Metric;
+  }
 
-    angular
-        .module('metric')
-        .factory('DerivedMetric', DerivedMetric);
- })();
+  angular
+    .module('metric')
+    .factory('DerivedMetric', DerivedMetric);
+})();

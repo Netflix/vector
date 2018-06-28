@@ -15,44 +15,44 @@
  *     limitations under the License.
  *
  */
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name SimpleMetricDataModel
-    * @desc
-    */
-    function ConvertedMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
-        var DataModel = function () {
-            return this;
-        };
+  /**
+   * @name SimpleMetricDataModel
+   * @desc
+   */
+  function ConvertedMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
+    var DataModel = function () {
+      return this;
+    };
 
-        DataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        DataModel.prototype.init = function () {
-            WidgetDataModel.prototype.init.call(this);
+    DataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
+      this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
 
-            this.conversionFunction = this.dataModelOptions.conversionFunction;
+      this.conversionFunction = this.dataModelOptions.conversionFunction;
 
-            this.metric = MetricListService.getOrCreateConvertedMetric(this.name, this.conversionFunction);
+      this.metric = MetricListService.getOrCreateConvertedMetric(this.name, this.conversionFunction);
 
-            this.updateScope(this.metric.data);
+      this.updateScope(this.metric.data);
 
-        };
+    };
 
-        DataModel.prototype.destroy = function () {
-            MetricListService.destroyMetric(this.name);
+    DataModel.prototype.destroy = function () {
+      MetricListService.destroyMetric(this.name);
 
-            WidgetDataModel.prototype.destroy.call(this);
-        };
+      WidgetDataModel.prototype.destroy.call(this);
+    };
 
-        return DataModel;
-    }
+    return DataModel;
+  }
 
-    angular
-        .module('datamodel')
-        .factory('ConvertedMetricDataModel', ConvertedMetricDataModel);
- })();
+  angular
+    .module('datamodel')
+    .factory('ConvertedMetricDataModel', ConvertedMetricDataModel);
+})();

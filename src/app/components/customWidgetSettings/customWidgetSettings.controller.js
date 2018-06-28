@@ -20,7 +20,7 @@
 
 (function () {
   'use strict';
-  
+
   function CustomWidgetSettingsCtrl($scope, $uibModalInstance, widget) {
     // add widget to scope
     $scope.widget = widget;

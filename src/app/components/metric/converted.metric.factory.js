@@ -16,57 +16,57 @@
  *
  */
 
- /*global _*/
+/*global _*/
 
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name ConvertedMetric
-    * @desc
-    */
-    function ConvertedMetric($rootScope, $log, SimpleMetric) {
+  /**
+   * @name ConvertedMetric
+   * @desc
+   */
+  function ConvertedMetric($rootScope, $log, SimpleMetric) {
 
-        var Metric = function (name, conversionFunction) {
-            this.base = SimpleMetric;
-            this.base(name);
-            this.conversionFunction = conversionFunction;
+    var Metric = function (name, conversionFunction) {
+      this.base = SimpleMetric;
+      this.base(name);
+      this.conversionFunction = conversionFunction;
+    };
+
+    Metric.prototype = new SimpleMetric();
+
+    Metric.prototype.pushValue = function (timestamp, iid, iname, value) {
+      var self = this,
+        instance,
+        overflow,
+        convertedValue;
+
+      convertedValue = self.conversionFunction(value);
+
+      instance = _.find(self.data, function (el) {
+        return el.iid === iid;
+      });
+
+      if (angular.isDefined(instance) && instance !== null) {
+        instance.values.push({ x: timestamp, y: convertedValue });
+        overflow = instance.values.length - ((parseInt($rootScope.properties.window) * 60) / parseInt($rootScope.properties.interval));
+        if (overflow > 0) {
+          instance.values.splice(0, overflow);
+        }
+      } else {
+        instance = {
+          key: angular.isDefined(iname) ? iname : this.name,
+          iid: iid,
+          values: [{x: timestamp, y: convertedValue}, {x: timestamp + 1, y: convertedValue}]
         };
+        self.data.push(instance);
+      }
+    };
 
-        Metric.prototype = new SimpleMetric();
+    return Metric;
+  }
 
-        Metric.prototype.pushValue = function (timestamp, iid, iname, value) {
-            var self = this,
-                instance,
-                overflow,
-                convertedValue;
-
-            convertedValue = self.conversionFunction(value);
-
-            instance = _.find(self.data, function (el) {
-                return el.iid === iid;
-            });
-
-            if (angular.isDefined(instance) && instance !== null) {
-                instance.values.push({ x: timestamp, y: convertedValue });
-                overflow = instance.values.length - ((parseInt($rootScope.properties.window) * 60) / parseInt($rootScope.properties.interval));
-                if (overflow > 0) {
-                    instance.values.splice(0, overflow);
-                }
-            } else {
-                instance = {
-                    key: angular.isDefined(iname) ? iname : this.name,
-                    iid: iid,
-                    values: [{x: timestamp, y: convertedValue}, {x: timestamp + 1, y: convertedValue}]
-                };
-                self.data.push(instance);
-            }
-        };
-
-        return Metric;
-    }
-
-    angular
-        .module('metric')
-        .factory('ConvertedMetric', ConvertedMetric);
- })();
+  angular
+    .module('metric')
+    .factory('ConvertedMetric', ConvertedMetric);
+})();

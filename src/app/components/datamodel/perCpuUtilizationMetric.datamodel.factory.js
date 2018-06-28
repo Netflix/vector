@@ -16,80 +16,80 @@
  *
  */
 
- /*global _*/
+/*global _*/
 
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name PerCpuUtilizationMetricDataModel
-    * @desc
-    */
-    function PerCpuUtilizationMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
-        var DataModel = function () {
-            return this;
-        };
+  /**
+   * @name PerCpuUtilizationMetricDataModel
+   * @desc
+   */
+  function PerCpuUtilizationMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
+    var DataModel = function () {
+      return this;
+    };
 
-        DataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        DataModel.prototype.init = function () {
-            WidgetDataModel.prototype.init.call(this);
+    DataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
+      this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
-            var cpuSysMetric = MetricListService.getOrCreateCumulativeMetric('kernel.percpu.cpu.sys'),
-                cpuUserMetric = MetricListService.getOrCreateCumulativeMetric('kernel.percpu.cpu.user'),
-                derivedFunction;
+      var cpuSysMetric = MetricListService.getOrCreateCumulativeMetric('kernel.percpu.cpu.sys'),
+        cpuUserMetric = MetricListService.getOrCreateCumulativeMetric('kernel.percpu.cpu.user'),
+        derivedFunction;
 
-            derivedFunction = function () {
-                var returnValues = [],
-                    cpuUserInstance,
-                    cpuSysLastValue,
-                    cpuUserLastValue;
+      derivedFunction = function () {
+        var returnValues = [],
+          cpuUserInstance,
+          cpuSysLastValue,
+          cpuUserLastValue;
 
-                angular.forEach(cpuSysMetric.data, function (cpuSysInstance) {
-                    if (cpuSysInstance.values.length > 0) {
-                        cpuUserInstance = _.find(cpuUserMetric.data, function (el) {
-                            return el.key === cpuSysInstance.key;
-                        });
-                        if (angular.isDefined(cpuUserInstance)) {
-                            cpuSysLastValue = cpuSysInstance.values[cpuSysInstance.values.length - 1];
-                            cpuUserLastValue = cpuUserInstance.values[cpuUserInstance.values.length - 1];
-                            if (cpuSysLastValue.x === cpuUserLastValue.x) {
-                                returnValues.push({
-                                    timestamp: cpuSysLastValue.x,
-                                    key: cpuSysInstance.key,
-                                    value: (cpuSysLastValue.y + cpuUserLastValue.y) / 1000
-                                });
-                            }
-                        }
-                    }
+        angular.forEach(cpuSysMetric.data, function (cpuSysInstance) {
+          if (cpuSysInstance.values.length > 0) {
+            cpuUserInstance = _.find(cpuUserMetric.data, function (el) {
+              return el.key === cpuSysInstance.key;
+            });
+            if (angular.isDefined(cpuUserInstance)) {
+              cpuSysLastValue = cpuSysInstance.values[cpuSysInstance.values.length - 1];
+              cpuUserLastValue = cpuUserInstance.values[cpuUserInstance.values.length - 1];
+              if (cpuSysLastValue.x === cpuUserLastValue.x) {
+                returnValues.push({
+                  timestamp: cpuSysLastValue.x,
+                  key: cpuSysInstance.key,
+                  value: (cpuSysLastValue.y + cpuUserLastValue.y) / 1000
                 });
+              }
+            }
+          }
+        });
 
-                return returnValues;
-            };
+        return returnValues;
+      };
 
-            // create derived metric
-            this.metric = MetricListService.getOrCreateDerivedMetric(this.name, derivedFunction);
+      // create derived metric
+      this.metric = MetricListService.getOrCreateDerivedMetric(this.name, derivedFunction);
 
-            this.updateScope(this.metric.data);
-        };
+      this.updateScope(this.metric.data);
+    };
 
-        DataModel.prototype.destroy = function () {
-            // remove subscribers and delete derived metric
-            MetricListService.destroyDerivedMetric(this.name);
+    DataModel.prototype.destroy = function () {
+      // remove subscribers and delete derived metric
+      MetricListService.destroyDerivedMetric(this.name);
 
-            // remove subscribers and delete base metrics
-            MetricListService.destroyMetric('kernel.percpu.cpu.sys');
-            MetricListService.destroyMetric('kernel.percpu.cpu.user');
+      // remove subscribers and delete base metrics
+      MetricListService.destroyMetric('kernel.percpu.cpu.sys');
+      MetricListService.destroyMetric('kernel.percpu.cpu.user');
 
-            WidgetDataModel.prototype.destroy.call(this);
-        };
+      WidgetDataModel.prototype.destroy.call(this);
+    };
 
-        return DataModel;
-    }
+    return DataModel;
+  }
 
-    angular
-        .module('datamodel')
-        .factory('PerCpuUtilizationMetricDataModel', PerCpuUtilizationMetricDataModel);
- })();
+  angular
+    .module('datamodel')
+    .factory('PerCpuUtilizationMetricDataModel', PerCpuUtilizationMetricDataModel);
+})();

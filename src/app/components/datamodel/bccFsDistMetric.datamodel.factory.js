@@ -16,51 +16,51 @@
  *
  */
 
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name BccFsDistMetricDataModel
-    * @desc generic data model for ext4dist, xfsdist and zfsdist
-    */
-    function BccFsDistMetricDataModel(WidgetDataModel, MetricListService, DashboardService, $rootScope) {
-        var DataModel = function () {
-            return this;
-        };
+  /**
+   * @name BccFsDistMetricDataModel
+   * @desc generic data model for ext4dist, xfsdist and zfsdist
+   */
+  function BccFsDistMetricDataModel(WidgetDataModel, MetricListService, DashboardService, $rootScope) {
+    var DataModel = function () {
+      return this;
+    };
 
-        DataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        DataModel.prototype.init = function () {
-            WidgetDataModel.prototype.init.call(this);
+    DataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
 
-            this.name = 'metric_' + DashboardService.getGuid();
+      this.name = 'metric_' + DashboardService.getGuid();
 
-            this.removeOperationWatcher = this.widgetScope.$watch('widget.dataModelOptions.operation', function(newValue) {
-                if (this.metric) {
-                    MetricListService.destroyMetric(this.metric.name);
-                }
+      this.removeOperationWatcher = this.widgetScope.$watch('widget.dataModelOptions.operation', function(newValue) {
+        if (this.metric) {
+          MetricListService.destroyMetric(this.metric.name);
+        }
 
-                this.metric = MetricListService.getOrCreateCumulativeMetric(this.dataModelOptions.name + '.' + newValue);
-                this.updateScope(this.metric.data);
-            }.bind(this));
+        this.metric = MetricListService.getOrCreateCumulativeMetric(this.dataModelOptions.name + '.' + newValue);
+        this.updateScope(this.metric.data);
+      }.bind(this));
 
-            this.removeIntervalWatcher = $rootScope.$watch('properties.interval', function() {
-                this.metric.clearData();
-            }.bind(this));
-        };
+      this.removeIntervalWatcher = $rootScope.$watch('properties.interval', function() {
+        this.metric.clearData();
+      }.bind(this));
+    };
 
-        DataModel.prototype.destroy = function () {
-            this.removeOperationWatcher();
-            this.removeIntervalWatcher();
+    DataModel.prototype.destroy = function () {
+      this.removeOperationWatcher();
+      this.removeIntervalWatcher();
 
-            MetricListService.destroyMetric(this.metric.name);
-            WidgetDataModel.prototype.destroy.call(this);
-        };
+      MetricListService.destroyMetric(this.metric.name);
+      WidgetDataModel.prototype.destroy.call(this);
+    };
 
-        return DataModel;
-    }
+    return DataModel;
+  }
 
-    angular
-        .module('datamodel')
-        .factory('BccFsDistMetricDataModel', BccFsDistMetricDataModel);
- })();
+  angular
+    .module('datamodel')
+    .factory('BccFsDistMetricDataModel', BccFsDistMetricDataModel);
+})();

@@ -15,41 +15,41 @@
  *     limitations under the License.
  *
  */
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name SimpleMetricDataModel
-    * @desc
-    */
-    function SimpleMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
-        var DataModel = function () {
-            return this;
-        };
+  /**
+   * @name SimpleMetricDataModel
+   * @desc
+   */
+  function SimpleMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
+    var DataModel = function () {
+      return this;
+    };
 
-        DataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        DataModel.prototype.init = function () {
-            WidgetDataModel.prototype.init.call(this);
+    DataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
+      this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
-            this.metric = MetricListService.getOrCreateMetric(this.name);
+      this.metric = MetricListService.getOrCreateMetric(this.name);
 
-            this.updateScope(this.metric.data);
+      this.updateScope(this.metric.data);
 
-        };
+    };
 
-        DataModel.prototype.destroy = function () {
-            MetricListService.destroyMetric(this.name);
+    DataModel.prototype.destroy = function () {
+      MetricListService.destroyMetric(this.name);
 
-            WidgetDataModel.prototype.destroy.call(this);
-        };
+      WidgetDataModel.prototype.destroy.call(this);
+    };
 
-        return DataModel;
-    }
+    return DataModel;
+  }
 
-    angular
-        .module('datamodel')
-        .factory('MetricDataModel', SimpleMetricDataModel);
- })();
+  angular
+    .module('datamodel')
+    .factory('MetricDataModel', SimpleMetricDataModel);
+})();

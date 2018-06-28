@@ -15,67 +15,67 @@
  *     limitations under the License.
  *
  */
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-     /**
-     * @name ModalService
+  /**
+   * @name ModalService
+   * @desc
+   */
+  function ModalService($uibModal) {
+
+    var defaultModal = {
+      backdrop: true,
+      keyboard: true,
+      modalFade: true,
+      templateUrl: 'app/components/modal/defaultModal.html'
+    };
+
+    var defaultModalOptions = {
+      closeButtonText: 'Close',
+      actionButtonText: 'OK',
+      headerText: 'Proceed?',
+      bodyText: 'Perform this action?'
+    };
+
+    /**
+     * @name show
      * @desc
      */
-     function ModalService($uibModal) {
+    function showModal(customModal, customModalOptions) {
+      //Create temp objects to work with since we're in a singleton service
+      var modal = {};
+      var modalOptions = {};
 
-        var defaultModal = {
-            backdrop: true,
-            keyboard: true,
-            modalFade: true,
-            templateUrl: 'app/components/modal/defaultModal.html'
+      customModal.backdrop = 'static';
+
+      //Map angular-ui modal custom defaults to modal defaults defined in service
+      angular.extend(modal, defaultModal, customModal);
+
+      //Map modal.html $scope custom properties to defaults defined in service
+      angular.extend(modalOptions, defaultModalOptions, customModalOptions);
+
+      modal.controller = ['$scope','$uibModalInstance', function ($scope, $uibModalInstance) {
+        $scope.modalOptions = modalOptions;
+        $scope.modalOptions.ok = function (result) {
+          $uibModalInstance.close(result);
         };
-
-        var defaultModalOptions = {
-            closeButtonText: 'Close',
-            actionButtonText: 'OK',
-            headerText: 'Proceed?',
-            bodyText: 'Perform this action?'
+        $scope.modalOptions.close = function () {
+          $uibModalInstance.dismiss('cancel');
         };
+      }];
 
-        /**
-        * @name show
-        * @desc
-        */
-        function showModal(customModal, customModalOptions) {
-            //Create temp objects to work with since we're in a singleton service
-            var modal = {};
-            var modalOptions = {};
-
-            customModal.backdrop = 'static';
-
-            //Map angular-ui modal custom defaults to modal defaults defined in service
-            angular.extend(modal, defaultModal, customModal);
-
-            //Map modal.html $scope custom properties to defaults defined in service
-            angular.extend(modalOptions, defaultModalOptions, customModalOptions);
-
-            modal.controller = ['$scope','$uibModalInstance', function ($scope, $uibModalInstance) {
-                $scope.modalOptions = modalOptions;
-                $scope.modalOptions.ok = function (result) {
-                    $uibModalInstance.close(result);
-                };
-                $scope.modalOptions.close = function () {
-                    $uibModalInstance.dismiss('cancel');
-                };
-            }];
-
-            return $uibModal.open(modal).result;
-        }
-
-        return {
-            showModal: showModal
-        };
-
+      return $uibModal.open(modal).result;
     }
 
-    angular
-        .module('modal' , [])
-        .factory('ModalService', ModalService);
+    return {
+      showModal: showModal
+    };
 
- })();
+  }
+
+  angular
+    .module('modal' , [])
+    .factory('ModalService', ModalService);
+
+})();

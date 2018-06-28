@@ -15,74 +15,74 @@
  *     limitations under the License.
  *
  */
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name CgroupCPUUsageMetricDataModel
-    * @desc
-    */
-    function CgroupCPUUsageMetricDataModel(ContainerMetadataService, WidgetDataModel, MetricListService, DashboardService) {
-        var DataModel = function () {
-            return this;
-        };
+  /**
+   * @name CgroupCPUUsageMetricDataModel
+   * @desc
+   */
+  function CgroupCPUUsageMetricDataModel(ContainerMetadataService, WidgetDataModel, MetricListService, DashboardService) {
+    var DataModel = function () {
+      return this;
+    };
 
-        DataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        DataModel.prototype.init = function () {
-            WidgetDataModel.prototype.init.call(this);
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
+    DataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
+      this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
-            // create create base metrics
-            var cpuUsageMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.cpuacct.usage'),
-                derivedFunction;
+      // create create base metrics
+      var cpuUsageMetric = MetricListService.getOrCreateCumulativeMetric('cgroup.cpuacct.usage'),
+        derivedFunction;
 
-            derivedFunction = function () {
-                var returnValues = [],
-                    lastValue,
-                    name;
+      derivedFunction = function () {
+        var returnValues = [],
+          lastValue,
+          name;
 
-                if ( cpuUsageMetric.data.length > 0){
-                    angular.forEach(cpuUsageMetric.data, function (instance) {
+        if ( cpuUsageMetric.data.length > 0){
+          angular.forEach(cpuUsageMetric.data, function (instance) {
 
-                        if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
-                            lastValue = instance.values[instance.values.length - 1];
-                            name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
+            if (instance.values.length > 0 && ContainerMetadataService.containerIdExist(instance.key)) {
+              lastValue = instance.values[instance.values.length - 1];
+              name = ContainerMetadataService.idDictionary(instance.key) || instance.key;
 
-                            if (ContainerMetadataService.checkContainerName(name) && ContainerMetadataService.checkContainerFilter(name)) {
-                                returnValues.push({
-                                    timestamp: lastValue.x,
-                                    key: name,
-                                    value: lastValue.y / 1000 / 1000 / 1000
-                                });
-                            }
-                        }
-                    });
-                }
+              if (ContainerMetadataService.checkContainerName(name) && ContainerMetadataService.checkContainerFilter(name)) {
+                returnValues.push({
+                  timestamp: lastValue.x,
+                  key: name,
+                  value: lastValue.y / 1000 / 1000 / 1000
+                });
+              }
+            }
+          });
+        }
 
-                return returnValues;
-            };
+        return returnValues;
+      };
 
-            // create derived metric
-            this.metric = MetricListService.getOrCreateDerivedMetric(this.name, derivedFunction);
+      // create derived metric
+      this.metric = MetricListService.getOrCreateDerivedMetric(this.name, derivedFunction);
 
-            this.updateScope(this.metric.data);
-        };
+      this.updateScope(this.metric.data);
+    };
 
-        DataModel.prototype.destroy = function () {
-            // remove subscribers and delete derived metric
-            MetricListService.destroyDerivedMetric(this.name);
+    DataModel.prototype.destroy = function () {
+      // remove subscribers and delete derived metric
+      MetricListService.destroyDerivedMetric(this.name);
 
-            // remove subscribers and delete base metrics
-            MetricListService.destroyMetric('cgroup.cpuacct.usage');
+      // remove subscribers and delete base metrics
+      MetricListService.destroyMetric('cgroup.cpuacct.usage');
 
-            WidgetDataModel.prototype.destroy.call(this);
-        };
+      WidgetDataModel.prototype.destroy.call(this);
+    };
 
-        return DataModel;
-    }
+    return DataModel;
+  }
 
-    angular
-        .module('datamodel')
-        .factory('CgroupCPUUsageMetricDataModel', CgroupCPUUsageMetricDataModel);
- })();
+  angular
+    .module('datamodel')
+    .factory('CgroupCPUUsageMetricDataModel', CgroupCPUUsageMetricDataModel);
+})();

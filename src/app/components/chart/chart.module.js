@@ -20,8 +20,8 @@
 
   angular
     .module('chart', [
-       'd3',
-       'dashboard'
+      'd3',
+      'dashboard'
     ]);
 
 })();

@@ -20,9 +20,9 @@
 
   angular
     .module('datamodel', [
-       'containermetadata',
-       'dashboard',
-       'metriclist'
+      'containermetadata',
+      'dashboard',
+      'metriclist'
     ]);
 
 })();

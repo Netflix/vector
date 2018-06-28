@@ -16,45 +16,45 @@
  *
  */
 
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name BccBiolatencyMetricDataModel
-    * @desc
-    */
-    function BccBiolatencyMetricDataModel(WidgetDataModel, MetricListService, DashboardService, $rootScope) {
-        var DataModel = function () {
-            return this;
-        };
+  /**
+   * @name BccBiolatencyMetricDataModel
+   * @desc
+   */
+  function BccBiolatencyMetricDataModel(WidgetDataModel, MetricListService, DashboardService, $rootScope) {
+    var DataModel = function () {
+      return this;
+    };
 
-        DataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        DataModel.prototype.init = function () {
-            WidgetDataModel.prototype.init.call(this);
+    DataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
-            this.metric = MetricListService.getOrCreateCumulativeMetric('bcc.disk.all.latency');
-            this.updateScope(this.metric.data);
+      this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
+      this.metric = MetricListService.getOrCreateCumulativeMetric('bcc.disk.all.latency');
+      this.updateScope(this.metric.data);
 
-            this.removeIntervalWatcher = $rootScope.$watch('properties.interval', function() {
-                this.metric.clearData();
-            }.bind(this));
-        };
+      this.removeIntervalWatcher = $rootScope.$watch('properties.interval', function() {
+        this.metric.clearData();
+      }.bind(this));
+    };
 
-        DataModel.prototype.destroy = function () {
-            this.removeIntervalWatcher();
+    DataModel.prototype.destroy = function () {
+      this.removeIntervalWatcher();
 
-            // remove subscribers and delete base metrics
-            MetricListService.destroyMetric('bcc.disk.all.latency');
+      // remove subscribers and delete base metrics
+      MetricListService.destroyMetric('bcc.disk.all.latency');
 
-            WidgetDataModel.prototype.destroy.call(this);
-        };
+      WidgetDataModel.prototype.destroy.call(this);
+    };
 
-        return DataModel;
-    }
+    return DataModel;
+  }
 
-    angular
-        .module('datamodel')
-        .factory('BccBiolatencyMetricDataModel', BccBiolatencyMetricDataModel);
- })();
+  angular
+    .module('datamodel')
+    .factory('BccBiolatencyMetricDataModel', BccBiolatencyMetricDataModel);
+})();

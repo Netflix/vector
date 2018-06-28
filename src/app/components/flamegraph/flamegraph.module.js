@@ -20,7 +20,7 @@
 
   angular
     .module('flamegraph', [
-       'dashboard'
+      'dashboard'
     ]);
 
 })();

@@ -15,57 +15,57 @@
  *     limitations under the License.
  *
  */
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name CustomMetricDataModel
-    * @desc
-    */
-    function CustomMetricDataModel($rootScope, WidgetDataModel, MetricListService) {
-        var DataModel = function () {
-            return this;
-        };
+  /**
+   * @name CustomMetricDataModel
+   * @desc
+   */
+  function CustomMetricDataModel($rootScope, WidgetDataModel, MetricListService) {
+    var DataModel = function () {
+      return this;
+    };
 
-        DataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        DataModel.prototype.init = function () {
-            WidgetDataModel.prototype.init.call(this);
-            this.name = null;
-            this.metric = null;
-            if (this.dataModelOptions) {
-                this.name = this.dataModelOptions.name;
-                this.isCumulative = this.dataModelOptions.isCumulative;
-                this.isConverted = this.dataModelOptions.isConverted;
-                this.strConversionFunction = this.dataModelOptions.strConversionFunction;
-            }
-            if (this.name) {
-                if (!this.isCumulative && !this.isConverted) {
-                    this.metric = MetricListService.getOrCreateMetric(this.name);
-                } else if (this.isCumulative && !this.isConverted) {
-                    this.metric = MetricListService.getOrCreateCumulativeMetric(this.name);
-                } else if (!this.isCumulative && this.isConverted) {
-                    var conversionFunction = new Function('value', 'return ' + this.strConversionFunction + ';');
-                    this.metric = MetricListService.getOrCreateConvertedMetric(this.name, conversionFunction);
-                } 
-                this.updateScope(this.metric.data);
-            } else {
-                this.updateScope([]);
-            }
-        };
+    DataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
+      this.name = null;
+      this.metric = null;
+      if (this.dataModelOptions) {
+        this.name = this.dataModelOptions.name;
+        this.isCumulative = this.dataModelOptions.isCumulative;
+        this.isConverted = this.dataModelOptions.isConverted;
+        this.strConversionFunction = this.dataModelOptions.strConversionFunction;
+      }
+      if (this.name) {
+        if (!this.isCumulative && !this.isConverted) {
+          this.metric = MetricListService.getOrCreateMetric(this.name);
+        } else if (this.isCumulative && !this.isConverted) {
+          this.metric = MetricListService.getOrCreateCumulativeMetric(this.name);
+        } else if (!this.isCumulative && this.isConverted) {
+          var conversionFunction = new Function('value', 'return ' + this.strConversionFunction + ';');
+          this.metric = MetricListService.getOrCreateConvertedMetric(this.name, conversionFunction);
+        }
+        this.updateScope(this.metric.data);
+      } else {
+        this.updateScope([]);
+      }
+    };
 
-        DataModel.prototype.destroy = function () {
-            if (this.metric) {
-                MetricListService.destroyMetric(this.name);
-                this.metric = null;
-            }
-            WidgetDataModel.prototype.destroy.call(this);
-        };
+    DataModel.prototype.destroy = function () {
+      if (this.metric) {
+        MetricListService.destroyMetric(this.name);
+        this.metric = null;
+      }
+      WidgetDataModel.prototype.destroy.call(this);
+    };
 
-        return DataModel;
-    }
+    return DataModel;
+  }
 
-    angular
-        .module('datamodel')
-        .factory('CustomMetricDataModel', CustomMetricDataModel);
- })();
+  angular
+    .module('datamodel')
+    .factory('CustomMetricDataModel', CustomMetricDataModel);
+})();

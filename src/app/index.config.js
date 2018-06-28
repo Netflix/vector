@@ -16,42 +16,42 @@
  *
  */
 (function () {
-    'use strict';
+  'use strict';
 
-    function toastrConfig(toastrConfig) {
-        toastrConfig.allowHtml = true;
-        toastrConfig.timeOut = 8000;
-        toastrConfig.positionClass = 'toast-top-right';
-        toastrConfig.preventDuplicates = true;
-        toastrConfig.progressBar = true;
-    }
+  function toastrConfig(toastrConfig) {
+    toastrConfig.allowHtml = true;
+    toastrConfig.timeOut = 8000;
+    toastrConfig.positionClass = 'toast-top-right';
+    toastrConfig.preventDuplicates = true;
+    toastrConfig.progressBar = true;
+  }
 
-    function logProviderConfig($logProvider) {
-        $logProvider.debugEnabled(true);
-    }
+  function logProviderConfig($logProvider) {
+    $logProvider.debugEnabled(true);
+  }
 
-    angular
-        .module('vector')
-        .constant('config', {
-            'protocol': 'http', // PMWEBD protocol (http or https)
-            'port': 44323,  // PMWEBD port
-            'hostspec': 'localhost', // Default PMCD hostspec
-            'interval': '2', // Default update interval in seconds
-            'window': '2', // Default graph time window in minutes
-            'enableFlameGraphs': false, // Enable flame graphs (requires extra PMDA)
-            'enableBpfFlameGraphs': false, // Enable BFP extended flame graphs (requires extra PMDA)
-            'enableContainerWidgets': true, // Enable container widgets
-            'disableHostspecInput': false, // Disable hostspec input
-            'disableContainerFilter': false, // Disable container id filter input
-            'disableContainerSelect': false, // Disable container name drop down select
-            'containerSelectOverride': true, // Overrides requireContainerFilter widget option
-            'useCgroupId': false, // Use container cgroup id instead of container name
-            'expandHostname': false, // Automatically expand hostname input when application opens
-            'disableHostnameInputContainerSelect': false, // Disable hostname and hostspec input when container is selected
-            'enableCustomWidgetFeature': true, // Enable the custom widget feature to add ad-hoc widgets
-            'enableBcc': false // Enable BCC widgets (requires BCC PMDA)
-      
-        })
-        .config(toastrConfig)
-        .config(logProviderConfig);
+  angular
+    .module('vector')
+    .constant('config', {
+      'protocol': 'http', // PMWEBD protocol (http or https)
+      'port': 44323,  // PMWEBD port
+      'hostspec': 'localhost', // Default PMCD hostspec
+      'interval': '2', // Default update interval in seconds
+      'window': '2', // Default graph time window in minutes
+      'enableFlameGraphs': false, // Enable flame graphs (requires extra PMDA)
+      'enableBpfFlameGraphs': false, // Enable BFP extended flame graphs (requires extra PMDA)
+      'enableContainerWidgets': true, // Enable container widgets
+      'disableHostspecInput': false, // Disable hostspec input
+      'disableContainerFilter': false, // Disable container id filter input
+      'disableContainerSelect': false, // Disable container name drop down select
+      'containerSelectOverride': true, // Overrides requireContainerFilter widget option
+      'useCgroupId': false, // Use container cgroup id instead of container name
+      'expandHostname': false, // Automatically expand hostname input when application opens
+      'disableHostnameInputContainerSelect': false, // Disable hostname and hostspec input when container is selected
+      'enableCustomWidgetFeature': true, // Enable the custom widget feature to add ad-hoc widgets
+      'enableBcc': false // Enable BCC widgets (requires BCC PMDA)
+
+    })
+    .config(toastrConfig)
+    .config(logProviderConfig);
 })();

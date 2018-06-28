@@ -16,97 +16,97 @@
  *
  */
 
- /*global _*/
+/*global _*/
 
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name DiskLatencyMetricDataModel
-    * @desc
-    */
-    function DiskLatencyMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
-        var DataModel = function () {
-            return this;
-        };
+  /**
+   * @name DiskLatencyMetricDataModel
+   * @desc
+   */
+  function DiskLatencyMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
+    var DataModel = function () {
+      return this;
+    };
 
-        DataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        DataModel.prototype.init = function () {
-            WidgetDataModel.prototype.init.call(this);
+    DataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
+      this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
-            var readActiveMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.read_rawactive'),
-                writeActiveMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.write_rawactive'),
-                readMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.read'),
-                writeMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.write'),
-                derivedFunction;
+      var readActiveMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.read_rawactive'),
+        writeActiveMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.write_rawactive'),
+        readMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.read'),
+        writeMetric = MetricListService.getOrCreateCumulativeMetric('disk.dev.write'),
+        derivedFunction;
 
-            derivedFunction = function () {
-                var returnValues = [],
-                    rawactiveInstance,
-                    lastValue,
-                    rawactiveLastValue,
-                    value;
+      derivedFunction = function () {
+        var returnValues = [],
+          rawactiveInstance,
+          lastValue,
+          rawactiveLastValue,
+          value;
 
-                function calculateValues(metric, rawactiveMetric, key, outputArr) {
-                    if (metric.data.length > 0) {
-                        angular.forEach(metric.data, function (instance) {
-                            rawactiveInstance = _.find(rawactiveMetric.data, function (element) {
-                                return element.key === instance.key;
-                            });
-                            if (angular.isDefined(rawactiveInstance)) {
-                                if (instance.values.length > 0) {
-                                    if (rawactiveInstance.values.length > 0) {
-                                        lastValue = instance.values[instance.values.length - 1];
-                                        rawactiveLastValue = rawactiveInstance.values[instance.values.length - 1];
-                                        if (lastValue.y > 0) {
-                                            value = rawactiveLastValue.y / lastValue.y;
-                                        } else {
-                                            value = 0;
-                                        }
-                                        outputArr.push({
-                                            timestamp: lastValue.x,
-                                            key: instance.key + key,
-                                            value: value
-                                        });
-                                    }
-                                }
-                            }
-                        });
+        function calculateValues(metric, rawactiveMetric, key, outputArr) {
+          if (metric.data.length > 0) {
+            angular.forEach(metric.data, function (instance) {
+              rawactiveInstance = _.find(rawactiveMetric.data, function (element) {
+                return element.key === instance.key;
+              });
+              if (angular.isDefined(rawactiveInstance)) {
+                if (instance.values.length > 0) {
+                  if (rawactiveInstance.values.length > 0) {
+                    lastValue = instance.values[instance.values.length - 1];
+                    rawactiveLastValue = rawactiveInstance.values[instance.values.length - 1];
+                    if (lastValue.y > 0) {
+                      value = rawactiveLastValue.y / lastValue.y;
+                    } else {
+                      value = 0;
                     }
+                    outputArr.push({
+                      timestamp: lastValue.x,
+                      key: instance.key + key,
+                      value: value
+                    });
+                  }
                 }
+              }
+            });
+          }
+        }
 
-                calculateValues(readMetric, readActiveMetric, ' read latency', returnValues);
-                calculateValues(writeMetric, writeActiveMetric, ' write latency', returnValues);
+        calculateValues(readMetric, readActiveMetric, ' read latency', returnValues);
+        calculateValues(writeMetric, writeActiveMetric, ' write latency', returnValues);
 
-                return returnValues;
-            };
+        return returnValues;
+      };
 
-            // create derived metric
-            this.metric = MetricListService.getOrCreateDerivedMetric(this.name, derivedFunction);
+      // create derived metric
+      this.metric = MetricListService.getOrCreateDerivedMetric(this.name, derivedFunction);
 
-            this.updateScope(this.metric.data);
-        };
+      this.updateScope(this.metric.data);
+    };
 
-        DataModel.prototype.destroy = function () {
-            // remove subscribers and delete derived metric
-            MetricListService.destroyDerivedMetric(this.name);
+    DataModel.prototype.destroy = function () {
+      // remove subscribers and delete derived metric
+      MetricListService.destroyDerivedMetric(this.name);
 
-            // remove subscribers and delete base metrics
-            MetricListService.destroyMetric('disk.dev.read_rawactive');
-            MetricListService.destroyMetric('disk.dev.write_rawactive');
-            MetricListService.destroyMetric('disk.dev.read');
-            MetricListService.destroyMetric('disk.dev.write');
+      // remove subscribers and delete base metrics
+      MetricListService.destroyMetric('disk.dev.read_rawactive');
+      MetricListService.destroyMetric('disk.dev.write_rawactive');
+      MetricListService.destroyMetric('disk.dev.read');
+      MetricListService.destroyMetric('disk.dev.write');
 
-            WidgetDataModel.prototype.destroy.call(this);
-        };
+      WidgetDataModel.prototype.destroy.call(this);
+    };
 
-        return DataModel;
-    }
+    return DataModel;
+  }
 
-    angular
-        .module('datamodel')
-        .factory('DiskLatencyMetricDataModel', DiskLatencyMetricDataModel);
- })();
+  angular
+    .module('datamodel')
+    .factory('DiskLatencyMetricDataModel', DiskLatencyMetricDataModel);
+})();
