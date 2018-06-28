@@ -26,8 +26,8 @@
   },
   "scripts": {
     "clean": "gulp clean",
-    "build": "gulp build",
-    "test": "gulp test",
+    "build": "gulp lintspaces && gulp build",
+    "test": "gulp lintspaces && gulp test",
     "serve": "gulp serve"
   },
   "devDependencies": {
