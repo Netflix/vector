@@ -81,7 +81,7 @@
 
         return {
             restrict: 'A',
-            template: require('app/components/ipcflamegraphtask/ipcflamegraph.html'),
+            template: require('./ipcflamegraph.html'),
             link: link
         };
     }

@@ -81,7 +81,7 @@
 
         return {
             restrict: 'A',
-            template: require('app/components/flamegraph/flamegraph.html'),
+            template: require('./flamegraph.html'),
             link: link
         };
     }
