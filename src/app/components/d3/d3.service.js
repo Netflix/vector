@@ -16,70 +16,70 @@
  *
  */
 
- /*global d3*/
+/*global d3*/
 
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name D3Service
-    * @desc
-    */
-    function D3Service() {
+  /**
+   * @name D3Service
+   * @desc
+   */
+  function D3Service() {
 
-        function xAxisTickFormat() {
-            return function (d) {
-                return d3.time.format('%X')(new Date(d));
-            };
-        }
-
-        function yAxisTickFormat() {
-            return function (d) {
-                return d3.format('.02f')(d);
-            };
-        }
-
-        function yAxisIntegerTickFormat() {
-            return function (d) {
-                return d3.format('f')(d);
-            };
-        }
-
-        function yAxisPercentageTickFormat() {
-            return function (d) {
-                return d3.format('%')(d);
-            };
-        }
-
-        function xFunction() {
-            return function (d) {
-                return d.x;
-            };
-        }
-
-        function yFunction() {
-            return function (d) {
-                return d.y;
-            };
-        }
-
-        function getId() {
-            return 'chart_' +
-                Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-        }
-
-        return {
-            xAxisTickFormat: xAxisTickFormat,
-            yAxisTickFormat: yAxisTickFormat,
-            yAxisIntegerTickFormat: yAxisIntegerTickFormat,
-            yAxisPercentageTickFormat: yAxisPercentageTickFormat,
-            xFunction: xFunction,
-            yFunction: yFunction,
-            getId: getId
-        };
+    function xAxisTickFormat() {
+      return function (d) {
+        return d3.time.format('%X')(new Date(d));
+      };
     }
 
-    angular
-        .module('d3', [])
-        .factory('D3Service', D3Service);
- })();
+    function yAxisTickFormat() {
+      return function (d) {
+        return d3.format('.02f')(d);
+      };
+    }
+
+    function yAxisIntegerTickFormat() {
+      return function (d) {
+        return d3.format('f')(d);
+      };
+    }
+
+    function yAxisPercentageTickFormat() {
+      return function (d) {
+        return d3.format('%')(d);
+      };
+    }
+
+    function xFunction() {
+      return function (d) {
+        return d.x;
+      };
+    }
+
+    function yFunction() {
+      return function (d) {
+        return d.y;
+      };
+    }
+
+    function getId() {
+      return 'chart_' +
+        Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    }
+
+    return {
+      xAxisTickFormat: xAxisTickFormat,
+      yAxisTickFormat: yAxisTickFormat,
+      yAxisIntegerTickFormat: yAxisIntegerTickFormat,
+      yAxisPercentageTickFormat: yAxisPercentageTickFormat,
+      xFunction: xFunction,
+      yFunction: yFunction,
+      getId: getId
+    };
+  }
+
+  angular
+    .module('d3', [])
+    .factory('D3Service', D3Service);
+})();

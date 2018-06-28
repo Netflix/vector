@@ -20,9 +20,9 @@
 
   angular
     .module('heatmap', [
-       'd3',
-       'dashboard',
-       'unit'
+      'd3',
+      'dashboard',
+      'unit'
     ]);
 
 })();

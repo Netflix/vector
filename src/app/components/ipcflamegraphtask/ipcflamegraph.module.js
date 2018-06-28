@@ -20,7 +20,7 @@
 
   angular
     .module('ipcflamegraphtask', [
-       'dashboard'
+      'dashboard'
     ]);
 
 })();

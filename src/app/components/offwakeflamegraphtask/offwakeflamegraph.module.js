@@ -20,7 +20,7 @@
 
   angular
     .module('offwakeflamegraphtask', [
-       'dashboard'
+      'dashboard'
     ]);
 
 })();

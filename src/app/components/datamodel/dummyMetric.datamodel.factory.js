@@ -15,36 +15,36 @@
  *     limitations under the License.
  *
  */
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name DummyMetricDataModel
-    * @desc
-    */
-    function DummyMetricDataModel(WidgetDataModel, MetricListService) {
-        var DataModel = function () {
-            return this;
-        };
+  /**
+   * @name DummyMetricDataModel
+   * @desc
+   */
+  function DummyMetricDataModel(WidgetDataModel, MetricListService) {
+    var DataModel = function () {
+      return this;
+    };
 
-        DataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        DataModel.prototype.init = function () {
-            WidgetDataModel.prototype.init.call(this);
+    DataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
 
-            this.metric = MetricListService.getOrCreateMetric('kernel.uname.release');
-        };
+      this.metric = MetricListService.getOrCreateMetric('kernel.uname.release');
+    };
 
-        DataModel.prototype.destroy = function () {
-            MetricListService.destroyMetric('kernel.uname.release');
+    DataModel.prototype.destroy = function () {
+      MetricListService.destroyMetric('kernel.uname.release');
 
-            WidgetDataModel.prototype.destroy.call(this);
-        };
+      WidgetDataModel.prototype.destroy.call(this);
+    };
 
-        return DataModel;
-    }
+    return DataModel;
+  }
 
-    angular
-        .module('datamodel')
-        .factory('DummyMetricDataModel', DummyMetricDataModel);
- })();
+  angular
+    .module('datamodel')
+    .factory('DummyMetricDataModel', DummyMetricDataModel);
+})();

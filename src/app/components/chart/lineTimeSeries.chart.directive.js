@@ -16,94 +16,94 @@
  *
  */
 
- /*global d3, nv*/
+/*global d3, nv*/
 
 (function () {
-    'use strict';
+  'use strict';
 
-    function lineTimeSeries($rootScope, D3Service) {
+  function lineTimeSeries($rootScope, D3Service) {
 
-        function link(scope) {
-            scope.id = D3Service.getId();
-            scope.flags = $rootScope.flags;
+    function link(scope) {
+      scope.id = D3Service.getId();
+      scope.flags = $rootScope.flags;
 
-            var chart;
+      var chart;
 
-            var height = 250;
+      var height = 250;
 
-            nv.addGraph(function () {
-              chart = nv.models.lineChart().options({
-                  duration: 0,
-                  useInteractiveGuideline: true,
-                  interactive: false,
-                  showLegend: true,
-                  showXAxis: true,
-                  showYAxis: true
-              });
+      nv.addGraph(function () {
+        chart = nv.models.lineChart().options({
+          duration: 0,
+          useInteractiveGuideline: true,
+          interactive: false,
+          showLegend: true,
+          showXAxis: true,
+          showYAxis: true
+        });
 
-              chart.margin({'left': 35, 'right': 35});
+        chart.margin({'left': 35, 'right': 35});
 
-              chart.height(height);
+        chart.height(height);
 
-              if (scope.forcey) {
-                  chart.forceY([0, scope.forcey]);
-              }
-
-              chart.x(D3Service.xFunction());
-              chart.y(D3Service.yFunction());
-
-              chart.xAxis.tickFormat(D3Service.xAxisTickFormat());
-
-              if (scope.percentage) {
-                  chart.yAxis.tickFormat(D3Service.yAxisPercentageTickFormat());
-              } else if (scope.integer) {
-                  chart.yAxis.tickFormat(D3Service.yAxisIntegerTickFormat());
-              } else {
-                  chart.yAxis.tickFormat(D3Service.yAxisTickFormat());
-              }
-
-              nv.utils.windowResize(chart.update);
-
-              d3.select('#' + scope.id + ' svg')
-                .datum(scope.data)
-                .style('height', height + 'px')
-                .transition().duration(0)
-                .call(chart);
-
-              return chart;
-            });
-
-            scope.$on('updateMetrics', function () {
-                if (scope.area) {
-                  angular.forEach(scope.data, function (instance) {
-                    instance.area=true;
-                  });
-                }
-                // TODO: check if updating datum on every refresh affects performance
-                d3.select('#' + scope.id + ' svg')
-                    .datum(scope.data)
-                    .style('height', height + 'px')
-                    .transition().duration(0)
-                    .call(chart);
-            });
+        if (scope.forcey) {
+          chart.forceY([0, scope.forcey]);
         }
 
-        return {
-            restrict: 'A',
-            templateUrl: 'app/components/chart/chart.html',
-            scope: {
-                data: '=',
-                forcey: '=',
-                percentage: '=',
-                integer: '=',
-                area: '='
-            },
-            link: link
-        };
+        chart.x(D3Service.xFunction());
+        chart.y(D3Service.yFunction());
+
+        chart.xAxis.tickFormat(D3Service.xAxisTickFormat());
+
+        if (scope.percentage) {
+          chart.yAxis.tickFormat(D3Service.yAxisPercentageTickFormat());
+        } else if (scope.integer) {
+          chart.yAxis.tickFormat(D3Service.yAxisIntegerTickFormat());
+        } else {
+          chart.yAxis.tickFormat(D3Service.yAxisTickFormat());
+        }
+
+        nv.utils.windowResize(chart.update);
+
+        d3.select('#' + scope.id + ' svg')
+          .datum(scope.data)
+          .style('height', height + 'px')
+          .transition().duration(0)
+          .call(chart);
+
+        return chart;
+      });
+
+      scope.$on('updateMetrics', function () {
+        if (scope.area) {
+          angular.forEach(scope.data, function (instance) {
+            instance.area=true;
+          });
+        }
+        // TODO: check if updating datum on every refresh affects performance
+        d3.select('#' + scope.id + ' svg')
+          .datum(scope.data)
+          .style('height', height + 'px')
+          .transition().duration(0)
+          .call(chart);
+      });
     }
 
-    angular
-        .module('chart')
-        .directive('lineTimeSeries', lineTimeSeries);
+    return {
+      restrict: 'A',
+      templateUrl: 'app/components/chart/chart.html',
+      scope: {
+        data: '=',
+        forcey: '=',
+        percentage: '=',
+        integer: '=',
+        area: '='
+      },
+      link: link
+    };
+  }
+
+  angular
+    .module('chart')
+    .directive('lineTimeSeries', lineTimeSeries);
 
 })();

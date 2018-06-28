@@ -16,94 +16,94 @@
  *
  */
 
- /*global d3, nv*/
+/*global d3, nv*/
 
 (function () {
-    'use strict';
+  'use strict';
 
-    function areaStackedTimeSeries($rootScope, $log, D3Service) {
+  function areaStackedTimeSeries($rootScope, $log, D3Service) {
 
-        function link(scope) {
-            scope.id = D3Service.getId();
-            scope.flags = $rootScope.flags;
-            scope.legend = true;
+    function link(scope) {
+      scope.id = D3Service.getId();
+      scope.flags = $rootScope.flags;
+      scope.legend = true;
 
-            var chart;
+      var chart;
 
-            nv.addGraph(function () {
+      nv.addGraph(function () {
 
-              var yAxisTickFormat = D3Service.yAxisTickFormat(),
-                  height = 250;
+        var yAxisTickFormat = D3Service.yAxisTickFormat(),
+          height = 250;
 
-              chart = nv.models.stackedAreaChart().options({
-                  duration: 0,
-                  useInteractiveGuideline: true,
-                  interactive: false,
-                  showLegend: true,
-                  showXAxis: true,
-                  showYAxis: true,
-                  showControls: false
-              });
+        chart = nv.models.stackedAreaChart().options({
+          duration: 0,
+          useInteractiveGuideline: true,
+          interactive: false,
+          showLegend: true,
+          showXAxis: true,
+          showYAxis: true,
+          showControls: false
+        });
 
-              chart.margin({'left': 35, 'right': 35});
+        chart.margin({'left': 35, 'right': 35});
 
-              chart.height(height);
+        chart.height(height);
 
-              if (scope.forcey) {
-                  chart.yDomain([0, scope.forcey]);
-              }
-
-              chart.x(D3Service.xFunction());
-              chart.y(D3Service.yFunction());
-
-              chart.xAxis.tickFormat(D3Service.xAxisTickFormat());
-
-              if (scope.percentage) {
-                  yAxisTickFormat = D3Service.yAxisPercentageTickFormat();
-                  chart.yAxis.tickFormat();
-              } else if (scope.integer) {
-                  yAxisTickFormat = D3Service.yAxisIntegerTickFormat();
-                  chart.yAxis.tickFormat();
-              }
-
-              chart.yAxis.tickFormat(yAxisTickFormat);
-
-              nv.utils.windowResize(chart.update);
-
-              d3.select('#' + scope.id + ' svg')
-                .datum(scope.data)
-                .style('height', height + 'px')
-                .transition().duration(0)
-                .call(chart);
-
-              return chart;
-            });
-
-            scope.$on('updateMetrics', function () {
-                chart.update();
-            });
+        if (scope.forcey) {
+          chart.yDomain([0, scope.forcey]);
         }
 
-        return {
-            restrict: 'A',
-            templateUrl: 'app/components/chart/chart.html',
-            scope: {
-                data: '=',
-                percentage: '=',
-                integer: '=',
-                forcey: '='
-            },
-            link: link
-        };
+        chart.x(D3Service.xFunction());
+        chart.y(D3Service.yFunction());
+
+        chart.xAxis.tickFormat(D3Service.xAxisTickFormat());
+
+        if (scope.percentage) {
+          yAxisTickFormat = D3Service.yAxisPercentageTickFormat();
+          chart.yAxis.tickFormat();
+        } else if (scope.integer) {
+          yAxisTickFormat = D3Service.yAxisIntegerTickFormat();
+          chart.yAxis.tickFormat();
+        }
+
+        chart.yAxis.tickFormat(yAxisTickFormat);
+
+        nv.utils.windowResize(chart.update);
+
+        d3.select('#' + scope.id + ' svg')
+          .datum(scope.data)
+          .style('height', height + 'px')
+          .transition().duration(0)
+          .call(chart);
+
+        return chart;
+      });
+
+      scope.$on('updateMetrics', function () {
+        chart.update();
+      });
     }
 
-    areaStackedTimeSeries.$inject = [
-        '$rootScope',
-        '$log',
-        'D3Service'
-    ];
+    return {
+      restrict: 'A',
+      templateUrl: 'app/components/chart/chart.html',
+      scope: {
+        data: '=',
+        percentage: '=',
+        integer: '=',
+        forcey: '='
+      },
+      link: link
+    };
+  }
 
-    angular
-        .module('chart')
-        .directive('areaStackedTimeSeries', areaStackedTimeSeries);
+  areaStackedTimeSeries.$inject = [
+    '$rootScope',
+    '$log',
+    'D3Service'
+  ];
+
+  angular
+    .module('chart')
+    .directive('areaStackedTimeSeries', areaStackedTimeSeries);
 })();

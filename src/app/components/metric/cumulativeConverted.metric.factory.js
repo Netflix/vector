@@ -16,62 +16,62 @@
  *
  */
 
- /*global _*/
+/*global _*/
 
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name CumulativeConvertedMetric
-    * @desc
-    */
-    function CumulativeConvertedMetric($rootScope, $log, SimpleMetric) {
+  /**
+   * @name CumulativeConvertedMetric
+   * @desc
+   */
+  function CumulativeConvertedMetric($rootScope, $log, SimpleMetric) {
 
-        var Metric = function (name, conversionFunction) {
-            this.base = Metric;
-            this.base(name);
-            this.conversionFunction = conversionFunction;
+    var Metric = function (name, conversionFunction) {
+      this.base = Metric;
+      this.base(name);
+      this.conversionFunction = conversionFunction;
+    };
+
+    Metric.prototype = new SimpleMetric();
+
+    Metric.prototype.pushValue = function (timestamp, iid, iname, value) {
+      var self = this,
+        instance,
+        overflow,
+        diffValue,
+        convertedValue;
+
+      instance = _.find(self.data, function (el) {
+        return el.iid === iid;
+      });
+
+      if (angular.isUndefined(instance)) {
+        instance = {
+          key: angular.isDefined(iname) ? iname : this.name,
+          iid: iid,
+          values: [],
+          previousValue: value,
+          previousTimestamp: timestamp
         };
+        self.data.push(instance);
+      } else {
+        diffValue = ((value - instance.previousValue) / (timestamp - instance.previousTimestamp)); // sampling frequency
+        convertedValue = self.conversionFunction(diffValue);
+        instance.values.push({ x: timestamp, y: convertedValue });
+        instance.previousValue = value;
+        instance.previousTimestamp = timestamp;
+        overflow = instance.values.length - ((parseInt($rootScope.properties.window) * 60) / parseInt($rootScope.properties.interval));
+        if (overflow > 0) {
+          instance.values.splice(0, overflow);
+        }
+      }
+    };
 
-        Metric.prototype = new SimpleMetric();
+    return Metric;
+  }
 
-        Metric.prototype.pushValue = function (timestamp, iid, iname, value) {
-            var self = this,
-                instance,
-                overflow,
-                diffValue,
-                convertedValue;
-
-            instance = _.find(self.data, function (el) {
-                return el.iid === iid;
-            });
-
-            if (angular.isUndefined(instance)) {
-                instance = {
-                    key: angular.isDefined(iname) ? iname : this.name,
-                    iid: iid,
-                    values: [],
-                    previousValue: value,
-                    previousTimestamp: timestamp
-                };
-                self.data.push(instance);
-            } else {
-                diffValue = ((value - instance.previousValue) / (timestamp - instance.previousTimestamp)); // sampling frequency
-                convertedValue = self.conversionFunction(diffValue);
-                instance.values.push({ x: timestamp, y: convertedValue });
-                instance.previousValue = value;
-                instance.previousTimestamp = timestamp;
-                overflow = instance.values.length - ((parseInt($rootScope.properties.window) * 60) / parseInt($rootScope.properties.interval));
-                if (overflow > 0) {
-                    instance.values.splice(0, overflow);
-                }
-            }
-        };
-
-        return Metric;
-    }
-
-    angular
-        .module('metric')
-        .factory('CumulativeConvertedMetric', CumulativeConvertedMetric);
- })();
+  angular
+    .module('metric')
+    .factory('CumulativeConvertedMetric', CumulativeConvertedMetric);
+})();

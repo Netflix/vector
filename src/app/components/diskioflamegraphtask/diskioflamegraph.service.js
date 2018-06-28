@@ -15,49 +15,49 @@
  *     limitations under the License.
  *
  */
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-     /**
-     * @name DiskIOFlameGraphService
+  /**
+   * @name DiskIOFlameGraphService
+   */
+  function DiskIOFlameGraphService($log, $rootScope, $http, toastr) {
+
+    /**
+     * @name generate
+     * @desc
      */
-     function DiskIOFlameGraphService($log, $rootScope, $http, toastr) {
-
-        /**
-        * @name generate
-        * @desc
-        */
-        function generate(seconds, poll) {
-            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_store?name=vector.task.diskioflamegraph&value=' + seconds)
-                .success(function () {
-                    toastr.success('vector.task.diskioflamegraph requested.', 'Success');
-                    poll("REQUESTED");
-                }).error(function (err) {
-                    toastr.error('Failed requesting vector.task.diskioflamegraph: ' + err, 'Error');
-                    poll("ERROR " + err);
-                });
-        }
-
-        function pollStatus(refresh) {
-            $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=vector.task.diskioflamegraph')
-                .success(function (data) {
-                    if (angular.isDefined(data.values[0])) {
-                        var message = data.values[0].instances[0].value;
-                        refresh(message);
-                    }
-                }).error(function () {
-                        refresh("ERROR fetching status");
-                });
-        }
-
-        return {
-            generate: generate,
-            pollStatus: pollStatus
-        };
+    function generate(seconds, poll) {
+      $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_store?name=vector.task.diskioflamegraph&value=' + seconds)
+        .success(function () {
+          toastr.success('vector.task.diskioflamegraph requested.', 'Success');
+          poll("REQUESTED");
+        }).error(function (err) {
+          toastr.error('Failed requesting vector.task.diskioflamegraph: ' + err, 'Error');
+          poll("ERROR " + err);
+        });
     }
 
-    angular
-        .module('diskioflamegraphtask')
-        .factory('DiskIOFlameGraphService', DiskIOFlameGraphService);
+    function pollStatus(refresh) {
+      $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=vector.task.diskioflamegraph')
+        .success(function (data) {
+          if (angular.isDefined(data.values[0])) {
+            var message = data.values[0].instances[0].value;
+            refresh(message);
+          }
+        }).error(function () {
+          refresh("ERROR fetching status");
+        });
+    }
 
- })();
+    return {
+      generate: generate,
+      pollStatus: pollStatus
+    };
+  }
+
+  angular
+    .module('diskioflamegraphtask')
+    .factory('DiskIOFlameGraphService', DiskIOFlameGraphService);
+
+})();

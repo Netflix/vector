@@ -20,7 +20,7 @@
 
   angular
     .module('pnamecpuflamegraphtask', [
-       'dashboard'
+      'dashboard'
     ]);
 
 })();

@@ -16,51 +16,51 @@
  *
  */
 
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name BccTcpretransMetricDataModel
-    * @desc
-    */
-    function BccTcpretransMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
-        var DataModel = function () {
-            return this;
-        };
+  /**
+   * @name BccTcpretransMetricDataModel
+   * @desc
+   */
+  function BccTcpretransMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
+    var DataModel = function () {
+      return this;
+    };
 
-        DataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        DataModel.prototype.init = function () {
-            WidgetDataModel.prototype.init.call(this);
+    DataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
-            this.tableDefinition = {
-                columns: [
-                    {label: 'LADDR:LPORT'},
-                    {label: 'DADDR:DPORT'},
-                    {label: 'RETRANSMITS'}
-                ],
-                rowFn: function(instance, value) {
-                    var spl = instance.split('::');
-                    return [spl[0], spl[1], value];
-                }
-            }
+      this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
+      this.tableDefinition = {
+        columns: [
+          {label: 'LADDR:LPORT'},
+          {label: 'DADDR:DPORT'},
+          {label: 'RETRANSMITS'}
+        ],
+        rowFn: function(instance, value) {
+          var spl = instance.split('::');
+          return [spl[0], spl[1], value];
+        }
+      }
 
-            this.metric = MetricListService.getOrCreateMetric('bcc.io.net.tcp.retrans.count');
-            this.updateScope(this.metric.data);
-        };
+      this.metric = MetricListService.getOrCreateMetric('bcc.io.net.tcp.retrans.count');
+      this.updateScope(this.metric.data);
+    };
 
-        DataModel.prototype.destroy = function () {
-            // remove subscribers and delete base metrics
-            MetricListService.destroyMetric(this.metric.name);
+    DataModel.prototype.destroy = function () {
+      // remove subscribers and delete base metrics
+      MetricListService.destroyMetric(this.metric.name);
 
-            WidgetDataModel.prototype.destroy.call(this);
-        };
+      WidgetDataModel.prototype.destroy.call(this);
+    };
 
-        return DataModel;
-    }
+    return DataModel;
+  }
 
-    angular
-        .module('datamodel')
-        .factory('BccTcpretransMetricDataModel', BccTcpretransMetricDataModel);
- })();
+  angular
+    .module('datamodel')
+    .factory('BccTcpretransMetricDataModel', BccTcpretransMetricDataModel);
+})();

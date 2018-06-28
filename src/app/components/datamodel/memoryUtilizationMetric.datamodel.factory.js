@@ -15,134 +15,134 @@
  *     limitations under the License.
  *
  */
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name MemoryUtilizationMetricDataModel
-    * @desc
-    */
-    function MemoryUtilizationMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
-        var DataModel = function () {
-            return this;
-        };
+  /**
+   * @name MemoryUtilizationMetricDataModel
+   * @desc
+   */
+  function MemoryUtilizationMetricDataModel(WidgetDataModel, MetricListService, DashboardService) {
+    var DataModel = function () {
+      return this;
+    };
 
-        DataModel.prototype = Object.create(WidgetDataModel.prototype);
+    DataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-        DataModel.prototype.init = function () {
-            WidgetDataModel.prototype.init.call(this);
+    DataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
 
-            this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
+      this.name = this.dataModelOptions ? this.dataModelOptions.name : 'metric_' + DashboardService.getGuid();
 
-            var conversionFunction = function (value) {
-                    return value / 1024;
-                },
-                cachedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.cached', conversionFunction),
-                usedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.used', conversionFunction),
-                freeMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.free', conversionFunction),
-                buffersMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.bufmem', conversionFunction),
-                derivedFunction;
+      var conversionFunction = function (value) {
+        return value / 1024;
+      },
+        cachedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.cached', conversionFunction),
+        usedMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.used', conversionFunction),
+        freeMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.free', conversionFunction),
+        buffersMemMetric = MetricListService.getOrCreateConvertedMetric('mem.util.bufmem', conversionFunction),
+        derivedFunction;
 
-            derivedFunction = function () {
-                var returnValues = [],
-                    usedValue,
-                    cachedValue,
-                    freeValue,
-                    buffersValue;
+      derivedFunction = function () {
+        var returnValues = [],
+          usedValue,
+          cachedValue,
+          freeValue,
+          buffersValue;
 
 
-                usedValue = (function () {
-                    if (usedMemMetric.data.length > 0) {
-                        var instance = usedMemMetric.data[usedMemMetric.data.length - 1];
-                        if (instance.values.length > 0) {
-                            return instance.values[instance.values.length - 1];
-                        }
-                    }
-                }());
+        usedValue = (function () {
+          if (usedMemMetric.data.length > 0) {
+            var instance = usedMemMetric.data[usedMemMetric.data.length - 1];
+            if (instance.values.length > 0) {
+              return instance.values[instance.values.length - 1];
+            }
+          }
+        }());
 
-                cachedValue = (function () {
-                    if (cachedMemMetric.data.length > 0) {
-                        var instance = cachedMemMetric.data[cachedMemMetric.data.length - 1];
-                        if (instance.values.length > 0) {
-                            return instance.values[instance.values.length - 1];
-                        }
-                    }
-                }());
+        cachedValue = (function () {
+          if (cachedMemMetric.data.length > 0) {
+            var instance = cachedMemMetric.data[cachedMemMetric.data.length - 1];
+            if (instance.values.length > 0) {
+              return instance.values[instance.values.length - 1];
+            }
+          }
+        }());
 
-                freeValue = (function () {
-                    if (freeMemMetric.data.length > 0) {
-                        var instance = freeMemMetric.data[freeMemMetric.data.length - 1];
-                        if (instance.values.length > 0) {
-                            return instance.values[instance.values.length - 1];
-                        }
-                    }
-                }());
+        freeValue = (function () {
+          if (freeMemMetric.data.length > 0) {
+            var instance = freeMemMetric.data[freeMemMetric.data.length - 1];
+            if (instance.values.length > 0) {
+              return instance.values[instance.values.length - 1];
+            }
+          }
+        }());
 
-                buffersValue = (function () {
-                    if (buffersMemMetric.data.length > 0) {
-                        var instance = buffersMemMetric.data[buffersMemMetric.data.length - 1];
-                        if (instance.values.length > 0) {
-                            return instance.values[instance.values.length - 1];
-                        }
-                    }
-                }());
+        buffersValue = (function () {
+          if (buffersMemMetric.data.length > 0) {
+            var instance = buffersMemMetric.data[buffersMemMetric.data.length - 1];
+            if (instance.values.length > 0) {
+              return instance.values[instance.values.length - 1];
+            }
+          }
+        }());
 
-                if (angular.isDefined(usedValue) &&
-                    angular.isDefined(cachedValue) &&
-                    angular.isDefined(buffersValue)) {
+        if (angular.isDefined(usedValue) &&
+          angular.isDefined(cachedValue) &&
+          angular.isDefined(buffersValue)) {
 
-                    returnValues.push({
-                        timestamp: usedValue.x,
-                        key: 'application',
-                        value: usedValue.y - cachedValue.y - buffersValue.y
-                    });
-                }
+          returnValues.push({
+            timestamp: usedValue.x,
+            key: 'application',
+            value: usedValue.y - cachedValue.y - buffersValue.y
+          });
+        }
 
-                if (angular.isDefined(cachedValue) &&
-                    angular.isDefined(buffersValue)) {
+        if (angular.isDefined(cachedValue) &&
+          angular.isDefined(buffersValue)) {
 
-                    returnValues.push({
-                        timestamp: usedValue.x,
-                        key: 'free (cache)',
-                        value: cachedValue.y + buffersValue.y
-                    });
-                }
+          returnValues.push({
+            timestamp: usedValue.x,
+            key: 'free (cache)',
+            value: cachedValue.y + buffersValue.y
+          });
+        }
 
-                if (angular.isDefined(freeValue)) {
+        if (angular.isDefined(freeValue)) {
 
-                    returnValues.push({
-                        timestamp: usedValue.x,
-                        key: 'free (unused)',
-                        value: freeValue.y
-                    });
-                }
+          returnValues.push({
+            timestamp: usedValue.x,
+            key: 'free (unused)',
+            value: freeValue.y
+          });
+        }
 
-                return returnValues;
-            };
+        return returnValues;
+      };
 
-            // create derived metric
-            this.metric = MetricListService.getOrCreateDerivedMetric(this.name, derivedFunction);
+      // create derived metric
+      this.metric = MetricListService.getOrCreateDerivedMetric(this.name, derivedFunction);
 
-            this.updateScope(this.metric.data);
-        };
+      this.updateScope(this.metric.data);
+    };
 
-        DataModel.prototype.destroy = function () {
-            // remove subscribers and delete derived metric
-            MetricListService.destroyDerivedMetric(this.name);
+    DataModel.prototype.destroy = function () {
+      // remove subscribers and delete derived metric
+      MetricListService.destroyDerivedMetric(this.name);
 
-            // remove subscribers and delete base metrics
-            MetricListService.destroyMetric('mem.util.cached');
-            MetricListService.destroyMetric('mem.util.used');
-            MetricListService.destroyMetric('mem.util.free');
-            MetricListService.destroyMetric('mem.util.bufmem');
+      // remove subscribers and delete base metrics
+      MetricListService.destroyMetric('mem.util.cached');
+      MetricListService.destroyMetric('mem.util.used');
+      MetricListService.destroyMetric('mem.util.free');
+      MetricListService.destroyMetric('mem.util.bufmem');
 
-            WidgetDataModel.prototype.destroy.call(this);
-        };
+      WidgetDataModel.prototype.destroy.call(this);
+    };
 
-        return DataModel;
-    }
+    return DataModel;
+  }
 
-    angular
-        .module('datamodel')
-        .factory('MemoryUtilizationMetricDataModel', MemoryUtilizationMetricDataModel);
- })();
+  angular
+    .module('datamodel')
+    .factory('MemoryUtilizationMetricDataModel', MemoryUtilizationMetricDataModel);
+})();

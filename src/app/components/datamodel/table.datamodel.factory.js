@@ -16,61 +16,61 @@
  *
  */
 
-  /*global _*/
+/*global _*/
 
-  (function () {
-    'use strict';
+(function () {
+  'use strict';
 
-   /**
+  /**
    * @name TableDataModel
    * @desc
    */
-   function TableDataModel() {
+  function TableDataModel() {
 
-       function derivedFunction (tableDefinition) {
-            var returnValues = [];
+    function derivedFunction (tableDefinition) {
+      var returnValues = [];
 
-            var columns = tableDefinition.columns;
-            var firstColumn = columns[0];
-            for (var i = 0; i < firstColumn.metric.data.length; i++) {
-                var instance = firstColumn.metric.data[i];
+      var columns = tableDefinition.columns;
+      var firstColumn = columns[0];
+      for (var i = 0; i < firstColumn.metric.data.length; i++) {
+        var instance = firstColumn.metric.data[i];
 
-                if (instance.values.length > 0) {
-                    var lastValue = instance.values[instance.values.length - 1];
-                    var values = [];
-                    values.push(firstColumn.format ? firstColumn.format(lastValue.y) : lastValue.y);
+        if (instance.values.length > 0) {
+          var lastValue = instance.values[instance.values.length - 1];
+          var values = [];
+          values.push(firstColumn.format ? firstColumn.format(lastValue.y) : lastValue.y);
 
-                    for(var j = 1; j < columns.length; j++) {
-                        var otherColumn = columns[j];
-                        var otherInstance = _.find(otherColumn.metric.data, function (element) {
-                            return element.key === instance.key;
-                        });
-                        if (angular.isDefined(otherInstance) && otherInstance.values.length > 0) {
-                            var otherLastValue = otherInstance.values[otherInstance.values.length - 1];
-                            values.push(otherColumn.format ? otherColumn.format(otherLastValue.y) : otherLastValue.y);
-                        }
-                        else {
-                            values.push('');
-                        }
-                    }
-
-                    returnValues.push({
-                        timestamp: lastValue.x,
-                        key: instance.key,
-                        value: values
-                    });
-                }
+          for(var j = 1; j < columns.length; j++) {
+            var otherColumn = columns[j];
+            var otherInstance = _.find(otherColumn.metric.data, function (element) {
+              return element.key === instance.key;
+            });
+            if (angular.isDefined(otherInstance) && otherInstance.values.length > 0) {
+              var otherLastValue = otherInstance.values[otherInstance.values.length - 1];
+              values.push(otherColumn.format ? otherColumn.format(otherLastValue.y) : otherLastValue.y);
             }
+            else {
+              values.push('');
+            }
+          }
 
-            return returnValues;
+          returnValues.push({
+            timestamp: lastValue.x,
+            key: instance.key,
+            value: values
+          });
         }
+      }
 
-        return {
-            derivedFunction: derivedFunction
-        };
-   }
+      return returnValues;
+    }
 
-   angular
-       .module('datamodel')
-       .factory('TableDataModel', TableDataModel);
+    return {
+      derivedFunction: derivedFunction
+    };
+  }
+
+  angular
+    .module('datamodel')
+    .factory('TableDataModel', TableDataModel);
 })();

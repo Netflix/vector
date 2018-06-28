@@ -20,7 +20,7 @@
 
   angular
     .module('cswflamegraphtask', [
-       'dashboard'
+      'dashboard'
     ]);
 
 })();

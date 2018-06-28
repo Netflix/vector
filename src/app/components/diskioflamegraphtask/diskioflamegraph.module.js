@@ -20,7 +20,7 @@
 
   angular
     .module('diskioflamegraphtask', [
-       'dashboard'
+      'dashboard'
     ]);
 
 })();

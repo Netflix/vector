@@ -16,48 +16,48 @@
  *
  */
 
- (function () {
-     'use strict';
+(function () {
+  'use strict';
 
-    /**
-    * @name UnitService
-    * @desc
-    */
-    function UnitService() {
+  /**
+   * @name UnitService
+   * @desc
+   */
+  function UnitService() {
 
-        function convert(a, b, unit) {
-            var units,
-                bases;
+    function convert(a, b, unit) {
+      var units,
+        bases;
 
-            if (unit[unit.length - 1] == 's') {
-                units = ['ns', 'us', 'ms', 's', 'm', 'h', 'd'];
-                bases = [1000, 1000, 1000, 1000, 60, 60, 24];
-            }
-            else if (unit[unit.length - 1] == 'B') {
-                units = ['B', 'kB', 'MB', 'GB', 'TB', 'PB'];
-                bases = [1024, 1024, 1024, 1024, 1024, 1024];
-            }
-            else {
-                var baseUnit = unit.length > 1 ? unit.substr(1) : unit;
-                units = ['n', 'u', 'm', '', 'k', 'M', 'G', 'T', 'P'].map(function(u) { return u + baseUnit; });
-                bases = [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000];
-            }
+      if (unit[unit.length - 1] == 's') {
+        units = ['ns', 'us', 'ms', 's', 'm', 'h', 'd'];
+        bases = [1000, 1000, 1000, 1000, 60, 60, 24];
+      }
+      else if (unit[unit.length - 1] == 'B') {
+        units = ['B', 'kB', 'MB', 'GB', 'TB', 'PB'];
+        bases = [1024, 1024, 1024, 1024, 1024, 1024];
+      }
+      else {
+        var baseUnit = unit.length > 1 ? unit.substr(1) : unit;
+        units = ['n', 'u', 'm', '', 'k', 'M', 'G', 'T', 'P'].map(function(u) { return u + baseUnit; });
+        bases = [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000];
+      }
 
-            var unitIdx = units.indexOf(unit);
-            while (unitIdx + 1 < units.length && a >= bases[unitIdx + 1] && b >= bases[unitIdx + 1]) {
-                a /= bases[unitIdx + 1];
-                b /= bases[unitIdx + 1];
-                unitIdx++;
-            }
-            return [Math.round(a), Math.round(b), units[unitIdx]];
-        }
-
-        return {
-            convert: convert
-        };
+      var unitIdx = units.indexOf(unit);
+      while (unitIdx + 1 < units.length && a >= bases[unitIdx + 1] && b >= bases[unitIdx + 1]) {
+        a /= bases[unitIdx + 1];
+        b /= bases[unitIdx + 1];
+        unitIdx++;
+      }
+      return [Math.round(a), Math.round(b), units[unitIdx]];
     }
 
-    angular
-        .module('unit', [])
-        .factory('UnitService', UnitService);
- })();
+    return {
+      convert: convert
+    };
+  }
+
+  angular
+    .module('unit', [])
+    .factory('UnitService', UnitService);
+})();
