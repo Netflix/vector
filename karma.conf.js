@@ -4,26 +4,19 @@ var path = require('path');
 var conf = require('./gulp/conf');
 
 var _ = require('lodash');
-var wiredep = require('wiredep');
 
 var pathSrcHtml = [
   path.join(conf.paths.src, '/**/*.html')
 ];
 
 function listFiles() {
-  var wiredepOptions = _.extend({}, conf.wiredep, {
-    dependencies: true,
-    devDependencies: true
-  });
-
-  var patterns = wiredep(wiredepOptions).js
-    .concat([
+  var patterns = conf.vendorJs.concat([
+      'node_modules/angular-mocks/angular-mocks.js',
       path.join(conf.paths.src, '/app/**/*.module.js'),
       path.join(conf.paths.src, '/app/**/*.js'),
       path.join(conf.paths.src, '/**/*.spec.js'),
       path.join(conf.paths.src, '/**/*.mock.js'),
-    ])
-    .concat(pathSrcHtml);
+    ]).concat(pathSrcHtml);
 
   var files = patterns.map(function(pattern) {
     return {

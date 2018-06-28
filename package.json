@@ -6,9 +6,29 @@
   "main": "src/app/index.html",
   "repository": "https://github.com/Netflix/vector",
   "license": "Apache-2.0",
-  "dependencies": {},
+  "dependencies": {
+    "angular": "~1.4.10",
+    "angular-mocks": "~1.4.10",
+    "angular-route": "~1.4.10",
+    "angular-sanitize": "~1.4.10",
+    "angular-toastr": "~1.5.0",
+    "angular-ui-bootstrap": "^2.5.6",
+    "angular-ui-sortable": "^0.19.0",
+    "animate.css": "~3.4.0",
+    "bootstrap": "~3.3.6",
+    "d3": "3.5.16",
+    "font-awesome": "4.6.1",
+    "jquery": "~2.1.4",
+    "lodash": "~4.5.1",
+    "malhar-angular-dashboard": "git+https://github.com/dtpublic/malhar-angular-dashboard.git",
+    "moment": "~2.10.6",
+    "nvd3": "1.8.2"
+  },
   "scripts": {
-    "test": "gulp test"
+    "clean": "gulp clean",
+    "build": "gulp build",
+    "test": "gulp test",
+    "serve": "gulp serve"
   },
   "devDependencies": {
     "browser-sync": "~2.9.11",
@@ -21,6 +41,7 @@
     "gulp-angular-filesort": "~1.1.1",
     "gulp-angular-templatecache": "~1.8.0",
     "gulp-autoprefixer": "~3.0.2",
+    "gulp-concat": "^2.6.1",
     "gulp-cssnano": "~2.1.1",
     "gulp-eslint": "~1.0.0",
     "gulp-filter": "~3.0.1",
@@ -49,11 +70,8 @@
     "karma-ng-html2js-preprocessor": "~0.2.0",
     "karma-phantomjs-launcher": "~0.2.1",
     "karma-phantomjs-shim": "~1.2.0",
-    "lodash": "~3.10.1",
-    "main-bower-files": "~2.9.0",
     "phantomjs": "~2.1.7",
     "uglify-save-license": "~0.4.1",
-    "wiredep": "~2.2.2",
     "wrench": "~1.5.8"
   },
   "engines": {
