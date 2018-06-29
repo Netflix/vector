@@ -27,8 +27,8 @@
     "nvd3": "1.8.2"
   },
   "scripts": {
-    "build": "echo 'TODO linter' && webpack --display-error-details",
-    "test": "echo 'TODO linter' && npm run test",
+    "build": "webpack --display-error-details",
+    "test": "karma start",
     "serve": "lite-server"
   },
   "devDependencies": {
