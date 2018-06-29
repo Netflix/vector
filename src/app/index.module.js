@@ -25,7 +25,6 @@ require('./index.css')
 
 require('./main/main.controller')
 
-
 angular.module('vector', [
     'ngRoute',
     'ui.dashboard',

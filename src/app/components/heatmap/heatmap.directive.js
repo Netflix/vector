@@ -21,6 +21,8 @@
 (function () {
   'use strict';
 
+  var templateUrl = require('./heatmap.html')
+
   function heatmap($rootScope, $document, D3Service, HeatmapService, UnitService) {
 
     function timeFormat(ts, i) {
@@ -88,7 +90,7 @@
 
     return {
       restrict: 'A',
-      template: require('./heatmap.html'),
+      templateUrl: templateUrl,
       scope: {
         data: '=',
         unit: '='

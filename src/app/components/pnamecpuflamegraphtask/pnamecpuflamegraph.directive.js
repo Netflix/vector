@@ -18,6 +18,8 @@
 (function () {
     'use strict';
 
+    var templateUrl = require('./pnamecpuflamegraph.html')
+
     function pNameCpuFlameGraph($rootScope, $timeout, PNameCPUFlameGraphService, DashboardService) {
 
         function link(scope) {
@@ -81,7 +83,7 @@
 
         return {
             restrict: 'A',
-            template: require('./pnamecpuflamegraph.html'),
+            templateUrl: templateUrl,
             link: link
         };
     }

@@ -19,14 +19,19 @@ let config = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
-                    presets: [ 'es2015' ]
-                }
+                use: [
+                  { loader: 'babel-loader', query: { presets: [ 'es2015' ] } },
+                ]
             },
             {
                 test: /\.html$/,
-                loader: "html-loader"
+                exclude: [
+                  path.resolve(__dirname, 'src/index.html'),
+                ],
+                use: [
+                    { loader: "ngtemplate-loader", query: { relativeTo: 'src/app/' } },
+                    { loader: "html-loader" }
+                ]
             },
             {
                 test: /\.css$/,

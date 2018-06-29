@@ -57,6 +57,7 @@
     "karma-phantomjs-shim": "~1.2.0",
     "less": "^3.0.4",
     "lite-server": "^2.3.0",
+    "ngtemplate-loader": "^2.0.1",
     "node-sass": "^4.9.0",
     "phantomjs": "~2.1.7",
     "sass-loader": "^7.0.3",

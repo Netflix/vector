@@ -18,6 +18,7 @@
 (function () {
   'use strict';
 
+  var templateUrl = require('./defaultModal.html')
   /**
    * @name ModalService
    * @desc
@@ -28,7 +29,7 @@
       backdrop: true,
       keyboard: true,
       modalFade: true,
-      template: require('./defaultModal.html')
+      templateUrl: templateUrl
     };
 
     var defaultModalOptions = {

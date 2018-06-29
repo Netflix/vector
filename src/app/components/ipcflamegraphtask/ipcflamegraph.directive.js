@@ -18,6 +18,8 @@
 (function () {
     'use strict';
 
+    var templateUrl = require('./ipcflamegraph.html')
+
     function ipcFlameGraph($rootScope, $timeout, IPCFlameGraphService, DashboardService) {
 
         function link(scope) {
@@ -81,7 +83,7 @@
 
         return {
             restrict: 'A',
-            template: require('./ipcflamegraph.html'),
+            templateUrl: templateUrl,
             link: link
         };
     }

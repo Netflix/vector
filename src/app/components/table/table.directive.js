@@ -19,6 +19,8 @@
 (function () {
     'use strict';
 
+    var templateUrl = require('./table.html')
+
     function table($rootScope, D3Service) {
 
         function link(scope) {
@@ -48,7 +50,7 @@
 
         return {
             restrict: 'A',
-            template: require('./table.html'),
+            templateUrl: templateUrl,
             scope: {
                 data: '='
             },

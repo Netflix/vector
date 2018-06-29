@@ -17,6 +17,7 @@
  */
 (function () {
     'use strict';
+    var templateUrl = require('./cswflamegraph.html')
 
     function cswFlameGraph($rootScope, $timeout, CSwFlameGraphService, DashboardService) {
 
@@ -81,7 +82,7 @@
 
         return {
             restrict: 'A',
-            template: require('./cswflamegraph.html'),
+            templateUrl: templateUrl,
             link: link
         };
     }

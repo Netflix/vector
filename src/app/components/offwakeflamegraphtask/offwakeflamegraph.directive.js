@@ -18,6 +18,8 @@
 (function () {
     'use strict';
 
+    var templateUrl = require('./offwakeflamegraph.html')
+
     function offWakeFlameGraph($rootScope, $timeout, OffWakeFlameGraphService, DashboardService) {
 
         function link(scope) {
@@ -81,7 +83,7 @@
 
         return {
             restrict: 'A',
-            template: require('./offwakeflamegraph.html'),
+            templateUrl: templateUrl,
             link: link
         };
     }

@@ -15,8 +15,12 @@
  *     limitations under the License.
  *
  */
+
 (function () {
     'use strict';
+
+    var mainTemplate = require('./main/main.html')
+    var dashboardTemplate = require('./components/dashboard/dashboard.html')
 
     /**
     * @name config
@@ -24,7 +28,7 @@
     */
     function routeConfig($routeProvider) {
         $routeProvider.when('/', {
-            template: require('./main/main.html'),
+            templateUrl: mainTemplate,
             controller: 'MainController',
             controllerAs: 'vm',
             title: 'Vector',
@@ -38,7 +42,7 @@
                 }
             }
         }).when('/embed', {
-            template: require('./main/main.html'),
+            templateUrl: mainTemplate,
             controller: 'MainController',
             controllerAs: 'vm',
             title: 'Vector',
@@ -52,7 +56,7 @@
                 }
             }
         }).when('/empty', {
-            template: require('./main/main.html'),
+            templateUrl: mainTemplate,
             controller: 'MainController',
             controllerAs: 'vm',
             title: 'Vector',
@@ -66,7 +70,7 @@
                 }
             }
         }).when('/container', {
-            template: require('./main/main.html'),
+            templateUrl: mainTemplate,
             controller: 'MainController',
             controllerAs: 'vm',
             title: 'Vector',
