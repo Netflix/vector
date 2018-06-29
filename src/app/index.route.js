@@ -20,7 +20,9 @@
     'use strict';
 
     var mainTemplate = require('./main/main.html')
-    var dashboardTemplate = require('./components/dashboard/dashboard.html')
+
+    // we need this webpacked as it is loaded from main.html as an attrib template-url
+    require('./components/dashboard/dashboard.html')
 
     /**
     * @name config

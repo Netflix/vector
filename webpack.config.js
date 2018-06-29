@@ -18,9 +18,17 @@ let config = {
         rules: [
             {
                 test: /\.js$/,
+                enforce: 'pre',
                 exclude: /node_modules/,
                 use: [
-                  { loader: 'babel-loader', query: { presets: [ 'es2015' ] } },
+                  { loader: 'eslint-loader', options: { envs: ['commonjs'] } },
+                ]
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: [
+                  { loader: 'babel-loader', options: { presets: [ 'es2015' ] } },
                 ]
             },
             {
