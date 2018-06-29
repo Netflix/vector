@@ -1,15 +1,25 @@
-window.$ = window.jQuery = require('jquery')
-require('jquery-ui')
 
+// Javascript imports - in order
+
+window.$ = window.jQuery = require('jquery/dist/jquery')
+require('jquery-ui-dist/jquery-ui')
 require('bootstrap')
-import angular from 'angular'
-import ngRoute from 'angular-route'
-import uiDashboard from 'malhar-angular-dashboard'
-import toastr from 'angular-toastr'
-import bootstrap from 'angular-ui-bootstrap'
-import sortable from 'angular-ui-sortable'
-import d3 from 'd3'
-import nv from 'nvd3'
+require('angular/angular')
+require('angular-route/angular-route')
+require('malhar-angular-dashboard/dist/malhar-angular-dashboard')
+require('angular-toastr/dist/angular-toastr.tpls')
+require('angular-ui-bootstrap/dist/ui-bootstrap-tpls')
+require('angular-ui-sortable/dist/sortable')
+require('d3/d3')
+require('nvd3/build/nv.d3')
+require('moment/moment')
 
-require('moment')
+// CSS imports - also in order
+
+require('bootstrap/dist/css/bootstrap.css')
+require('angular-toastr/dist/angular-toastr.css')
+require('animate.css/animate.css')
+require('malhar-angular-dashboard/dist/malhar-angular-dashboard.css')
+require('nvd3/build/nv.d3.css')
+require('font-awesome/scss/font-awesome.scss')
 

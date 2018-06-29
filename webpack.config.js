@@ -60,18 +60,7 @@ let config = {
     },
     resolve: {
         alias: {
-            'malhar-angular-dashboard': 'malhar-angular-dashboard/dist/malhar-angular-dashboard',
-            'jquery': 'jquery/dist/jquery',
-            'angular': 'angular/angular',
-            'angular-route': 'angular-route/angular-route',
-            'angular-ui-bootstrap': 'angular-ui-bootstrap/dist/ui-bootstrap-tpls',
             'lodash': 'lodash/lodash',
-            'angular-toastr': 'angular-toastr/dist/angular-toastr.tpls',
-            'moment': 'moment/moment',
-            'jquery-ui': 'jquery-ui-dist/jquery-ui',
-            'angular-ui-sortable': 'angular-ui-sortable/dist/sortable',
-            'd3': 'd3/d3',
-            'nvd3': 'nvd3/build/nv.d3',
             'angular-santize': 'angular-sanitize/angular-sanitize.js'
         }
     },

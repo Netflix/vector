@@ -16,15 +16,16 @@
  *
  */
 
+// external imports (js and CSS), will be bundled by webpack
 require('./vendors')
 
-require('bootstrap/dist/css/bootstrap.css')
-require('font-awesome/scss/font-awesome.scss')
+// local CSS, will be bundled by webpack
 require('./_reboot.min.css')
 require('./index.css')
 
+// lots of other components rely on the vector module having been declared first
+// so do it early
 require('./main/main.controller')
-
 angular.module('vector', [
     'ngRoute',
     'ui.dashboard',
@@ -32,6 +33,7 @@ angular.module('vector', [
     'toastr'
   ]);
 
+// load anything else in
 require('./index.route')
 require('./index.config')
 require('./index.constants')
@@ -40,92 +42,14 @@ require('./index.extensions')
 require('./index.filters')
 require('./index.version')
 
-require('./components/datamodel/datamodel.module')
-require('./components/table/table.module')
-
-require('./components/containermetadata/containermetadata.service')
-require('./components/cswflamegraphtask/cswflamegraph.module')
-require('./components/cswflamegraphtask/cswflamegraph.service')
-require('./components/cswflamegraphtask/cswflamegraph.directive')
-require('./components/d3/d3.service')
-require('./components/dashboard/dashboard.service')
-require('./components/diskioflamegraphtask/diskioflamegraph.module')
-require('./components/diskioflamegraphtask/diskioflamegraph.service')
-require('./components/diskioflamegraphtask/diskioflamegraph.directive')
-require('./components/flamegraph/flamegraph.module')
-require('./components/flamegraph/flamegraph.service')
-require('./components/flamegraph/flamegraph.directive')
-require('./components/heatmap/heatmap.module')
-require('./components/heatmap/heatmap.service')
-require('./components/heatmap/heatmap.directive')
-require('./components/ipcflamegraphtask/ipcflamegraph.module')
-require('./components/ipcflamegraphtask/ipcflamegraph.service')
-require('./components/ipcflamegraphtask/ipcflamegraph.directive')
-require('./components/metriclist/metriclist.service')
-require('./components/metric/metric.model')
-require('./components/metric/metric.service')
-require('./components/metric/converted.metric.factory')
-require('./components/metric/cumulativeConverted.metric.factory')
-require('./components/metric/cumulative.metric.factory')
-require('./components/metric/derived.metric.factory')
-require('./components/metric/simple.metric.factory')
-require('./components/modal/modal.service')
-require('./components/offcpuflamegraphtask/offcpuflamegraph.module')
-require('./components/offcpuflamegraphtask/offcpuflamegraph.service')
-require('./components/offcpuflamegraphtask/offcpuflamegraph.directive')
-require('./components/offwakeflamegraphtask/offwakeflamegraph.module')
-require('./components/offwakeflamegraphtask/offwakeflamegraph.service')
-require('./components/offwakeflamegraphtask/offwakeflamegraph.directive')
-require('./components/pagefaultflamegraphtask/pagefaultflamegraph.module')
-require('./components/pagefaultflamegraphtask/pagefaultflamegraph.service')
-require('./components/pagefaultflamegraphtask/pagefaultflamegraph.directive')
-require('./components/pmapi/pmapi.service')
-require('./components/pnamecpuflamegraphtask/pnamecpuflamegraph.module')
-require('./components/pnamecpuflamegraphtask/pnamecpuflamegraph.service')
-require('./components/pnamecpuflamegraphtask/pnamecpuflamegraph.directive')
-require('./components/uninlinedcpuflamegraphtask/uninlinedcpuflamegraph.module')
-require('./components/uninlinedcpuflamegraphtask/uninlinedcpuflamegraph.service')
-require('./components/uninlinedcpuflamegraphtask/uninlinedcpuflamegraph.directive')
-require('./components/unit/unit.service')
-require('./components/widget/widget.factory')
-
-require('./components/datamodel/containerMultipleMetric.datamodel.factory')
-require('./components/datamodel/cgroupCPUUsageMetric.datamodel.factory')
-require('./components/datamodel/containerMemoryUsageMetric.datamodel.factory')
-require('./components/datamodel/bccBiolatencyMetric.datamodel.factory')
-require('./components/datamodel/bccBiotopMetric.datamodel.factory')
-require('./components/datamodel/bccExecsnoopMetric.datamodel.factory')
-require('./components/datamodel/bccFsDistMetric.datamodel.factory')
-require('./components/datamodel/bccRunqlatMetric.datamodel.factory')
-require('./components/datamodel/bccTcplifeMetric.datamodel.factory')
-require('./components/datamodel/bccTcpretransMetric.datamodel.factory')
-require('./components/datamodel/cumulativeMetric.datamodel.factory')
-require('./components/datamodel/simpleMetric.datamodel.factory')
-require('./components/datamodel/cgroupMemoryUsageMetric.datamodel.factory')
-require('./components/datamodel/diskLatencyMetric.datamodel.factory')
-require('./components/datamodel/cpuUtilizationMetric.datamodel.factory')
-require('./components/datamodel/perCpuUtilizationMetric.datamodel.factory')
-require('./components/datamodel/multipleCumulativeMetric.datamodel.factory')
-require('./components/datamodel/networkBytesMetric.datamodel.factory')
-require('./components/datamodel/cgroupCPUHeadroomMetric.datamodel.factory')
-require('./components/datamodel/cgroupMemoryUtilizationMetric.datamodel.factory')
-require('./components/datamodel/convertedMetric.datamodel.factory')
-require('./components/datamodel/multipleMetric.datamodel.factory')
-require('./components/datamodel/cumulativeUtilizationMetric.datamodel.factory')
-require('./components/datamodel/dummyMetric.datamodel.factory')
-require('./components/datamodel/containerNetworkBytesMetric.datamodel.factory')
-require('./components/datamodel/containerMultipleCumulativeMetric.datamodel.factory')
-require('./components/datamodel/memoryUtilizationMetric.datamodel.factory')
-require('./components/datamodel/cgroupMemoryHeadroomMetric.datamodel.factory')
-require('./components/datamodel/customMetric.datamodel.factory')
-require('./components/datamodel/table.datamodel.factory')
-
-require('./components/chart/chart.module')
-require('./components/chart/lineTimeSeries.chart.directive')
-require('./components/chart/areaStackedTimeSeries.chart.directive')
-require('./components/table/table.directive')
+// all the remaining components, particularly vector specific angular components
+function requireAll(requireContext) {
+  return requireContext.keys().map(requireContext);
+}
+requireAll(require.context('./components/', true, /\.module\.js$/));
+requireAll(require.context('./components/', true, /\.model\.js$/));
+requireAll(require.context('./components/', true, /\.service\.js$/));
+requireAll(require.context('./components/', true, /\.directive\.js$/));
+requireAll(require.context('./components/', true, /\.factory\.js$/));
+requireAll(require.context('./components/', true, /\.controller\.js$/));
 require('./components/chart/nvd3-tooltip')
-
-require('./components/customWidgetSettings/customWidgetSettings.controller')
-require('./components/customWidgetHelp/customWidgetHelp.controller')
-require('./components/widgetFilterSettings/widgetFilterSettings.controller')
