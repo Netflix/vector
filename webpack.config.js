@@ -75,6 +75,14 @@ let config = {
     },
     devtool: 'source-map',
     plugins: [
+        // needs to go first to insert the file in js
+        new WebpackAutoInjectVersion({
+          components: {
+            AutoIncreaseVersion: false,
+            InjectAsComment: false,
+            InjectByTag: true
+          }
+        }),
         // the html, which will have the bundle.js script tag injected
         new HtmlWebpackPlugin({
             template: 'src/index.html',
@@ -94,11 +102,6 @@ let config = {
             moment: 'moment',
             '_': 'lodash'
         }),
-        new WebpackAutoInjectVersion({
-          components: {
-            AutoIncreaseVersion: false
-          }
-        })
     ]
 }
 
