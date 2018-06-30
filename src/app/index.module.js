@@ -31,7 +31,9 @@ angular.module('vector', [
     'ui.dashboard',
     'main',
     'toastr'
-  ]);
+  ])
+  // automatically propagate from webpack configuration based on package.json
+  .constant('version', { 'id': '[AIV]{version}[/AIV]' });
 
 // load anything else in
 require('./index.route')
@@ -40,7 +42,6 @@ require('./index.constants')
 require('./index.decorators')
 require('./index.extensions')
 require('./index.filters')
-require('./index.version')
 
 // all the remaining components, particularly vector specific angular components
 function requireAll(requireContext) {

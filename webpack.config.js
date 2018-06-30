@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const WebpackAutoInjectVersion = require('webpack-auto-inject-version')
 
 let config = {
     mode: 'development',
@@ -92,6 +93,11 @@ let config = {
             'window.jQuery': 'jquery',
             moment: 'moment',
             '_': 'lodash'
+        }),
+        new WebpackAutoInjectVersion({
+          components: {
+            AutoIncreaseVersion: false
+          }
         })
     ]
 }

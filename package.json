@@ -67,6 +67,7 @@
     "uglify-save-license": "~0.4.1",
     "url-loader": "^1.0.1",
     "webpack": "^4.12.2",
+    "webpack-auto-inject-version": "^1.1.0",
     "webpack-cli": "^3.0.8",
     "wrench": "~1.5.8"
   },
