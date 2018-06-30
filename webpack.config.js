@@ -90,7 +90,8 @@ let config = {
             $: 'jquery',
             'jQuery': 'jquery',
             'window.jQuery': 'jquery',
-            moment: 'moment'
+            moment: 'moment',
+            '_': 'lodash'
         })
     ]
 }

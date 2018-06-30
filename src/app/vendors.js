@@ -13,6 +13,7 @@ require('angular-ui-sortable/dist/sortable')
 require('d3/d3')
 require('nvd3/build/nv.d3')
 require('moment/moment')
+require('lodash/lodash')
 
 // CSS imports - also in order
 

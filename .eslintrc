@@ -1,9 +1,6 @@
 {
   "extends": "eslint:recommended",
   "plugins": ["angular"],
-  "rules": {
-    "indent": ["warn", 2]
-  },
   "env": {
     "browser": true,
     "jasmine": true
