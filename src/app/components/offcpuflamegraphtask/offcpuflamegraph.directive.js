@@ -18,6 +18,8 @@
 (function () {
     'use strict';
 
+    var templateUrl = require('./offcpuflamegraph.html')
+
     function offCPUFlameGraph($rootScope, $timeout, OffCPUFlameGraphService, DashboardService) {
 
         function link(scope) {
@@ -81,7 +83,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/offcpuflamegraphtask/offcpuflamegraph.html',
+            templateUrl: templateUrl,
             link: link
         };
     }

@@ -16,15 +16,41 @@
  *
  */
 
-(function () {
-    'use strict';
+// external imports (js and CSS), will be bundled by webpack
+require('./vendors')
 
-    angular
-        .module('vector', [
-            'ngRoute',
-            'ui.dashboard',
-            'toastr',
-            'main'
-        ]);
+// local CSS, will be bundled by webpack
+require('./_reboot.min.css')
+require('./index.css')
 
-})();
+// lots of other components rely on the vector module having been declared first
+// so do it early
+require('./main/main.controller')
+angular.module('vector', [
+    'ngRoute',
+    'ui.dashboard',
+    'main',
+    'toastr'
+  ])
+  // automatically propagate from webpack configuration based on package.json
+  .constant('version', { 'id': '[AIV]{version}[/AIV]' });
+
+// load anything else in
+require('./index.route')
+require('./index.config')
+require('./index.constants')
+require('./index.decorators')
+require('./index.extensions')
+require('./index.filters')
+
+// all the remaining components, particularly vector specific angular components
+function requireAll(requireContext) {
+  return requireContext.keys().map(requireContext);
+}
+requireAll(require.context('./components/', true, /\.module\.js$/));
+requireAll(require.context('./components/', true, /\.model\.js$/));
+requireAll(require.context('./components/', true, /\.service\.js$/));
+requireAll(require.context('./components/', true, /\.directive\.js$/));
+requireAll(require.context('./components/', true, /\.factory\.js$/));
+requireAll(require.context('./components/', true, /\.controller\.js$/));
+require('./components/chart/nvd3-tooltip')

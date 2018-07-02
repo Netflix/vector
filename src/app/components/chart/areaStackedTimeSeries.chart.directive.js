@@ -21,6 +21,8 @@
 (function () {
   'use strict';
 
+  var chartTemplate = require('./chart.html')
+
   function areaStackedTimeSeries($rootScope, $log, D3Service) {
 
     function link(scope) {
@@ -86,7 +88,7 @@
 
     return {
       restrict: 'A',
-      templateUrl: 'app/components/chart/chart.html',
+      templateUrl: chartTemplate,
       scope: {
         data: '=',
         percentage: '=',
