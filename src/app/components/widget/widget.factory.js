@@ -50,6 +50,9 @@
         BccExecsnoopMetricDataModel,
         BccTcpretransMetricDataModel,
         BccBiotopMetricDataModel,
+        BccTracepointhitsMetricDataModel,
+        BccUSDThitsMetricDataModel,
+        BccUprobehitsMetricDataModel,
         CumulativeUtilizationMetricDataModel,
         CgroupMemoryUtilizationMetricDataModel,
         CustomMetricDataModel,
@@ -1358,6 +1361,73 @@
                     overflow: 'auto'
                 }
             });
+
+            definitions.push({
+                name: 'bcc.tracepoint.hits',
+                title: 'BCC tracepoint hits (kernel tracepoint hit counts)',
+                directive: 'table',
+                dataAttrName: 'data',
+                dataModelType: BccTracepointhitsMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.tracepoint.hits'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BPF/BCC',
+                attrs: {
+                },
+                contentStyle: {
+                    overflow: 'auto'
+                }
+            });
+
+            definitions.push({
+                name: 'bcc.usdt.hits',
+                title: 'BCC USDT hits (USDT hit counts)',
+                directive: 'table',
+                dataAttrName: 'data',
+                dataModelType: BccUSDThitsMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.usdt.hits'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BPF/BCC',
+                attrs: {
+                },
+                contentStyle: {
+                    overflow: 'auto'
+                }
+            });
+
+            definitions.push({
+                name: 'bcc.uprobe.hits',
+                title: 'BCC uprobe hits (uprobe hit counts)',
+                directive: 'table',
+                dataAttrName: 'data',
+                dataModelType: BccUprobehitsMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.uprobe.hits'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BPF/BCC',
+                attrs: {
+                },
+                contentStyle: {
+                    overflow: 'auto'
+                }
+            });
+
         }
 
         return definitions;
