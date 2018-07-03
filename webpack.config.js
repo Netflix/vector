@@ -22,14 +22,8 @@ let config = {
                 enforce: 'pre',
                 exclude: /node_modules/,
                 use: [
+                  { loader: 'babel-loader', options: { presets: [ 'env', 'react' ] } },
                   { loader: 'eslint-loader', options: { envs: ['commonjs'], failOnWarning: true, failOnError: true } },
-                ]
-            },
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: [
-                  { loader: 'babel-loader', options: { presets: [ 'es2015' ] } },
                 ]
             },
             {
@@ -69,7 +63,6 @@ let config = {
     },
     resolve: {
         alias: {
-            'lodash': 'lodash/lodash',
             'angular-santize': 'angular-sanitize/angular-sanitize.js'
         }
     },

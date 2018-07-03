@@ -1,6 +1,7 @@
 {
   "extends": "eslint:recommended",
-  "plugins": ["angular"],
+  "parser": "babel-eslint",
+  "plugins": ["angular", "react"],
   "env": {
     "browser": true,
     "jasmine": true
