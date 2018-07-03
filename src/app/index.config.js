@@ -49,7 +49,8 @@
       'expandHostname': false, // Automatically expand hostname input when application opens
       'disableHostnameInputContainerSelect': false, // Disable hostname and hostspec input when container is selected
       'enableCustomWidgetFeature': true, // Enable the custom widget feature to add ad-hoc widgets
-      'enableBcc': false // Enable BCC widgets (requires BCC PMDA)
+      'enableBcc': false, // Enable BCC widgets (requires BCC PMDA)
+      'version': '[AIV]{version}[/AIV]' // version number, auto loaded by webpack from package.json
 
     })
     .config(toastrConfig)

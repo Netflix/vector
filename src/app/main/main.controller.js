@@ -21,6 +21,9 @@
 /*jslint browser: true*/
 /*jslint nomen: true */
 
+import { react2angular } from 'react2angular'
+import DashboardFooter from '../components/dashboard/dashboard-footer'
+
 (function () {
     'use strict';
 
@@ -28,7 +31,7 @@
     * @name MainCtrl
     * @desc Main Controller
     */
-    function MainCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, version, DashboardService, ContainerMetadataService, ModalService) {
+    function MainCtrl($document, $rootScope, $log, $route, $routeParams, $location, widgetDefinitions, widgets, embed, config, DashboardService, ContainerMetadataService, ModalService) {
 
         var vm = this,
             widgetsToLoad = widgets;
@@ -104,7 +107,7 @@
             };
         }
 
-        vm.version = version.id;
+        vm.version = config.version;
 
         vm.embed = embed;
 
@@ -217,5 +220,6 @@
             'containermetadata',
             'modal'
         ])
-        .controller('MainController', MainCtrl);
+        .controller('MainController', MainCtrl)
+        .component('dashboardFooter', react2angular(DashboardFooter, ['version']))
 })();
