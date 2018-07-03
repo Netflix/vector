@@ -4,7 +4,10 @@ var path = require('path');
 
 module.exports = function(config) {
   var configuration = {
+
     files: [
+      // babel
+      'node_modules/babel-polyfill/dist/polyfill.js',
       // required dependencies
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
@@ -13,7 +16,8 @@ module.exports = function(config) {
       'src/app/components/**/*.module.js',
       'src/app/components/**/*.model.js',
       // tests
-      'src/app/**/*.spec.js'
+      'tests.webpack.js',
+      'src/app/**/*.spec.js',
     ],
 
     singleRun: true,
@@ -23,6 +27,12 @@ module.exports = function(config) {
     logLevel: 'INFO',
 
     frameworks: ['phantomjs-shim', 'jasmine', 'angular-filesort'],
+
+    webpack: require('./webpack.config'),
+
+    preprocessors: {
+      'tests.webpack.js': ['webpack', 'sourcemap']
+    },
 
     angularFilesort: {
       whitelist: [path.join('src', '/**/!(*.html|*.spec|*.mock).js')]

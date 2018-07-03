@@ -22,7 +22,7 @@
 /*jslint nomen: true */
 
 import { react2angular } from 'react2angular'
-import DashboardFooter from '../components/dashboard/dashboard-footer'
+import DashboardFooter from '../components/dashboard/dashboard-footer.jsx'
 
 (function () {
     'use strict';

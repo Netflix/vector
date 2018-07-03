@@ -18,6 +18,15 @@ let config = {
     module: {
         rules: [
             {
+                test: /\.jsx$/,
+                enforce: 'pre',
+                exclude: /node_modules/,
+                use: [
+                  { loader: 'babel-loader', options: { presets: [ 'env', 'react' ] } },
+                  { loader: 'eslint-loader', options: { envs: ['commonjs'], failOnWarning: true, failOnError: true } },
+                ]
+            },
+            {
                 test: /\.js$/,
                 enforce: 'pre',
                 exclude: /node_modules/,

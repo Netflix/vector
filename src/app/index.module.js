@@ -53,7 +53,7 @@ requireAll(require.context('./components/', true, /\.factory\.js$/));
 requireAll(require.context('./components/', true, /\.controller\.js$/));
 
 // explicit react require
-require('./components/dashboard/dashboard-footer')
+require('./components/dashboard/dashboard-footer.jsx')
 
 // other stuff
 require('./components/chart/nvd3-tooltip')
