@@ -221,5 +221,5 @@ import DashboardFooter from '../components/dashboard/dashboard-footer'
             'modal'
         ])
         .controller('MainController', MainCtrl)
-        .component('dashboardFooter', react2angular(DashboardFooter, ['version']))
+        .component('dashboardFooter', react2angular(DashboardFooter))
 })();

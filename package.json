@@ -25,6 +25,7 @@
     "malhar-angular-dashboard": "git+https://github.com/dtpublic/malhar-angular-dashboard.git",
     "moment": "~2.10.6",
     "nvd3": "1.8.2",
+    "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react2angular": "^4.0.4"
