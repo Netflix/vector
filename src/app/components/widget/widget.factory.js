@@ -50,6 +50,7 @@
         BccExecsnoopMetricDataModel,
         BccTcpretransMetricDataModel,
         BccBiotopMetricDataModel,
+        BccTcptopMetricDataModel,
         BccTracepointhitsMetricDataModel,
         BccUSDThitsMetricDataModel,
         BccUprobehitsMetricDataModel,
@@ -1348,6 +1349,28 @@
                 dataModelType: BccBiotopMetricDataModel,
                 dataModelOptions: {
                     name: 'bcc.proc.io.perdev'
+                },
+                size: {
+                    width: '50%',
+                    height: '500px'
+                },
+                enableVerticalResize: true,
+                group: 'BPF/BCC',
+                attrs: {
+                },
+                contentStyle: {
+                    overflow: 'auto'
+                }
+            });
+
+            definitions.push({
+                name: 'bcc.proc.io.net.tcptop',
+                title: 'BCC tcptop (tcp throughput)',
+                directive: 'table',
+                dataAttrName: 'data',
+                dataModelType: BccTcptopMetricDataModel,
+                dataModelOptions: {
+                    name: 'bcc.proc.io.net.tcptop'
                 },
                 size: {
                     width: '50%',
