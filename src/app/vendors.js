@@ -15,6 +15,9 @@ require('nvd3/build/nv.d3')
 require('moment/moment')
 require('lodash/lodash')
 
+require('react')
+require('react2angular')
+
 // CSS imports - also in order
 
 require('bootstrap/dist/css/bootstrap.css')

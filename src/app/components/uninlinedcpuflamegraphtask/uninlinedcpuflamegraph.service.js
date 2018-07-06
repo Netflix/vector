@@ -29,10 +29,10 @@
      */
     function generate(seconds, poll) {
       $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_store?name=vector.task.uninlinedcpuflamegraph&value=' + seconds)
-        .success(function () {
+        .then(function () {
           toastr.success('vector.task.uninlinedcpuflamegraph requested.', 'Success');
           poll("REQUESTED");
-        }).error(function (err) {
+        }).catch(function (err) {
           toastr.error('Failed requesting vector.task.uninlinedcpuflamegraph: ' + err, 'Error');
           poll("ERROR " + err);
         });
@@ -40,12 +40,13 @@
 
     function pollStatus(refresh) {
       $http.get($rootScope.properties.protocol + '://' + $rootScope.properties.host + ':' + $rootScope.properties.port + '/pmapi/' + $rootScope.properties.context + '/_fetch?names=vector.task.uninlinedcpuflamegraph')
-        .success(function (data) {
+        .then(function (response) {
+          var data = response.data
           if (angular.isDefined(data.values[0])) {
             var message = data.values[0].instances[0].value;
             refresh(message);
           }
-        }).error(function () {
+        }).catch(function () {
           refresh("ERROR fetching status");
         });
     }

@@ -32,8 +32,6 @@ angular.module('vector', [
     'main',
     'toastr'
   ])
-  // automatically propagate from webpack configuration based on package.json
-  .constant('version', { 'id': '[AIV]{version}[/AIV]' });
 
 // load anything else in
 require('./index.route')
@@ -53,4 +51,9 @@ requireAll(require.context('./components/', true, /\.service\.js$/));
 requireAll(require.context('./components/', true, /\.directive\.js$/));
 requireAll(require.context('./components/', true, /\.factory\.js$/));
 requireAll(require.context('./components/', true, /\.controller\.js$/));
+
+// explicit react require
+require('./components/dashboard/dashboard-footer.jsx')
+
+// other stuff
 require('./components/chart/nvd3-tooltip')

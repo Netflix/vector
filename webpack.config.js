@@ -18,18 +18,21 @@ let config = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.jsx$/,
                 enforce: 'pre',
                 exclude: /node_modules/,
                 use: [
-                  { loader: 'eslint-loader', options: { envs: ['commonjs'] } },
+                  { loader: 'babel-loader', options: { presets: [ 'env', 'react' ] } },
+                  { loader: 'eslint-loader', options: { envs: ['commonjs'], failOnWarning: true, failOnError: true } },
                 ]
             },
             {
                 test: /\.js$/,
+                enforce: 'pre',
                 exclude: /node_modules/,
                 use: [
-                  { loader: 'babel-loader', options: { presets: [ 'es2015' ] } },
+                  { loader: 'babel-loader', options: { presets: [ 'env', 'react' ] } },
+                  { loader: 'eslint-loader', options: { envs: ['commonjs'], failOnWarning: true, failOnError: true } },
                 ]
             },
             {
@@ -69,7 +72,6 @@ let config = {
     },
     resolve: {
         alias: {
-            'lodash': 'lodash/lodash',
             'angular-santize': 'angular-sanitize/angular-sanitize.js'
         }
     },
