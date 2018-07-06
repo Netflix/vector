@@ -23,6 +23,7 @@
 
 import { react2angular } from 'react2angular'
 import DashboardFooter from '../components/dashboard/dashboard-footer.jsx'
+import WidgetHeader from '../components/dashboard/widget-header.jsx'
 
 (function () {
     'use strict';
@@ -205,6 +206,13 @@ import DashboardFooter from '../components/dashboard/dashboard-footer.jsx'
             return true;
         };
 
+        vm.onCloseWidgetButton = function(widget) {
+          $rootScope.$apply(() => {
+            vm.dashboardOptions.removeWidget(widget)
+            vm.removeWidgetFromURL(widget)
+          })
+        }
+
         vm.updateInterval = DashboardService.updateInterval;
         vm.updateContainer = ContainerMetadataService.updateContainer;
         vm.updateContainerFilter = ContainerMetadataService.updateContainerFilter;
@@ -218,8 +226,9 @@ import DashboardFooter from '../components/dashboard/dashboard-footer.jsx'
             'dashboard',
             'widget',
             'containermetadata',
-            'modal'
+            'modal',
         ])
         .controller('MainController', MainCtrl)
         .component('dashboardFooter', react2angular(DashboardFooter))
+        .component('widgetHeader', react2angular(WidgetHeader))
 })();

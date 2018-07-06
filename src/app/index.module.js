@@ -48,12 +48,13 @@ function requireAll(requireContext) {
 requireAll(require.context('./components/', true, /\.module\.js$/));
 requireAll(require.context('./components/', true, /\.model\.js$/));
 requireAll(require.context('./components/', true, /\.service\.js$/));
-requireAll(require.context('./components/', true, /\.directive\.js$/));
 requireAll(require.context('./components/', true, /\.factory\.js$/));
 requireAll(require.context('./components/', true, /\.controller\.js$/));
+requireAll(require.context('./components/', true, /\.directive\.js$/));
 
 // explicit react require
 require('./components/dashboard/dashboard-footer.jsx')
+require('./components/dashboard/widget-header.jsx')
 
 // other stuff
 require('./components/chart/nvd3-tooltip')

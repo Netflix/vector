@@ -1,17 +1,16 @@
 /* eslint-disable */
 
 import React from 'react'
-import { mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import { expect } from 'chai'
 import DashboardFooter from './dashboard-footer.jsx'
-import PropTypes from 'prop-types'
 
 describe('DashboardFooter', () => {
   let mountedDashboardFooter
   let props
   const dashboardFooter = () => {
     if (!mountedDashboardFooter) {
-      mountedDashboardFooter = mount(<DashboardFooter {...props} />)
+      mountedDashboardFooter = shallow(<DashboardFooter {...props} />)
     }
     return mountedDashboardFooter
   }

@@ -34,11 +34,11 @@
     .module('vector')
     .constant('config', {
       'protocol': 'http', // PMWEBD protocol (http or https)
-      'port': 44323,  // PMWEBD port
+      'port': 7402,  // PMWEBD port
       'hostspec': 'localhost', // Default PMCD hostspec
       'interval': '2', // Default update interval in seconds
       'window': '2', // Default graph time window in minutes
-      'enableFlameGraphs': false, // Enable flame graphs (requires extra PMDA)
+      'enableFlameGraphs': true, // Enable flame graphs (requires extra PMDA)
       'enableBpfFlameGraphs': false, // Enable BFP extended flame graphs (requires extra PMDA)
       'enableContainerWidgets': true, // Enable container widgets
       'disableHostspecInput': false, // Disable hostspec input
@@ -49,7 +49,7 @@
       'expandHostname': false, // Automatically expand hostname input when application opens
       'disableHostnameInputContainerSelect': false, // Disable hostname and hostspec input when container is selected
       'enableCustomWidgetFeature': true, // Enable the custom widget feature to add ad-hoc widgets
-      'enableBcc': false, // Enable BCC widgets (requires BCC PMDA)
+      'enableBcc': true, // Enable BCC widgets (requires BCC PMDA)
       'version': '[AIV]{version}[/AIV]' // version number, auto loaded by webpack from package.json
 
     })
