@@ -17,7 +17,7 @@ describe('WidgetHeader', () => {
 
   beforeEach(() => {
     props = {
-      widget: {
+      theWidget: {
         title: 'Spiffy widget',
         name: 'New widget thing'
       },

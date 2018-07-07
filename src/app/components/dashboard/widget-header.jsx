@@ -6,13 +6,13 @@ export default class WidgetHeader extends React.Component {
     return (
       <div className="widget-header panel-heading">
         <h3 className="panel-title">
-          <span className="widget-title">{this.props.widget.title}</span>
-          {!this.props.hideName && <span className="label label-primary">{this.props.widget.name}</span>}
-          {!this.props.hideClose && this.props.onClose && <span title="Close widget" className="glyphicon glyphicon-remove" onClick={() => this.props.onClose(this.props.widget)} />}
-          {!this.props.hideSettings && this.props.widget.hasLocalSettings && this.props.onSettings && <span title="Settings" className="glyphicon glyphicon-cog" onClick={() => this.props.onSettings(this.props.widget)} />}
-          {this.props.widget.hasLocalHelp && this.props.onSettings && <span title="Help documentation" className="glyphicon glyphicon-question-sign" onClick={() => this.props.onSettings(this.props.widget)} />}
-          {this.props.widget.hasHighOverhead && <span title="May cost high overhead, see help" className="glyphicon glyphicon-alert" onClick={() => this.alertHighOverhead()} />}
-          {this.props.widget.isContainerAware && <span title="Container aware" className="glyphicon glyphicon glyphicon-ok-circle" onClick={() => this.alertContainerAware()} />}
+          <span className="widget-title">{this.props.theWidget.title}</span>
+          {!this.props.hideName && <span className="label label-primary">{this.props.theWidget.name}</span>}
+          {!this.props.hideClose && this.props.onClose && <span title="Close widget" className="glyphicon glyphicon-remove" onClick={() => this.props.onClose(this.props.theWidget)} />}
+          {!this.props.hideSettings && this.props.theWidget.hasLocalSettings && this.props.onSettings && <span title="Settings" className="glyphicon glyphicon-cog" onClick={() => this.props.onSettings(this.props.theWidget)} />}
+          {this.props.theWidget.hasLocalHelp && this.props.onSettings && <span title="Help documentation" className="glyphicon glyphicon-question-sign" onClick={() => this.props.onSettings(this.props.theWidget)} />}
+          {this.props.theWidget.hasHighOverhead && <span title="May cost high overhead, see help" className="glyphicon glyphicon-alert" onClick={() => this.alertHighOverhead()} />}
+          {this.props.theWidget.isContainerAware && <span title="Container aware" className="glyphicon glyphicon glyphicon-ok-circle" onClick={() => this.alertContainerAware()} />}
         </h3>
       </div>
     )
@@ -28,7 +28,7 @@ export default class WidgetHeader extends React.Component {
 }
 
 WidgetHeader.propTypes = {
-  widget: PropTypes.object.isRequired,
+  theWidget: PropTypes.object.isRequired,
   onSettings: PropTypes.func,
   onClose: PropTypes.func,
   hideName: PropTypes.bool,
