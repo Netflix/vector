@@ -1451,6 +1451,21 @@
                 }
             });
 
+            definitions.push({
+                name: 'bcc.profile',
+                title: 'BCC profile (CPU Flame Graphs)',
+                directive: 'profile',
+                dataModelType: DummyMetricDataModel,
+                size: {
+                  width: '50%',
+                  height: '500px'
+                },
+                enableVerticalResize: false,
+                group: 'BPF/BCC',
+                attrs: {
+                    maxstackdepth: 20
+                }
+            });
         }
 
         return definitions;
@@ -1586,6 +1601,7 @@
             'offwakeflamegraphtask',
             'heatmap',
             'table',
+            'profile',
             'customWidgetSettings',
             'customWidgetHelp',
             'widgetFilterSettings'
