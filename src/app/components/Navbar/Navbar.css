@@ -1,0 +1,19 @@
+.navbar-inverse .navbar-brand {
+  text-transform: uppercase;
+  font-size: 23px;
+  letter-spacing: 1px;
+  font-weight: 300;
+}
+
+.navbar-inverse {
+  background: #5b5b5b;
+}
+
+.navbar .container-fluid .navbar-brand {
+  margin-left: -10px;
+}
+
+.navbar-logo {
+  max-width: 42px;
+  margin-top: -7px;
+}

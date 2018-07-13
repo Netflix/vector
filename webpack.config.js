@@ -8,7 +8,7 @@ const WebpackAutoInjectVersion = require('webpack-auto-inject-version')
 let config = {
     mode: 'development',
     entry: {
-        javascript: './src/app/index.module.js'
+        javascript: './src/app/App.jsx'
     },
     output: {
         path: path.join(__dirname, '/dist/'),
@@ -18,21 +18,18 @@ let config = {
     module: {
         rules: [
             {
-                test: /\.jsx$/,
+                test: /\.(js|jsx)$/,
                 enforce: 'pre',
-                exclude: /node_modules/,
+                exclude: [ /node_modules/, /src\/\_app/ ],
                 use: [
-                  { loader: 'babel-loader', options: { presets: [ 'env', 'react' ] } },
-                  { loader: 'eslint-loader', options: { envs: ['commonjs'], failOnWarning: true, failOnError: true } },
+                  { loader: 'eslint-loader' }
                 ]
             },
             {
-                test: /\.js$/,
-                enforce: 'pre',
-                exclude: /node_modules/,
+                test: /\.(js|jsx)$/,
+                exclude: [ /node_modules/, /src\/\_app/ ],
                 use: [
-                  { loader: 'babel-loader', options: { presets: [ 'env', 'react' ] } },
-                  { loader: 'eslint-loader', options: { envs: ['commonjs'], failOnWarning: true, failOnError: true } },
+                  { loader: 'babel-loader', options: { babelrc: true }}
                 ]
             },
             {
@@ -41,7 +38,6 @@ let config = {
                   path.resolve(__dirname, 'src/index.html'),
                 ],
                 use: [
-                    { loader: "ngtemplate-loader", query: { relativeTo: 'src/app/' } },
                     { loader: "html-loader" }
                 ]
             },
@@ -70,11 +66,6 @@ let config = {
             }
         ]
     },
-    resolve: {
-        alias: {
-            'angular-santize': 'angular-sanitize/angular-sanitize.js'
-        }
-    },
     devtool: 'source-map',
     plugins: [
         // needs to go first to insert the file in js
@@ -87,23 +78,14 @@ let config = {
         }),
         // the html, which will have the bundle.js script tag injected
         new HtmlWebpackPlugin({
-            template: 'src/index.html',
-            inject: 'head'
+            template: 'src/app/index.html',
+            inject: 'body'
         }),
         // copy static assets
         new CopyWebpackPlugin([
-            { from: 'src/lib/d3-heatmap2', to: 'lib/d3-heatmap2' },
             { from: 'src/favicon.ico', to: 'favicon.ico' },
-            { from: 'vector.png', to: 'assets/images/vector_owl.png' }
-        ]),
-        // configure jquery, needed by angular and other components that assume jQuery or other strings
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            'jQuery': 'jquery',
-            'window.jQuery': 'jquery',
-            moment: 'moment',
-            '_': 'lodash'
-        }),
+            { from: 'src/assets/images/vector_owl.png', to: 'assets/images/vector_owl.png' }
+        ])
     ]
 }
 

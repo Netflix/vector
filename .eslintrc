@@ -1,16 +1,22 @@
 {
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended"
   ],
-  "parser": "babel-eslint",
-  "plugins": ["angular", "react"],
+  "rules": {
+    "indent": [ "error", 2 ],
+    "react/prop-types": [ 2 ],
+    "no-console": [ "off" ]
+  },
   "env": {
     "browser": true,
     "jasmine": true
   },
   "globals": {
-    "angular": true,
     "module": true,
     "inject": true
   }
