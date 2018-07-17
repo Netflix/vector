@@ -16,9 +16,12 @@
  *
  */
 
-import simpleModel from './processors/simpleModel'
-import cumulativeModel from './processors/cumulativeModel'
-import cpuRatioModel from './processors/cpuRatioModel'
+import simpleModel from '../processors/simpleModel'
+import cumulativeModel from '../processors/cumulativeModel'
+import cpuRatioModel from '../processors/cpuRatioModel'
+
+import HelpFlamegraph from '../help/Flamegraph.jsx'
+import FilterModal from '../components/FilterModal/FilterModal.jsx'
 
 export default [
   {
@@ -54,5 +57,12 @@ export default [
     config: {
       metricName: 'kernel.all.pswitch',
     },
+    settings: {
+      filter: ''
+    },
+    isContainerAware: true,
+    isHighOverhead: true,
+    helpComponent: HelpFlamegraph,
+    settingsComponent: FilterModal,
   }
 ]

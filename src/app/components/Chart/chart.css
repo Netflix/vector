@@ -24,7 +24,6 @@ circle.frame-hover {
   r: 10;
 }
 
-.chart {
-  shape-rendering:crispEdges;
-  stroke-width: 1px;
+.chart-card {
+  width: 400px;
 }

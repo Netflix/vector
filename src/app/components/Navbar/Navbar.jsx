@@ -1,28 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { Menu, Image } from 'semantic-ui-react'
+
 import './Navbar.css'
 
-const Navbar = ({ embed, onClick }) => {
+const Navbar = ({ embed }) => {
   if (embed) return null;
 
   return (
-    <div className="navbar navbar-inverse navbar-fixed-top" role="navigation" onClick={onClick}>
-      <div className="container-fluid">
-        <div className="navbar-header">
-          <a className="navbar-brand" href="#/">
-            <img src="assets/images/vector_owl.png" alt="Vector Owl" height="20" />
-          </a>
-          <a className="navbar-brand" href="javascript:window.location.reload(true);history.pushState(null, '', location.href.split('?')[0]);">Vector</a>
-        </div>
-      </div>
-    </div>
+    <Menu inverted={true} size={'large'} attached>
+      <Menu.Item><Image centered src='assets/images/vector_owl.png' height='20'/></Menu.Item>
+      <Menu.Item size='big' href="javascript:window.location.reload(true);history.pushState(null, '', location.href.split('?')[0]);">VECTOR</Menu.Item>
+    </Menu>
   )
 }
 
 Navbar.propTypes = {
   embed: PropTypes.bool.isRequired,
-  onClick: PropTypes.func
 }
 
 export default Navbar

@@ -2,18 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import superagent from 'superagent'
 
-import './dashboard.css'
-
 import Chart from '../Chart/Chart.jsx'
-
-const DEBUG_PMIDS = false
+import { flatten } from '../../processors/utils'
 
 export class Dashboard extends React.Component {
   state = {
     context: null,
     status: 'Initializing',
     pmids: [],
-    charts: [],
     datasets: []
   }
 
@@ -21,10 +17,14 @@ export class Dashboard extends React.Component {
     this.startContext()
   }
 
+  // TODO status updates should be calculated from state and properties, not at runtime
+  // TODO pmweb component interactions should be moved to a separate module
+
   componentDidUpdate(prevProps /*, prevState, snapshot */) {
     // if hostname or hostspec has changed, we need to tear down and set up a new context
     if (this.props.host.hostname !== prevProps.host.hostname
       || this.props.host.hostspec !== prevProps.host.hostspec) {
+      this.setState({ datasets: [] })
       this.startContext()
     }
     if (this.props.settings.containerId !== prevProps.settings.containerId) {
@@ -33,7 +33,7 @@ export class Dashboard extends React.Component {
   }
 
   async selectContainer() {
-    this.setState({ status: `Connected to ${this.props.host.hostname}/${this.props.host.hostspec} ${this.state.context} - selecting container` })
+    this.setState({ status: `Connected to ${this.props.host.hostname}/${this.props.host.hostspec} - selecting container` })
     let newContainerId = this.props.settings.containerId
     if (newContainerId === '_all') {
       newContainerId = ''
@@ -44,9 +44,9 @@ export class Dashboard extends React.Component {
         .get(`${host}/pmapi/${this.state.context}/_store`)
         .query({ name: 'pmcd.client.container', value: newContainerId })
 
-      this.setState({ status: `Connected to ${this.props.host.hostname}/${this.props.host.hostspec} ${this.state.context} - ${newContainerId}` })
+      this.setState({ status: `Connected to ${this.props.host.hostname}/${this.props.host.hostspec} - ${newContainerId}` })
     } catch (err) {
-      this.setState({ status: `Connected to ${this.props.host.hostname}/${this.props.host.hostspec} ${this.state.context} - could not select container, ${err.message}` })
+      this.setState({ status: `Connected to ${this.props.host.hostname}/${this.props.host.hostspec} - could not select container, ${err.message}` })
     }
   }
 
@@ -79,7 +79,7 @@ export class Dashboard extends React.Component {
 
       // set context as last thing we do, this is the flag that we are connected
       this.setState({ context })
-      this.setState({ status: `Connected to ${hostname}/${this.props.host.hostspec} ${this.state.context}` })
+      this.setState({ status: `Connected to ${hostname}/${this.props.host.hostspec}` })
 
       // do it
       setTimeout(this.pollMetrics, this.props.settings.intervalSeconds * 1000)
@@ -93,49 +93,49 @@ export class Dashboard extends React.Component {
    */
   pollMetrics = async () => {
     // collect pmids to fetch
-    let uniqueMetrics = this.props.chartlist
-      .map((c) => c.processor.requiredMetricNames(c.config)) // extract only the metric names we need
-      .reduce((xs, ys) => xs.concat(ys)) // flatten the array
-      .filter((val, index, array) => array.indexOf(val) === index) // keep only one instance of an object ie: make it unique
+    if (this.props.chartlist.length > 0) {
+      let uniqueMetrics = this.props.chartlist
+        .map((c) => c.processor.requiredMetricNames(c.config)) // extract only the metric names we need
+        .reduce(flatten, []) // flatten the array
+        .filter((val, index, array) => array.indexOf(val) === index) // keep only one instance of an object ie: make it unique
 
-    let uniquePmids = this.state.pmids.filter((pmid) => uniqueMetrics.includes(pmid.name)) // collect all pmids where the name matches
-      .map((pmid) => pmid.pmid) // extract the pmid
-      .join(',') // concatenate to string
+      let uniquePmids = this.state.pmids.filter((pmid) => uniqueMetrics.includes(pmid.name)) // collect all pmids where the name matches
+        .map((pmid) => pmid.pmid) // extract the pmid
+        .join(',') // concatenate to string
 
-    // do a fetch
-    let host = `http://${this.props.host.hostname}:7402`
-    let res = await superagent
-      .get(`${host}/pmapi/${this.state.context}/_fetch`)
-      .query({ pmids: uniquePmids })
+      // do a fetch
+      let host = `http://${this.props.host.hostname}:7402`
+      let res = await superagent
+        .get(`${host}/pmapi/${this.state.context}/_fetch`)
+        .query({ pmids: uniquePmids })
 
-    this.setState((state) => {
-      // we want a WINDOW of x seconds, which means we need from latest to newest, we will assume the most recent is newest
-      const oldestS = res.body.timestamp.s - this.props.settings.windowSeconds
-      // new dataset is ... all the old stuff, plus the new one, without anything with an old timestamp
-      const newDatasets = [ ...state.datasets, res.body ]
-        .filter(ds => ds.timestamp.s >= oldestS)
-      return { datasets: newDatasets }
-    })
+      this.setState((state) => {
+        // we want a WINDOW of x seconds, which means we need from latest to newest, we will assume the most recent is newest
+        const oldestS = res.body.timestamp.s - this.props.settings.windowSeconds
+        // new dataset is ... all the old stuff, plus the new one, without anything with an old timestamp
+        const newDatasets = [ ...state.datasets, res.body ]
+          .filter(ds => ds.timestamp.s >= oldestS)
+        return { datasets: newDatasets }
+      })
 
+    }
     // go again
     setTimeout(this.pollMetrics, this.props.settings.intervalSeconds * 1000)
   }
 
   render () {
     return (
-      <div className="main-container">
+      <div>
         Status: { this.state.status }<br />
-        <ul>
-          {
-            this.props.chartlist.map((c) => (
-              <li key={c.title}>Chart: {c.title}
-                <Chart chartInfo={c} datasets={this.state.datasets} />
-              </li>
-            ))
-          }
-        </ul>
         Context: { this.state.context }<br />
-        { DEBUG_PMIDS && <span>Available PMIDs: { JSON.stringify(this.state.pmids) }<br /></span> }
+        { this.props.chartlist.map((c, idx) =>
+          <Chart
+            key={idx}
+            chartInfo={c}
+            datasets={this.state.datasets}
+            onCloseClicked={() => this.props.removeChartByIndex(idx)}
+            onNewSettings={(settings) => this.props.updateChartSettings(idx, settings)} />
+        )}
       </div>
     )
   }
@@ -146,6 +146,8 @@ Dashboard.propTypes = {
   settings: PropTypes.object.isRequired,
   chartlist: PropTypes.array.isRequired,
   onContainerListLoaded: PropTypes.func.isRequired,
+  removeChartByIndex: PropTypes.func.isRequired,
+  updateChartSettings: PropTypes.func.isRequired,
 }
 
 export default Dashboard

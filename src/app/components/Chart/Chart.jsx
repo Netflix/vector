@@ -5,6 +5,8 @@ import moment from 'moment'
 import ColorHash from 'color-hash'
 const colorHash = new ColorHash()
 
+import { Modal, Popup, Icon, Card } from 'semantic-ui-react'
+
 import './chart.css'
 
 const tooltipStyles = {
@@ -80,57 +82,105 @@ function fetchSharedTooltipContent(passedData, dataset) {
   );
 }
 
-function Chart({ chartInfo, datasets }) {
-  if (!datasets || !datasets.length) return null
+class Chart extends React.Component {
+  state = {
+    modalOpen: false
+  }
 
-  // for a single datapoint
-  const dataset = chartInfo.processor.calculateChart(datasets, chartInfo.config)
+  render () {
+    const { chartInfo, datasets, onCloseClicked, onNewSettings } = this.props
 
-  if (!dataset) return (
-    <div><p>{chartInfo.title}</p><br /><p>No data</p><br /></div>
-  )
+    if (!datasets || !datasets.length) return null
 
-  return (
-    <div>
-      <div>
-        <p>{chartInfo.title}</p><br />
-      </div>
-      <div>
-        <XYFrame
-          size={[600, 300]}
-          className='xyframe'
-          lines={dataset}
-          lineDataAccessor={d => d.data}
-          margin={{ left: 60, bottom: 60, right: 3, top: 3 }}
-          xAccessor={d => d.ts}
-          yAccessor={d => d.value}
-          lineStyle={d => ({ stroke: colorHash.hex(d.keylabel) })}
-          yExtent={[0, undefined]}
-          axes={[
-            { orient: "left", tickLineGenerator: horizontalTickLineGenerator },
-            { orient: "bottom",
-              tickFormat: ts => moment(ts).format('hh:mm:ss'),
-              tickLineGenerator: verticalTickLineGenerator,
-              rotate: 90,
-              ticks: Math.min(dataset[0].data.length, 12),
-              size: [100, 100] }
-          ]}
-          // line highlight
-          hoverAnnotation={[
-            { type: 'vertical-points', threshold: 0.1, r: () => 5 },
-            { type: 'x', disable: ['connector', 'note']},
-            { type: 'frame-hover' },
-          ]}
-          tooltipContent={(d) => fetchSharedTooltipContent(d, dataset)}
-          baseMarkProps={{ transitionDuration: 0 }} />
-      </div>
-    </div>
-  )
+    const dataset = chartInfo.processor.calculateChart(datasets, chartInfo.config)
+    if (!dataset) return null
+
+    const HelpComponent = chartInfo.helpComponent
+    const SettingsComponent = chartInfo.settingsComponent
+
+    const handleSettingsIcon = () => this.setState({ modalOpen: true })
+    const handleNewSettings = (settings) => {
+      this.setState({ modalOpen: false })
+      onNewSettings(settings)
+    }
+
+    return (
+      <Card style={{width: '650px' }} raised={true}>
+
+        <Card.Content>
+          <Icon className='right floated' circular fitted link name='close' onClick={onCloseClicked}/>
+
+          { chartInfo.settingsComponent &&
+            <Modal dimmer='inverted' open={this.state.modalOpen} trigger={
+              <Icon className='right floated' name='setting' circular fitted link onClick={handleSettingsIcon}/> }>
+              <Modal.Content>
+                <SettingsComponent {...chartInfo.settings} onNewSettings={handleNewSettings} />
+              </Modal.Content>
+            </Modal> }
+
+          { chartInfo.helpComponent &&
+            <Modal dimmer='inverted' trigger={
+              <Icon className='right floated' name='help' circular fitted link/>}>
+              <Modal.Content>
+                <HelpComponent chartInfo={chartInfo} />
+              </Modal.Content>
+            </Modal> }
+
+          { chartInfo.isHighOverhead &&
+            <Popup content='May cost high overhead, see help' trigger={
+              <Icon className='right floated' name='exclamation' circular fitted />} /> }
+
+          { chartInfo.isContainerAware &&
+            <Popup content='Container aware' trigger={
+              <Icon className='right floated' name='check' circular fitted />} /> }
+
+          <Card.Header>
+            {chartInfo.title}
+          </Card.Header>
+        </Card.Content>
+
+        <Card.Content raised='true'>
+          <Card.Description>
+            <XYFrame
+              size={[600, 300]}
+              lines={dataset}
+              lineDataAccessor={d => d.data}
+              defined={d => d.value !== null}
+              margin={{ left: 60, bottom: 60, right: 3, top: 3 }}
+              xAccessor={d => d.ts}
+              yAccessor={d => d.value}
+              lineStyle={d => ({ stroke: colorHash.hex(d.keylabel) })}
+              yExtent={[0, undefined]}
+              axes={[
+                { orient: "left", tickLineGenerator: horizontalTickLineGenerator },
+                { orient: "bottom",
+                  tickFormat: ts => moment(ts).format('hh:mm:ss'),
+                  tickLineGenerator: verticalTickLineGenerator,
+                  rotate: 90,
+                  ticks: Math.min(dataset[0].data.length, 12),
+                  size: [100, 100] }
+              ]}
+              // line highlight
+              hoverAnnotation={[
+                { type: 'vertical-points', threshold: 0.1, r: () => 5 },
+                { type: 'x', disable: ['connector', 'note']},
+                { type: 'frame-hover' },
+              ]}
+              tooltipContent={(d) => fetchSharedTooltipContent(d, dataset)}
+              baseMarkProps={{ transitionDuration: 0 }} />
+          </Card.Description>
+        </Card.Content>
+
+      </Card>
+    )
+  }
 }
 
 Chart.propTypes = {
   chartInfo: PropTypes.object.isRequired,
   datasets: PropTypes.array.isRequired,
+  onCloseClicked: PropTypes.func.isRequired,
+  onNewSettings: PropTypes.func,
 }
 
 export default Chart

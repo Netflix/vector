@@ -1,7 +1,5 @@
 import React from 'react'
 import { render } from 'react-dom'
-import 'bootstrap/dist/css/bootstrap.css'
-import './_reboot.min.css'
 
 import config from './config'
 import charts from './charts'
@@ -12,7 +10,7 @@ import Dashboard from './components/Dashboard/Dashboard.jsx'
 import ConfigPanel from './components/ConfigPanel/ConfigPanel.jsx'
 import './App.css'
 
-// TODO pass defaults in to ConfigPanel
+import 'semantic-ui-css/semantic.min.css';
 
 class App extends React.Component {
   state = {
@@ -28,25 +26,42 @@ class App extends React.Component {
       windowSeconds: 120,
       intervalSeconds: 2
     },
-    chartlist: [
-      ...charts
-    ],
-    // provided by dashboard, could probably refactor it
+    chartlist: [ ],
     containerList: []
   }
 
   onContainerListLoaded = (list) => this.setState({ containerList: list })
+  onClearCharts = () => this.setState({ chartlist: [] })
+  onAddChart = (chart) => {
+    this.setState((oldState) => ({ chartlist: [ ...oldState.chartlist, chart ] }))
+  }
+
+  removeChartByIndex = (idx) => {
+    this.setState((oldState) =>
+      ({ chartlist: [ ...oldState.chartlist.slice(0, idx), ...oldState.chartlist.slice(idx + 1) ] })
+    )
+  }
+
+  updateChartSettings = (idx, settings) => {
+    this.setState((oldState) => {
+      let newChart = { ...oldState.chartlist[idx], settings: { ...settings } }
+      return { chartlist: [ ...oldState.chartlist.slice(0, idx), newChart, ...oldState.chartlist.slice(idx + 1) ] }
+    })
+  }
 
   render () {
     return (
-      <div className="row">
+      <div>
         <div className="col-md-12">
-          <Navbar embed={false}/>
+          <Navbar embed={false} />
 
           <ConfigPanel
-            onHostDataChanged={(s) => { this.setState({ host: s }) }}
-            onSettingsChanged={(s) => { this.setState({ settings: s }) }}
+            onHostDataChanged={(h) => this.setState({ host: h })}
+            onSettingsChanged={(s) => this.setState({ settings: s })}
+            onClearCharts={this.onClearCharts}
+            onAddChart={this.onAddChart}
             containers={this.state.containerList}
+            charts={charts}
             windows={config.windows}
             intervals={config.intervals}
             hostname={'100.113.110.19'}
@@ -59,7 +74,9 @@ class App extends React.Component {
             host={this.state.host}
             settings={this.state.settings}
             chartlist={this.state.chartlist}
-            onContainerListLoaded={this.onContainerListLoaded} />
+            onContainerListLoaded={this.onContainerListLoaded}
+            removeChartByIndex={this.removeChartByIndex}
+            updateChartSettings={this.updateChartSettings} />
 
           <Footer version={config.version}/>
         </div>

@@ -110,12 +110,6 @@
             <button ng-click="clear();" type="button" class="btn btn-info">Clear</button>
         </div>
 
-                <!--
-                TODO - put an if block to start converting some content styles across to react
-                TODO - update the app launch settings
-                TODO - use semiotic to render some of the graphs
-                TODO - convert some components like widget-header to a proper functional component -->
-
         <div ui-sortable="sortableOptions" ng-model="widgets" class="dashboard-widget-area">
             <div ng-repeat="widget in widgets" ng-style="widget.containerStyle" class="widget-container" widget>
                 <div class="widget panel panel-default">

@@ -53,6 +53,10 @@ let config = {
                 use: 'url-loader?name=fonts/[name].[ext]&limit=10000',
             },
             {
+                test: /\.(png)(\?[\s\S]+)?$/,
+                use: 'file-loader?name=images/[name].[ext]',
+            },
+            {
                 test: /\.(ttf|eot|svg|otf)(\?[\s\S]+)?$/,
                 use: 'file-loader?name=fonts/[name].[ext]',
             },

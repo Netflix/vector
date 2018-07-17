@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './configpanel.css'
+import { Input, Grid, Dropdown, Popup, Menu } from 'semantic-ui-react'
+
+import ChartSelector from '../ChartSelector/ChartSelector.jsx'
 
 export class ConfigPanel extends React.Component {
   state = {
@@ -9,37 +11,49 @@ export class ConfigPanel extends React.Component {
     hostspec: this.props.hostspec,
     windowSeconds: this.props.windowSeconds,
     intervalSeconds: this.props.intervalSeconds,
-    containerFilter: this.props.containerFilter
+    containerId: '_all'
   }
 
-  getVisibleContainerList = () => {
-    const containerFilter = this.state.containerFilter
-    if (containerFilter === '_all' || containerFilter === '') {
-      return this.props.containers
-    } else {
-      return this.props.containers.filter(name => name.includes(containerFilter))
-    }
+  createContainerList = () => {
+    const allContainer = { text: 'All', value: '_all' }
+    const containers = this.props.containers.map(c => ({ text: c, value: c }))
+    const containerList = [ allContainer ].concat(containers)
+    return containerList
   }
 
   render() {
     return (
       <div className="configpanel-container">
-        <form>
-          <label>Hostname (pmwebd)<input type='text' onChange={this.handleHostnameChange} value={this.state.hostname}/></label><br/>
-          <label>Hostspec (target)<input type='text' onChange={this.handleHostspecChange} value={this.state.hostspec}/></label><br/>
-          <br/>
-          <label>Container filter<input type='text' onChange={this.handleContainerFilterChange} /></label><br/>
-          <label>Container ID<select onChange={this.handleContainerIdChange} value={this.containerFilter}>
-            <option value='_all'>All</option>
-            { this.getVisibleContainerList().map((id) => { return <option key={id} value={id}>{id}</option> }) }
-          </select></label>
-          <label>Window<select onChange={this.handleWindowChange} value={this.state.windowSeconds}>
-            { this.props.windows.map((w) => { return <option key={w.valueSeconds} value={w.valueSeconds}>{w.text}</option> }) }
-          </select></label>
-          <label>Interval<select onChange={this.handleIntervalChange} value={this.state.intervalSeconds}>
-            { this.props.intervals.map((w) => { return <option key={w.valueSeconds} value={w.valueSeconds}>{w.text}</option> }) }
-          </select></label>
-        </form>
+        <Menu secondary style={{margin: '5px'}}>
+          <Popup trigger={<Menu.Item header>Connection</Menu.Item>} hoverable position='bottom left'>
+            <Grid>
+              <Grid.Row>
+                <label>Hostname (pmwebd)</label>
+                <Input onChange={this.handleHostnameChange} value={this.state.hostname}/>
+              </Grid.Row>
+              <Grid.Row>
+                <label>Hostspec (target)</label>
+                <Input onChange={this.handleHostspecChange} value={this.state.hostspec}/>
+              </Grid.Row>
+              <Grid.Row>
+                <label>Container ID</label>
+                <Dropdown search selection fluid
+                  defaultValue={this.state.containerId}
+                  options={this.createContainerList()}
+                  onChange={this.handleContainerIdChange} />
+              </Grid.Row>
+            </Grid>
+          </Popup>
+          <Popup trigger={<Menu.Item header>Charts</Menu.Item>} hoverable>
+            <ChartSelector onClearCharts={this.props.onClearCharts} onAddChart={this.props.onAddChart} charts={this.props.charts} />
+          </Popup>
+          <Menu.Item header>Window</Menu.Item>
+          { this.props.windows.map((w, idx) => (
+            <Menu.Item key={idx} active={this.state.windowSeconds === w.valueSeconds} name={w.valueSeconds.toString()} content={w.text} onClick={this.handleWindowChange}/>)) }
+          <Menu.Item header>Interval</Menu.Item>
+          { this.props.intervals.map((i, idx) => (
+            <Menu.Item key={idx} active={this.state.intervalSeconds === i.valueSeconds} name={i.valueSeconds.toString()} content={i.text} onClick={this.handleIntervalChange}/>)) }
+        </Menu>
       </div>
     )
   }
@@ -60,34 +74,32 @@ export class ConfigPanel extends React.Component {
     this.setState({ hostspec: e.target.value }, this.propagateHostDataChanged)
   }
 
-  handleContainerFilterChange = (e) => {
-    this.setState({ containerFilter: e.target.value })
+  handleContainerIdChange = (e, { value }) => {
+    this.setState({ containerId: value }, this.propagateSettingsChanged)
   }
 
-  handleContainerIdChange = (e) => {
-    this.setState({ containerId: e.target.value }, this.propagateSettingsChanged)
+  handleWindowChange = (e, { name }) => {
+    this.setState({ windowSeconds: parseInt(name) }, this.propagateSettingsChanged)
   }
 
-  handleWindowChange = (e) => {
-    this.setState({ windowSeconds: e.target.value }, this.propagateSettingsChanged)
-  }
-
-  handleIntervalChange = (e) => {
-    this.setState({ intervalSeconds: e.target.value }, this.propagateSettingsChanged)
+  handleIntervalChange = (e, { name }) => {
+    this.setState({ intervalSeconds: parseInt(name) }, this.propagateSettingsChanged)
   }
 }
 
 ConfigPanel.propTypes = {
   onHostDataChanged: PropTypes.func.isRequired,
   onSettingsChanged: PropTypes.func.isRequired,
+  onClearCharts: PropTypes.func.isRequired,
+  onAddChart: PropTypes.func.isRequired,
   containers: PropTypes.array.isRequired,
   windows: PropTypes.array.isRequired,
   intervals: PropTypes.array.isRequired,
+  charts: PropTypes.array.isRequired,
   hostname: PropTypes.string,
   hostspec: PropTypes.string,
   windowSeconds: PropTypes.number,
   intervalSeconds: PropTypes.number,
-  containerFilter: PropTypes.string
 }
 
 export default ConfigPanel
