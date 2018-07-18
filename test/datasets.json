@@ -1,0 +1,2614 @@
+[
+  {
+    "timestamp": {
+      "s": 1531869878,
+      "us": 882804
+    },
+    "values": [
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125885593597
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 178
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869881,
+      "us": 103765
+    },
+    "values": [
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125885757228
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 104
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869883,
+      "us": 354578
+    },
+    "values": [
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125885880347
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 7
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869885,
+      "us": 509563
+    },
+    "values": [
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125885975028
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 9
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869887,
+      "us": 757439
+    },
+    "values": [
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125886101256
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 9
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869889,
+      "us": 969822
+    },
+    "values": [
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125886256630
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 8
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869892,
+      "us": 183967
+    },
+    "values": [
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125886439848
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 136
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869894,
+      "us": 362094
+    },
+    "values": [
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125886553864
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869896,
+      "us": 541978
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125886669659
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 8
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591033300
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869898,
+      "us": 821179
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125886857999
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 57
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065350170
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591034240
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869901,
+      "us": 38447
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125887044887
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065392590
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591035440
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869903,
+      "us": 318814
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125887172913
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 10
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065427400
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591037210
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869905,
+      "us": 550189
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125887298210
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 8
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065451310
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591038300
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869907,
+      "us": 748198
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125887443983
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 9
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065489280
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591038950
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869909,
+      "us": 996762
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125887657847
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 10
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065519070
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591039450
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869911,
+      "us": 662717
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125887747949
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 7
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065537580
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591039740
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869912,
+      "us": 803687
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125887899467
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 8
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065553170
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591040080
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869913,
+      "us": 827935
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125887960323
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 7
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065565920
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591040240
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869915,
+      "us": 12796
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888076785
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 13
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065588290
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591040590
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869916,
+      "us": 75307
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888190734
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 215
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065610540
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591041120
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869916,
+      "us": 257752
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888215591
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 8
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065614590
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591041200
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869917,
+      "us": 239458
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888296721
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 8
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065630880
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591041450
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869917,
+      "us": 462006
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888312780
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 7
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065633600
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591041680
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869918,
+      "us": 416088
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888408565
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 41
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065650580
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591042020
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869918,
+      "us": 667927
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888426570
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 7
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065654170
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591042170
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869919,
+      "us": 580282
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888483343
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 135
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065666320
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591042320
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869919,
+      "us": 873619
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888500815
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 10
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065669530
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591042370
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869920,
+      "us": 786474
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888562046
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 51
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065681710
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591042590
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869921,
+      "us": 81547
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888583360
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 97
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065685550
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591042620
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869922,
+      "us": 1109
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888640130
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 40
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065698870
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591042930
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869922,
+      "us": 295117
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888662866
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 57
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065703690
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591043000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869923,
+      "us": 212100
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 13.67
+          },
+          {
+            "instance": 5,
+            "value": 30.32
+          },
+          {
+            "instance": 15,
+            "value": 36.080002
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888738833
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 15
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065720980
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591043350
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869923,
+      "us": 466975
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 13.67
+          },
+          {
+            "instance": 5,
+            "value": 30.32
+          },
+          {
+            "instance": 15,
+            "value": 36.080002
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888756159
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 6
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065725300
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591043430
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869924,
+      "us": 424798
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 12.89
+          },
+          {
+            "instance": 5,
+            "value": 29.879999
+          },
+          {
+            "instance": 15,
+            "value": 35.91
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888848335
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 9
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065744090
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591043750
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869924,
+      "us": 981264
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 12.89
+          },
+          {
+            "instance": 5,
+            "value": 29.879999
+          },
+          {
+            "instance": 15,
+            "value": 35.91
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888891354
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 153
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065752710
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591044050
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869925,
+      "us": 652482
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 12.89
+          },
+          {
+            "instance": 5,
+            "value": 29.879999
+          },
+          {
+            "instance": 15,
+            "value": 35.91
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888927559
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 7
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065763970
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591044140
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869926,
+      "us": 172977
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 12.89
+          },
+          {
+            "instance": 5,
+            "value": 29.879999
+          },
+          {
+            "instance": 15,
+            "value": 35.91
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888956222
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 7
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065772140
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591044240
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869926,
+      "us": 812472
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 12.89
+          },
+          {
+            "instance": 5,
+            "value": 29.879999
+          },
+          {
+            "instance": 15,
+            "value": 35.91
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125888994417
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 6
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065781320
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591044400
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869927,
+      "us": 312409
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 12.89
+          },
+          {
+            "instance": 5,
+            "value": 29.879999
+          },
+          {
+            "instance": 15,
+            "value": 35.91
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125889016315
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 44
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065786740
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591044480
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869927,
+      "us": 986464
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 12.89
+          },
+          {
+            "instance": 5,
+            "value": 29.879999
+          },
+          {
+            "instance": 15,
+            "value": 35.91
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125889051102
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 78
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065794580
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591044640
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869928,
+      "us": 472500
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 12.89
+          },
+          {
+            "instance": 5,
+            "value": 29.879999
+          },
+          {
+            "instance": 15,
+            "value": 35.91
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125889076757
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 6
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065800560
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591044740
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869929,
+      "us": 156269
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 25.32
+          },
+          {
+            "instance": 5,
+            "value": 32.18
+          },
+          {
+            "instance": 15,
+            "value": 36.619999
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125889124157
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 6
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065811720
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591044890
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869929,
+      "us": 633691
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 25.32
+          },
+          {
+            "instance": 5,
+            "value": 32.18
+          },
+          {
+            "instance": 15,
+            "value": 36.619999
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125889153390
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 7
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065818740
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591044980
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869930,
+      "us": 365784
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 25.32
+          },
+          {
+            "instance": 5,
+            "value": 32.18
+          },
+          {
+            "instance": 15,
+            "value": 36.619999
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125889212470
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 6
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065829880
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591045210
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": {
+      "s": 1531869930,
+      "us": 787234
+    },
+    "values": [
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 64
+          }
+        ]
+      },
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          {
+            "instance": 1,
+            "value": 25.32
+          },
+          {
+            "instance": 5,
+            "value": 32.18
+          },
+          {
+            "instance": 15,
+            "value": 36.619999
+          }
+        ]
+      },
+      {
+        "pmid": 251658253,
+        "name": "kernel.all.pswitch",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 125889252559
+          }
+        ]
+      },
+      {
+        "pmid": 251660290,
+        "name": "kernel.all.runnable",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 144
+          }
+        ]
+      },
+      {
+        "pmid": 251658260,
+        "name": "kernel.all.cpu.user",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 11065837410
+          }
+        ]
+      },
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          {
+            "instance": -1,
+            "value": 591045400
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -16,53 +16,15 @@
  *
  */
 
-import simpleModel from '../processors/simpleModel'
-import cumulativeModel from '../processors/cumulativeModel'
-import cpuRatioModel from '../processors/cpuRatioModel'
+/* eslint-disable */
 
-import HelpFlamegraph from '../help/Flamegraph.jsx'
-import FilterModal from '../components/FilterModal/FilterModal.jsx'
+// all the remaining components, particularly vector specific angular components
+function requireAll(requireContext) {
+  const validKeys = requireContext.keys().filter(f => f !== './index.js')
+  return validKeys.map(requireContext)
+}
 
-export default [
-  {
-    group: 'CPU',
-    title: 'Load Average',
-    processor: simpleModel,
-    config: {
-      metricName: 'kernel.all.load',
-    },
-  },
-  {
-    group: 'CPU',
-    title: 'CPU Utilization (User)',
-    processor: cpuRatioModel,
-    config: {
-      metricName: 'kernel.all.cpu.user',
-      divisorMetricName: 'hinv.ncpu'
-    },
-  },
-  {
-    group: 'CPU',
-    title: 'CPU Utilization (System)',
-    processor: cpuRatioModel,
-    config: {
-      metricName: 'kernel.all.cpu.sys',
-      divisorMetricName: 'hinv.ncpu'
-    },
-  },
-  {
-    group: 'CPU',
-    title: 'Context Switches per second',
-    processor: cumulativeModel,
-    config: {
-      metricName: 'kernel.all.pswitch',
-    },
-    settings: {
-      filter: ''
-    },
-    isContainerAware: true,
-    isHighOverhead: true,
-    helpComponent: HelpFlamegraph,
-    settingsComponent: FilterModal,
-  }
-]
+const requires = requireAll(require.context('./', false, /\.js$/))
+const charts = requires.map(r => r.default)
+
+export default charts

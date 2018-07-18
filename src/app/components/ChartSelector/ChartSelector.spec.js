@@ -4,6 +4,8 @@ import { shallow, configure } from 'enzyme'
 import { expect } from 'chai'
 configure({ adapter: new Adapter() });
 
+import { Menu } from 'semantic-ui-react'
+
 import ChartSelector from './ChartSelector.jsx'
 
 describe('ChartSelector', () => {
@@ -19,24 +21,24 @@ describe('ChartSelector', () => {
   beforeEach(() => {
     props = {
       charts: [],
-      onNewChartList: () => {}
+      onClearCharts: () => {},
+      onAddChart: () => {},
     }
     component = undefined
   })
 
   describe('with empty input list', () => {
-    console.log(create().html())
     it('renders a Menu', () => {
-      const divs = create().find('Menu')
-      expect(divs.length).to.equal(1)
+      const menus = create().find(Menu)
+      expect(menus.length).to.equal(1)
     })
-    it('renders two menu items', () => {
-      const items = create().find('Menu').find('Menu.Item')
-      expect(items.length).to.equal(2)
+    it('renders one menu items', () => {
+      const items = create().find(Menu).find(Menu.Item)
+      expect(items.length).to.equal(1)
     })
     it('renders a clear widgets item', () => {
-      const text = create().find('Menu').find('Menu.Item')[0].text()
-      expect(text).to.equal('Clear widgets')
+      const menutext = create().find(Menu).find(Menu.Item).render().text()
+      expect(menutext).to.equal('Clear charts')
     })
   })
 
@@ -45,8 +47,20 @@ describe('ChartSelector', () => {
       props.charts.push({ title: 'cpu usage', group: 'CPU' })
     })
     it('renders three menu items', () => {
-      const items = create().find('Menu').find('Menu.Item')
+      const items = create().find(Menu).find(Menu.Item)
       expect(items.length).to.equal(3)
+    })
+    it('the clear menu item is first', () => {
+      const menutext = create().find(Menu).find(Menu.Item).at(0).render().text()
+      expect(menutext).to.equal('Clear charts')
+    })
+    it('the cpu header is first', () => {
+      const menutext = create().find(Menu).find(Menu.Item).at(1).render().text()
+      expect(menutext).to.equal('CPU')
+    })
+    it('the cpu usage element is second', () => {
+      const menutext = create().find(Menu).find(Menu.Item).at(2).render().text()
+      expect(menutext).to.equal('cpu usage')
     })
   })
 
@@ -55,9 +69,13 @@ describe('ChartSelector', () => {
       props.charts.push({ title: 'cpu usage', group: 'CPU' })
       props.charts.push({ title: 'load average', group: 'CPU' })
     })
-    it('renders three menu items', () => {
-      const items = create().find('Menu').find('Menu.Item')
-      expect(items.length).to.equal(3)
+    // clear charts
+    // CPU header
+    // - cpu usage
+    // - load average
+    it('renders four menu items', () => {
+      const items = create().find(Menu).find(Menu.Item)
+      expect(items.length).to.equal(4)
     })
   })
 
@@ -65,10 +83,17 @@ describe('ChartSelector', () => {
     beforeEach(() => {
       props.charts.push({ title: 'cpu usage', group: 'CPU' })
       props.charts.push({ title: 'iops', group: 'DISK' })
+      props.charts.push({ title: 'load average', group: 'CPU' })
     })
-    it('renders four menu items', () => {
-      const items = create().find('Menu').find('Menu.Item')
-      expect(items.length).to.equal(4)
+    // clear charts
+    // CPU
+    // - cpu usage
+    // - load average
+    // DISK
+    // - iops
+    it('renders six menu items', () => {
+      const items = create().find(Menu).find(Menu.Item)
+      expect(items.length).to.equal(6)
     })
   })
 })
