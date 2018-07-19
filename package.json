@@ -15,6 +15,7 @@
     "d3-scale": "^2.1.0",
     "font-awesome": "4.6.1",
     "font-awesome-webpack": "git+https://github.com/jarecsni/font-awesome-webpack#440af2a2efe7ba1779d039556f04538e57bad4bb",
+    "lodash-es": "^4.17.10",
     "moment": "^2.22.2",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
@@ -74,6 +75,10 @@
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/test/__mocks__/styleMock.js",
       "\\.(gif|ttf|eot|svg)$": "<rootDir>/test/__mocks__/fileMock.js"
+    },
+    "transform": {
+      "^.+\\.jsx$": "babel-jest",
+      "^.+\\.js$": "babel-jest"
     }
   }
 }

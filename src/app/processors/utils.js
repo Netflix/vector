@@ -1,13 +1,10 @@
 const flatten = (xs, ys) => xs.concat(ys)
 const uniqueFilter = (val, index, array) => array.indexOf(val) === index
 
+import { uniqWith, isEqual } from 'lodash'
+
 function createTimestampFromDataset(dataset) {
   return new Date(dataset.timestamp.s * 1000 + dataset.timestamp.us / 1000)
-}
-
-function extractValueFromChartDataAnyInstance(dataset, metricName) {
-  // given a single pmweb fetch result, traverse the metricName -> instances -> value hierarchy to get a specific value
-  return extractValueFromChartDataForInstance(dataset, metricName)
 }
 
 function extractValueFromChartDataForInstance(dataset, metricName, instanceName) {
@@ -22,14 +19,33 @@ function extractValueFromChartDataForInstance(dataset, metricName, instanceName)
   return metrics[0].value
 }
 
-function extractInstanceNamesForMetric(datasets, metricName) {
+function extractInstancesForMetric(datasets, metricNames) {
   // find all the possible instance names for the primary metric
-  return datasets
+  let instanceTags = datasets
     .map(ds => ds.values).reduce(flatten, [])                     // traverse to values, flatten
-    .filter(ds => ds.name === metricName)                         // filter for only relevant metrics
-    .map(v => v.instances).reduce(flatten, [])                    // traverse to instances, flatten
-    .map(i => i.instance)                                         // extract instance value
-    .filter(uniqueFilter)                                         // extract unique
+    .filter(ds => metricNames.includes(ds.name))                  // filter for only relevant metrics
+    .map(ds => {
+      let newInstances = ds.instances.map(i => Object.assign({ _metricName: ds.name }, i))
+      return Object.assign({ _instances: newInstances }, ds)
+    })                                                            // modify each instance, adding a _metricName
+    .map(v => v._instances).reduce(flatten, [])                    // traverse to instances, flatten
+    .map(i => ({ metric: i._metricName, instance: i.instance }))  // extract instance value
+  return uniqWith(instanceTags, isEqual)
+}
+
+/**
+ * Convert a nominal value to a interval value
+ * ie: convert a series that increments forever into an average over the last time period
+ */
+function nominalTsValueToIntervalTsValue(elem, index, arr) {
+  if (index === 0) return []
+
+  let prev = arr[index - 1]
+
+  return {
+    ...elem, // copy everything over and replace the value with time scaled from previous
+    value: ((elem.value - prev.value) / ((elem.ts - prev.ts) / 1000))
+  }
 }
 
 export {
@@ -37,6 +53,6 @@ export {
   uniqueFilter,
   createTimestampFromDataset,
   extractValueFromChartDataForInstance,
-  extractValueFromChartDataAnyInstance,
-  extractInstanceNamesForMetric,
+  extractInstancesForMetric,
+  nominalTsValueToIntervalTsValue,
 }

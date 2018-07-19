@@ -5,6 +5,8 @@ export default {
   title: 'Load Average',
   processor: simpleModel,
   config: {
-    metricName: 'kernel.all.load',
+    metricNames: [
+      'kernel.all.load',
+    ]
   },
 }

@@ -5,6 +5,8 @@ export default {
   title: 'Runnable',
   processor: simpleModel,
   config: {
-    metricName: 'kernel.all.runnable',
+    metricNames: [
+      'kernel.all.runnable',
+    ]
   },
 }

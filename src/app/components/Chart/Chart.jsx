@@ -17,21 +17,19 @@ const tooltipStyles = {
   wrapper: {background:"rgba(255,255,255,0.8)", minWidth: "max-content", whiteSpace: "nowrap"}
 }
 
+// Search the lines for a similar x value for vertical shared tooltip
 function fetchCoincidentPoints(passedData, dataset) {
-  return dataset.map((point) => {
-    return {
+  return dataset
+    .map((point) => ({
       keylabel: point.keylabel,
       color: colorHash.hex(point.keylabel),
       value: point.data.find((i) => {
-        // Search the lines for a similar x value for vertical shared tooltip
-        // Can implement a 'close enough' conditional here too (fuzzy equality)
         return i.ts.getTime() === passedData.ts.getTime();
-      }),
-    };
-  })
+      })}))
+    .filter((point) => !!point.value)
     .sort((a, b) => {
       return b.value.value - a.value.value;
-    });
+    })
 }
 
 const verticalTickLineGenerator = (axisData) => {
@@ -70,7 +68,7 @@ function fetchSharedTooltipContent(passedData, dataset) {
             margin: '0'
           }} />
         <p key={`tooltip_p_${i}`} style={tooltipStyles.title}>{point.keylabel}</p>
-        <p key={`tooltip_p_val_${i}`} style={tooltipStyles.value}>{Number(point.value.value).toFixed(2)}</p>
+        <p key={`tooltip_p_val_${i}`} style={tooltipStyles.value}>{Number(point && point.value && point.value.value).toFixed(2)}</p>
       </div>
     ]);
   });
@@ -93,7 +91,6 @@ class Chart extends React.Component {
     if (!datasets || !datasets.length) return null
 
     const dataset = chartInfo.processor.calculateChart(datasets, chartInfo.config)
-    if (!dataset) return null
 
     const HelpComponent = chartInfo.helpComponent
     const SettingsComponent = chartInfo.settingsComponent
@@ -103,6 +100,8 @@ class Chart extends React.Component {
       this.setState({ modalOpen: false })
       onNewSettings(settings)
     }
+
+    const color = (d) => colorHash.hex(d.keylabel)
 
     return (
       <Card style={{width: '650px' }} raised={true}>
@@ -140,35 +139,39 @@ class Chart extends React.Component {
         </Card.Content>
 
         <Card.Content raised='true'>
-          <Card.Description>
-            <XYFrame
-              size={[600, 300]}
-              lines={dataset}
-              lineDataAccessor={d => d.data}
-              defined={d => d.value !== null}
-              margin={{ left: 60, bottom: 60, right: 3, top: 3 }}
-              xAccessor={d => d.ts}
-              yAccessor={d => d.value}
-              lineStyle={d => ({ stroke: colorHash.hex(d.keylabel) })}
-              yExtent={[0, undefined]}
-              axes={[
-                { orient: "left", tickLineGenerator: horizontalTickLineGenerator },
-                { orient: "bottom",
-                  tickFormat: ts => moment(ts).format('hh:mm:ss'),
-                  tickLineGenerator: verticalTickLineGenerator,
-                  rotate: 90,
-                  ticks: Math.min(dataset[0].data.length, 12),
-                  size: [100, 100] }
-              ]}
-              // line highlight
-              hoverAnnotation={[
-                { type: 'vertical-points', threshold: 0.1, r: () => 5 },
-                { type: 'x', disable: ['connector', 'note']},
-                { type: 'frame-hover' },
-              ]}
-              tooltipContent={(d) => fetchSharedTooltipContent(d, dataset)}
-              baseMarkProps={{ transitionDuration: 0 }} />
-          </Card.Description>
+          { dataset && dataset.length >= 1 &&
+            <Card.Description>
+              <XYFrame
+                size={[600, 300]}
+                lines={dataset}
+                lineDataAccessor={d => d.data}
+                lineStyle={d => ({ stroke: color(d), fill: color(d), fillOpacity: 0.5 })}
+                areaStyle={d => ({ stroke: color(d), fill: color(d), fillOpacity: 0.5, strokeWidth: '2px' })}
+                lineType={chartInfo.config.lineType || 'line'}
+                defined={d => d.value !== null}
+                margin={{ left: 60, bottom: 60, right: 3, top: 3 }}
+                xAccessor={d => d.ts}
+                yAccessor={d => d.value}
+                yExtent={[0, undefined]}
+                axes={[
+                  { orient: "left", tickLineGenerator: horizontalTickLineGenerator },
+                  { orient: "bottom",
+                    tickFormat: ts => moment(ts).format('hh:mm:ss'),
+                    tickLineGenerator: verticalTickLineGenerator,
+                    rotate: 90,
+                    ticks: Math.min(dataset[0].data.length, 12),
+                    size: [100, 100] }
+                ]}
+                // line highlight
+                hoverAnnotation={[
+                  { type: 'vertical-points', threshold: 0.1, r: () => 5 },
+                  { type: 'x', disable: ['connector', 'note']},
+                  { type: 'frame-hover' },
+                ]}
+                tooltipContent={(d) => fetchSharedTooltipContent(d, dataset)}
+                baseMarkProps={{ transitionDuration: 0 }} />
+            </Card.Description>
+          }
         </Card.Content>
 
       </Card>

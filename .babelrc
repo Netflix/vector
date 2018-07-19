@@ -2,7 +2,7 @@
   "presets": [
     "env",
     "react",
-    "es2015"
+    "es2015",
   ],
   plugins: [
     "transform-class-properties",

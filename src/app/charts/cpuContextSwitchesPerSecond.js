@@ -8,7 +8,9 @@ export default {
   title: 'Context Switches per second',
   processor: cumulativeModel,
   config: {
-    metricName: 'kernel.all.pswitch',
+    metricNames: [
+      'kernel.all.pswitch'
+    ],
   },
   settings: {
     filter: ''

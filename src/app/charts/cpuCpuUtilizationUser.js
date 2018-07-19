@@ -5,7 +5,9 @@ export default {
   title: 'CPU Utilization (user)',
   processor: cpuRatioModel,
   config: {
-    metricName: 'kernel.all.cpu.user',
+    metricNames: [
+      'kernel.all.cpu.user',
+    ],
     divisorMetricName: 'hinv.ncpu'
   },
 }
