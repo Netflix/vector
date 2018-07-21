@@ -68,6 +68,173 @@ describe('extractInstancesForMetric', () => {
       })
     })
   })
+})
 
+describe('combineValuesAtTimestampReducer', () => {
+  describe('with a sum combiner', () => {
+    const sum = (a, b) => (a + b)
+    describe('with no timestamps', () => {
+      const data = []
+      it('produces an empty array', () => {
+        const result = data.reduce(utils.combineValuesAtTimestampReducer(sum), [])
+        expect(result.length).to.equal(0)
+      })
+    })
+
+    describe('with no matching timestamps', () => {
+      const data = [
+        { ts: new Date(1234), value: 1 },
+        { ts: new Date(4567), value: 3 },
+      ]
+      it('produces a concat result', () => {
+        const result = data.reduce(utils.combineValuesAtTimestampReducer(sum), [])
+        expect(result.length).to.equal(2)
+        expect(result).to.have.deep.members([
+          { ts: new Date(1234), value: 1 },
+          { ts: new Date(4567), value: 3 },
+        ])
+      })
+    })
+
+    describe('with two matching timestamps', () => {
+      const data = [
+        { ts: new Date(1234), value: 1 },
+        { ts: new Date(1234), value: 3 },
+      ]
+      it('produces a single output with combined result', () => {
+        const result = data.reduce(utils.combineValuesAtTimestampReducer(sum), [])
+        expect(result.length).to.equal(1)
+        expect(result).to.have.deep.members([
+          { ts: new Date(1234), value: 4 },
+        ])
+      })
+    })
+
+    describe('with four matching timestamps', () => {
+      const data = [
+        { ts: new Date(1234), value: 1 },
+        { ts: new Date(1234), value: 3 },
+        { ts: new Date(1234), value: 5 },
+        { ts: new Date(1234), value: 9 },
+      ]
+      it('produces a single output with combined result', () => {
+        const result = data.reduce(utils.combineValuesAtTimestampReducer(sum), [])
+        expect(result.length).to.equal(1)
+        expect(result).to.have.deep.members([
+          { ts: new Date(1234), value: 18 },
+        ])
+      })
+    })
+
+    describe('with two timestamps and four values each', () => {
+      const data = [
+        { ts: new Date(1234), value: 1 },
+        { ts: new Date(1234), value: 3 },
+        { ts: new Date(1234), value: 5 },
+        { ts: new Date(1234), value: 9 },
+        { ts: new Date(5678), value: 101 },
+        { ts: new Date(5678), value: 103 },
+        { ts: new Date(5678), value: 105 },
+        { ts: new Date(5678), value: 109 },
+      ]
+      it('produces two timestamps with correct combined result', () => {
+        const result = data.reduce(utils.combineValuesAtTimestampReducer(sum), [])
+        expect(result.length).to.equal(2)
+        expect(result).to.have.deep.members([
+          { ts: new Date(1234), value: 18 },
+          { ts: new Date(5678), value: 418 },
+        ])
+      })
+    })
+  })
+})
+
+describe('combineValuesByTitleReducer', () => {
+  describe('with a sum combiner', () => {
+    const sum = (a, b) => (a + b)
+    describe('with empty input', () => {
+      const data = []
+      it('returns an empty array', () => {
+        const result = data.reduce(utils.combineValuesByTitleReducer(sum), [])
+        expect(result.length).to.equal(0)
+      })
+    })
+    describe('with no overlap at same time', () => {
+      const data = [
+        { title: 'cpu', keylabel: 'cpu', data: [ { ts: new Date(1234), value: 1 } ] },
+        { title: 'disk', keylabel: 'disk', data: [ { ts: new Date(1234), value: 1 } ] },
+      ]
+      it('returns unique titles', () => {
+        const result = data.reduce(utils.combineValuesByTitleReducer(sum), [])
+        expect(result.length).to.equal(2)
+        expect(result).to.have.deep.members([
+          { title: 'cpu', keylabel: 'cpu', data: [ { ts: new Date(1234), value: 1 } ] },
+          { title: 'disk', keylabel: 'disk', data: [ { ts: new Date(1234), value: 1 } ] },
+        ])
+      })
+    })
+
+    describe('with no overlap at different time', () => {
+      const data = [
+        { title: 'cpu', keylabel: 'cpu', data: [ { ts: new Date(1234), value: 1 } ] },
+        { title: 'disk', keylabel: 'disk', data: [ { ts: new Date(5678), value: 1 } ] },
+      ]
+      it('returns unique titles', () => {
+        const result = data.reduce(utils.combineValuesByTitleReducer(sum), [])
+        expect(result.length).to.equal(2)
+        expect(result).to.have.deep.members([
+          { title: 'cpu', keylabel: 'cpu', data: [ { ts: new Date(1234), value: 1 } ] },
+          { title: 'disk', keylabel: 'disk', data: [ { ts: new Date(5678), value: 1 } ] },
+        ])
+      })
+    })
+
+    describe('with overlap at different time', () => {
+      const data = [
+        { title: 'cpu', keylabel: 'cpu', data: [ { ts: new Date(1234), value: 1 } ] },
+        { title: 'cpu', keylabel: 'cpu', data: [ { ts: new Date(5678), value: 7 } ] },
+      ]
+      it('returns a single timeline', () => {
+        const result = data.reduce(utils.combineValuesByTitleReducer(sum), [])
+        expect(result.length).to.equal(1)
+        expect(result).to.have.deep.members([
+          { title: 'cpu', keylabel: 'cpu', data: [ { ts: new Date(1234), value: 1 }, { ts: new Date(5678), value: 7 } ] },
+        ])
+      })
+    })
+
+    describe('with a single title and multiple lines', () => {
+      const data = [
+        { title: 'cpu', keylabel: 'cpu', data: [ { ts: new Date(1234), value: 1 }, { ts: new Date(5678), value: 5 } ] },
+        { title: 'cpu', keylabel: 'cpu', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(5678), value: 50 } ] },
+      ]
+      it('combines to a single title', () => {
+        const result = data.reduce(utils.combineValuesByTitleReducer(sum), [])
+        expect(result.length).to.equal(1)
+        expect(result).to.have.deep.members([
+          { title: 'cpu', keylabel: 'cpu', data: [ { ts: new Date(1234), value: 11 }, { ts: new Date(5678), value: 55 } ] },
+        ])
+      })
+    })
+
+    describe('with a mix of titles with multiple lines', () => {
+      const data = [
+        { title: 'cpu', keylabel: 'cpu', data: [ { ts: new Date(1234), value: 1 }, { ts: new Date(5678), value: 5 } ] },
+        { title: 'cpu', keylabel: 'cpu', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(5678), value: 50 } ] },
+        { title: 'disk', keylabel: 'disk', data: [ { ts: new Date(5678), value: 1 } ] },
+        { title: 'network', keylabel: 'network', data: [ { ts: new Date(1234), value: 5 } ] },
+        { title: 'network', keylabel: 'network', data: [ { ts: new Date(5678), value: 7 } ] },
+      ]
+      it('combines to the correct mix', () => {
+        const result = data.reduce(utils.combineValuesByTitleReducer(sum), [])
+        expect(result.length).to.equal(3)
+        expect(result).to.have.deep.members([
+          { title: 'cpu', keylabel: 'cpu', data: [ { ts: new Date(1234), value: 11 }, { ts: new Date(5678), value: 55 } ] },
+          { title: 'disk', keylabel: 'disk', data: [ { ts: new Date(5678), value: 1 } ] },
+          { title: 'network', keylabel: 'network', data: [ { ts: new Date(1234), value: 5 }, { ts: new Date(5678), value: 7 } ] },
+        ])
+      })
+    })
+  })
 })
 
