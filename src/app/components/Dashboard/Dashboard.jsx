@@ -10,7 +10,8 @@ export class Dashboard extends React.Component {
     context: null,
     status: 'Initializing',
     pmids: [],
-    datasets: []
+    datasets: [],
+    instanceDomainMappings: {},
   }
 
   componentDidMount() {
@@ -72,6 +73,7 @@ export class Dashboard extends React.Component {
       res = await superagent.get(`${host}/pmapi/${context}/_fetch?names=pmcd.hostname`)
       let hostname = res.body.values[0].instances[0].value
 
+      // TODO what is the trigger for fetching new container names, as they start and stop?
       this.setState({ status: 'Fetching container names' })
       res = await superagent.get(`${host}/pmapi/${context}/_fetch?names=containers.name`)
       let containerList = res.body.values[0].instances.map(i => i.value)
@@ -118,6 +120,26 @@ export class Dashboard extends React.Component {
         return { datasets: newDatasets }
       })
 
+      // determine needed new mappings
+      // TODO what is the trigger for re-polling a given value if we can't map it?
+      let neededNewMappings = uniqueMetrics.filter(metricName => !(metricName in this.state.instanceDomainMappings))
+      neededNewMappings.forEach(async name => {
+        const newMapping = {}
+        try {
+          let res = await superagent
+            .get(`${host}/pmapi/${this.state.context}/_indom`)
+            .query({ name })
+          res.body.instances.forEach(({ instance, name }) => newMapping[instance] = name)
+        } catch (err) {
+          console.error(`could not fetch _indom mapping for name=${name}`, err)
+        }
+        this.setState(state => {
+          let newMappings = { ...state.instanceDomainMappings }
+          newMappings[name] = newMapping
+          return { instanceDomainMappings: newMappings }
+        })
+      })
+
     }
     // go again
     setTimeout(this.pollMetrics, this.props.settings.intervalSeconds * 1000)
@@ -134,6 +156,7 @@ export class Dashboard extends React.Component {
             chartInfo={c}
             datasets={this.state.datasets}
             onCloseClicked={() => this.props.removeChartByIndex(idx)}
+            instanceDomainMappings={this.state.instanceDomainMappings}
             onNewSettings={(settings) => this.props.updateChartSettings(idx, settings)} />
         )}
       </div>

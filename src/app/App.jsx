@@ -16,9 +16,9 @@ class App extends React.Component {
   state = {
     // provided from ConfigPanel
     host: {
-      // 100.113.110.19
+      // 100.118.181.46
       // localhost
-      hostname: '100.113.110.19',
+      hostname: '100.118.181.46',
       hostspec: 'localhost'
     },
     settings: {
@@ -64,7 +64,7 @@ class App extends React.Component {
             charts={charts}
             windows={config.windows}
             intervals={config.intervals}
-            hostname={'100.113.110.19'}
+            hostname={'100.118.181.46'}
             hostspec={'localhost'}
             windowSeconds={120}
             intervalSeconds={2}

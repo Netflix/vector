@@ -18,13 +18,16 @@
 
 /* eslint-disable */
 
+import { flatten } from '../processors/utils'
+
 // all the remaining components, particularly vector specific angular components
 function requireAll(requireContext) {
   const validKeys = requireContext.keys().filter(f => f !== './index.js')
-  return validKeys.map(requireContext)
+  const requires = validKeys.map(requireContext)
+  return Array.isArray(requires) ? requires : [requires]
 }
 
 const requires = requireAll(require.context('./', false, /\.js$/))
-const charts = requires.map(r => r.default)
+const charts = requires.map(r => r.default).reduce(flatten, [])
 
 export default charts

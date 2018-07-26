@@ -1,8 +1,6 @@
 const flatten = (xs, ys) => xs.concat(ys)
 const uniqueFilter = (val, index, array) => array.indexOf(val) === index
 
-import { uniqWith } from 'lodash'
-
 function createTimestampFromDataset(dataset) {
   return new Date(dataset.timestamp.s * 1000 + dataset.timestamp.us / 1000)
 }
@@ -20,17 +18,35 @@ function extractValueFromChartDataForInstance(dataset, metricName, instanceName)
 }
 
 function extractInstancesForMetric(datasets, metricNames) {
-  // find all the possible instance names for the primary metric
-  const instanceTags = datasets
-    .map(ds => ds.values).reduce(flatten, [])                     // traverse to values, flatten
-    .filter(ds => metricNames.includes(ds.name))                  // filter for only relevant metrics
-    .map(ds => {
-      let newInstances = ds.instances.map(i => Object.assign({ _metricName: ds.name }, i))
-      return Object.assign({ _instances: newInstances }, ds)
-    })                                                            // modify each instance, adding a _metricName
-    .map(v => v._instances).reduce(flatten, [])                    // traverse to instances, flatten
-    .map(i => ({ metric: i._metricName, instance: i.instance }))  // extract instance value
-  return uniqWith(instanceTags, (a, b) => (a.metric === b.metric && a.instance === b.instance))
+  // note: performance sensitive
+
+  // functional arrays and maps explodes the performance due to the nature of the nested loop explosion, so choose to collect
+  // this in an associative set
+
+  // collect all the metric instances
+  let metricInstances = {}
+  for (let d in datasets) {
+    for (let v in datasets[d].values) {
+      let metric = datasets[d].values[v].name
+      if (metricNames.includes(metric)) {
+        metricInstances[metric] = metricInstances[metric] || {}
+        for (let i in datasets[d].values[v].instances) {
+          let instance = datasets[d].values[v].instances[i].instance
+          metricInstances[metric][instance] = instance
+        }
+      }
+    }
+  }
+
+  // format them nicely for output
+  let output = []
+  for (let metric in metricInstances) {
+    for (let instance in metricInstances[metric]) {
+      // fetch the actual value, not the key, so we get the right type, since a key is always coerced to a string
+      output.push({ metric, instance: metricInstances[metric][instance] })
+    }
+  }
+  return output
 }
 
 /**
@@ -89,12 +105,102 @@ function combineValuesByTitleReducer(combiner) {
       .reduce(combineValuesAtTimestampReducer(combiner), [])
 
     newArray[existingIndex] = {
-      title: acc[existingIndex].title,
-      keylabel: acc[existingIndex].keylabel,
+      ...acc[existingIndex],
       data: newData
     }
     return newArray
   }
+}
+
+function findContainerName (cgroup) {
+  // TODO the old code did something different in containermetadata.service.js, not sure why
+
+  if (typeof cgroup !== 'string') return cgroup
+
+  // plain docker: docker/<cgroup_id>
+  if (cgroup.includes('/docker/')) {
+    return cgroup.split('/')[2]
+  }
+
+  // systemd: /docker-cgroup_id.scope
+  if (cgroup.includes('/docker-') && cgroup.includes('.scope')) {
+    return cgroup.split('-')[1].split('.')[0]
+  }
+
+  // /container.slice/<cgroup_id> and /container.slice/???/<cgroup_id>
+  if (cgroup.includes('/containers.slice/')) {
+    return cgroup.split('/')[2]
+  }
+
+  // not found
+  return null
+}
+
+function getAllMetricInstancesAtTs(metricInstances, ts) {
+  return metricInstances
+    .map(({ metric, instance, data }) => {
+      const tsv = data.find(tsv => tsv.ts.getTime() === ts.getTime())
+      return {
+        metric: metric,
+        instance: instance,
+        value: tsv && tsv.value,
+      }
+    })
+    .filter(({ value }) => !!value)
+}
+
+/**
+ * Note: this only keeps timestamps which are present in the first index
+ */
+function transposeToTimeslices(metricInstances) {
+  if (!metricInstances) return metricInstances
+
+  const timestamps = metricInstances[0].data.map(tsv => tsv.ts)
+  return timestamps.map(ts => {
+    const values = getAllMetricInstancesAtTs(metricInstances, ts)
+    // transform to a hierarchy of associative objects rather than an array of tuples
+    const transformed = values.reduce((acc, { metric, instance, value }) => {
+      acc[metric] = acc[metric] || {}
+      acc[metric][instance] = value
+      return acc
+    }, {})
+    return { ts, values: transformed }
+  })
+}
+
+function applyFunctionsToTimeslices(timeslices, fns) {
+  return timeslices.map(({ ts, values }) => {
+    return {
+      ts,
+      values: Object.keys(fns)
+        // apply the function to all the values
+        .map(fname => ({ fname, values: fns[fname](values) }))
+        // convert the mapped array [ { fname, values }, ... ] to object { fname: values, ... }
+        .reduce((acc, { fname, values }) => ({ ...acc, [fname]: values }), {})
+    }
+  })
+}
+
+function getMetricInstancesFromTimeslice(slice) {
+  return Object.keys(slice.values).map(metric => {
+    const instancesForThisMetric = Object.keys(slice.values[metric])
+    return instancesForThisMetric.map(instance => ({ metric, instance }))
+  }).reduce(flatten)
+}
+
+
+function untransposeTimeslices(timeslices) {
+  const metricInstances = getMetricInstancesFromTimeslice(timeslices[0])
+  const untransposed = metricInstances.map(({ metric, instance}) => ({
+    metric,
+    instance,
+    data: timeslices.map(({ ts, values }) => ({ ts, value: values[metric][instance] }))
+  }))
+  return untransposed
+}
+
+function firstValueInObject(obj) {
+  return obj[Object.keys(obj)[0]]
 }
 
 export {
@@ -106,4 +212,10 @@ export {
   nominalTsValueToIntervalTsValue,
   combineValuesAtTimestampReducer,
   combineValuesByTitleReducer,
+  findContainerName,
+  getAllMetricInstancesAtTs,
+  transposeToTimeslices,
+  untransposeTimeslices,
+  applyFunctionsToTimeslices,
+  firstValueInObject,
 }
