@@ -16,7 +16,8 @@ export class ConfigPanel extends React.Component {
 
   createContainerList = () => {
     const allContainer = { text: 'All', value: '_all' }
-    const containers = this.props.containers.map(c => ({ text: c, value: c }))
+    // containers is a list [ { instance, cgroup, containerId }, .. ]
+    const containers = this.props.containerList.map(c => ({ text: c.containerId, value: c.containerId }))
     const containerList = [ allContainer ].concat(containers)
     return containerList
   }
@@ -44,7 +45,7 @@ export class ConfigPanel extends React.Component {
               </Grid.Row>
             </Grid>
           </Popup>
-          <Popup trigger={<Menu.Item header>Charts</Menu.Item>} hoverable>
+          <Popup trigger={<Menu.Item header>Charts</Menu.Item>} hoverable flowing>
             <ChartSelector onClearCharts={this.props.onClearCharts} onAddChart={this.props.onAddChart} charts={this.props.charts} />
           </Popup>
           <Menu.Item header>Window</Menu.Item>
@@ -92,7 +93,7 @@ ConfigPanel.propTypes = {
   onSettingsChanged: PropTypes.func.isRequired,
   onClearCharts: PropTypes.func.isRequired,
   onAddChart: PropTypes.func.isRequired,
-  containers: PropTypes.array.isRequired,
+  containerList: PropTypes.array.isRequired,
   windows: PropTypes.array.isRequired,
   intervals: PropTypes.array.isRequired,
   charts: PropTypes.array.isRequired,

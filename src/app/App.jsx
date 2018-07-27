@@ -30,7 +30,7 @@ class App extends React.Component {
     containerList: []
   }
 
-  onContainerListLoaded = (list) => this.setState({ containerList: list })
+  onContainerListLoaded = (containerList) => this.setState({ containerList })
   onClearCharts = () => this.setState({ chartlist: [] })
   onAddChart = (chart) => {
     this.setState((oldState) => ({ chartlist: [ ...oldState.chartlist, chart ] }))
@@ -60,7 +60,7 @@ class App extends React.Component {
             onSettingsChanged={(s) => this.setState({ settings: s })}
             onClearCharts={this.onClearCharts}
             onAddChart={this.onAddChart}
-            containers={this.state.containerList}
+            containerList={this.state.containerList}
             charts={charts}
             windows={config.windows}
             intervals={config.intervals}

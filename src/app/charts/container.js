@@ -1,20 +1,23 @@
 import simpleModel from '../processors/simpleModel'
 import {
+  mapInstanceDomains,
+  mapContainerNames,
   divideByOnlyMetric,
   timesliceCalculations,
   customTitleAndKeylabel,
   kbToGb,
   combineValuesByTitle,
   toPercentage,
-  mapInstanceDomains,
   defaultTitleAndKeylabel,
   divideBy,
   cumulativeTransform,
-  fixContainerNames,
+  cumulativeTransformOnlyMetric,
+  // log,
 } from '../processors/transforms'
 
 import {
   firstValueInObject,
+  keyValueArrayToObject,
 } from '../processors/utils'
 
 export default [
@@ -30,13 +33,9 @@ export default [
       transforms: [
         // TODO check for container filter in ConfigPanel
         mapInstanceDomains,
-        fixContainerNames,
+        mapContainerNames('cgroup.cpuacct.usage'),
         defaultTitleAndKeylabel,
         cumulativeTransform,
-        // TODO is average the right approach here, or should we exclude duplicates?
-        // it seems like the result set includes data for multiple copies of the same container and so the
-        // cpu for a container is double counted
-        combineValuesByTitle((a, b) => (a + b)/2),
         divideBy(1000 * 1000 * 1000),
         toPercentage,
       ],
@@ -54,12 +53,8 @@ export default [
       transforms: [
         // TODO check for container filter in ConfigPanel
         mapInstanceDomains,
-        fixContainerNames,
+        mapContainerNames('cgroup.memory.usage'),
         defaultTitleAndKeylabel,
-        // TODO is average the right approach here, or should we exclude duplicates?
-        // it seems like the result set includes data for multiple copies of the same container and so the
-        // cpu for a container is double counted
-        combineValuesByTitle((a, b) => (a + b)/2),
         kbToGb,
       ],
     },
@@ -80,12 +75,12 @@ export default [
         // make sure that all the cgroup memory uses the same metric and then add them together
         // this sums all the values across the cgroup (map + fix are so that the cgroup size is calculated only on containers)
         mapInstanceDomains,
-        fixContainerNames,
+        mapContainerNames('cgroup.memory.usage'),
         customTitleAndKeylabel(metric => metric),
         combineValuesByTitle((a, b) => a + b),
         divideByOnlyMetric(1024, 'mem.util.used'),
         divideByOnlyMetric(1024, 'mem.util.free'),
-        divideByOnlyMetric(1024 * 1024 * 2, 'cgroup.memory.usage'), // TODO why double counted (*2)
+        divideByOnlyMetric(1024 * 1024, 'cgroup.memory.usage'),
         // extra transform for cgroup memory usage
         // apply some mathsy stuff, note this wipes title and keylabel
         timesliceCalculations({
@@ -111,37 +106,216 @@ export default [
       ],
       transforms: [
         mapInstanceDomains,
-        fixContainerNames,
+        mapContainerNames('cgroup.memory.usage'),
+        mapContainerNames('cgroup.memory.limit'),
         divideByOnlyMetric(1024, 'mem.physmem'),
-        divideByOnlyMetric(1024*1024*2, 'cgroup.memory.usage'),
-        divideByOnlyMetric(1024*1024*2, 'cgroup.memory.limit'),
+        divideByOnlyMetric(1024*1024, 'cgroup.memory.usage'),
+        divideByOnlyMetric(1024*1024, 'cgroup.memory.limit'),
         timesliceCalculations({
           // TODO this calculation is substantially different from the old vector calculation
           'headroom': (slice) => {
-            console.log(slice)
-            let containerNames = Object.keys(slice['cgroup.memory.usage'])
+            let containerNames = Object.keys(slice['cgroup.memory.usage'] || {})
             let headrooms = containerNames.map(cname => ({
-              cname,
-              headroomMb: Math.min(slice['cgroup.memory.limit'][cname], slice['mem.physmem']['-1']) - slice['cgroup.memory.usage'][cname]
+              key: cname,
+              value: Math.min(slice['cgroup.memory.limit'][cname], slice['mem.physmem']['-1']) - slice['cgroup.memory.usage'][cname]
             }))
-            return headrooms.reduce((acc, { cname, headroomMb }) => { acc[cname] = headroomMb; return acc; }, {})
+            return headrooms.reduce(keyValueArrayToObject, {})
           }
         }),
         defaultTitleAndKeylabel,
       ],
     },
   },
+
+  {
+    group: 'Container',
+    title: 'Container Disk IOPS',
+    processor: simpleModel,
+    config: {
+      metricNames: [
+        'cgroup.blkio.all.io_serviced.read',
+        'cgroup.blkio.all.io_serviced.write',
+      ],
+      transforms: [
+        mapInstanceDomains,
+        mapContainerNames('cgroup.blkio.all.io_serviced.read'),
+        mapContainerNames('cgroup.blkio.all.io_serviced.write'),
+        cumulativeTransform,
+        // TODO fix up titling
+        defaultTitleAndKeylabel,
+      ],
+    },
+  },
+
+  {
+    group: 'Container',
+    title: 'Container Disk Throughput (Bytes)',
+    processor: simpleModel,
+    config: {
+      metricNames: [
+        'cgroup.blkio.all.io_service_bytes.read',
+        'cgroup.blkio.all.io_service_bytes.write',
+      ],
+      transforms: [
+        mapInstanceDomains,
+        mapContainerNames('cgroup.blkio.all.io_service_bytes.read'),
+        mapContainerNames('cgroup.blkio.all.io_service_bytes.write'),
+        cumulativeTransform,
+        // TODO fix up titling
+        defaultTitleAndKeylabel,
+      ],
+    },
+  },
+
+  {
+    group: 'Container',
+    title: 'Container Disk IOPS (Throttled)',
+    processor: simpleModel,
+    config: {
+      metricNames: [
+        'cgroup.blkio.all.throttle.io_serviced.read',
+        'cgroup.blkio.all.throttle.io_serviced.write',
+      ],
+      transforms: [
+        mapInstanceDomains,
+        mapContainerNames('cgroup.blkio.all.throttle.io_serviced.read'),
+        mapContainerNames('cgroup.blkio.all.throttle.io_serviced.write'),
+        cumulativeTransform,
+        // TODO fix up titling
+        defaultTitleAndKeylabel,
+      ],
+    },
+  },
+
+  {
+    group: 'Container',
+    title: 'Container Disk Throughput (Throttled) (Bytes)',
+    processor: simpleModel,
+    config: {
+      metricNames: [
+        'cgroup.blkio.all.throttle.io_service_bytes.read',
+        'cgroup.blkio.all.throttle.io_service_bytes.write',
+      ],
+      transforms: [
+        mapInstanceDomains,
+        mapContainerNames('cgroup.blkio.all.throttle.io_service_bytes.read'),
+        mapContainerNames('cgroup.blkio.all.throttle.io_service_bytes.write'),
+        cumulativeTransform,
+        // TODO fix up titling
+        defaultTitleAndKeylabel,
+      ],
+    },
+  },
+
+  {
+    group: 'Container',
+    title: 'Per-Container CPU Scheduler',
+    processor: simpleModel,
+    config: {
+      metricNames: [
+        'cgroup.cpusched.shares',
+        'cgroup.cpusched.periods',
+      ],
+      transforms: [
+        mapInstanceDomains,
+        mapContainerNames('cgroup.cpusched.shares'),
+        mapContainerNames('cgroup.cpusched.periods'),
+        // TODO fix up titling
+        defaultTitleAndKeylabel,
+      ],
+    },
+  },
+
+  {
+    group: 'Container',
+    title: 'Per-Container CPU Headroom',
+    processor: simpleModel,
+    config: {
+      lineType: 'stackedarea',
+      metricNames: [
+        'cgroup.cpuacct.usage',
+        'cgroup.cpusched.shares',
+        'cgroup.cpusched.periods',
+        'hinv.ncpu',
+      ],
+      transforms: [
+        mapInstanceDomains,
+        mapContainerNames('cgroup.cpusched.shares'),
+        mapContainerNames('cgroup.cpusched.periods'),
+        mapContainerNames('cgroup.cpuacct.usage'),
+        cumulativeTransformOnlyMetric('cgroup.cpuacct.usage'),
+        divideByOnlyMetric(1000 * 1000 * 1000, 'cgroup.cpuacct.usage'),
+        timesliceCalculations({
+          // TODO i really don't understand why this calculation is built like this,
+          // surely it should be something like: headroom = limits - utilisation
+          'usage': (slice) => slice['cgroup.cpuacct.usage'] || [],
+          'limit': (slice) => {
+            let containerNames = Object.keys(slice['cgroup.cpusched.periods'] || {})
+            let limits = containerNames.map(cname => ({
+              key: cname,
+              value: slice['cgroup.cpusched.shares'][cname]
+                ? (slice['cgroup.cpusched.shares'][cname] / slice['cgroup.cpusched.periods'][cname])
+                : slice['hinv.ncpu']['-1']
+            }))
+            return limits.reduce(keyValueArrayToObject, {})
+          }
+        }),
+        defaultTitleAndKeylabel,
+        toPercentage,
+      ],
+    },
+  },
+
+  {
+    group: 'Container',
+    title: 'Per-Container Throttled CPU',
+    processor: simpleModel,
+    config: {
+      metricNames: [
+        'cgroup.cpusched.throttled_time',
+      ],
+      transforms: [
+        mapInstanceDomains,
+        mapContainerNames('cgroup.cpusched.throttled_time'),
+        cumulativeTransform,
+        // TODO fix up titling
+        defaultTitleAndKeylabel,
+      ],
+    },
+  },
+
+  {
+    group: 'Container',
+    title: 'Per-Container Memory Utilization (%)',
+    processor: simpleModel,
+    config: {
+      metricNames: [
+        'cgroup.memory.usage',
+        'cgroup.memory.limit',
+        'mem.physmem',
+      ],
+      transforms: [
+        mapInstanceDomains,
+        mapContainerNames('cgroup.memory.usage'),
+        mapContainerNames('cgroup.memory.limit'),
+        divideByOnlyMetric(1024, 'mem.physmem'),
+        divideByOnlyMetric(1024 * 1024, 'cgroup.memory.usage'),
+        divideByOnlyMetric(1024 * 1024, 'cgroup.memory.limit'),
+        timesliceCalculations({
+          'utilization': (slice) => {
+            let containerNames = Object.keys(slice['cgroup.memory.usage'] || {})
+            let utilizations = containerNames.map(cname => ({
+              key: cname,
+              value: (cname in slice['cgroup.memory.limit'])
+                ? (slice['cgroup.memory.usage'][cname] / Math.min(slice['cgroup.memory.limit'][cname], slice['mem.physmem']['-1']))
+                : (slice['cgroup.memory.usage'][cname] / slice['mem.physmem']['-1'])
+            }))
+            return utilizations.reduce(keyValueArrayToObject, {})
+          }
+        }),
+        defaultTitleAndKeylabel,
+        toPercentage,
+      ],
+    },
+  },
 ]
-
-/*
-
-Container Disk IOPS
-Container Disk Throughput (Bytes)
-Container Disk IOPS (Throttled)
-Container Disk Throughput (Throttled) (Bytes)
-
-Per-Container CPU Scheduler
-Per-Container CPU Headroom
-Per-Container Throttled CPU
-Per-Container Memory Utilization
-*/

@@ -1,49 +1,57 @@
-import { untransposeTimeslices, applyFunctionsToTimeslices, combineValuesByTitleReducer, findContainerName, transposeToTimeslices } from './utils'
+import { untransposeTimeslices, applyFunctionsToTimeslices, combineValuesByTitleReducer, transposeToTimeslices } from './utils'
+
+const selectAll = () => true
+
+function nominalTsValueToIntervalTsValue(elem, index, arr) {
+  if (index === 0) return []
+  let prev = arr[index - 1]
+  return {
+    ...elem, // copy everything over and replace the value with time scaled from previous
+    value: ((elem.value - prev.value) / ((elem.ts - prev.ts) / 1000))
+  }
+}
 
 /**
  * Convert a nominal value to a interval value
  * ie: convert a series that increments forever into an average over the last time period
  */
-export function cumulativeTransform (instances) {
-  function nominalTsValueToIntervalTsValue(elem, index, arr) {
-    if (index === 0) return []
-    let prev = arr[index - 1]
-    return {
-      ...elem, // copy everything over and replace the value with time scaled from previous
-      value: ((elem.value - prev.value) / ((elem.ts - prev.ts) / 1000))
-    }
+export function cumulativeTransformSelective (shouldApplyFn) {
+  return function _cumulativeTransformSelective (instances) {
+    return instances.map(instance => {
+      return shouldApplyFn(instance)
+        ? { ...instance, data: instance.data.map(nominalTsValueToIntervalTsValue).slice(1) }
+        : instance
+    })
   }
-
-  return instances.map(instance => ({
-    ...instance,
-    data: instance.data.map(nominalTsValueToIntervalTsValue).slice(1)
-  }))
+}
+export const cumulativeTransform = cumulativeTransformSelective(selectAll)
+export function cumulativeTransformOnlyMetric (metric) {
+  return cumulativeTransformSelective(mi => mi.metric === metric)
 }
 
+/**
+ * Perform generic (typically linear) math on instantaneous values
+ */
+export function mathValuesSelective (math, shouldApplyFn) {
+  return function _mathSomeSelective (instances) {
+    return instances.map(instance => {
+      let result = shouldApplyFn(instance)
+        ? { ...instance, data: instance.data.map(({ ts, value }) => ({ ts, value: math(value) })) }
+        : instance
+      return result
+    })
+  }
+}
+
+export const mathAllValues = (fn) => mathValuesSelective(fn, selectAll)
 export const kbToGb = mathAllValues(v => v / 1024 / 1024)
 export const divideBy = (number) => mathAllValues(v => v / number)
 export const toPercentage = mathAllValues(v => v * 100)
-export const divideByOnlyMetric = (number, metric) => mathSomeValues(v => v / number, i => i.metric === metric)
+export const divideByOnlyMetric = (number, metric) => mathValuesSelective((v) => v / number, (i) => i.metric === metric)
 
-export function mathAllValues (math) {
-  return function _mathAllValues (instances) {
-    return instances.map(instance => ({
-      ...instance,
-      data: instance.data.map(({ ts, value }) => ({ ts, value: math(value) }))
-    }))
-  }
-}
-
-export function mathSomeValues (math, shouldApplyFn) {
-  return function _mathSomeValues (instances) {
-    return instances.map(instance =>
-      shouldApplyFn(instance)
-        ? { ...instance, data: instance.data.map(({ ts, value }) => ({ ts, value: math(value) })) }
-        : instance
-    )
-  }
-}
-
+/**
+ * Combine metrics sharing the same title, applying some function to combine them
+ */
 export function combineValuesByTitle (fn) {
   return function _combineValuesByTitle (instances) {
     return instances.reduce(combineValuesByTitleReducer(fn), [])
@@ -93,22 +101,51 @@ export function customTitleAndKeylabel (titleFn) {
   }
 }
 
-export function mapInstanceDomains (instances, instanceDomainMappings) {
+export function mapInstanceDomains (instances, { instanceDomainMappings }) {
   return instances.map(instance => ({
     ...instance,
     instance: (instanceDomainMappings[instance.metric] && instanceDomainMappings[instance.metric][instance.instance]) || instance.instance
   }))
 }
 
-export function fixContainerNames (metricInstances) {
-  return metricInstances
-    // map the names
-    .map(metricInstance => ({
-      ...metricInstance,
-      instance: findContainerName(metricInstance.instance)
-    }))
-    // make sure the instance had a valid name
-    .filter(metricInstance => !!metricInstance.instance)
+export function mapContainerNames (metricName) {
+  return function _mapContainerNames (metricInstances, { containerList }) {
+    return metricInstances
+      .map(metricInstance => {
+        if (metricInstance.metric !== metricName) return metricInstance
+        let container = containerList.find(e => e.cgroup === metricInstance.instance) || {}
+        return { ...metricInstance, instance: container.containerId }
+      })
+      // make sure the instance had a valid name
+      .filter(metricInstance => !!metricInstance.instance)
+  }
+}
+
+export function log (message) {
+  return function _log (instances) {
+    console.log(message, instances)
+    return instances
+  }
+}
+
+export function filterOutPartialTimestamps (metricInstances) {
+  // from each data element, capture the timestamp only
+  const timestamps = metricInstances.map(mi =>
+    mi.data.map(({ ts }) => ts.getTime())
+  )
+
+  // filter to only include elements in both
+  const eligibleTimestamps = timestamps.reduce(
+    (acc, array) => acc.filter(ts => array.includes(ts)),
+    timestamps[0] || []) // start with a default set
+
+  // filter the data content, so that only eligible timestamps are present
+  const filteredInstances = metricInstances.map(mi => ({
+    ...mi,
+    data: mi.data.filter(tsv => eligibleTimestamps.includes(tsv.ts.getTime()))
+  }))
+
+  return filteredInstances
 }
 
 /**

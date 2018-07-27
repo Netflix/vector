@@ -7,7 +7,7 @@ import {
 /**
  * Extracts a single metric by name from the datasets
  */
-function calculateChart(datasets, config, instanceDomainMappings) {
+function calculateChart(datasets, config, instanceDomainMappings, containerList) {
   const instances = extractInstancesForMetric(datasets, config.metricNames)
   if (instances.length == 0) return null
   const transforms = config.transforms || []
@@ -32,9 +32,7 @@ function calculateChart(datasets, config, instanceDomainMappings) {
   // that way we could pass params to it that it can store? or a class?
   // console.log('doing transforms;;')
   transforms.forEach(fn => {
-    // console.log('before', transformed)
-    transformed = fn(transformed, instanceDomainMappings)
-    // console.log('after', transformed)
+    transformed = fn(transformed, { instanceDomainMappings, containerList })
   })
   return transformed
 }

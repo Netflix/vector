@@ -1,5 +1,11 @@
 {
   "server": {
     "baseDir": "./dist"
+  },
+  "watchOptions": {
+    "ignored": [
+      "node_modules",
+      "src"
+    ]
   }
 }

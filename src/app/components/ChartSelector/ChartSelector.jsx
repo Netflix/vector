@@ -22,12 +22,12 @@ function ChartSelector({ charts, onAddChart, onClearCharts }) {
   const onMenuItemClick = (event, { chart }) => onAddChart(chart)
 
   return (
-    <Menu text vertical>
-      <Menu.Item content='Clear charts' onClick={onClearMenuClick} />
+    <Menu >
+      <Menu.Item content='Clear charts' onClick={onClearMenuClick}/>
       { groupNames.map((g, gidx) => (
         <div key={gidx}>
           <Menu.Item header>{g}</Menu.Item>
-          { charts.filter(c => c.group === g).map((c, cidx) => <Menu.Item name={c.title} content={c.title} key={cidx} onClick={onMenuItemClick} fitted='vertically' chart={c}/>) }
+          { charts.filter(c => c.group === g).map((c, cidx) => <Menu.Item name={c.title} content={c.title} key={cidx} onClick={onMenuItemClick} chart={c}/>) }
         </div>
       )) }
     </Menu>

@@ -1,5 +1,6 @@
 const flatten = (xs, ys) => xs.concat(ys)
 const uniqueFilter = (val, index, array) => array.indexOf(val) === index
+const keyValueArrayToObject = (obj, { key, value }) => { obj[key] = value; return obj; }
 
 function createTimestampFromDataset(dataset) {
   return new Date(dataset.timestamp.s * 1000 + dataset.timestamp.us / 1000)
@@ -112,24 +113,23 @@ function combineValuesByTitleReducer(combiner) {
   }
 }
 
-function findContainerName (cgroup) {
-  // TODO the old code did something different in containermetadata.service.js, not sure why
-
-  if (typeof cgroup !== 'string') return cgroup
+function findCgroupId (iname) {
+  if (typeof iname !== 'string') return iname
 
   // plain docker: docker/<cgroup_id>
-  if (cgroup.includes('/docker/')) {
-    return cgroup.split('/')[2]
+  if (iname.includes('/docker/')) {
+    return iname.split('/')[2]
   }
 
   // systemd: /docker-cgroup_id.scope
-  if (cgroup.includes('/docker-') && cgroup.includes('.scope')) {
-    return cgroup.split('-')[1].split('.')[0]
+  if (iname.includes('/docker-') && iname.includes('.scope')) {
+    return iname.split('-')[1].split('.')[0]
   }
 
   // /container.slice/<cgroup_id> and /container.slice/???/<cgroup_id>
-  if (cgroup.includes('/containers.slice/')) {
-    return cgroup.split('/')[2]
+  if (iname.includes('/containers.slice/')) {
+    const inameArr = iname.split('/')
+    return inameArr[inameArr.length - 1]
   }
 
   // not found
@@ -174,27 +174,41 @@ function applyFunctionsToTimeslices(timeslices, fns) {
       ts,
       values: Object.keys(fns)
         // apply the function to all the values
-        .map(fname => ({ fname, values: fns[fname](values) }))
-        // convert the mapped array [ { fname, values }, ... ] to object { fname: values, ... }
-        .reduce((acc, { fname, values }) => ({ ...acc, [fname]: values }), {})
+        .map(fname => {
+          let valuesOut
+          try {
+            valuesOut = fns[fname](values)
+          } catch (err) {
+            console.warn('could not apply fn', err.message)
+          }
+          return { key: fname, value: valuesOut }
+        })
+        .reduce(keyValueArrayToObject, {})
     }
   })
 }
 
 function getMetricInstancesFromTimeslice(slice) {
   return Object.keys(slice.values).map(metric => {
+    if (!slice.values[metric]) return []
     const instancesForThisMetric = Object.keys(slice.values[metric])
     return instancesForThisMetric.map(instance => ({ metric, instance }))
-  }).reduce(flatten)
+  }).reduce(flatten, [])
 }
 
 
 function untransposeTimeslices(timeslices) {
-  const metricInstances = getMetricInstancesFromTimeslice(timeslices[0])
+  if (!timeslices.length) return timeslices
+
+  const metricInstances = timeslices
+    .map(t => getMetricInstancesFromTimeslice(t))
+    .reduce(flatten)
+    .filter((val, index, arr) => arr.findIndex(e => e.metric === val.metric && e.instance === val.instance) === index)
+
   const untransposed = metricInstances.map(({ metric, instance}) => ({
     metric,
     instance,
-    data: timeslices.map(({ ts, values }) => ({ ts, value: values[metric][instance] }))
+    data: timeslices.map(({ ts, values }) => ({ ts, value: values && values[metric] && values[metric][instance] })).filter(tsv => !!tsv.value)
   }))
   return untransposed
 }
@@ -206,13 +220,14 @@ function firstValueInObject(obj) {
 export {
   flatten,
   uniqueFilter,
+  keyValueArrayToObject,
   createTimestampFromDataset,
   extractValueFromChartDataForInstance,
   extractInstancesForMetric,
   nominalTsValueToIntervalTsValue,
   combineValuesAtTimestampReducer,
   combineValuesByTitleReducer,
-  findContainerName,
+  findCgroupId,
   getAllMetricInstancesAtTs,
   transposeToTimeslices,
   untransposeTimeslices,

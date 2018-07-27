@@ -238,19 +238,19 @@ describe('combineValuesByTitleReducer', () => {
   })
 })
 
-describe('findContainerName', () => {
+describe('findCgroupId', () => {
   describe('with titus sample dataset', () => {
     let data = {
       '/': null,
       '/containers.slice': null,
       '/containers.slice/5eb50578-4298-408f-93bc-2b6358f5e399': '5eb50578-4298-408f-93bc-2b6358f5e399',
-      '/containers.slice/5eb50578-4298-408f-93bc-2b6358f5e399/b7634827117ffd3aa989931c34dac3806621ca5e96ffae04e8b41df93b70d42f': '5eb50578-4298-408f-93bc-2b6358f5e399',
+      '/containers.slice/5eb50578-4298-408f-93bc-2b6358f5e399/b7634827117ffd3aa989931c34dac3806621ca5e96ffae04e8b41df93b70d42f': 'b7634827117ffd3aa989931c34dac3806621ca5e96ffae04e8b41df93b70d42f',
       '/containers.slice/67592816-7265-42ca-ab0c-e9bd562c27a8': '67592816-7265-42ca-ab0c-e9bd562c27a8',
-      '/containers.slice/67592816-7265-42ca-ab0c-e9bd562c27a8/2c317fec6f0ec37b2293b3940fb158cffee7b3cc27e017f8bfd8ce492d1ab806': '67592816-7265-42ca-ab0c-e9bd562c27a8',
+      '/containers.slice/67592816-7265-42ca-ab0c-e9bd562c27a8/2c317fec6f0ec37b2293b3940fb158cffee7b3cc27e017f8bfd8ce492d1ab806': '2c317fec6f0ec37b2293b3940fb158cffee7b3cc27e017f8bfd8ce492d1ab806',
       '/containers.slice/ada1370b-b805-4b9a-8f2a-2e1343a2c68c': 'ada1370b-b805-4b9a-8f2a-2e1343a2c68c',
-      '/containers.slice/ada1370b-b805-4b9a-8f2a-2e1343a2c68c/48e1821ff5486d585270435aaf5baedda1863028528a5bfcbd401d18d6e43cca': 'ada1370b-b805-4b9a-8f2a-2e1343a2c68c',
+      '/containers.slice/ada1370b-b805-4b9a-8f2a-2e1343a2c68c/48e1821ff5486d585270435aaf5baedda1863028528a5bfcbd401d18d6e43cca': '48e1821ff5486d585270435aaf5baedda1863028528a5bfcbd401d18d6e43cca',
       '/containers.slice/37231f82-f44a-4bb3-abb5-ffe78a7e0d0f': '37231f82-f44a-4bb3-abb5-ffe78a7e0d0f',
-      '/containers.slice/37231f82-f44a-4bb3-abb5-ffe78a7e0d0f/39ff2d3812c00e15191b250397fd4e69b5f3d8108556b5a53ea4efeb26146cc7': '37231f82-f44a-4bb3-abb5-ffe78a7e0d0f',
+      '/containers.slice/37231f82-f44a-4bb3-abb5-ffe78a7e0d0f/39ff2d3812c00e15191b250397fd4e69b5f3d8108556b5a53ea4efeb26146cc7': '39ff2d3812c00e15191b250397fd4e69b5f3d8108556b5a53ea4efeb26146cc7',
       '/mesos_executors.slice': null,
       '/user.slice': null,
       '/init.scope': null,
@@ -354,13 +354,13 @@ describe('findContainerName', () => {
       '/system.slice/titus-reaper.service': null,
       '/system.slice/systemd-udev-trigger.service': null,
       '/containers.slice/5e66f6f7-9b13-4cd9-b14a-2ec9f90f718c': '5e66f6f7-9b13-4cd9-b14a-2ec9f90f718c',
-      '/containers.slice/5e66f6f7-9b13-4cd9-b14a-2ec9f90f718c/022df928288864f4c3937315d516b1aeb0d8b221790baa91ada35edbf466cdf3': '5e66f6f7-9b13-4cd9-b14a-2ec9f90f718c',
+      '/containers.slice/5e66f6f7-9b13-4cd9-b14a-2ec9f90f718c/022df928288864f4c3937315d516b1aeb0d8b221790baa91ada35edbf466cdf3': '022df928288864f4c3937315d516b1aeb0d8b221790baa91ada35edbf466cdf3',
       '/system.slice/mnt-docker-10000.10000-overlay2-373e46d75b5902260ac9571cc323b6225d0f027ac7fb45ad279ef702931e5f91-merged.mount': null,
       '/system.slice/var-lib-titus\x2dinits-092ef666\x2df025\x2d43ed\x2db76c\x2d26a84d8b98ed.mount': null,
       '/system.slice/run-docker-netns-9777c7f6750e.mount': null,
       '/system.slice/mnt-docker-10000.10000-containers-022df928288864f4c3937315d516b1aeb0d8b221790baa91ada35edbf466cdf3-mounts-shm.mount': null,
       '/containers.slice/6889511b-f5ba-4b21-9003-833874e7186e': '6889511b-f5ba-4b21-9003-833874e7186e',
-      '/containers.slice/6889511b-f5ba-4b21-9003-833874e7186e/ca9836673400bd33df9c2fa1542ee5602b6e606b1e03104c6a160191d2fc356c': '6889511b-f5ba-4b21-9003-833874e7186e',
+      '/containers.slice/6889511b-f5ba-4b21-9003-833874e7186e/ca9836673400bd33df9c2fa1542ee5602b6e606b1e03104c6a160191d2fc356c': 'ca9836673400bd33df9c2fa1542ee5602b6e606b1e03104c6a160191d2fc356c',
       '/system.slice/mnt-docker-10000.10000-containers-ca9836673400bd33df9c2fa1542ee5602b6e606b1e03104c6a160191d2fc356c-mounts-shm.mount': null,
       '/system.slice/mnt-docker-10000.10000-overlay2-f821d201821845692d9446da595abc4acf759bd52151480fbd33da4eba430f76-merged.mount': null,
       '/system.slice/var-lib-titus\x2dinits-c4194faf\x2d58f7\x2d4b94\x2dae3a\x2d7f3929199fbe.mount': null,
@@ -368,7 +368,7 @@ describe('findContainerName', () => {
     }
     it('maps them all correctly', () => {
       Object.keys(data).forEach(k => {
-        expect(utils.findContainerName(k)).to.equal(data[k], `${k} => ${data[k]}`)
+        expect(utils.findCgroupId(k)).to.equal(data[k], `${k} => ${data[k]}`)
       })
     })
   })
@@ -503,6 +503,23 @@ describe('untransposeTimeslices', () => {
         { metric: 'mem.free', instance: '0', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1235), value: 15 }, { ts: new Date(1236), value: 30 } ] },
         { metric: 'mem.free', instance: 'foo', data: [ { ts: new Date(1234), value: 3 }, { ts: new Date(1235), value: 4 }, { ts: new Date(1236), value: 5 } ] },
         { metric: 'mem.used', instance: '-1', data: [ { ts: new Date(1234), value: 90 }, { ts: new Date(1235), value: 85 }, { ts: new Date(1236), value: 70 } ] }
+      ])
+    })
+  })
+
+  describe('with an empty first timeslice', () => {
+    let data = [
+      { ts: new Date(1234), values: { } },
+      { ts: new Date(1235), values: { 'mem.free': { '0': 15, 'foo': 4 }, 'mem.used': { '-1': 85 } } },
+      { ts: new Date(1236), values: { 'mem.free': { '0': 30, 'foo': 5 }, 'mem.used': { '-1': 70 } } },
+    ]
+    it('transposes', () => {
+      let untransposed = utils.untransposeTimeslices(data)
+      expect(untransposed.length).to.equal(3)
+      expect(untransposed).to.have.deep.members([
+        { metric: 'mem.free', instance: '0', data: [ { ts: new Date(1235), value: 15 }, { ts: new Date(1236), value: 30 } ] },
+        { metric: 'mem.free', instance: 'foo', data: [ { ts: new Date(1235), value: 4 }, { ts: new Date(1236), value: 5 } ] },
+        { metric: 'mem.used', instance: '-1', data: [ { ts: new Date(1235), value: 85 }, { ts: new Date(1236), value: 70 } ] }
       ])
     })
   })

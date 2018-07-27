@@ -12,6 +12,7 @@ export class Dashboard extends React.Component {
     pmids: [],
     datasets: [],
     instanceDomainMappings: {},
+    containerList: [],
   }
 
   componentDidMount() {
@@ -76,7 +77,15 @@ export class Dashboard extends React.Component {
       // TODO what is the trigger for fetching new container names, as they start and stop?
       this.setState({ status: 'Fetching container names' })
       res = await superagent.get(`${host}/pmapi/${context}/_fetch?names=containers.name`)
-      let containerList = res.body.values[0].instances.map(i => i.value)
+      let containers = res.body.values[0].instances
+      res = await superagent.get(`${host}/pmapi/${context}/_fetch?names=containers.cgroup`)
+      let cgroups = res.body.values[0].instances
+      let containerList = cgroups.map(({ instance, value }) => ({
+        instance,
+        cgroup: value,
+        containerId: containers.find(cont => cont.instance === instance).value
+      }))
+      this.setState({ containerList })
       this.props.onContainerListLoaded(containerList)
 
       // set context as last thing we do, this is the flag that we are connected
@@ -156,6 +165,7 @@ export class Dashboard extends React.Component {
             chartInfo={c}
             datasets={this.state.datasets}
             onCloseClicked={() => this.props.removeChartByIndex(idx)}
+            containerList={this.state.containerList}
             instanceDomainMappings={this.state.instanceDomainMappings}
             onNewSettings={(settings) => this.props.updateChartSettings(idx, settings)} />
         )}
