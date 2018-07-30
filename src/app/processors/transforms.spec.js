@@ -66,3 +66,67 @@ describe('filterOutPartialTimestamps', () => {
     })
   })
 })
+
+describe('filterForContainerId', () => {
+  let data = [
+      { metric: 'containercpu', instance: 'abc', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+      { metric: 'containercpu', instance: 'def', data: [ { ts: new Date(1234), value: 3 } ] },
+      { metric: 'containerram', instance: 'abc', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+      { metric: 'containerram', instance: 'def', data: [ { ts: new Date(1234), value: 3 } ] },
+  ]
+  describe('with a different metric id', () => {
+    it('returns all values', () => {
+      let filtered = transforms.filterForContainerId([ 'containerdisk' ])(data, { containerId: 'abc' })
+      expect(filtered.length).to.equal(4)
+      expect(filtered).to.have.deep.members([
+        { metric: 'containercpu', instance: 'abc', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+        { metric: 'containercpu', instance: 'def', data: [ { ts: new Date(1234), value: 3 } ] },
+        { metric: 'containerram', instance: 'abc', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+        { metric: 'containerram', instance: 'def', data: [ { ts: new Date(1234), value: 3 } ] },
+      ])
+    })
+  })
+  describe('with a matching metric id and invalid container id', () => {
+    it('returns only other metric values', () => {
+      let filtered = transforms.filterForContainerId([ 'containercpu' ])(data, { containerId: 'zzz' })
+      expect(filtered.length).to.equal(2)
+      expect(filtered).to.have.deep.members([
+        { metric: 'containerram', instance: 'abc', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+        { metric: 'containerram', instance: 'def', data: [ { ts: new Date(1234), value: 3 } ] },
+      ])
+    })
+  })
+  describe('with a matching metric id', () => {
+    it('returns all values', () => {
+      let filtered = transforms.filterForContainerId([ 'containercpu' ])(data, { containerId: 'abc' })
+      expect(filtered.length).to.equal(3)
+      expect(filtered).to.have.deep.members([
+        { metric: 'containercpu', instance: 'abc', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+        { metric: 'containerram', instance: 'abc', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+        { metric: 'containerram', instance: 'def', data: [ { ts: new Date(1234), value: 3 } ] },
+      ])
+    })
+  })
+  describe('with a list including all metrics and empty filter', () => {
+    it('returns all values', () => {
+      let filtered = transforms.filterForContainerId([ 'containerdisk', 'containercpu', 'containerram' ])(data, { containerId: '' })
+      expect(filtered.length).to.equal(4)
+      expect(filtered).to.have.deep.members([
+        { metric: 'containercpu', instance: 'abc', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+        { metric: 'containercpu', instance: 'def', data: [ { ts: new Date(1234), value: 3 } ] },
+        { metric: 'containerram', instance: 'abc', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+        { metric: 'containerram', instance: 'def', data: [ { ts: new Date(1234), value: 3 } ] },
+      ])
+    })
+  })
+  describe('with a list including all metrics', () => {
+    it('returns filtered values', () => {
+      let filtered = transforms.filterForContainerId([ 'containerdisk', 'containercpu', 'containerram' ])(data, { containerId: 'abc' })
+      expect(filtered.length).to.equal(2)
+      expect(filtered).to.have.deep.members([
+        { metric: 'containercpu', instance: 'abc', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+        { metric: 'containerram', instance: 'abc', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+      ])
+    })
+  })
+})

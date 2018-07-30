@@ -1,5 +1,6 @@
 import simpleModel from '../processors/simpleModel'
 import {
+  renameMetric,
   mapInstanceDomains,
   mapContainerNames,
   divideByOnlyMetric,
@@ -12,7 +13,8 @@ import {
   divideBy,
   cumulativeTransform,
   cumulativeTransformOnlyMetric,
-  // log,
+  filterForContainerId,
+  log,
 } from '../processors/transforms'
 
 import {
@@ -21,7 +23,6 @@ import {
 } from '../processors/utils'
 
 export default [
-  // TODO need to remove containers that do not actually exist
   {
     group: 'Container',
     title: 'Per-Container CPU Utilization',
@@ -31,9 +32,9 @@ export default [
         'cgroup.cpuacct.usage',
       ],
       transforms: [
-        // TODO check for container filter in ConfigPanel
         mapInstanceDomains,
         mapContainerNames('cgroup.cpuacct.usage'),
+        filterForContainerId([ 'cgroup.cpuacct.usage' ]),
         defaultTitleAndKeylabel,
         cumulativeTransform,
         divideBy(1000 * 1000 * 1000),
@@ -51,9 +52,9 @@ export default [
         'cgroup.memory.usage',
       ],
       transforms: [
-        // TODO check for container filter in ConfigPanel
         mapInstanceDomains,
         mapContainerNames('cgroup.memory.usage'),
+        filterForContainerId([ 'cgroup.memory.usage' ]),
         defaultTitleAndKeylabel,
         kbToGb,
       ],
@@ -76,13 +77,12 @@ export default [
         // this sums all the values across the cgroup (map + fix are so that the cgroup size is calculated only on containers)
         mapInstanceDomains,
         mapContainerNames('cgroup.memory.usage'),
+        // do not filter here, we want totals
         customTitleAndKeylabel(metric => metric),
         combineValuesByTitle((a, b) => a + b),
         divideByOnlyMetric(1024, 'mem.util.used'),
         divideByOnlyMetric(1024, 'mem.util.free'),
         divideByOnlyMetric(1024 * 1024, 'cgroup.memory.usage'),
-        // extra transform for cgroup memory usage
-        // apply some mathsy stuff, note this wipes title and keylabel
         timesliceCalculations({
           'host used': (values) => ({ '-1': values['mem.util.used']['-1'] - firstValueInObject(values['cgroup.memory.usage']) }),
           'free (unused)': (values) => ({ '-1': values['mem.util.free']['-1'] }),
@@ -108,6 +108,7 @@ export default [
         mapInstanceDomains,
         mapContainerNames('cgroup.memory.usage'),
         mapContainerNames('cgroup.memory.limit'),
+        filterForContainerId([ 'cgroup.memory.usage', 'cgroup.memory.limit' ]),
         divideByOnlyMetric(1024, 'mem.physmem'),
         divideByOnlyMetric(1024*1024, 'cgroup.memory.usage'),
         divideByOnlyMetric(1024*1024, 'cgroup.memory.limit'),
@@ -140,8 +141,12 @@ export default [
         mapInstanceDomains,
         mapContainerNames('cgroup.blkio.all.io_serviced.read'),
         mapContainerNames('cgroup.blkio.all.io_serviced.write'),
+        filterForContainerId([ 'cgroup.blkio.all.io_serviced.read', 'cgroup.blkio.all.io_serviced.write' ]),
         cumulativeTransform,
-        // TODO fix up titling
+        renameMetric({
+          'cgroup.blkio.all.io_serviced.read': 'read',
+          'cgroup.blkio.all.io_serviced.write': 'write',
+        }),
         defaultTitleAndKeylabel,
       ],
     },
@@ -160,8 +165,12 @@ export default [
         mapInstanceDomains,
         mapContainerNames('cgroup.blkio.all.io_service_bytes.read'),
         mapContainerNames('cgroup.blkio.all.io_service_bytes.write'),
+        filterForContainerId([ 'cgroup.blkio.all.io_service_bytes.read', 'cgroup.blkio.all.io_service_bytes.write' ]),
         cumulativeTransform,
-        // TODO fix up titling
+        renameMetric({
+          'cgroup.blkio.all.io_service_bytes.read': 'read',
+          'cgroup.blkio.all.io_service_bytes.write': 'write',
+        }),
         defaultTitleAndKeylabel,
       ],
     },
@@ -180,8 +189,12 @@ export default [
         mapInstanceDomains,
         mapContainerNames('cgroup.blkio.all.throttle.io_serviced.read'),
         mapContainerNames('cgroup.blkio.all.throttle.io_serviced.write'),
+        filterForContainerId([ 'cgroup.blkio.all.throttle.io_serviced.read', 'cgroup.blkio.all.throttle.io_serviced.write' ]),
         cumulativeTransform,
-        // TODO fix up titling
+        renameMetric({
+          'cgroup.blkio.all.throttle.io_serviced.read': 'read',
+          'cgroup.blkio.all.throttle.io_serviced.write': 'write',
+        }),
         defaultTitleAndKeylabel,
       ],
     },
@@ -200,8 +213,12 @@ export default [
         mapInstanceDomains,
         mapContainerNames('cgroup.blkio.all.throttle.io_service_bytes.read'),
         mapContainerNames('cgroup.blkio.all.throttle.io_service_bytes.write'),
+        filterForContainerId([ 'cgroup.blkio.all.throttle.io_service_bytes.read', 'cgroup.blkio.all.throttle.io_service_bytes.write' ]),
         cumulativeTransform,
-        // TODO fix up titling
+        renameMetric({
+          'cgroup.blkio.all.throttle.io_service_bytes.read': 'read',
+          'cgroup.blkio.all.throttle.io_service_bytes.write': 'write',
+        }),
         defaultTitleAndKeylabel,
       ],
     },
@@ -220,7 +237,11 @@ export default [
         mapInstanceDomains,
         mapContainerNames('cgroup.cpusched.shares'),
         mapContainerNames('cgroup.cpusched.periods'),
-        // TODO fix up titling
+        filterForContainerId([ 'cgroup.cpusched.shares', 'cgroup.cpusched.periods' ]),
+        renameMetric({
+          'cgroup.cpusched.shares': 'shares',
+          'cgroup.cpusched.periods': 'periods',
+        }),
         defaultTitleAndKeylabel,
       ],
     },
@@ -243,6 +264,7 @@ export default [
         mapContainerNames('cgroup.cpusched.shares'),
         mapContainerNames('cgroup.cpusched.periods'),
         mapContainerNames('cgroup.cpuacct.usage'),
+        filterForContainerId([ 'cgroup.cpuacct.usage', 'cgroup.cpusched.shares', 'cgroup.cpusched.periods' ]),
         cumulativeTransformOnlyMetric('cgroup.cpuacct.usage'),
         divideByOnlyMetric(1000 * 1000 * 1000, 'cgroup.cpuacct.usage'),
         timesliceCalculations({
@@ -277,9 +299,9 @@ export default [
       transforms: [
         mapInstanceDomains,
         mapContainerNames('cgroup.cpusched.throttled_time'),
+        filterForContainerId([ 'cgroup.cpusched.throttled_time' ]),
         cumulativeTransform,
-        // TODO fix up titling
-        defaultTitleAndKeylabel,
+        customTitleAndKeylabel((metric, instance) => instance),
       ],
     },
   },
@@ -298,6 +320,7 @@ export default [
         mapInstanceDomains,
         mapContainerNames('cgroup.memory.usage'),
         mapContainerNames('cgroup.memory.limit'),
+        filterForContainerId([ 'cgroup.memory.usage', 'cgroup.memory.limit' ]),
         divideByOnlyMetric(1024, 'mem.physmem'),
         divideByOnlyMetric(1024 * 1024, 'cgroup.memory.usage'),
         divideByOnlyMetric(1024 * 1024, 'cgroup.memory.limit'),

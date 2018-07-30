@@ -417,6 +417,16 @@ describe('getAllMetricInstancesAtTs', () => {
       ])
     })
   })
+  describe('with a zero value', () => {
+    let metricInstances = [
+      { metric: 'cpu', instance: 'cpu0', data: [ { ts: new Date(1234), value: 0 } ] }
+    ]
+    it('extracts the values', () => {
+      expect(utils.getAllMetricInstancesAtTs(metricInstances, new Date(1234))).to.deep.equal([
+        { metric: 'cpu', instance: 'cpu0', value: 0 },
+      ])
+    })
+  })
 })
 
 describe('transposeToTimeslices', () => {

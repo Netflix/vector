@@ -1,12 +1,9 @@
 import simpleModel from '../processors/simpleModel'
-import { customTitleAndKeylabel, combineValuesByTitle, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform, toPercentage } from '../processors/transforms'
+import { timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform, toPercentage } from '../processors/transforms'
+import { keyValueArrayToObject } from '../processors/utils'
 
 import HelpFlamegraph from '../help/Flamegraph.jsx'
 import FilterModal from '../components/FilterModal/FilterModal.jsx'
-
-function sum (a, b) {
-  return a + b
-}
 
 export default [
   {
@@ -43,7 +40,6 @@ export default [
         'hinv.ncpu',
       ],
       transforms: [
-        // TODO filterWithoutAllValuesAtTimestamps,
         defaultTitleAndKeylabel,
         divideBySeries('hinv.ncpu'),
         divideBy(1000),
@@ -63,7 +59,6 @@ export default [
         'hinv.ncpu',
       ],
       transforms: [
-        // TODO filterWithoutAllValuesAtTimestamps,
         defaultTitleAndKeylabel,
         divideBySeries('hinv.ncpu'),
         divideBy(1000),
@@ -83,7 +78,6 @@ export default [
         'hinv.ncpu'
       ],
       transforms: [
-        // TODO filterWithoutAllValuesAtTimestamps,
         defaultTitleAndKeylabel,
         divideBySeries('hinv.ncpu'),
         divideBy(1000),
@@ -120,8 +114,17 @@ export default [
         divideBy(1000),
         cumulativeTransform,
         toPercentage,
-        customTitleAndKeylabel((metric, instance) => `cpu [sys+user] (${instance})`),
-        combineValuesByTitle(sum),
+        timesliceCalculations({
+          'cpu [sys+user]': (values) => {
+            let cpus = Object.keys(values['kernel.percpu.cpu.sys'])
+            let utilizations = cpus.map(cpu => ({
+              key: cpu,
+              value: (values['kernel.percpu.cpu.sys'][cpu] || 0) + (values['kernel.percpu.cpu.user'][cpu] || 0)
+            }))
+            return utilizations.reduce(keyValueArrayToObject, {})
+          }
+        }),
+        defaultTitleAndKeylabel,
       ],
     },
   },

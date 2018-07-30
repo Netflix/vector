@@ -1,5 +1,7 @@
 import simpleModel from '../processors/simpleModel'
-import { defaultTitleAndKeylabel, mapInstanceDomains, cumulativeTransform } from '../processors/transforms'
+import { renameMetric, defaultTitleAndKeylabel, mapInstanceDomains, cumulativeTransform, filterInstanceIncludesFilterText } from '../processors/transforms'
+
+import FilterModal from '../components/FilterModal/FilterModal.jsx'
 
 export default [
   {
@@ -51,7 +53,6 @@ export default [
     },
   },
 
-  // TODO add interface filtering
   {
     group: 'Network',
     title: 'Network Packets',
@@ -63,9 +64,14 @@ export default [
       ],
       transforms: [
         mapInstanceDomains,
+        filterInstanceIncludesFilterText,
         defaultTitleAndKeylabel,
         cumulativeTransform,
       ],
+    },
+    settingsComponent: FilterModal,
+    settings: {
+      filter: ''
     },
   },
 
@@ -83,13 +89,20 @@ export default [
         'network.tcp.synretrans',
       ],
       transforms: [
-        defaultTitleAndKeylabel,
         cumulativeTransform,
+        renameMetric({
+          'network.tcp.retranssegs': 'retranssegs',
+          'network.tcp.timeouts': 'timeouts',
+          'network.tcp.listendrops': 'listendrops',
+          'network.tcp.fastretrans': 'fastretrans',
+          'network.tcp.slowstartretrans': 'slowstartretrans',
+          'network.tcp.synretrans': 'synretrans',
+        }),
+        defaultTitleAndKeylabel,
       ],
     },
   },
 
-  // TODO add interface filtering
   {
     group: 'Network',
     title: 'Network Throughput (kB)',
@@ -101,9 +114,14 @@ export default [
       ],
       transforms: [
         mapInstanceDomains,
+        filterInstanceIncludesFilterText,
         defaultTitleAndKeylabel,
         cumulativeTransform,
       ],
+    },
+    settingsComponent: FilterModal,
+    settings: {
+      filter: ''
     },
   }
 ]

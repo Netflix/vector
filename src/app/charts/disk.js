@@ -3,7 +3,6 @@ import { mapInstanceDomains, defaultTitleAndKeylabel, divideBy, cumulativeTransf
 
 
 export default [
-  // TODO clarify scale (iops per what?)
   {
     group: 'Disk',
     title: 'Disk IOPS',
@@ -21,7 +20,6 @@ export default [
     },
   },
 
-  // TODO clarify scale
   {
     group: 'Disk',
     title: 'Disk Latency',
@@ -41,7 +39,6 @@ export default [
     },
   },
 
-  // TODO clarify what 'Bytes' is, is it per second?
   {
     group: 'Disk',
     title: 'Disk Throughput (Bytes)',

@@ -167,6 +167,8 @@ export class Dashboard extends React.Component {
             onCloseClicked={() => this.props.removeChartByIndex(idx)}
             containerList={this.state.containerList}
             instanceDomainMappings={this.state.instanceDomainMappings}
+            containerId={this.props.settings.containerId === '_all' ? '' : this.props.settings.containerId}
+            settings={c.settings}
             onNewSettings={(settings) => this.props.updateChartSettings(idx, settings)} />
         )}
       </div>
@@ -178,6 +180,7 @@ Dashboard.propTypes = {
   host: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   chartlist: PropTypes.array.isRequired,
+  containerId: PropTypes.string.isRequired,
   onContainerListLoaded: PropTypes.func.isRequired,
   removeChartByIndex: PropTypes.func.isRequired,
   updateChartSettings: PropTypes.func.isRequired,

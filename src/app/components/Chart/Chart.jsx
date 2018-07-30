@@ -86,11 +86,14 @@ class Chart extends React.Component {
   }
 
   render () {
-    const { chartInfo, datasets, onCloseClicked, onNewSettings, containerList, instanceDomainMappings } = this.props
+    const { chartInfo, datasets, onCloseClicked, onNewSettings, containerList, instanceDomainMappings, containerId, settings } = this.props
 
     if (!datasets || !datasets.length) return null
 
-    const dataset = chartInfo.processor.calculateChart(datasets, chartInfo.config, instanceDomainMappings, containerList)
+    const dataset = chartInfo.processor.calculateChart(
+      datasets,
+      chartInfo.config,
+      { instanceDomainMappings, containerList, containerId, settings })
 
     const HelpComponent = chartInfo.helpComponent
     const SettingsComponent = chartInfo.settingsComponent
@@ -186,6 +189,8 @@ Chart.propTypes = {
   onNewSettings: PropTypes.func,
   instanceDomainMappings: PropTypes.object.isRequired,
   containerList: PropTypes.array.isRequired,
+  containerId: PropTypes.string.isRequired,
+  settings: PropTypes.object,
 }
 
 export default Chart

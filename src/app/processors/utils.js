@@ -146,14 +146,14 @@ function getAllMetricInstancesAtTs(metricInstances, ts) {
         value: tsv && tsv.value,
       }
     })
-    .filter(({ value }) => !!value)
+    .filter(({ value }) => value !== null && typeof value !== 'undefined')
 }
 
 /**
  * Note: this only keeps timestamps which are present in the first index
  */
 function transposeToTimeslices(metricInstances) {
-  if (!metricInstances) return metricInstances
+  if (!metricInstances || metricInstances.length === 0) return metricInstances
 
   const timestamps = metricInstances[0].data.map(tsv => tsv.ts)
   return timestamps.map(ts => {

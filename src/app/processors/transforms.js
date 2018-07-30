@@ -163,3 +163,34 @@ export function timesliceCalculations (calcs) {
     return untransposed
   }
 }
+
+export function renameMetric (renames) {
+  return function _renameMetric (instances) {
+    return instances.map(instance => ({
+      ...instance,
+      metric: (instance.metric in renames) ? renames[instance.metric] : instance.metric
+    }))
+  }
+}
+
+/**
+ * Removes anything not matching the configured containerId
+ *
+ * Assumes the 'instance' tag refers to the container id, which it should do immediately after a mapContainerNames
+ * if containerId is falsey, return existing instances
+ */
+export function filterForContainerId (metricNames) {
+  return function _filterForContainerId (metricInstances, { containerId }) {
+    if (!containerId) return metricInstances
+    // only filter out where (it is not a filterable metric) or (it is a filterable metric and the container instance matches)
+    return metricInstances.filter(mi => !metricNames.includes(mi.metric) || metricNames.includes(mi.metric) && containerId === mi.instance)
+  }
+}
+
+/**
+ * Filter instance name by settings (basic includes)
+ */
+export function filterInstanceIncludesFilterText (metricInstances, { settings }) {
+  if (!settings.filter) return metricInstances
+  return metricInstances.filter(mi => mi.instance.includes(settings.filter))
+}

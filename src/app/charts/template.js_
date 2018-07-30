@@ -1,0 +1,30 @@
+iimport simpleModel from '../processors/simpleModel'
+import { timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform, toPercentage } from '../processors/transforms'
+import { keyValueArrayToObject } from '../processors/utils'
+
+import HelpFlamegraph from '../help/Flamegraph.jsx'
+import FilterModal from '../components/FilterModal/FilterModal.jsx'
+
+export default [
+  {
+    group: 'CPU',
+    title: 'Context Switches per second',
+    processor: simpleModel,
+    config: {
+      metricNames: [
+        'kernel.all.pswitch'
+      ],
+      transforms: [
+        defaultTitleAndKeylabel,
+        cumulativeTransform,
+      ],
+    },
+    settings: {
+      filter: ''
+    },
+    isContainerAware: true,          // if the chart supports containers
+    isHighOverhead: true,            // should it print a high overhead warning
+    helpComponent: HelpFlamegraph,   // help text, load as jsx (see import above)
+    settingsComponent: FilterModal,  // settings modal, will load data into the settings{} block
+  },
+]

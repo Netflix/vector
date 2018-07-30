@@ -1,5 +1,5 @@
 import simpleModel from '../processors/simpleModel'
-import { defaultTitleAndKeylabel, cumulativeTransform, kbToGb } from '../processors/transforms'
+import { timesliceCalculations, defaultTitleAndKeylabel, cumulativeTransform, kbToGb } from '../processors/transforms'
 
 export default [
   {
@@ -47,7 +47,12 @@ export default [
       transforms: [
         defaultTitleAndKeylabel,
         kbToGb,
-        // TODO this needs a transform to remap the cached/used/free/bufmem to a nice chart as it does in the original
+        timesliceCalculations({
+          'free (unused)': (slices) => ({ '-1': slices['mem.util.free']['-1'] }),
+          'free (cache)': (slices) => ({ '-1': slices['mem.util.cached']['-1'] + slices['mem.util.bufmem']['-1'] }),
+          'application': (slices) => ({ '-1': slices['mem.util.used']['-1'] - slices['mem.util.cached']['-1'] - slices['mem.util.bufmem']['-1'] }),
+        }),
+        defaultTitleAndKeylabel,
       ],
     },
   },

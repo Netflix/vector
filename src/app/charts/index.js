@@ -31,3 +31,13 @@ const requires = requireAll(require.context('./', false, /\.js$/))
 const charts = requires.map(r => r.default).reduce(flatten, [])
 
 export default charts
+
+// TODO add custom widget type
+// TODO more filtering so that partial graph data does not throw errors
+// TODO enable vertical resize
+// TODO set chart width and heights
+// TODO add chart formatting (round, percent) and vertical axis scale options
+// TODO set up url # parameter and parser to allow reconstruction of by sharing links
+// TODO chart legends / click to show and hide
+// TODO add bcc graphs
+// TODO add flame graphs
