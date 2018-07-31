@@ -93,7 +93,7 @@ class Chart extends React.Component {
 
     const dataset = chartInfo.processor.calculateChart(
       datasets,
-      chartInfo.config,
+      chartInfo,
       { instanceDomainMappings, containerList, containerId, settings })
 
     const HelpComponent = chartInfo.helpComponent
@@ -152,7 +152,7 @@ class Chart extends React.Component {
                 lineDataAccessor={d => d.data}
                 lineStyle={d => ({ stroke: color(d), fill: color(d), fillOpacity: 0.5 })}
                 areaStyle={d => ({ stroke: color(d), fill: color(d), fillOpacity: 0.5, strokeWidth: '2px' })}
-                lineType={chartInfo.config.lineType || 'line'}
+                lineType={(chartInfo.settings && chartInfo.settings.area) ? 'stackedarea' : (chartInfo.config.lineType || 'line')}
                 defined={d => d.value !== null}
                 margin={{ left: 60, bottom: 60, right: 3, top: 3 }}
                 xAccessor={d => d.ts}

@@ -7,7 +7,7 @@ import {
 /**
  * Extracts a single metric by name from the datasets
  */
-function calculateChart(datasets, config, context) {
+function calculateChart(datasets, { config }, context) {
   const instances = extractInstancesForMetric(datasets, config.metricNames)
   if (instances.length == 0) return null
 
@@ -33,7 +33,7 @@ function calculateChart(datasets, config, context) {
   return transformed
 }
 
-function requiredMetricNames(config) {
+function requiredMetricNames({ config }) {
   return config.metricNames
 }
 

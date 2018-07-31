@@ -131,52 +131,57 @@ export class Dashboard extends React.Component {
    * Polls the endpoint for metrics
    */
   pollMetrics = async () => {
-    // collect pmids to fetch
-    if (this.props.chartlist.length > 0) {
-      let uniqueMetrics = this.props.chartlist
-        .map((c) => c.processor.requiredMetricNames(c.config)) // extract only the metric names we need
-        .reduce(flatten, []) // flatten the array
-        .filter((val, index, array) => array.indexOf(val) === index) // keep only one instance of an object ie: make it unique
+    try {
+      // collect pmids to fetch
+      if (this.props.chartlist.length > 0) {
+        let uniqueMetrics = this.props.chartlist
+          .map((c) => c.processor.requiredMetricNames(c)) // extract only the metric names we need
+          .filter(val => !!val) // check a valid metric name came back
+          .reduce(flatten, []) // flatten the array
+          .filter((val, index, array) => array.indexOf(val) === index) // keep only one instance of an object ie: make it unique
 
-      let uniquePmids = this.state.pmids.filter((pmid) => uniqueMetrics.includes(pmid.name)) // collect all pmids where the name matches
-        .map((pmid) => pmid.pmid) // extract the pmid
-        .join(',') // concatenate to string
+        let uniquePmids = this.state.pmids.filter((pmid) => uniqueMetrics.includes(pmid.name)) // collect all pmids where the name matches
+          .map((pmid) => pmid.pmid) // extract the pmid
+          .join(',') // concatenate to string
 
-      // do a fetch
-      let host = `http://${this.props.host.hostname}:7402`
-      let res = await superagent
-        .get(`${host}/pmapi/${this.state.context}/_fetch`)
-        .query({ pmids: uniquePmids })
+        // do a fetch
+        let host = `http://${this.props.host.hostname}:7402`
+        let res = await superagent
+          .get(`${host}/pmapi/${this.state.context}/_fetch`)
+          .query({ pmids: uniquePmids })
 
-      this.setState((state) => {
-        // we want a WINDOW of x seconds, which means we need from latest to newest, we will assume the most recent is newest
-        const oldestS = res.body.timestamp.s - this.props.settings.windowSeconds
-        // new dataset is ... all the old stuff, plus the new one, without anything with an old timestamp
-        const newDatasets = [ ...state.datasets, res.body ]
-          .filter(ds => ds.timestamp.s >= oldestS)
-        return { datasets: newDatasets }
-      })
-
-      // determine needed new mappings
-      // TODO what is the trigger for re-polling a given value if we can't map it?
-      let neededNewMappings = uniqueMetrics.filter(metricName => !(metricName in this.state.instanceDomainMappings))
-      neededNewMappings.forEach(async name => {
-        const newMapping = {}
-        try {
-          let res = await superagent
-            .get(`${host}/pmapi/${this.state.context}/_indom`)
-            .query({ name })
-          res.body.instances.forEach(({ instance, name }) => newMapping[instance] = name)
-        } catch (err) {
-          console.error(`could not fetch _indom mapping for name=${name}`, err)
-        }
-        this.setState(state => {
-          let newMappings = { ...state.instanceDomainMappings }
-          newMappings[name] = newMapping
-          return { instanceDomainMappings: newMappings }
+        this.setState((state) => {
+          // we want a WINDOW of x seconds, which means we need from latest to newest, we will assume the most recent is newest
+          const oldestS = res.body.timestamp.s - this.props.settings.windowSeconds
+          // new dataset is ... all the old stuff, plus the new one, without anything with an old timestamp
+          const newDatasets = [ ...state.datasets, res.body ]
+            .filter(ds => ds.timestamp.s >= oldestS)
+          return { datasets: newDatasets }
         })
-      })
 
+        // determine needed new mappings
+        // TODO what is the trigger for re-polling a given value if we can't map it?
+        let neededNewMappings = uniqueMetrics.filter(metricName => !(metricName in this.state.instanceDomainMappings))
+        neededNewMappings.forEach(async name => {
+          const newMapping = {}
+          try {
+            let res = await superagent
+              .get(`${host}/pmapi/${this.state.context}/_indom`)
+              .query({ name })
+            res.body.instances.forEach(({ instance, name }) => newMapping[instance] = name)
+          } catch (err) {
+            console.error(`could not fetch _indom mapping for name=${name}`, err)
+          }
+          this.setState(state => {
+            let newMappings = { ...state.instanceDomainMappings }
+            newMappings[name] = newMapping
+            return { instanceDomainMappings: newMappings }
+          })
+        })
+
+      }
+    } catch (err) {
+      console.warn(err)
     }
     // go again
     setTimeout(this.pollMetrics, this.props.settings.intervalSeconds * 1000)

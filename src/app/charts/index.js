@@ -32,12 +32,16 @@ const charts = requires.map(r => r.default).reduce(flatten, [])
 
 export default charts
 
-// TODO add custom widget type
+// TODO ensure all charts have a min height so that a new chart with no data shows up (eg add custom with no other charts)
+// TODO combine 'settings' and 'config' to remove special handling for chart types
 // TODO add chart formatting (round, percent) and vertical axis scale options
+// TODO add vertical axis settings to custom chart
 // TODO set up url # parameter and parser to allow reconstruction of by sharing links
+// TODO black dots when hovering over chart show up in the wrong spot for area charts
 // TODO chart legends / click to show and hide
 // TODO add bcc graphs
 // TODO add flame graphs
+// TODO extract out a StatusBar component
 // TODO bug why does the network packets chart explode when a container selection is made - looks like network packets filter is actually container aware
 // TODO when changing ip address, refresh container list
 // TODO enable vertical resize
