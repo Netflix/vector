@@ -89,12 +89,9 @@ class Chart extends React.Component {
   render () {
     const { chartInfo, datasets, onCloseClicked, onNewSettings, containerList, instanceDomainMappings, containerId, settings } = this.props
 
-    if (!datasets || !datasets.length) return null
-
-    const dataset = chartInfo.processor.calculateChart(
-      datasets,
-      chartInfo,
-      { instanceDomainMappings, containerList, containerId, settings })
+    const dataset = datasets
+      ? chartInfo.processor.calculateChart(datasets, chartInfo, { instanceDomainMappings, containerList, containerId, settings })
+      : []
 
     const HelpComponent = chartInfo.helpComponent
     const SettingsComponent = chartInfo.settingsComponent
@@ -108,7 +105,7 @@ class Chart extends React.Component {
     const color = (d) => colorHash.hex(d.keylabel)
 
     return (
-      <Card style={{width: '650px' }} raised={true}>
+      <Card style={{ width: '650px', height: '385px' }} raised={true}>
 
         <Card.Content>
           <Icon className='right floated' circular fitted link name='close' onClick={onCloseClicked}/>
@@ -143,9 +140,9 @@ class Chart extends React.Component {
           </Card.Header>
         </Card.Content>
 
-        <Card.Content raised='true'>
-          { dataset && dataset.length >= 1 &&
-            <Card.Description>
+        <Card.Content>
+          <Card.Description style={{ width: '600px', height: '300px' }}>
+            { dataset && dataset.length > 1 &&
               <XYFrame
                 size={[600, 300]}
                 lines={dataset}
@@ -175,8 +172,11 @@ class Chart extends React.Component {
                 ]}
                 tooltipContent={(d) => fetchSharedTooltipContent(d, dataset)}
                 baseMarkProps={{ transitionDuration: 0 }} />
-            </Card.Description>
-          }
+            }
+            { (!dataset || dataset.length <= 1) &&
+              <span>No data yet</span>
+            }
+          </Card.Description>
         </Card.Content>
 
       </Card>

@@ -32,9 +32,9 @@ const charts = requires.map(r => r.default).reduce(flatten, [])
 
 export default charts
 
-// TODO ensure all charts have a min height so that a new chart with no data shows up (eg add custom with no other charts)
 // TODO combine 'settings' and 'config' to remove special handling for chart types
 // TODO add chart formatting (round, percent) and vertical axis scale options
+// TODO custom chart modal needs dropdown selector for the metric
 // TODO add vertical axis settings to custom chart
 // TODO set up url # parameter and parser to allow reconstruction of by sharing links
 // TODO black dots when hovering over chart show up in the wrong spot for area charts
