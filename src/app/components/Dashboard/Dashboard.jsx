@@ -26,7 +26,9 @@ const SortableDashboard = SortableContainer(({ state, props }) => {
             instanceDomainMappings={state.instanceDomainMappings}
             containerId={(props.settings.containerId || '_all') === '_all' ? '' : props.settings.containerId}
             settings={c.settings}
-            onNewSettings={(settings) => props.updateChartSettings(idx, settings)} />
+            onNewSettings={(settings) => props.updateChartSettings(idx, settings)}
+            // TODO need a better way to pass this pmid list in to the settings dialogs
+            pmids={state.pmids}/>
         })}
       </ul>
     </div>

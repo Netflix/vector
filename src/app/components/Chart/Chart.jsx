@@ -87,7 +87,7 @@ class Chart extends React.Component {
   }
 
   render () {
-    const { chartInfo, datasets, onCloseClicked, onNewSettings, containerList, instanceDomainMappings, containerId } = this.props
+    const { chartInfo, datasets, onCloseClicked, onNewSettings, containerList, instanceDomainMappings, containerId, pmids } = this.props
 
     const dataset = datasets
       ? chartInfo.processor.calculateChart(datasets, chartInfo, { instanceDomainMappings, containerList, containerId, chartInfo })
@@ -114,7 +114,7 @@ class Chart extends React.Component {
             <Modal dimmer='inverted' open={this.state.modalOpen} trigger={
               <Icon className='right floated' name='setting' circular fitted link onClick={handleSettingsIcon} /> }>
               <Modal.Content>
-                <SettingsComponent {...chartInfo} onNewSettings={handleNewSettings} onClose={() => {}} />
+                <SettingsComponent {...chartInfo} pmids={pmids} onNewSettings={handleNewSettings} onClose={() => {}} />
               </Modal.Content>
             </Modal> }
 
@@ -192,6 +192,7 @@ Chart.propTypes = {
   instanceDomainMappings: PropTypes.object.isRequired,
   containerList: PropTypes.array.isRequired,
   containerId: PropTypes.string.isRequired,
+  pmids: PropTypes.array.isRequired,
 }
 
 export default Chart

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Form, Button, Checkbox } from 'semantic-ui-react'
+import { Form, Button, Checkbox, Dropdown } from 'semantic-ui-react'
 
 class CustomSettingsModal extends React.Component {
   state = {
@@ -28,7 +28,10 @@ class CustomSettingsModal extends React.Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Form.Input label='Select Metric' value={this.state.metricNames[0]} onChange={this.handleMetricChange} />
+        <Dropdown placeholder='Select Metric' fluid search selection
+          value={this.state.metricNames[0]}
+          onChange={this.handleMetricChange}
+          options={this.props.pmids.map(({ name }) => ({ text: name, value: name }))}/>
         <Checkbox label='Percentage' checked={this.state.percentage} onChange={this.handlePercentageChange} />
         <Checkbox label='Area' checked={this.state.lineType === 'stackedarea'} onChange={this.handleAreaChange} />
         <Checkbox label='Cumulative' checked={this.state.cumulative} onChange={this.handleCumulativeChange} />
@@ -45,6 +48,7 @@ class CustomSettingsModal extends React.Component {
 }
 
 CustomSettingsModal.propTypes = {
+  pmids: PropTypes.array.isRequired,
   metricNames: PropTypes.array.isRequired,
   percentage: PropTypes.bool.isRequired,
   lineType: PropTypes.string.isRequired,
