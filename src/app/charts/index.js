@@ -32,7 +32,7 @@ const charts = requires.map(r => r.default).reduce(flatten, [])
 
 export default charts
 
-// TODO combine 'settings' and 'config' to remove special handling for chart types
+// TODO make transforms a bit more consistent (take a list of metric names etc) and document them
 // TODO add chart formatting (round, percent) and vertical axis scale options
 // TODO custom chart modal needs dropdown selector for the metric
 // TODO add vertical axis settings to custom chart

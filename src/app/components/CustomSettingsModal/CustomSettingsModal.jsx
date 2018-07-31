@@ -5,17 +5,17 @@ import { Form, Button, Checkbox } from 'semantic-ui-react'
 
 class CustomSettingsModal extends React.Component {
   state = {
-    metricName: this.props.metricName,
+    metricNames: this.props.metricNames,
     percentage: this.props.percentage,
-    area: this.props.area,
+    lineType: this.props.lineType,
     cumulative: this.props.cumulative,
     converted: this.props.converted,
     conversionFunction: this.props.conversionFunction,
   }
 
-  handleMetricChange = (e, { value }) => this.setState({ metricName: value })
+  handleMetricChange = (e, { value }) => this.setState({ metricNames: [value] })
   handlePercentageChange = (e, { checked }) => this.setState({ percentage: checked })
-  handleAreaChange = (e, { checked }) => this.setState({ area: checked })
+  handleAreaChange = (e, { checked }) => this.setState({ lineType: checked ? 'stackedarea' : 'line'})
   handleCumulativeChange = (e, { checked }) => this.setState({ cumulative: checked })
   handleConvertedChange = (e, { checked }) => this.setState({ converted: checked })
   handleConversionFunctionChange = (e, { value }) => this.setState({ conversionFunction: value })
@@ -28,9 +28,9 @@ class CustomSettingsModal extends React.Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Form.Input label='Select Metric' value={this.state.metricName} onChange={this.handleMetricChange} />
+        <Form.Input label='Select Metric' value={this.state.metricNames[0]} onChange={this.handleMetricChange} />
         <Checkbox label='Percentage' checked={this.state.percentage} onChange={this.handlePercentageChange} />
-        <Checkbox label='Area' checked={this.state.area} onChange={this.handleAreaChange} />
+        <Checkbox label='Area' checked={this.state.lineType === 'stackedarea'} onChange={this.handleAreaChange} />
         <Checkbox label='Cumulative' checked={this.state.cumulative} onChange={this.handleCumulativeChange} />
         <Checkbox label='Converted' checked={this.state.converted} onChange={this.handleConvertedChange} />
         <Form.Input label='Conversion Function'
@@ -45,9 +45,9 @@ class CustomSettingsModal extends React.Component {
 }
 
 CustomSettingsModal.propTypes = {
-  metricName: PropTypes.string.isRequired,
+  metricNames: PropTypes.array.isRequired,
   percentage: PropTypes.bool.isRequired,
-  area: PropTypes.bool.isRequired,
+  lineType: PropTypes.string.isRequired,
   cumulative: PropTypes.bool.isRequired,
   converted: PropTypes.bool.isRequired,
   conversionFunction: PropTypes.string.isRequired,

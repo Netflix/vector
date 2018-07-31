@@ -87,10 +87,10 @@ class Chart extends React.Component {
   }
 
   render () {
-    const { chartInfo, datasets, onCloseClicked, onNewSettings, containerList, instanceDomainMappings, containerId, settings } = this.props
+    const { chartInfo, datasets, onCloseClicked, onNewSettings, containerList, instanceDomainMappings, containerId } = this.props
 
     const dataset = datasets
-      ? chartInfo.processor.calculateChart(datasets, chartInfo, { instanceDomainMappings, containerList, containerId, settings })
+      ? chartInfo.processor.calculateChart(datasets, chartInfo, { instanceDomainMappings, containerList, containerId })
       : []
 
     const HelpComponent = chartInfo.helpComponent
@@ -114,7 +114,7 @@ class Chart extends React.Component {
             <Modal dimmer='inverted' open={this.state.modalOpen} trigger={
               <Icon className='right floated' name='setting' circular fitted link onClick={handleSettingsIcon} /> }>
               <Modal.Content>
-                <SettingsComponent {...chartInfo.settings} onNewSettings={handleNewSettings} onClose={() => {}} />
+                <SettingsComponent {...chartInfo} onNewSettings={handleNewSettings} onClose={() => {}} />
               </Modal.Content>
             </Modal> }
 
@@ -142,14 +142,14 @@ class Chart extends React.Component {
 
         <Card.Content>
           <Card.Description style={{ width: '600px', height: '300px' }}>
-            { dataset && dataset.length > 1 &&
+            { dataset && dataset.length > 0 &&
               <XYFrame
                 size={[600, 300]}
                 lines={dataset}
                 lineDataAccessor={d => d.data}
                 lineStyle={d => ({ stroke: color(d), fill: color(d), fillOpacity: 0.5 })}
                 areaStyle={d => ({ stroke: color(d), fill: color(d), fillOpacity: 0.5, strokeWidth: '2px' })}
-                lineType={(chartInfo.settings && chartInfo.settings.area) ? 'stackedarea' : (chartInfo.config.lineType || 'line')}
+                lineType={chartInfo.lineType || 'line'}
                 defined={d => d.value !== null}
                 margin={{ left: 60, bottom: 60, right: 3, top: 3 }}
                 xAccessor={d => d.ts}
@@ -173,7 +173,7 @@ class Chart extends React.Component {
                 tooltipContent={(d) => fetchSharedTooltipContent(d, dataset)}
                 baseMarkProps={{ transitionDuration: 0 }} />
             }
-            { (!dataset || dataset.length <= 1) &&
+            { (!dataset || dataset.length <= 0) &&
               <span>No data yet</span>
             }
           </Card.Description>
@@ -191,7 +191,6 @@ Chart.propTypes = {
   onNewSettings: PropTypes.func,
   instanceDomainMappings: PropTypes.object.isRequired,
   containerList: PropTypes.array.isRequired,
-  settings: PropTypes.object,
   containerId: PropTypes.string.isRequired,
 }
 

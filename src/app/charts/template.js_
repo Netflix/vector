@@ -10,18 +10,14 @@ export default [
     group: 'CPU',
     title: 'Context Switches per second',
     processor: simpleModel,
-    config: {
-      metricNames: [
-        'kernel.all.pswitch'
-      ],
-      transforms: [
-        defaultTitleAndKeylabel,
-        cumulativeTransform,
-      ],
-    },
-    settings: {
-      filter: ''
-    },
+    metricNames: [
+      'kernel.all.pswitch'
+    ],
+    transforms: [
+      defaultTitleAndKeylabel,
+    cumulativeTransform,
+    ],
+    filter: '',
     isContainerAware: true,          // if the chart supports containers
     isHighOverhead: true,            // should it print a high overhead warning
     helpComponent: HelpFlamegraph,   // help text, load as jsx (see import above)

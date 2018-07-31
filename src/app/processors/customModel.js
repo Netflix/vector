@@ -14,8 +14,8 @@ import {
 /**
  * Extracts a single metric by name from the datasets
  */
-function calculateChart(datasets, { settings }, context) {
-  const instances = extractInstancesForMetric(datasets, settings.metricName)
+function calculateChart(datasets, chartInfo, context) {
+  const instances = extractInstancesForMetric(datasets, chartInfo.metricNames)
   if (instances.length == 0) return null
 
   // create an entry for each instance name
@@ -31,7 +31,7 @@ function calculateChart(datasets, { settings }, context) {
         .filter(ds => ds.value !== null)
     }))
 
-  const transforms = constructTransformPipeline(settings)
+  const transforms = constructTransformPipeline(chartInfo)
   let transformed = data
   transforms.forEach(fn => {
     transformed = fn(transformed, context)
@@ -42,27 +42,25 @@ function calculateChart(datasets, { settings }, context) {
 /**
  * Creates the transform pipeline for the custom metric
  */
-function constructTransformPipeline(settings) {
+function constructTransformPipeline(chartInfo) {
+  // TODO move this logic into the modal (?) and then collapse customModel into simpleModel
   let transforms = []
   transforms.push(defaultTitleAndKeylabel)
-  if (settings.cumulative) {
+  if (chartInfo.cumulative) {
     transforms.push(cumulativeTransform)
   }
-  if (settings.converted && settings.conversionFunction) {
-    const conversionFunction = new Function('value', 'return ' + settings.conversionFunction + ';')
+  if (chartInfo.converted && chartInfo.conversionFunction) {
+    const conversionFunction = new Function('value', 'return ' + chartInfo.conversionFunction + ';')
     transforms.push(mathAllValues(conversionFunction))
   }
-  if (settings.percentage) {
+  if (chartInfo.percentage) {
     transforms.push(toPercentage)
   }
   return transforms
 }
 
-// TODO handle 'area' in Chart.jsx
-// TODO handle 'percentage' in Chart.jsx
-
-function requiredMetricNames({ settings }) {
-  return settings.metricName || null
+function requiredMetricNames(chartInfo) {
+  return chartInfo.metricNames || null
 }
 
 export default {

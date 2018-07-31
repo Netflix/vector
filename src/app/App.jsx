@@ -45,7 +45,7 @@ class App extends React.Component {
 
   updateChartSettings = (idx, settings) => {
     this.setState((oldState) => {
-      let newChart = { ...oldState.chartlist[idx], settings: { ...settings } }
+      let newChart = { ...oldState.chartlist[idx], ...settings }
       return { chartlist: [ ...oldState.chartlist.slice(0, idx), newChart, ...oldState.chartlist.slice(idx + 1) ] }
     })
   }
