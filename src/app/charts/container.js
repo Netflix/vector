@@ -12,7 +12,7 @@ import {
   defaultTitleAndKeylabel,
   divideBy,
   cumulativeTransform,
-  cumulativeTransformOnlyMetric,
+  cumulativeTransformOnlyMetrics,
   filterForContainerId,
   // log,
 } from '../processors/transforms'
@@ -32,7 +32,7 @@ export default [
     ],
     transforms: [
       mapInstanceDomains,
-      mapContainerNames('cgroup.cpuacct.usage'),
+      mapContainerNames([ 'cgroup.cpuacct.usage' ]),
       filterForContainerId([ 'cgroup.cpuacct.usage' ]),
       defaultTitleAndKeylabel,
       cumulativeTransform,
@@ -50,7 +50,7 @@ export default [
     ],
     transforms: [
       mapInstanceDomains,
-      mapContainerNames('cgroup.memory.usage'),
+      mapContainerNames([ 'cgroup.memory.usage' ]),
       filterForContainerId([ 'cgroup.memory.usage' ]),
       defaultTitleAndKeylabel,
       kbToGb,
@@ -71,13 +71,12 @@ export default [
       // make sure that all the cgroup memory uses the same metric and then add them together
       // this sums all the values across the cgroup (map + fix are so that the cgroup size is calculated only on containers)
       mapInstanceDomains,
-      mapContainerNames('cgroup.memory.usage'),
+      mapContainerNames([ 'cgroup.memory.usage' ]),
       // do not filter here, we want totals
       customTitleAndKeylabel(metric => metric),
       combineValuesByTitle((a, b) => a + b),
-      divideByOnlyMetric(1024, 'mem.util.used'),
-      divideByOnlyMetric(1024, 'mem.util.free'),
-      divideByOnlyMetric(1024 * 1024, 'cgroup.memory.usage'),
+      divideByOnlyMetric(1024, [ 'mem.util.used', 'mem.util.free' ]),
+      divideByOnlyMetric(1024 * 1024, [ 'cgroup.memory.usage' ]),
       timesliceCalculations({
         'host used': (values) => ({ '-1': values['mem.util.used']['-1'] - firstValueInObject(values['cgroup.memory.usage']) }),
         'free (unused)': (values) => ({ '-1': values['mem.util.free']['-1'] }),
@@ -99,12 +98,10 @@ export default [
     ],
     transforms: [
       mapInstanceDomains,
-      mapContainerNames('cgroup.memory.usage'),
-      mapContainerNames('cgroup.memory.limit'),
+      mapContainerNames([ 'cgroup.memory.usage', 'cgroup.memory.limit' ]),
       filterForContainerId([ 'cgroup.memory.usage', 'cgroup.memory.limit' ]),
-      divideByOnlyMetric(1024, 'mem.physmem'),
-      divideByOnlyMetric(1024*1024, 'cgroup.memory.usage'),
-      divideByOnlyMetric(1024*1024, 'cgroup.memory.limit'),
+      divideByOnlyMetric(1024, [ 'mem.physmem' ]),
+      divideByOnlyMetric(1024*1024, [ 'cgroup.memory.usage', 'cgroup.memory.limit' ]),
       timesliceCalculations({
         // TODO this calculation is substantially different from the old vector calculation
         'headroom': (slice) => {
@@ -130,8 +127,7 @@ export default [
     ],
     transforms: [
       mapInstanceDomains,
-      mapContainerNames('cgroup.blkio.all.io_serviced.read'),
-      mapContainerNames('cgroup.blkio.all.io_serviced.write'),
+      mapContainerNames([ 'cgroup.blkio.all.io_serviced.read', 'cgroup.blkio.all.io_serviced.write' ]),
       filterForContainerId([ 'cgroup.blkio.all.io_serviced.read', 'cgroup.blkio.all.io_serviced.write' ]),
       cumulativeTransform,
       renameMetric({
@@ -152,8 +148,7 @@ export default [
     ],
     transforms: [
       mapInstanceDomains,
-      mapContainerNames('cgroup.blkio.all.io_service_bytes.read'),
-      mapContainerNames('cgroup.blkio.all.io_service_bytes.write'),
+      mapContainerNames([ 'cgroup.blkio.all.io_service_bytes.read', 'cgroup.blkio.all.io_service_bytes.write' ]),
       filterForContainerId([ 'cgroup.blkio.all.io_service_bytes.read', 'cgroup.blkio.all.io_service_bytes.write' ]),
       cumulativeTransform,
       renameMetric({
@@ -174,8 +169,7 @@ export default [
     ],
     transforms: [
       mapInstanceDomains,
-      mapContainerNames('cgroup.blkio.all.throttle.io_serviced.read'),
-      mapContainerNames('cgroup.blkio.all.throttle.io_serviced.write'),
+      mapContainerNames([ 'cgroup.blkio.all.throttle.io_serviced.read', 'cgroup.blkio.all.throttle.io_serviced.write' ]),
       filterForContainerId([ 'cgroup.blkio.all.throttle.io_serviced.read', 'cgroup.blkio.all.throttle.io_serviced.write' ]),
       cumulativeTransform,
       renameMetric({
@@ -196,8 +190,8 @@ export default [
     ],
     transforms: [
       mapInstanceDomains,
-      mapContainerNames('cgroup.blkio.all.throttle.io_service_bytes.read'),
-      mapContainerNames('cgroup.blkio.all.throttle.io_service_bytes.write'),
+      mapContainerNames([ 'cgroup.blkio.all.throttle.io_service_bytes.read',
+        'cgroup.blkio.all.throttle.io_service_bytes.write' ]),
       filterForContainerId([ 'cgroup.blkio.all.throttle.io_service_bytes.read', 'cgroup.blkio.all.throttle.io_service_bytes.write' ]),
       cumulativeTransform,
       renameMetric({
@@ -218,8 +212,7 @@ export default [
     ],
     transforms: [
       mapInstanceDomains,
-      mapContainerNames('cgroup.cpusched.shares'),
-      mapContainerNames('cgroup.cpusched.periods'),
+      mapContainerNames([ 'cgroup.cpusched.shares', 'cgroup.cpusched.periods' ]),
       filterForContainerId([ 'cgroup.cpusched.shares', 'cgroup.cpusched.periods' ]),
       renameMetric({
         'cgroup.cpusched.shares': 'shares',
@@ -242,12 +235,10 @@ export default [
     ],
     transforms: [
       mapInstanceDomains,
-      mapContainerNames('cgroup.cpusched.shares'),
-      mapContainerNames('cgroup.cpusched.periods'),
-      mapContainerNames('cgroup.cpuacct.usage'),
+      mapContainerNames([ 'cgroup.cpusched.shares', 'cgroup.cpusched.periods', 'cgroup.cpuacct.usage' ]),
       filterForContainerId([ 'cgroup.cpuacct.usage', 'cgroup.cpusched.shares', 'cgroup.cpusched.periods' ]),
-      cumulativeTransformOnlyMetric('cgroup.cpuacct.usage'),
-      divideByOnlyMetric(1000 * 1000 * 1000, 'cgroup.cpuacct.usage'),
+      cumulativeTransformOnlyMetrics([ 'cgroup.cpuacct.usage' ]),
+      divideByOnlyMetric(1000 * 1000 * 1000, [ 'cgroup.cpuacct.usage' ]),
       timesliceCalculations({
         // TODO i really don't understand why this calculation is built like this,
         // surely it should be something like: headroom = limits - utilisation
@@ -277,7 +268,7 @@ export default [
     ],
     transforms: [
       mapInstanceDomains,
-      mapContainerNames('cgroup.cpusched.throttled_time'),
+      mapContainerNames([ 'cgroup.cpusched.throttled_time' ]),
       filterForContainerId([ 'cgroup.cpusched.throttled_time' ]),
       cumulativeTransform,
       customTitleAndKeylabel((metric, instance) => instance),
@@ -295,12 +286,10 @@ export default [
     ],
     transforms: [
       mapInstanceDomains,
-      mapContainerNames('cgroup.memory.usage'),
-      mapContainerNames('cgroup.memory.limit'),
+      mapContainerNames([ 'cgroup.memory.usage', 'cgroup.memory.limit' ]),
       filterForContainerId([ 'cgroup.memory.usage', 'cgroup.memory.limit' ]),
-      divideByOnlyMetric(1024, 'mem.physmem'),
-      divideByOnlyMetric(1024 * 1024, 'cgroup.memory.usage'),
-      divideByOnlyMetric(1024 * 1024, 'cgroup.memory.limit'),
+      divideByOnlyMetric(1024, [ 'mem.physmem' ]),
+      divideByOnlyMetric(1024 * 1024, [ 'cgroup.memory.usage', 'cgroup.memory.limit' ]),
       timesliceCalculations({
         'utilization': (slice) => {
           let containerNames = Object.keys(slice['cgroup.memory.usage'] || {})

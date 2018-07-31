@@ -90,7 +90,7 @@ class Chart extends React.Component {
     const { chartInfo, datasets, onCloseClicked, onNewSettings, containerList, instanceDomainMappings, containerId } = this.props
 
     const dataset = datasets
-      ? chartInfo.processor.calculateChart(datasets, chartInfo, { instanceDomainMappings, containerList, containerId })
+      ? chartInfo.processor.calculateChart(datasets, chartInfo, { instanceDomainMappings, containerList, containerId, chartInfo })
       : []
 
     const HelpComponent = chartInfo.helpComponent

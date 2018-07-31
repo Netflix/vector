@@ -32,7 +32,6 @@ const charts = requires.map(r => r.default).reduce(flatten, [])
 
 export default charts
 
-// TODO make transforms a bit more consistent (take a list of metric names etc) and document them
 // TODO add chart formatting (round, percent) and vertical axis scale options
 // TODO custom chart modal needs dropdown selector for the metric
 // TODO add vertical axis settings to custom chart
@@ -45,3 +44,5 @@ export default charts
 // TODO bug why does the network packets chart explode when a container selection is made - looks like network packets filter is actually container aware
 // TODO when changing ip address, refresh container list
 // TODO enable vertical resize
+// TODO automatically reconnect and timeout when temporarily cannot reach a host$a
+// TODO automatically repoll / earlier timeouts for failed polls

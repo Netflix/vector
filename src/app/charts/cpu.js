@@ -1,5 +1,5 @@
 import simpleModel from '../processors/simpleModel'
-import { log, timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform, toPercentage } from '../processors/transforms'
+import { timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform, toPercentage } from '../processors/transforms'
 import { keyValueArrayToObject } from '../processors/utils'
 
 export default [
@@ -11,10 +11,8 @@ export default [
       'kernel.all.pswitch'
     ],
     transforms: [
-      log('before'),
       defaultTitleAndKeylabel,
       cumulativeTransform,
-      log('after'),
     ],
   },
 
