@@ -32,7 +32,6 @@ const charts = requires.map(r => r.default).reduce(flatten, [])
 
 export default charts
 
-// TODO black dots when hovering over chart show up in the wrong spot for area charts
 // TODO add chart formatting (round, percent) and vertical axis scale options
 // TODO add vertical axis settings to custom chart
 // TODO set up url # parameter and parser to allow reconstruction of sharing links

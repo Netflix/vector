@@ -166,9 +166,7 @@ class Chart extends React.Component {
                 ]}
                 // line highlight
                 hoverAnnotation={[
-                  { type: 'vertical-points', threshold: 0.1, r: () => 5 },
-                  { type: 'x', disable: ['connector', 'note']},
-                  { type: 'frame-hover' },
+                  { type: 'frame-hover' }, // shows the tooltip frame
                 ]}
                 tooltipContent={(d) => fetchSharedTooltipContent(d, dataset)}
                 baseMarkProps={{ transitionDuration: 0 }} />
