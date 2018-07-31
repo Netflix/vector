@@ -1,10 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './footer.css'
-
 function Footer({ version }) {
-  return <div className="version-div">Version: {version}</div>
+  return <div style={{ paddingLeft: '15px' }}>Version: {version}</div>
 }
 
 Footer.propTypes = {

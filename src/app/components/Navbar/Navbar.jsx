@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import { Menu, Image } from 'semantic-ui-react'
 
-import './Navbar.css'
-
 const Navbar = ({ embed }) => {
   if (embed) return null;
 

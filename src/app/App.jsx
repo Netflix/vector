@@ -8,9 +8,9 @@ import Navbar from './components/Navbar/Navbar.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import Dashboard from './components/Dashboard/Dashboard.jsx'
 import ConfigPanel from './components/ConfigPanel/ConfigPanel.jsx'
-import './App.css'
 
-import 'semantic-ui-css/semantic.min.css';
+import { arrayMove } from 'react-sortable-hoc'
+import 'semantic-ui-css/semantic.min.css'
 
 class App extends React.Component {
   state = {
@@ -37,6 +37,7 @@ class App extends React.Component {
   }
 
   removeChartByIndex = (idx) => {
+    console.log('removing chart at index ', idx)
     this.setState((oldState) =>
       ({ chartlist: [ ...oldState.chartlist.slice(0, idx), ...oldState.chartlist.slice(idx + 1) ] })
     )
@@ -47,6 +48,12 @@ class App extends React.Component {
       let newChart = { ...oldState.chartlist[idx], settings: { ...settings } }
       return { chartlist: [ ...oldState.chartlist.slice(0, idx), newChart, ...oldState.chartlist.slice(idx + 1) ] }
     })
+  }
+
+  onMoveChart = (oldIndex, newIndex) => {
+    this.setState((oldState) => ({
+      chartlist: arrayMove(oldState.chartlist, oldIndex, newIndex)
+    }))
   }
 
   render () {
@@ -76,7 +83,8 @@ class App extends React.Component {
             chartlist={this.state.chartlist}
             onContainerListLoaded={this.onContainerListLoaded}
             removeChartByIndex={this.removeChartByIndex}
-            updateChartSettings={this.updateChartSettings} />
+            updateChartSettings={this.updateChartSettings}
+            onMoveChart={this.onMoveChart} />
 
           <Footer version={config.version}/>
         </div>

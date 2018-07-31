@@ -6,8 +6,7 @@ import ColorHash from 'color-hash'
 const colorHash = new ColorHash()
 
 import { Modal, Popup, Icon, Card } from 'semantic-ui-react'
-
-import './chart.css'
+import { SortableHandle } from 'react-sortable-hoc'
 
 const tooltipStyles = {
   header: {fontWeight: 'bold', borderBottom: 'thin solid black', marginBottom: '10px', textAlign: 'center'},
@@ -16,6 +15,8 @@ const tooltipStyles = {
   value: {display: 'inline-block', fontWeight: 'bold', margin: '0'},
   wrapper: {background:"rgba(255,255,255,0.8)", minWidth: "max-content", whiteSpace: "nowrap"}
 }
+
+const DragHandle = SortableHandle(() => <Icon name='expand arrows alternate' />)
 
 // Search the lines for a similar x value for vertical shared tooltip
 function fetchCoincidentPoints(passedData, dataset) {
@@ -74,7 +75,7 @@ function fetchSharedTooltipContent(passedData, dataset) {
   });
 
   return (
-    <div className="tooltip-content" style={tooltipStyles.wrapper} >
+    <div style={tooltipStyles.wrapper} >
       {returnArray}
     </div>
   );
@@ -114,9 +115,9 @@ class Chart extends React.Component {
 
           { chartInfo.settingsComponent &&
             <Modal dimmer='inverted' open={this.state.modalOpen} trigger={
-              <Icon className='right floated' name='setting' circular fitted link onClick={handleSettingsIcon}/> }>
+              <Icon className='right floated' name='setting' circular fitted link onClick={handleSettingsIcon} /> }>
               <Modal.Content>
-                <SettingsComponent {...chartInfo.settings} onNewSettings={handleNewSettings} />
+                <SettingsComponent {...chartInfo.settings} onNewSettings={handleNewSettings} onClose={() => {}} />
               </Modal.Content>
             </Modal> }
 
@@ -137,6 +138,7 @@ class Chart extends React.Component {
               <Icon className='right floated' name='check' circular fitted />} /> }
 
           <Card.Header>
+            <DragHandle />
             {chartInfo.title}
           </Card.Header>
         </Card.Content>
@@ -189,8 +191,8 @@ Chart.propTypes = {
   onNewSettings: PropTypes.func,
   instanceDomainMappings: PropTypes.object.isRequired,
   containerList: PropTypes.array.isRequired,
-  containerId: PropTypes.string.isRequired,
   settings: PropTypes.object,
+  containerId: PropTypes.string.isRequired,
 }
 
 export default Chart

@@ -192,5 +192,5 @@ export function filterForContainerId (metricNames) {
  */
 export function filterInstanceIncludesFilterText (metricInstances, { settings }) {
   if (!settings.filter) return metricInstances
-  return metricInstances.filter(mi => mi.instance.includes(settings.filter))
+  return metricInstances.filter(mi => mi.instance ? mi.instance.includes(settings.filter) : true)
 }

@@ -32,12 +32,12 @@ describe('ChartSelector', () => {
       const menus = create().find(Menu)
       expect(menus.length).to.equal(1)
     })
-    it('renders one menu items', () => {
+    it('renders one heading and one menu items', () => {
       const items = create().find(Menu).find(Menu.Item)
-      expect(items.length).to.equal(1)
+      expect(items.length).to.equal(2)
     })
     it('renders a clear widgets item', () => {
-      const menutext = create().find(Menu).find(Menu.Item).render().text()
+      const menutext = create().find(Menu).find(Menu.Item).at(1).render().text()
       expect(menutext).to.equal('Clear charts')
     })
   })
@@ -46,20 +46,24 @@ describe('ChartSelector', () => {
     beforeEach(() => {
       props.charts.push({ title: 'cpu usage', group: 'CPU' })
     })
-    it('renders three menu items', () => {
+    it('renders four menu items', () => {
       const items = create().find(Menu).find(Menu.Item)
-      expect(items.length).to.equal(3)
+      expect(items.length).to.equal(4)
     })
-    it('the clear menu item is first', () => {
+    it('the charts header is first', () => {
       const menutext = create().find(Menu).find(Menu.Item).at(0).render().text()
+      expect(menutext).to.equal('Charts')
+    })
+    it('the clear menu item is second', () => {
+      const menutext = create().find(Menu).find(Menu.Item).at(1).render().text()
       expect(menutext).to.equal('Clear charts')
     })
     it('the cpu header is first', () => {
-      const menutext = create().find(Menu).find(Menu.Item).at(1).render().text()
+      const menutext = create().find(Menu).find(Menu.Item).at(2).render().text()
       expect(menutext).to.equal('CPU')
     })
     it('the cpu usage element is second', () => {
-      const menutext = create().find(Menu).find(Menu.Item).at(2).render().text()
+      const menutext = create().find(Menu).find(Menu.Item).at(3).render().text()
       expect(menutext).to.equal('cpu usage')
     })
   })
@@ -69,13 +73,14 @@ describe('ChartSelector', () => {
       props.charts.push({ title: 'cpu usage', group: 'CPU' })
       props.charts.push({ title: 'load average', group: 'CPU' })
     })
-    // clear charts
+    // Charts
+    // - clear charts
     // CPU header
     // - cpu usage
     // - load average
     it('renders four menu items', () => {
       const items = create().find(Menu).find(Menu.Item)
-      expect(items.length).to.equal(4)
+      expect(items.length).to.equal(5)
     })
   })
 
@@ -85,7 +90,8 @@ describe('ChartSelector', () => {
       props.charts.push({ title: 'iops', group: 'DISK' })
       props.charts.push({ title: 'load average', group: 'CPU' })
     })
-    // clear charts
+    // Charts
+    // - clear charts
     // CPU
     // - cpu usage
     // - load average
@@ -93,7 +99,7 @@ describe('ChartSelector', () => {
     // - iops
     it('renders six menu items', () => {
       const items = create().find(Menu).find(Menu.Item)
-      expect(items.length).to.equal(6)
+      expect(items.length).to.equal(7)
     })
   })
 })

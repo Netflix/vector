@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Input, Grid, Dropdown, Popup, Menu } from 'semantic-ui-react'
+import { Input, Form, Dropdown, Popup, Menu } from 'semantic-ui-react'
 
 import ChartSelector from '../ChartSelector/ChartSelector.jsx'
 
@@ -24,26 +24,26 @@ export class ConfigPanel extends React.Component {
 
   render() {
     return (
-      <div className="configpanel-container">
+      <div className="configpanel-container" style={{ paddingLeft: '10px' }}>
         <Menu secondary style={{margin: '5px'}}>
           <Popup trigger={<Menu.Item header>Connection</Menu.Item>} hoverable position='bottom left'>
-            <Grid>
-              <Grid.Row>
+            <Form style={{ width: '400px' }}>
+              <Form.Field>
                 <label>Hostname (pmwebd)</label>
                 <Input onChange={this.handleHostnameChange} value={this.state.hostname}/>
-              </Grid.Row>
-              <Grid.Row>
+              </Form.Field>
+              <Form.Field>
                 <label>Hostspec (target)</label>
                 <Input onChange={this.handleHostspecChange} value={this.state.hostspec}/>
-              </Grid.Row>
-              <Grid.Row>
+              </Form.Field>
+              <Form.Field>
                 <label>Container ID</label>
-                <Dropdown search selection fluid
+                <Dropdown search selection
                   defaultValue={this.state.containerId}
                   options={this.createContainerList()}
                   onChange={this.handleContainerIdChange} />
-              </Grid.Row>
-            </Grid>
+              </Form.Field>
+            </Form>
           </Popup>
           <Popup trigger={<Menu.Item header>Charts</Menu.Item>} hoverable flowing>
             <ChartSelector onClearCharts={this.props.onClearCharts} onAddChart={this.props.onAddChart} charts={this.props.charts} />

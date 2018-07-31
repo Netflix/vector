@@ -23,7 +23,10 @@ function ChartSelector({ charts, onAddChart, onClearCharts }) {
 
   return (
     <Menu >
-      <Menu.Item content='Clear charts' onClick={onClearMenuClick}/>
+      <div key='_clear'>
+        <Menu.Item header>Charts</Menu.Item>
+        <Menu.Item content='Clear charts' onClick={onClearMenuClick}/>
+      </div>
       { groupNames.map((g, gidx) => (
         <div key={gidx}>
           <Menu.Item header>{g}</Menu.Item>

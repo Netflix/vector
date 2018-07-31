@@ -14,7 +14,7 @@ import {
   cumulativeTransform,
   cumulativeTransformOnlyMetric,
   filterForContainerId,
-  log,
+  // log,
 } from '../processors/transforms'
 
 import {

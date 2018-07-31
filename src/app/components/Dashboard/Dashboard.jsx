@@ -2,8 +2,36 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import superagent from 'superagent'
 
+import { SortableContainer, SortableElement } from 'react-sortable-hoc'
+
 import Chart from '../Chart/Chart.jsx'
 import { flatten } from '../../processors/utils'
+
+const SortableChart = SortableElement(props => <li style={{ listStyle: 'none', display: 'inline-block', margin: '6px 6px 6px 6px' }}><Chart {...props}/></li>)
+
+const SortableDashboard = SortableContainer(({ state, props }) => {
+  return (
+    <div style={{ paddingLeft: '15px' }}>
+      Status: { state.status }<br />
+      Context: { state.context }<br />
+      <ul>
+        { props.chartlist.map((c, idx) => {
+          return <SortableChart
+            key={`chart-${idx}`}
+            index={idx}
+            chartInfo={c}
+            datasets={state.datasets}
+            onCloseClicked={() => props.removeChartByIndex(idx)}
+            containerList={state.containerList}
+            instanceDomainMappings={state.instanceDomainMappings}
+            containerId={(props.settings.containerId || '_all') === '_all' ? '' : props.settings.containerId}
+            settings={c.settings}
+            onNewSettings={(settings) => props.updateChartSettings(idx, settings)} />
+        })}
+      </ul>
+    </div>
+  )
+})
 
 export class Dashboard extends React.Component {
   state = {
@@ -154,25 +182,10 @@ export class Dashboard extends React.Component {
     setTimeout(this.pollMetrics, this.props.settings.intervalSeconds * 1000)
   }
 
+  onSortEnd = ({ oldIndex, newIndex }) => this.props.onMoveChart(oldIndex, newIndex)
+
   render () {
-    return (
-      <div>
-        Status: { this.state.status }<br />
-        Context: { this.state.context }<br />
-        { this.props.chartlist.map((c, idx) =>
-          <Chart
-            key={idx}
-            chartInfo={c}
-            datasets={this.state.datasets}
-            onCloseClicked={() => this.props.removeChartByIndex(idx)}
-            containerList={this.state.containerList}
-            instanceDomainMappings={this.state.instanceDomainMappings}
-            containerId={this.props.settings.containerId === '_all' ? '' : this.props.settings.containerId}
-            settings={c.settings}
-            onNewSettings={(settings) => this.props.updateChartSettings(idx, settings)} />
-        )}
-      </div>
-    )
+    return <SortableDashboard state={this.state} props={this.props} onSortEnd={this.onSortEnd} useDragHandle={true} axis='xy'/>
   }
 }
 
@@ -180,10 +193,10 @@ Dashboard.propTypes = {
   host: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   chartlist: PropTypes.array.isRequired,
-  containerId: PropTypes.string.isRequired,
   onContainerListLoaded: PropTypes.func.isRequired,
   removeChartByIndex: PropTypes.func.isRequired,
   updateChartSettings: PropTypes.func.isRequired,
+  onMoveChart: PropTypes.func.isRequired,
 }
 
 export default Dashboard
