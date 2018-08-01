@@ -8,7 +8,6 @@ import {
   defaultTitleAndKeylabel,
   cumulativeTransform,
   mathAllValues,
-  toPercentage,
 } from './transforms'
 
 /**
@@ -52,9 +51,6 @@ function constructTransformPipeline(chartInfo) {
   if (chartInfo.converted && chartInfo.conversionFunction) {
     const conversionFunction = new Function('value', 'return ' + chartInfo.conversionFunction + ';')
     transforms.push(mathAllValues(conversionFunction))
-  }
-  if (chartInfo.percentage) {
-    transforms.push(toPercentage)
   }
   return transforms
 }

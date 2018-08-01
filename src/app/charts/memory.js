@@ -1,5 +1,6 @@
 import simpleModel from '../processors/simpleModel'
 import { timesliceCalculations, defaultTitleAndKeylabel, cumulativeTransform, kbToGb } from '../processors/transforms'
+import { percentage, integer, number } from '../processors/formats'
 
 export default [
   {
@@ -12,7 +13,8 @@ export default [
     transforms: [
       defaultTitleAndKeylabel,
       kbToGb
-    ]
+    ],
+    yTickFormat: integer,
   },
 
   {
@@ -25,7 +27,8 @@ export default [
     transforms: [
       defaultTitleAndKeylabel,
       kbToGb
-    ]
+    ],
+    yTickFormat: integer,
   },
 
   {
@@ -49,6 +52,7 @@ export default [
       }),
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -61,7 +65,8 @@ export default [
     transforms: [
       defaultTitleAndKeylabel,
       kbToGb
-    ]
+    ],
+    yTickFormat: integer,
   },
 
   {
@@ -76,6 +81,7 @@ export default [
     transforms: [
       defaultTitleAndKeylabel,
       cumulativeTransform
-    ]
+    ],
+    yTickFormat: integer,
   },
 ]

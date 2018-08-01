@@ -47,7 +47,7 @@ const horizontalTickLineGenerator = (axisData) => {
   return <path key={style} style={{ stroke: "lightgrey" }} d={style} />
 }
 
-function fetchSharedTooltipContent(passedData, dataset) {
+function fetchSharedTooltipContent(passedData, dataset, formatter) {
   const points = fetchCoincidentPoints(passedData, dataset)
 
   const returnArray = [
@@ -55,6 +55,9 @@ function fetchSharedTooltipContent(passedData, dataset) {
       {moment(new Date(passedData.ts)).format('HH:mm:ss')}
     </div>
   ];
+
+  // provide a default formatter if none was input
+  const format = formatter || ((val) => val)
 
   points.forEach((point, i) => {
     returnArray.push([
@@ -69,7 +72,7 @@ function fetchSharedTooltipContent(passedData, dataset) {
             margin: '0'
           }} />
         <p key={`tooltip_p_${i}`} style={tooltipStyles.title}>{point.keylabel}</p>
-        <p key={`tooltip_p_val_${i}`} style={tooltipStyles.value}>{Number(point && point.value && point.value.value).toFixed(2)}</p>
+        <p key={`tooltip_p_val_${i}`} style={tooltipStyles.value}>{format(point.value && point.value.value)}</p>
       </div>
     ]);
   });
@@ -156,7 +159,9 @@ class Chart extends React.Component {
                 yAccessor={d => d.value}
                 yExtent={[0, undefined]}
                 axes={[
-                  { orient: "left", tickLineGenerator: horizontalTickLineGenerator },
+                  { orient: "left",
+                    tickFormat: chartInfo.yTickFormat,
+                    tickLineGenerator: horizontalTickLineGenerator },
                   { orient: "bottom",
                     tickFormat: ts => moment(ts).format('hh:mm:ss'),
                     tickLineGenerator: verticalTickLineGenerator,
@@ -168,7 +173,7 @@ class Chart extends React.Component {
                 hoverAnnotation={[
                   { type: 'frame-hover' }, // shows the tooltip frame
                 ]}
-                tooltipContent={(d) => fetchSharedTooltipContent(d, dataset)}
+                tooltipContent={(d) => fetchSharedTooltipContent(d, dataset, chartInfo.yTickFormat)}
                 baseMarkProps={{ transitionDuration: 0 }} />
             }
             { (!dataset || dataset.length <= 0) &&

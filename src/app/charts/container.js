@@ -8,7 +8,6 @@ import {
   customTitleAndKeylabel,
   kbToGb,
   combineValuesByTitle,
-  toPercentage,
   defaultTitleAndKeylabel,
   divideBy,
   cumulativeTransform,
@@ -16,6 +15,7 @@ import {
   filterForContainerId,
   // log,
 } from '../processors/transforms'
+import { percentage, integer, number } from '../processors/formats'
 
 import {
   firstValueInObject,
@@ -37,8 +37,8 @@ export default [
       defaultTitleAndKeylabel,
       cumulativeTransform,
       divideBy(1000 * 1000 * 1000),
-      toPercentage,
     ],
+    yTickFormat: percentage,
   },
 
   {
@@ -55,6 +55,7 @@ export default [
       defaultTitleAndKeylabel,
       kbToGb,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -85,6 +86,7 @@ export default [
       // add back a title and keylabel
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -115,6 +117,7 @@ export default [
       }),
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -136,6 +139,7 @@ export default [
       }),
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: number,
   },
 
   {
@@ -157,6 +161,7 @@ export default [
       }),
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -178,6 +183,7 @@ export default [
       }),
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: numberj,
   },
 
   {
@@ -200,6 +206,7 @@ export default [
       }),
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -220,6 +227,7 @@ export default [
       }),
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -255,8 +263,8 @@ export default [
         }
       }),
       defaultTitleAndKeylabel,
-      toPercentage,
     ],
+    yTickFormat: percentage,
   },
 
   {
@@ -303,7 +311,7 @@ export default [
         }
       }),
       defaultTitleAndKeylabel,
-      toPercentage,
     ],
+    yTickFormat: percentage,
   },
 ]

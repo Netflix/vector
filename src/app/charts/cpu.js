@@ -1,6 +1,7 @@
 import simpleModel from '../processors/simpleModel'
-import { timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform, toPercentage } from '../processors/transforms'
+import { timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform } from '../processors/transforms'
 import { keyValueArrayToObject } from '../processors/utils'
+import { percentage, integer, number } from '../processors/formats'
 
 export default [
   {
@@ -14,6 +15,7 @@ export default [
       defaultTitleAndKeylabel,
       cumulativeTransform,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -31,8 +33,8 @@ export default [
       divideBySeries('hinv.ncpu'),
       divideBy(1000),
       cumulativeTransform,
-      toPercentage,
     ],
+    yTickFormat: percentage,
   },
 
   {
@@ -48,8 +50,8 @@ export default [
       divideBySeries('hinv.ncpu'),
       divideBy(1000),
       cumulativeTransform,
-      toPercentage,
     ],
+    yTickFormat: percentage,
   },
 
   {
@@ -65,8 +67,8 @@ export default [
       divideBySeries('hinv.ncpu'),
       divideBy(1000),
       cumulativeTransform,
-      toPercentage,
     ],
+    yTickFormat: percentage,
   },
 
   {
@@ -79,6 +81,7 @@ export default [
     transforms: [
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: number,
   },
 
   {
@@ -92,7 +95,6 @@ export default [
     transforms: [
       divideBy(1000),
       cumulativeTransform,
-      toPercentage,
       timesliceCalculations({
         'cpu [sys+user]': (values) => {
           let cpus = Object.keys(values['kernel.percpu.cpu.sys'])
@@ -105,6 +107,7 @@ export default [
       }),
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: percentage,
   },
 
   {
@@ -118,8 +121,8 @@ export default [
       divideBy(1000),
       defaultTitleAndKeylabel,
       cumulativeTransform,
-      toPercentage,
-    ]
+    ],
+    yTickFormat: number,
   },
 
   {
@@ -133,8 +136,8 @@ export default [
       defaultTitleAndKeylabel,
       divideBy(1000),
       cumulativeTransform,
-      toPercentage,
     ],
+    yTickFormat: number,
   },
 
   {
@@ -147,5 +150,6 @@ export default [
     transforms: [
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: integer,
   }
 ]

@@ -1,6 +1,6 @@
 import simpleModel from '../processors/simpleModel'
-import { mapInstanceDomains, defaultTitleAndKeylabel, divideBy, cumulativeTransform, toPercentage } from '../processors/transforms'
-
+import { mapInstanceDomains, defaultTitleAndKeylabel, divideBy, cumulativeTransform } from '../processors/transforms'
+import { percentage, integer, number } from '../processors/formats'
 
 export default [
   {
@@ -15,7 +15,8 @@ export default [
       mapInstanceDomains,
       defaultTitleAndKeylabel,
       cumulativeTransform,
-    ]
+    ],
+    yTickFormat: number,
   },
 
   {
@@ -32,7 +33,8 @@ export default [
       mapInstanceDomains,
       defaultTitleAndKeylabel,
       cumulativeTransform
-    ]
+    ],
+    yTickFormat: number,
   },
 
   {
@@ -47,7 +49,8 @@ export default [
       mapInstanceDomains,
       defaultTitleAndKeylabel,
       cumulativeTransform
-    ]
+    ],
+    yTickFormat: integer,
   },
 
   {
@@ -62,7 +65,7 @@ export default [
       defaultTitleAndKeylabel,
       divideBy(1000),
       cumulativeTransform,
-      toPercentage,
     ],
+    yTickFormat: percentage,
   },
 ]

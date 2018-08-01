@@ -98,13 +98,6 @@ export const kbToGb = mathAllValues(v => v / 1024 / 1024)
 export const divideBy = (divisor) => mathAllValues(v => v / divisor)
 
 /**
- * Perform a number to percentage conversion (ie: multiply by 100)
- *
- * @return {function} a transform function
- */
-export const toPercentage = mathAllValues(v => v * 100)
-
-/**
  * Perform a division of values by a constant for the given metrics
  *
  * @param {number} divisor the constant that will be the divisor

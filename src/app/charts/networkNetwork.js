@@ -1,5 +1,6 @@
 import simpleModel from '../processors/simpleModel'
 import { renameMetric, defaultTitleAndKeylabel, mapInstanceDomains, cumulativeTransform, filterInstanceIncludesFilterText } from '../processors/transforms'
+import { percentage, integer, number } from '../processors/formats'
 
 import FilterModal from '../components/FilterModal/FilterModal.jsx'
 
@@ -16,6 +17,7 @@ export default [
       defaultTitleAndKeylabel,
       cumulativeTransform,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -31,6 +33,7 @@ export default [
       defaultTitleAndKeylabel,
       cumulativeTransform,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -45,6 +48,7 @@ export default [
       defaultTitleAndKeylabel,
       cumulativeTransform,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -62,7 +66,8 @@ export default [
       cumulativeTransform,
     ],
     settingsComponent: FilterModal,
-    filter: ''
+    filter: '',
+    yTickFormat: integer,
   },
 
   {
@@ -89,6 +94,7 @@ export default [
       }),
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -106,6 +112,7 @@ export default [
       cumulativeTransform,
     ],
     settingsComponent: FilterModal,
-    filter: ''
+    filter: '',
+    yTickFormat: integer,
   }
 ]

@@ -1,5 +1,6 @@
 import simpleModel from '../processors/simpleModel'
 import { defaultTitleAndKeylabel } from '../processors/transforms'
+import { percentage, integer, number } from '../processors/formats'
 
 export default [
   {
@@ -12,6 +13,7 @@ export default [
     transforms: [
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -24,6 +26,7 @@ export default [
     transforms: [
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -38,6 +41,7 @@ export default [
     transforms: [
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: integer,
   },
 
   {
@@ -50,5 +54,6 @@ export default [
     transforms: [
       defaultTitleAndKeylabel,
     ],
+    yTickFormat: integer,
   }
 ]

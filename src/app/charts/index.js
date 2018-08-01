@@ -32,7 +32,7 @@ const charts = requires.map(r => r.default).reduce(flatten, [])
 
 export default charts
 
-// TODO add chart formatting (round, percent) and vertical axis scale options
+// TODO add chart formatting (round, percent) and vertical axis scale options (percentage => d3.format('%')(d), integer => d3.format('f')(d), other => d3.format('.02f')(d))
 // TODO add vertical axis settings to custom chart
 // TODO set up url # parameter and parser to allow reconstruction of sharing links
 // TODO chart legends / click to show and hide

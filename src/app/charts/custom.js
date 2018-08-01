@@ -1,4 +1,5 @@
 import customModel from '../processors/customModel'
+import { percentage, integer, number } from '../processors/formats'
 
 import CustomSettingsModal from '../components/CustomSettingsModal/CustomSettingsModal.jsx'
 
@@ -16,5 +17,6 @@ export default [
     percentage: false,
     cumulative: false,
     settingsComponent: CustomSettingsModal,
+    yTickFormat: number,
   },
 ]
