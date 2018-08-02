@@ -1,6 +1,6 @@
 import simpleModel from '../processors/simpleModel'
 import { defaultTitleAndKeylabel } from '../processors/transforms'
-import { percentage, integer, number } from '../processors/formats'
+import { integer } from '../processors/formats'
 
 export default [
   {

@@ -1,6 +1,6 @@
 import simpleModel from '../processors/simpleModel'
 import { timesliceCalculations, defaultTitleAndKeylabel, cumulativeTransform, kbToGb } from '../processors/transforms'
-import { percentage, integer, number } from '../processors/formats'
+import { integer } from '../processors/formats'
 
 export default [
   {

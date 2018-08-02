@@ -32,15 +32,17 @@ const charts = requires.map(r => r.default).reduce(flatten, [])
 
 export default charts
 
-// TODO add chart formatting (round, percent) and vertical axis scale options (percentage => d3.format('%')(d), integer => d3.format('f')(d), other => d3.format('.02f')(d))
-// TODO add vertical axis settings to custom chart
-// TODO set up url # parameter and parser to allow reconstruction of sharing links
-// TODO chart legends / click to show and hide
+// TODO allow simultaneous graphing of multiple hosts
+// TODO improve container landing experience (depending on host type, provide different experience)
 // TODO add bcc graphs
 // TODO add flame graphs
 // TODO extract out a StatusBar component
 // TODO bug why does the network packets chart explode when a container selection is made - looks like network packets filter is actually container aware
 // TODO when changing ip address, refresh container list
-// TODO enable vertical resize
-// TODO automatically reconnect and timeout when temporarily cannot reach a host$a
+// TODO regularly refresh container list
+// TODO automatically reconnect and timeout when temporarily cannot reach a host
 // TODO automatically repoll / earlier timeouts for failed polls
+// TODO allow vector to browse and collect cluster information
+// TODO performance improvements for custom settings metric dropdown
+// TODO set up url # parameter and parser to allow reconstruction of sharing links
+// TODO chart legends / click to show and hide

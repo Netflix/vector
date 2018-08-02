@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import * as formats from '../../processors/formats'
 
-import { Form, Button, Checkbox, Dropdown } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 
 class CustomSettingsModal extends React.Component {
   state = {
     metricNames: this.props.metricNames,
-    percentage: this.props.percentage,
+    yTickFormat: this.props.yTickFormat,
     lineType: this.props.lineType,
     cumulative: this.props.cumulative,
     converted: this.props.converted,
@@ -14,11 +15,11 @@ class CustomSettingsModal extends React.Component {
   }
 
   handleMetricChange = (e, { value }) => this.setState({ metricNames: [value] })
-  handlePercentageChange = (e, { checked }) => this.setState({ percentage: checked })
   handleAreaChange = (e, { checked }) => this.setState({ lineType: checked ? 'stackedarea' : 'line'})
   handleCumulativeChange = (e, { checked }) => this.setState({ cumulative: checked })
   handleConvertedChange = (e, { checked }) => this.setState({ converted: checked })
   handleConversionFunctionChange = (e, { value }) => this.setState({ conversionFunction: value })
+  handleYTickFormatChange = (e, { value }) => this.setState({ yTickFormat: formats[value] })
 
   handleSubmit = () => {
     this.props.onNewSettings(this.state)
@@ -28,20 +29,34 @@ class CustomSettingsModal extends React.Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Dropdown placeholder='Select Metric' fluid search selection
-          value={this.state.metricNames[0]}
+        <Form.Dropdown label='Select metric' placeholder='Select Metric' fluid search selection
+          value={this.state.metricNames && this.state.metricNames.length && this.state.metricNames[0]}
           onChange={this.handleMetricChange}
           options={this.props.pmids.map(({ name }) => ({ text: name, value: name }))}/>
-        <Checkbox label='Percentage' checked={this.state.percentage} onChange={this.handlePercentageChange} />
-        <Checkbox label='Area' checked={this.state.lineType === 'stackedarea'} onChange={this.handleAreaChange} />
-        <Checkbox label='Cumulative' checked={this.state.cumulative} onChange={this.handleCumulativeChange} />
-        <Checkbox label='Converted' checked={this.state.converted} onChange={this.handleConvertedChange} />
+
+        <Form.Checkbox label='Area' checked={this.state.lineType === 'stackedarea'} onChange={this.handleAreaChange} />
+        <Form.Checkbox label='Cumulative' checked={this.state.cumulative} onChange={this.handleCumulativeChange} />
+        <Form.Checkbox label='Converted' checked={this.state.converted} onChange={this.handleConvertedChange} />
+
         <Form.Input label='Conversion Function'
           disabled={!this.state.converted}
           value={this.state.converted ? this.state.conversionFunction: ''}
           onChange={this.handleConversionFunctionChange} />
 
-        <Button type='submit'>OK</Button>
+        <Form.Group inline>
+          <label>Format</label>
+          <Form.Radio label='Number' name='yTickFormat' value='number'
+            checked={this.state.yTickFormat === formats.number}
+            onChange={this.handleYTickFormatChange} />
+          <Form.Radio label='Integer' name='yTickFormat' value='integer'
+            checked={this.state.yTickFormat === formats.integer}
+            onChange={this.handleYTickFormatChange} />
+          <Form.Radio label='Percentage' name='yTickFormat' value='percentage'
+            checked={this.state.yTickFormat === formats.percentage}
+            onChange={this.handleYTickFormatChange} />
+        </Form.Group>
+
+        <Form.Button type='submit'>OK</Form.Button>
       </Form>
     )
   }
@@ -50,7 +65,7 @@ class CustomSettingsModal extends React.Component {
 CustomSettingsModal.propTypes = {
   pmids: PropTypes.array.isRequired,
   metricNames: PropTypes.array.isRequired,
-  percentage: PropTypes.bool.isRequired,
+  yTickFormat: PropTypes.func.isRequired,
   lineType: PropTypes.string.isRequired,
   cumulative: PropTypes.bool.isRequired,
   converted: PropTypes.bool.isRequired,

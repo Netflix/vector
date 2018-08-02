@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { XYFrame } from "semiotic"
+import { ResponsiveXYFrame } from "semiotic"
 import moment from 'moment'
 import ColorHash from 'color-hash'
 const colorHash = new ColorHash()
 
-import { Modal, Popup, Icon, Card } from 'semantic-ui-react'
+import { ResizableBox } from 'react-resizable';
+import 'react-resizable/css/styles.css'
+import { Modal, Popup, Icon, Button, Segment } from 'semantic-ui-react'
 import { SortableHandle } from 'react-sortable-hoc'
 
 const tooltipStyles = {
@@ -108,14 +110,14 @@ class Chart extends React.Component {
     const color = (d) => colorHash.hex(d.keylabel)
 
     return (
-      <Card style={{ width: '650px', height: '385px' }} raised={true}>
-
-        <Card.Content>
-          <Icon className='right floated' circular fitted link name='close' onClick={onCloseClicked}/>
+      <Segment.Group raised>
+        <Segment clearing>
+          <DragHandle />
+          {'  ' + chartInfo.title + '  '}
 
           { chartInfo.settingsComponent &&
             <Modal dimmer='inverted' open={this.state.modalOpen} trigger={
-              <Icon className='right floated' name='setting' circular fitted link onClick={handleSettingsIcon} /> }>
+              <Icon  name='setting' circular fitted link onClick={handleSettingsIcon} /> }>
               <Modal.Content>
                 <SettingsComponent {...chartInfo} pmids={pmids} onNewSettings={handleNewSettings} onClose={() => {}} />
               </Modal.Content>
@@ -123,7 +125,7 @@ class Chart extends React.Component {
 
           { chartInfo.helpComponent &&
             <Modal dimmer='inverted' trigger={
-              <Icon className='right floated' name='help' circular fitted link/>}>
+              <Icon name='help' circular fitted link/>}>
               <Modal.Content>
                 <HelpComponent chartInfo={chartInfo} />
               </Modal.Content>
@@ -131,23 +133,20 @@ class Chart extends React.Component {
 
           { chartInfo.isHighOverhead &&
             <Popup content='May cost high overhead, see help' trigger={
-              <Icon className='right floated' name='exclamation' circular fitted />} /> }
+              <Icon name='exclamation' circular fitted />} /> }
 
           { chartInfo.isContainerAware &&
             <Popup content='Container aware' trigger={
-              <Icon className='right floated' name='check' circular fitted />} /> }
+              <Icon name='check' circular fitted />} /> }
 
-          <Card.Header>
-            <DragHandle />
-            {chartInfo.title}
-          </Card.Header>
-        </Card.Content>
-
-        <Card.Content>
-          <Card.Description style={{ width: '600px', height: '300px' }}>
+          <Button circular size='tiny' basic icon='close' floated='right' onClick={onCloseClicked} />
+        </Segment>
+        <Segment>
+          <ResizableBox width={650} height={385}>
             { dataset && dataset.length > 0 &&
-              <XYFrame
-                size={[600, 300]}
+              <ResponsiveXYFrame
+                responsiveWidth={true}
+                responsiveHeight={true}
                 lines={dataset}
                 lineDataAccessor={d => d.data}
                 lineStyle={d => ({ stroke: color(d), fill: color(d), fillOpacity: 0.5 })}
@@ -179,10 +178,9 @@ class Chart extends React.Component {
             { (!dataset || dataset.length <= 0) &&
               <span>No data yet</span>
             }
-          </Card.Description>
-        </Card.Content>
-
-      </Card>
+          </ResizableBox>
+        </Segment>
+      </Segment.Group>
     )
   }
 }

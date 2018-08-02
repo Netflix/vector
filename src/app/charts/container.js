@@ -183,7 +183,7 @@ export default [
       }),
       defaultTitleAndKeylabel,
     ],
-    yTickFormat: numberj,
+    yTickFormat: number,
   },
 
   {

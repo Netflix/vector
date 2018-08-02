@@ -1,6 +1,6 @@
 import simpleModel from '../processors/simpleModel'
 import { renameMetric, defaultTitleAndKeylabel, mapInstanceDomains, cumulativeTransform, filterInstanceIncludesFilterText } from '../processors/transforms'
-import { percentage, integer, number } from '../processors/formats'
+import { integer } from '../processors/formats'
 
 import FilterModal from '../components/FilterModal/FilterModal.jsx'
 
