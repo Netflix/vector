@@ -8,6 +8,8 @@ import Navbar from './components/Navbar/Navbar.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import Dashboard from './components/Dashboard/Dashboard.jsx'
 import ConfigPanel from './components/ConfigPanel/ConfigPanel.jsx'
+import ContextPoller from './components/ContextPoller.jsx'
+import DatasetPoller from './components/DatasetPoller.jsx'
 
 import { arrayMove } from 'react-sortable-hoc'
 import 'semantic-ui-css/semantic.min.css'
@@ -27,7 +29,8 @@ class App extends React.Component {
       intervalSeconds: 2
     },
     chartlist: [ ],
-    containerList: []
+    containerList: [],
+    contextData: [],
   }
 
   onContainerListLoaded = (containerList) => this.setState({ containerList })
@@ -56,10 +59,37 @@ class App extends React.Component {
     }))
   }
 
+  onContextUpdated = (context) => {
+    this.setState(() => {
+      // TODO should actually update the context not just replace it
+      console.log('context updated', context)
+      return { contextData: [ context ] }
+    })
+  }
+
+  onContextDatasetUpdated = (ctxds) => {
+    console.log('ctxds updated', ctxds)
+  }
+
   render () {
     return (
       <div>
         <div className="col-md-12">
+          <ContextPoller
+            pollIntervalMs={5000}
+            targets={[ { hostname: '100.118.181.46', hostspec: 'localhost', containerId: null } ]}
+            onContextUpdated={this.onContextUpdated} />
+
+          <DatasetPoller
+            pollIntervalMs={2000}
+            charts={ (this.state.contextData && this.state.chartlist)
+              ? this.state.chartlist.map(c => ({ context: this.state.contextData[0], ...c }))
+              : []
+            }
+            windowIntervalMs={120000}
+            contextData={this.state.contextData}
+            onContextDatasetUpdated={this.onContextDatasetUpdated} />
+
           <Navbar embed={false} />
 
           <ConfigPanel
