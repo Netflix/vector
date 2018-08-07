@@ -113,7 +113,7 @@ class Chart extends React.Component {
       <Segment.Group raised>
         <Segment clearing>
           <DragHandle />
-          {'  ' + chartInfo.title + '  '}
+          {`  ${chartInfo.title}  (${chartInfo.context && chartInfo.context.target && chartInfo.context.target.hostname})  `}
 
           { chartInfo.settingsComponent &&
             <Modal dimmer='inverted' open={this.state.modalOpen} trigger={
@@ -193,7 +193,7 @@ Chart.propTypes = {
   instanceDomainMappings: PropTypes.object.isRequired,
   containerList: PropTypes.array.isRequired,
   containerId: PropTypes.string.isRequired,
-  pmids: PropTypes.array.isRequired,
+  pmids: PropTypes.object.isRequired,
 }
 
 export default Chart

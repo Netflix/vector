@@ -32,7 +32,7 @@ class CustomSettingsModal extends React.Component {
         <Form.Dropdown label='Select metric' placeholder='Select Metric' fluid search selection
           value={this.state.metricNames && this.state.metricNames.length && this.state.metricNames[0]}
           onChange={this.handleMetricChange}
-          options={this.props.pmids.map(({ name }) => ({ text: name, value: name }))}/>
+          options={Object.keys(this.props.pmids).map(name => ({ text: name, value: name }))} />
 
         <Form.Checkbox label='Area' checked={this.state.lineType === 'stackedarea'} onChange={this.handleAreaChange} />
         <Form.Checkbox label='Cumulative' checked={this.state.cumulative} onChange={this.handleCumulativeChange} />

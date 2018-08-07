@@ -9,7 +9,7 @@ function targetMatches (t1, t2) {
 /**
  * ContextPoller accepts a poller as a set of properties, and performs polling for context data.
  *
- * Accepts target (hostname, hostspec, context, containerId)
+ * Accepts target (hostname, hostspec, containerId)
  * Calls back with updates to metadata (hostname etc)
  */
 class ContextPoller extends React.Component {
@@ -26,6 +26,7 @@ class ContextPoller extends React.Component {
 
   componentDidMount = () => {
     setTimeout(() => this.pollContexts(), this.props.pollIntervalMs)
+    this.props.onContextsUpdated(this.state.contexts)
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -40,14 +41,15 @@ class ContextPoller extends React.Component {
   }
 
   pollContexts = () => {
+    this.props.onContextsUpdated(this.state.contexts)
     this.state.contexts.forEach(c => this.pollContext(c))
+    setTimeout(() => this.pollContexts(), this.props.pollIntervalMs)
   }
 
   pollContext = async (existingContext) => {
     try {
       const context = { ...existingContext }
       const pmApi = `http://${context.target.hostname}:7402/pmapi`
-      let needsPublish = false
 
       const TIMEOUTS = { response: 5000, deadline: 10000 }
 
@@ -58,7 +60,7 @@ class ContextPoller extends React.Component {
           .timeout(TIMEOUTS)
           .query({ exclusive: 1, hostspec: context.target.hostspec, polltimeout: 10 })
         context.contextId = contextResponse.body.context
-        needsPublish = true
+        this.publishContext(context)
       }
 
       // check if pmids is missing, fetch it
@@ -68,7 +70,7 @@ class ContextPoller extends React.Component {
           .timeout(TIMEOUTS)
         context.pmids = {}
         pmidResponse.body.metrics.forEach(m => context.pmids[m.name] = m.pmid)
-        needsPublish = true
+        this.publishContext(context)
       }
 
       // check if hostname is available, fetch it
@@ -77,7 +79,7 @@ class ContextPoller extends React.Component {
           .get(`${pmApi}/${context.contextId}/_fetch?names=pmcd.hostname`)
           .timeout(TIMEOUTS)
         context.hostname = hostnameResponse.body.values[0].instances[0].value
-        needsPublish = true
+        this.publishContext(context)
       }
 
       // check if container set
@@ -88,26 +90,31 @@ class ContextPoller extends React.Component {
           .query({ name: 'pmcd.client.container', value: context.containerId })
         // does this ever fail?
         context.isContainerSet = true
-        needsPublish = true
-      }
-
-      // publish by copying and replacing the modified context
-      if (needsPublish) {
         this.publishContext(context)
       }
+
+      // refresh container list
+      let res = await superagent.get(`${pmApi}/${context.contextId}/_fetch?names=containers.name`)
+      let containers = res.body.values[0].instances
+      res = await superagent.get(`${pmApi}/${context.contextId}/_fetch?names=containers.cgroup`)
+      let cgroups = res.body.values[0].instances
+      context.containerList = cgroups.map(({ instance, value }) => ({
+        instance,
+        cgroup: value,
+        containerId: containers.find(cont => cont.instance === instance).value
+      }))
+      this.publishContext(context)
     } catch (err) {
       console.warn('could not poll context', err)
     }
-
-    setTimeout(() => this.pollContexts(), this.props.pollIntervalMs)
   }
 
   publishContext = (context) => {
-    this.props.onContextUpdated(context)
     this.setState(state => {
       const newContexts = [...state.contexts]
       const idx = newContexts.findIndex(old => targetMatches(old.target, context.target))
       newContexts[idx] = context
+      this.props.onContextsUpdated(newContexts)
       return { contexts: newContexts }
     })
   }
@@ -122,7 +129,7 @@ ContextPoller.propTypes = {
       containerId: PropTypes.string,
     })),
   pollIntervalMs: PropTypes.number.isRequired,
-  onContextUpdated: PropTypes.func.isRequired,
+  onContextsUpdated: PropTypes.func.isRequired,
 }
 
 export default ContextPoller

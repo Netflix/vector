@@ -22,7 +22,7 @@ function ChartSelector({ charts, onAddChart, onClearCharts }) {
   const onMenuItemClick = (event, { chart }) => onAddChart(chart)
 
   return (
-    <Menu >
+    <Menu size='tiny'>
       <div key='_clear'>
         <Menu.Item header>Charts</Menu.Item>
         <Menu.Item content='Clear charts' onClick={onClearMenuClick}/>

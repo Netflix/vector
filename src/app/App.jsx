@@ -2,45 +2,42 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import config from './config'
-import charts from './charts'
 
 import Navbar from './components/Navbar/Navbar.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import Dashboard from './components/Dashboard/Dashboard.jsx'
-import ConfigPanel from './components/ConfigPanel/ConfigPanel.jsx'
+import ConfigPanel from './components/ConfigPanel2/ConfigPanel.jsx'
 import ContextPoller from './components/ContextPoller.jsx'
 import DatasetPoller from './components/DatasetPoller.jsx'
+
+import { Sidebar } from 'semantic-ui-react'
 
 import { arrayMove } from 'react-sortable-hoc'
 import 'semantic-ui-css/semantic.min.css'
 
 class App extends React.Component {
   state = {
-    // provided from ConfigPanel
-    host: {
-      // 100.118.181.46
-      // localhost
-      hostname: '100.118.181.46',
-      hostspec: 'localhost'
-    },
-    settings: {
-      containerFilter: '_all',
-      windowSeconds: 120,
-      intervalSeconds: 2
-    },
-    chartlist: [ ],
-    containerList: [],
+    chartlist: [],
     contextData: [],
+    contextDatasets: [],
+    targets: [ { hostname: '100.118.181.46', hostspec: 'localhost', containerId: '_all' } ],
+    configVisible: false,
   }
 
-  onContainerListLoaded = (containerList) => this.setState({ containerList })
-  onClearCharts = () => this.setState({ chartlist: [] })
-  onAddChart = (chart) => {
-    this.setState((oldState) => ({ chartlist: [ ...oldState.chartlist, chart ] }))
+  onClearChartsFromContext = (ctx) => {
+    console.log('onClearChartsFromContext', ctx, this.state.chartlist)
+    this.setState((oldState) => ({
+      chartlist: oldState.chartlist.filter(chart =>
+        chart.context.target.hostname !== ctx.target.hostname
+        && chart.context.target.containerId !== ctx.containerId)
+    }))
+  }
+
+  onAddChartToContext = (ctx, chart) => {
+    this.setState((oldState) => ({ chartlist: oldState.chartlist.concat({ ...chart, context: ctx }) }))
   }
 
   removeChartByIndex = (idx) => {
-    console.log('removing chart at index ', idx)
     this.setState((oldState) =>
       ({ chartlist: [ ...oldState.chartlist.slice(0, idx), ...oldState.chartlist.slice(idx + 1) ] })
     )
@@ -59,64 +56,62 @@ class App extends React.Component {
     }))
   }
 
-  onContextUpdated = (context) => {
+  onContextsUpdated = (contexts) => {
     this.setState(() => {
-      // TODO should actually update the context not just replace it
-      console.log('context updated', context)
-      return { contextData: [ context ] }
+      return { contextData: [ ...contexts ] }
     })
   }
 
-  onContextDatasetUpdated = (ctxds) => {
-    console.log('ctxds updated', ctxds)
+  onContextDatasetsUpdated = (ctxds) => {
+    this.setState({ contextDatasets: ctxds })
+  }
+
+  onNewContext = (target) => {
+    this.setState((state) => ({ targets: state.targets.concat(target) }))
+  }
+
+  toggleConfigVisible = () => {
+    this.setState((state) => ({ configVisible: !state.configVisible }))
   }
 
   render () {
     return (
       <div>
         <div className="col-md-12">
+          <Navbar embed={false} onClick={this.toggleConfigVisible} />
+
           <ContextPoller
             pollIntervalMs={5000}
-            targets={[ { hostname: '100.118.181.46', hostspec: 'localhost', containerId: null } ]}
-            onContextUpdated={this.onContextUpdated} />
+            targets={this.state.targets}
+            onContextsUpdated={this.onContextsUpdated} />
 
           <DatasetPoller
             pollIntervalMs={2000}
-            charts={ (this.state.contextData && this.state.chartlist)
-              ? this.state.chartlist.map(c => ({ context: this.state.contextData[0], ...c }))
-              : []
-            }
+            charts={this.state.chartlist}
             windowIntervalMs={120000}
             contextData={this.state.contextData}
-            onContextDatasetUpdated={this.onContextDatasetUpdated} />
+            onContextDatasetsUpdated={this.onContextDatasetsUpdated} />
 
-          <Navbar embed={false} />
+          <Sidebar.Pushable style={{ minHeight: '100vh' }}>
+            <Sidebar animation='overlay' direction='top'
+              visible={this.state.configVisible ? true : undefined} >
+              <ConfigPanel
+                contextData={this.state.contextData}
+                onNewContext={this.onNewContext}
+                onAddChartToContext={this.onAddChartToContext}
+                onClearChartsFromContext={this.onClearChartsFromContext} />
+            </Sidebar>
 
-          <ConfigPanel
-            onHostDataChanged={(h) => this.setState({ host: h })}
-            onSettingsChanged={(s) => this.setState({ settings: s })}
-            onClearCharts={this.onClearCharts}
-            onAddChart={this.onAddChart}
-            containerList={this.state.containerList}
-            charts={charts}
-            windows={config.windows}
-            intervals={config.intervals}
-            hostname={'100.118.181.46'}
-            hostspec={'localhost'}
-            windowSeconds={120}
-            intervalSeconds={2}
-            containerFilter={'_all'}/>
-
-          <Dashboard
-            host={this.state.host}
-            settings={this.state.settings}
-            chartlist={this.state.chartlist}
-            onContainerListLoaded={this.onContainerListLoaded}
-            removeChartByIndex={this.removeChartByIndex}
-            updateChartSettings={this.updateChartSettings}
-            onMoveChart={this.onMoveChart} />
-
-          <Footer version={config.version}/>
+            <Sidebar.Pusher>
+              <Dashboard
+                chartlist={this.state.chartlist}
+                contextDatasets={this.state.contextDatasets}
+                removeChartByIndex={this.removeChartByIndex}
+                updateChartSettings={this.updateChartSettings}
+                onMoveChart={this.onMoveChart} />
+              <Footer version={config.version}/>
+            </Sidebar.Pusher>
+          </Sidebar.Pushable>
         </div>
       </div>
     )

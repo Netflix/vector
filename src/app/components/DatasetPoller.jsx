@@ -98,7 +98,7 @@ class DatasetPoller extends React.Component {
             .concat(res.body)
             .filter(ds => ds.timestamp.s >= oldestS)
 
-          this.props.onContextDatasetUpdated(newContextDatasets)
+          this.props.onContextDatasetsUpdated(newContextDatasets)
           return { contextDatasets: newContextDatasets }
         })
       }
@@ -124,7 +124,7 @@ class DatasetPoller extends React.Component {
             let cdsIndex = newContextDatasets.findIndex(cds => matchesHostnameContext(cds, q))
             newContextDatasets[cdsIndex].instanceDomainMappings = { ...newContextDatasets[cdsIndex].instanceDomainMappings, [name]: newMapping }
 
-            this.props.onContextDatasetUpdated(newContextDatasets)
+            this.props.onContextDatasetsUpdated(newContextDatasets)
             return { contextDatasets: newContextDatasets }
           })
         }
@@ -147,7 +147,7 @@ DatasetPoller.propTypes = {
     })
   ),
   contextData: PropTypes.array.isRequired,
-  onContextDatasetUpdated: PropTypes.func.isRequired,
+  onContextDatasetsUpdated: PropTypes.func.isRequired,
 }
 
 export default DatasetPoller
