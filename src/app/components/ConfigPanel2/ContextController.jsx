@@ -33,7 +33,7 @@ class ContextController extends React.Component {
 
   render () {
     return (
-      <Menu vertical pointing>
+      <Menu vertical pointing attached='top' borderless>
 
         { (this.props.contextData === null || this.props.contextData.length === 0) &&
           <Menu.Item disabled>No active connections</Menu.Item> }

@@ -49,6 +49,7 @@ class ContextPoller extends React.Component {
   pollContext = async (existingContext) => {
     try {
       const context = { ...existingContext }
+      context.pmids = context.pmids || {}
       const pmApi = `http://${context.target.hostname}:7402/pmapi`
 
       const TIMEOUTS = { response: 5000, deadline: 10000 }
@@ -64,11 +65,10 @@ class ContextPoller extends React.Component {
       }
 
       // check if pmids is missing, fetch it
-      if (!context.pmids) {
+      if (Object.keys(context.pmids).length === 0) {
         const pmidResponse = await superagent
           .get(`${pmApi}/${context.contextId}/_metric`)
           .timeout(TIMEOUTS)
-        context.pmids = {}
         pmidResponse.body.metrics.forEach(m => context.pmids[m.name] = m.pmid)
         this.publishContext(context)
       }
@@ -83,13 +83,14 @@ class ContextPoller extends React.Component {
       }
 
       // check if container set
-      if (!context.isContainerSet && context.containerId) {
+      if (!context.isContainerSet && context.target.containerId && context.target.containerId !== '_all') {
         await superagent
           .get(`${pmApi}/${context.contextId}/_store`)
           .timeout(TIMEOUTS)
-          .query({ name: 'pmcd.client.container', value: context.containerId })
+          .query({ name: 'pmcd.client.container', value: context.target.containerId })
         // does this ever fail?
         context.isContainerSet = true
+        console.log('set context', context.target.containerId)
         this.publishContext(context)
       }
 
@@ -106,6 +107,7 @@ class ContextPoller extends React.Component {
       this.publishContext(context)
     } catch (err) {
       console.warn('could not poll context', err)
+      console.log(JSON.stringify(err))
     }
   }
 

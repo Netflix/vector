@@ -28,7 +28,7 @@ const SortableDashboard = SortableContainer(({ chartlist, contextDatasets, remov
             chartInfo={c}
             datasets={ctxds ? ctxds.datasets : []}
             onCloseClicked={() => removeChartByIndex(idx)}
-            containerList={c.context.containerList}
+            containerList={c.context.containerList || []}
             instanceDomainMappings={ctxds ? ctxds.instanceDomainMappings : {}}
             containerId={(c.context.containerId || '_all') === '_all' ? '' : c.context.containerId}
             settings={c.settings}

@@ -10,18 +10,18 @@ class WindowIntervalSelector extends React.Component {
   }
 
   handleWindowChange = (e, { name }) => {
-    console.log('handleWindowChange')
     this.setState({ windowSeconds: parseInt(name) })
+    this.props.onWindowSecondsChange(parseInt(name))
   }
 
   handleIntervalChange = (e, { name }) => {
-    console.log('handleIntervalChange')
     this.setState({ intervalSeconds: parseInt(name) })
+    this.props.onPollIntervalSecondsChange(parseInt(name))
   }
 
   render () {
     return (
-      <Menu>
+      <Menu style={{ marginBottom: '0px' }} borderless fluid>
         <Menu.Item header>Window</Menu.Item>
         { this.props.windows.map((w, idx) => (
           <Menu.Item key={idx} active={this.state.windowSeconds === w.valueSeconds} name={w.valueSeconds.toString()} content={w.text} onClick={this.handleWindowChange}/>)) }
@@ -38,6 +38,8 @@ WindowIntervalSelector.propTypes = {
   intervals: PropTypes.array.isRequired,
   defaultWindow: PropTypes.number.isRequired,
   defaultInterval: PropTypes.number.isRequired,
+  onWindowSecondsChange: PropTypes.func.isRequired,
+  onPollIntervalSecondsChange: PropTypes.func.isRequired,
 }
 
 export default WindowIntervalSelector

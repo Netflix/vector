@@ -117,6 +117,7 @@ class DatasetPoller extends React.Component {
             res.body.instances.forEach(({ instance, name }) => newMapping[instance] = name)
           } catch (err) {
             console.warn('could not poll for instance domain mapping', err)
+            console.log(err)
           }
 
           this.setState(state => {

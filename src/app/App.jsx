@@ -18,6 +18,8 @@ import 'semantic-ui-css/semantic.min.css'
 class App extends React.Component {
   state = {
     chartlist: [],
+    pollIntervalMs: 2000,
+    windowIntervalMs: 120000,
     contextData: [],
     contextDatasets: [],
     targets: [ { hostname: '100.118.181.46', hostspec: 'localhost', containerId: '_all' } ],
@@ -28,8 +30,9 @@ class App extends React.Component {
     console.log('onClearChartsFromContext', ctx, this.state.chartlist)
     this.setState((oldState) => ({
       chartlist: oldState.chartlist.filter(chart =>
-        chart.context.target.hostname !== ctx.target.hostname
-        && chart.context.target.containerId !== ctx.containerId)
+        !(chart.context.target.hostname === ctx.target.hostname
+        && chart.context.target.hostspec === ctx.target.hostspec
+        && chart.context.target.containerId === ctx.target.containerId))
     }))
   }
 
@@ -56,23 +59,13 @@ class App extends React.Component {
     }))
   }
 
-  onContextsUpdated = (contexts) => {
-    this.setState(() => {
-      return { contextData: [ ...contexts ] }
-    })
-  }
-
-  onContextDatasetsUpdated = (ctxds) => {
-    this.setState({ contextDatasets: ctxds })
-  }
-
-  onNewContext = (target) => {
-    this.setState((state) => ({ targets: state.targets.concat(target) }))
-  }
-
-  toggleConfigVisible = () => {
-    this.setState((state) => ({ configVisible: !state.configVisible }))
-  }
+  onContextsUpdated = (contexts) => this.setState({ contextData: [ ...contexts ] })
+  onContextDatasetsUpdated = (ctxds) => this.setState({ contextDatasets: ctxds })
+  onNewContext = (target) => this.setState((state) => ({ targets: state.targets.concat(target) }))
+  toggleConfigVisible = () => this.setState((state) => ({ configVisible: !state.configVisible }))
+  handleSidebarHide = () => this.setState({ configVisible: false })
+  onWindowSecondsChange = (sec) => this.setState({ windowIntervalMs: sec * 1000 })
+  onPollIntervalSecondsChange = (sec) => this.setState({ pollIntervalMs: sec * 1000 })
 
   render () {
     return (
@@ -86,20 +79,25 @@ class App extends React.Component {
             onContextsUpdated={this.onContextsUpdated} />
 
           <DatasetPoller
-            pollIntervalMs={2000}
+            pollIntervalMs={this.state.pollIntervalMs}
             charts={this.state.chartlist}
-            windowIntervalMs={120000}
+            windowIntervalMs={this.state.windowIntervalMs}
             contextData={this.state.contextData}
             onContextDatasetsUpdated={this.onContextDatasetsUpdated} />
 
           <Sidebar.Pushable style={{ minHeight: '100vh' }}>
-            <Sidebar animation='overlay' direction='top'
-              visible={this.state.configVisible ? true : undefined} >
+            <Sidebar
+              animation='overlay'
+              direction='top'
+              visible={this.state.configVisible ? true : undefined}
+              onHide={this.handleSidebarHide} >
               <ConfigPanel
                 contextData={this.state.contextData}
                 onNewContext={this.onNewContext}
                 onAddChartToContext={this.onAddChartToContext}
-                onClearChartsFromContext={this.onClearChartsFromContext} />
+                onClearChartsFromContext={this.onClearChartsFromContext}
+                onWindowSecondsChange={this.onWindowSecondsChange}
+                onPollIntervalSecondsChange={this.onPollIntervalSecondsChange} />
             </Sidebar>
 
             <Sidebar.Pusher>

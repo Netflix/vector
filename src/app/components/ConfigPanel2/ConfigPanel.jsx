@@ -30,34 +30,31 @@ class ConfigPanel extends React.Component {
   render () {
     return (
       <Segment.Group>
-        <Segment>
-          <WindowIntervalSelector
-            windows={[
-              { valueSeconds: 120, text: '2 min' },
-              { valueSeconds: 300, text: '5 min' },
-              { valueSeconds: 600, text: '10 min' },
-            ]}
-            intervals={[
-              { valueSeconds: 1, text: '1 sec' },
-              { valueSeconds: 2, text: '2 sec' },
-              { valueSeconds: 5, text: '5 sec' },
-            ]}
-            defaultWindow={120}
-            defaultInterval={2} />
-        </Segment>
-        <Segment.Group horizontal>
-          <Segment>
-            <ContextController
-              contextData={this.props.contextData}
-              onContextSelect={this.onContextSelect}
-              onNewContext={this.props.onNewContext}/>
-          </Segment>
-          <Segment disabled={!this.state.contextSelected}>
-            <ChartSelector
-              charts={charts}
-              onClearCharts={this.onClearCharts}
-              onAddChart={this.onAddChart} />
-          </Segment>
+        <WindowIntervalSelector
+          windows={[
+            { valueSeconds: 120, text: '2 min' },
+            { valueSeconds: 300, text: '5 min' },
+            { valueSeconds: 600, text: '10 min' },
+          ]}
+          intervals={[
+            { valueSeconds: 1, text: '1 sec' },
+            { valueSeconds: 2, text: '2 sec' },
+            { valueSeconds: 5, text: '5 sec' },
+          ]}
+          defaultWindow={120}
+          defaultInterval={2}
+          onPollIntervalSecondsChange={this.props.onPollIntervalSecondsChange}
+          onWindowSecondsChange={this.props.onWindowSecondsChange} />
+        <Segment.Group horizontal compact>
+          <ContextController
+            contextData={this.props.contextData}
+            onContextSelect={this.onContextSelect}
+            onNewContext={this.props.onNewContext}/>
+          <ChartSelector
+            disabled={!this.state.contextSelected}
+            charts={charts}
+            onClearCharts={this.onClearCharts}
+            onAddChart={this.onAddChart} />
         </Segment.Group>
       </Segment.Group>
     )
@@ -69,6 +66,8 @@ ConfigPanel.propTypes = {
   onNewContext: PropTypes.func.isRequired,
   onAddChartToContext: PropTypes.func.isRequired,
   onClearChartsFromContext: PropTypes.func.isRequired,
+  onWindowSecondsChange: PropTypes.func.isRequired,
+  onPollIntervalSecondsChange: PropTypes.func.isRequired,
 }
 
 export default ConfigPanel
