@@ -1,12 +1,14 @@
 import simpleModel from '../processors/simpleModel'
 import { mapInstanceDomains, defaultTitleAndKeylabel, divideBy, cumulativeTransform } from '../processors/transforms'
 import { percentage, integer, number } from '../processors/formats'
+import Chart from '../components/Chart/Chart.jsx'
 
 export default [
   {
     group: 'Disk',
     title: 'Disk IOPS',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'disk.dev.read',
       'disk.dev.write',
@@ -23,6 +25,7 @@ export default [
     group: 'Disk',
     title: 'Disk Latency',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'disk.dev.read_rawactive',
       'disk.dev.write_rawactive',
@@ -41,6 +44,7 @@ export default [
     group: 'Disk',
     title: 'Disk Throughput (Bytes)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'disk.dev.read_bytes',
       'disk.dev.write_bytes',
@@ -57,6 +61,7 @@ export default [
     group: 'Disk',
     title: 'Disk Utilization (%)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'disk.dev.avactive',
     ],

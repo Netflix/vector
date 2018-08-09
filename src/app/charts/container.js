@@ -1,4 +1,6 @@
 import simpleModel from '../processors/simpleModel'
+import Chart from '../components/Chart/Chart.jsx'
+
 import {
   renameMetric,
   mapInstanceDomains,
@@ -27,6 +29,7 @@ export default [
     group: 'Container',
     title: 'Per-Container CPU Utilization',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'cgroup.cpuacct.usage',
     ],
@@ -45,6 +48,7 @@ export default [
     group: 'Container',
     title: 'Per-Container Memory Usage (Mb)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'cgroup.memory.usage',
     ],
@@ -62,6 +66,7 @@ export default [
     group: 'Container',
     title: 'Total Container Memory Usage (Mb)',
     processor: simpleModel,
+    visualisation: Chart,
     lineType: 'stackedarea',
     metricNames: [
       'cgroup.memory.usage',
@@ -93,6 +98,7 @@ export default [
     group: 'Container',
     title: 'Per-Container Memory Headroom (Mb)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'cgroup.memory.usage', // bytes
       'cgroup.memory.limit', // bytes
@@ -124,6 +130,7 @@ export default [
     group: 'Container',
     title: 'Container Disk IOPS',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'cgroup.blkio.all.io_serviced.read',
       'cgroup.blkio.all.io_serviced.write',
@@ -146,6 +153,7 @@ export default [
     group: 'Container',
     title: 'Container Disk Throughput (Bytes)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'cgroup.blkio.all.io_service_bytes.read',
       'cgroup.blkio.all.io_service_bytes.write',
@@ -168,6 +176,7 @@ export default [
     group: 'Container',
     title: 'Container Disk IOPS (Throttled)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'cgroup.blkio.all.throttle.io_serviced.read',
       'cgroup.blkio.all.throttle.io_serviced.write',
@@ -190,6 +199,7 @@ export default [
     group: 'Container',
     title: 'Container Disk Throughput (Throttled) (Bytes)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'cgroup.blkio.all.throttle.io_service_bytes.read',
       'cgroup.blkio.all.throttle.io_service_bytes.write',
@@ -213,6 +223,7 @@ export default [
     group: 'Container',
     title: 'Per-Container CPU Scheduler',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'cgroup.cpusched.shares',
       'cgroup.cpusched.periods',
@@ -234,6 +245,7 @@ export default [
     group: 'Container',
     title: 'Per-Container CPU Headroom',
     processor: simpleModel,
+    visualisation: Chart,
     lineType: 'stackedarea',
     metricNames: [
       'cgroup.cpuacct.usage',
@@ -271,6 +283,7 @@ export default [
     group: 'Container',
     title: 'Per-Container Throttled CPU',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'cgroup.cpusched.throttled_time',
     ],
@@ -287,6 +300,7 @@ export default [
     group: 'Container',
     title: 'Per-Container Memory Utilization (%)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'cgroup.memory.usage',
       'cgroup.memory.limit',

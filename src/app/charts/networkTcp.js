@@ -1,12 +1,14 @@
 import simpleModel from '../processors/simpleModel'
 import { defaultTitleAndKeylabel } from '../processors/transforms'
 import { integer } from '../processors/formats'
+import Chart from '../components/Chart/Chart.jsx'
 
 export default [
   {
     group: 'Network',
     title: 'TCP Connections (Close Wait)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'network.tcpconn.close_wait',
     ],
@@ -20,6 +22,7 @@ export default [
     group: 'Network',
     title: 'TCP Connections (Established)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'network.tcpconn.established',
     ],
@@ -33,6 +36,7 @@ export default [
     group: 'Network',
     title: 'TCP Connections',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'network.tcpconn.established',
       'network.tcpconn.time_wait',
@@ -48,6 +52,7 @@ export default [
     group: 'Network',
     title: 'TCP Connections (Time Wait)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'network.tcpconn.time_wait',
     ],

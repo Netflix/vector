@@ -3,16 +3,18 @@ import PropTypes from 'prop-types'
 
 import { SortableContainer, SortableElement } from 'react-sortable-hoc'
 
-import Chart from '../Chart/Chart.jsx'
-
 function matchesHostnameContext(hc1, hc2) {
   return hc1.hostname === hc2.hostname && hc1.contextId == hc2.contextId
 }
 
-const SortableChart = SortableElement(props =>
-  <li style={{ listStyle: 'none', display: 'inline-block', margin: '6px 6px 6px 6px' }}>
-    <Chart {...props}/>
-  </li>)
+const SortableChart = SortableElement(props => {
+  let Visualisation = props.visualisation
+  return (
+    <li style={{ listStyle: 'none', display: 'inline-block', margin: '6px 6px 6px 6px' }}>
+      <Visualisation {...props}/>
+    </li>
+  )
+})
 
 const SortableDashboard = SortableContainer(({ chartlist, contextDatasets, removeChartByIndex, updateChartSettings }) => {
   return (
@@ -25,6 +27,7 @@ const SortableDashboard = SortableContainer(({ chartlist, contextDatasets, remov
           return <SortableChart
             key={`chart-${idx}`}
             index={idx}
+            visualisation={c.visualisation}
             chartInfo={c}
             datasets={ctxds ? ctxds.datasets : []}
             onCloseClicked={() => removeChartByIndex(idx)}

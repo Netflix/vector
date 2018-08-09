@@ -1,12 +1,14 @@
 import simpleModel from '../processors/simpleModel'
 import { timesliceCalculations, defaultTitleAndKeylabel, cumulativeTransform, kbToGb } from '../processors/transforms'
 import { integer } from '../processors/formats'
+import Chart from '../components/Chart/Chart.jsx'
 
 export default [
   {
     group: 'Memory',
     title: 'Memory Utilization (Cached)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'mem.util.cached',
     ],
@@ -21,6 +23,7 @@ export default [
     group: 'Memory',
     title: 'Memory Utilization (Free)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'mem.util.free',
     ],
@@ -35,6 +38,7 @@ export default [
     group: 'Memory',
     title: 'Memory Utilization',
     processor: simpleModel,
+    visualisation: Chart,
     lineType: 'stackedarea',
     metricNames: [
       'mem.util.cached',
@@ -59,6 +63,7 @@ export default [
     group: 'Memory',
     title: 'Memory Utilization (Used)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'mem.util.used',
     ],
@@ -73,6 +78,7 @@ export default [
     group: 'Memory',
     title: 'Page Faults',
     processor: simpleModel,
+    visualisation: Chart,
     lineType: 'stackedarea',
     metricNames: [
       'mem.vmstat.pgfault',

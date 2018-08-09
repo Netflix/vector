@@ -2,12 +2,15 @@ import simpleModel from '../processors/simpleModel'
 import { timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform } from '../processors/transforms'
 import { keyValueArrayToObject } from '../processors/utils'
 import { percentage, integer, number } from '../processors/formats'
+import Chart from '../components/Chart/Chart.jsx'
+import Table from '../components/Table/Table.jsx'
 
 export default [
   {
     group: 'CPU',
     title: 'Context Switches per second',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'kernel.all.pswitch'
     ],
@@ -22,6 +25,7 @@ export default [
     group: 'CPU',
     title: 'CPU Utilization',
     processor: simpleModel,
+    visualisation: Chart,
     lineType: 'stackedarea',
     metricNames: [
       'kernel.all.cpu.sys',
@@ -41,6 +45,7 @@ export default [
     group: 'CPU',
     title: 'CPU Utilization (System)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'kernel.all.cpu.sys',
       'hinv.ncpu',
@@ -58,6 +63,7 @@ export default [
     group: 'CPU',
     title: 'CPU Utilization (user)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'kernel.all.cpu.user',
       'hinv.ncpu'
@@ -75,6 +81,21 @@ export default [
     group: 'CPU',
     title: 'Load Average',
     processor: simpleModel,
+    visualisation: Chart,
+    metricNames: [
+      'kernel.all.load',
+    ],
+    transforms: [
+      defaultTitleAndKeylabel,
+    ],
+    yTickFormat: number,
+  },
+
+  {
+    group: 'CPU',
+    title: 'Load Average (table)',
+    processor: simpleModel,
+    visualisation: Table,
     metricNames: [
       'kernel.all.load',
     ],
@@ -88,6 +109,7 @@ export default [
     group: 'CPU',
     title: 'Per-CPU Utilization',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'kernel.percpu.cpu.sys',
       'kernel.percpu.cpu.user',
@@ -114,6 +136,7 @@ export default [
     group: 'CPU',
     title: 'Per-CPU Utilization (System)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'kernel.percpu.cpu.sys',
     ],
@@ -129,6 +152,7 @@ export default [
     group: 'CPU',
     title: 'Per-CPU Utilization (User)',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'kernel.percpu.cpu.user',
     ],
@@ -144,6 +168,7 @@ export default [
     group: 'CPU',
     title: 'Runnable',
     processor: simpleModel,
+    visualisation: Chart,
     metricNames: [
       'kernel.all.runnable',
     ],
