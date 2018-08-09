@@ -22,7 +22,7 @@ class App extends React.Component {
     windowIntervalMs: 120000,
     contextData: [],
     contextDatasets: [],
-    targets: [ { hostname: '100.118.181.46', hostspec: 'localhost', containerId: '_all' } ],
+    targets: [],
     configVisible: false,
   }
 
@@ -89,7 +89,7 @@ class App extends React.Component {
             <Sidebar
               animation='overlay'
               direction='top'
-              visible={this.state.configVisible ? true : undefined}
+              visible={this.state.chartlist.length === 0 || this.state.configVisible ? true : undefined}
               onHide={this.handleSidebarHide} >
               <ConfigPanel
                 contextData={this.state.contextData}
