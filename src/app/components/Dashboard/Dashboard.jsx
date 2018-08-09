@@ -48,6 +48,7 @@ export class Dashboard extends React.Component {
       chartlist={this.props.chartlist}
       contextDatasets={this.props.contextDatasets}
       removeChartByIndex={this.props.removeChartByIndex}
+      updateChartSettings={this.props.updateChartSettings}
       onSortEnd={this.onSortEnd}
       useDragHandle={true}
       axis='xy'/>

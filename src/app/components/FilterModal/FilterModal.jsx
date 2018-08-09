@@ -8,7 +8,7 @@ class FilterModal extends React.Component {
     filterText: this.props.filter
   }
 
-  handleSubmit = () => this.props.onNewSettings({ filter: this.state.filterText }) && this.props.onClose
+  handleSubmit = () => this.props.onNewSettings({ filter: this.state.filterText })
 
   handleChange = (e, { value }) => this.setState({ filterText: value })
 
@@ -17,6 +17,7 @@ class FilterModal extends React.Component {
       <Form onSubmit={this.handleSubmit}>
         <Form.Input label='Filter' value={this.state.filterText} onChange={this.handleChange} />
         <Button type='submit'>Save</Button>
+        <Button onClick={this.props.onClose}>Cancel</Button>
       </Form>
     )
   }

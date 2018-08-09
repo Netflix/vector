@@ -33,12 +33,12 @@ class AddContextButton extends React.Component {
     // TODO next two fetches in parallel
     res = await superagent
       .get(`${pmapi}/${context}/_fetch?names=containers.name`)
-    const containers = res.body.values[0].instances
+    const containers = res.body.values.length ? res.body.values[0].instances : []
 
     // need to do this second fetch and join to make sure we get genuine containers
     res = await superagent
       .get(`${pmapi}/${context}/_fetch?names=containers.cgroup`)
-    const cgroups = res.body.values[0].instances
+    const cgroups = res.body.values.length ? res.body.values[0].instances : []
 
     // TODO refactor to a proper some()
     // containerList = list of all containers.value where container.instance is present in containerlist
@@ -81,7 +81,7 @@ class AddContextButton extends React.Component {
 
   render () {
     return (
-      <Modal open={this.state.modalOpen} trigger={<Button onClick={this.handleOpen}>Add Context</Button>} closeIcon={true} onClose={this.handleClose}>
+      <Modal open={this.state.modalOpen} trigger={<Button onClick={this.handleOpen}>Add Context ...</Button>} closeIcon={true} onClose={this.handleClose}>
         <Modal.Header>Add a context</Modal.Header>
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>

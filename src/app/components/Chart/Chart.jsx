@@ -106,20 +106,28 @@ class Chart extends React.Component {
       this.setState({ modalOpen: false })
       onNewSettings(settings)
     }
+    const handleCloseSettings = () => {
+      this.setState({ modalOpen: false })
+    }
 
     const color = (d) => colorHash.hex(d.keylabel)
+
+    const chartSubtitle = (c) => c.context.target.hostname
+      + (c.context.target.hostspec === 'localhost' ? '' : (' ' + c.context.target.hostspec))
+      + (c.context.target.containerId === '_all' ? '' : (' ' + c.context.target.containerId))
 
     return (
       <Segment.Group raised>
         <Segment clearing>
           <DragHandle />
-          {`  ${chartInfo.title}  (${chartInfo.context && chartInfo.context.target && chartInfo.context.target.hostname})  `}
+          { chartInfo.title }<br/>
+          { chartSubtitle(chartInfo) }
 
           { chartInfo.settingsComponent &&
-            <Modal dimmer='inverted' open={this.state.modalOpen} trigger={
+            <Modal dimmer='inverted' open={this.state.modalOpen} onClose={handleCloseSettings} trigger={
               <Icon  name='setting' circular fitted link onClick={handleSettingsIcon} /> }>
               <Modal.Content>
-                <SettingsComponent {...chartInfo} pmids={pmids} onNewSettings={handleNewSettings} onClose={() => {}} />
+                <SettingsComponent {...chartInfo} pmids={pmids} onNewSettings={handleNewSettings} onClose={handleCloseSettings} />
               </Modal.Content>
             </Modal> }
 

@@ -38,7 +38,7 @@ class CustomSettingsModal extends React.Component {
         <Form.Checkbox label='Cumulative' checked={this.state.cumulative} onChange={this.handleCumulativeChange} />
         <Form.Checkbox label='Converted' checked={this.state.converted} onChange={this.handleConvertedChange} />
 
-        <Form.Input label='Conversion Function'
+        <Form.Input label='Conversion Function (use "value" as the variable)'
           disabled={!this.state.converted}
           value={this.state.converted ? this.state.conversionFunction: ''}
           onChange={this.handleConversionFunctionChange} />
@@ -63,7 +63,7 @@ class CustomSettingsModal extends React.Component {
 }
 
 CustomSettingsModal.propTypes = {
-  pmids: PropTypes.array.isRequired,
+  pmids: PropTypes.object.isRequired,
   metricNames: PropTypes.array.isRequired,
   yTickFormat: PropTypes.func.isRequired,
   lineType: PropTypes.string.isRequired,

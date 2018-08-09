@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Segment  } from 'semantic-ui-react'
 import ChartSelector from '../ChartSelector/ChartSelector.jsx'
 import WindowIntervalSelector from './WindowIntervalSelector.jsx'
-import ContextController from './ContextController.jsx'
+import ContextMenu from './ContextMenu.jsx'
 
 import charts from '../../charts'
 
@@ -46,7 +46,7 @@ class ConfigPanel extends React.Component {
           onPollIntervalSecondsChange={this.props.onPollIntervalSecondsChange}
           onWindowSecondsChange={this.props.onWindowSecondsChange} />
         <Segment.Group horizontal compact>
-          <ContextController
+          <ContextMenu
             contextData={this.props.contextData}
             onContextSelect={this.onContextSelect}
             onNewContext={this.props.onNewContext}/>

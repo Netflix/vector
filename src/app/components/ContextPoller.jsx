@@ -16,7 +16,7 @@ class ContextPoller extends React.Component {
   state = {
     // an array of
     // { target: { hostname, hostspec, containerId },
-    //   contextId, isContainerSet, pmids{name:pmid}, hostnameFromHost, containerList }
+    //   contextId, isContainerSet, pmids{name:pmid}, hostnameFromHost, containerList, errText }
     contexts: []
   }
 
@@ -47,8 +47,8 @@ class ContextPoller extends React.Component {
   }
 
   pollContext = async (existingContext) => {
+    const context = { ...existingContext, errText: null }
     try {
-      const context = { ...existingContext }
       context.pmids = context.pmids || {}
       const pmApi = `http://${context.target.hostname}:7402/pmapi`
 
@@ -96,9 +96,9 @@ class ContextPoller extends React.Component {
 
       // refresh container list
       let res = await superagent.get(`${pmApi}/${context.contextId}/_fetch?names=containers.name`)
-      let containers = res.body.values[0].instances
+      let containers = res.body.values.length ? res.body.values[0].instances : []
       res = await superagent.get(`${pmApi}/${context.contextId}/_fetch?names=containers.cgroup`)
-      let cgroups = res.body.values[0].instances
+      let cgroups = res.body.values.length ? res.body.values[0].instances : []
       context.containerList = cgroups.map(({ instance, value }) => ({
         instance,
         cgroup: value,
@@ -107,6 +107,8 @@ class ContextPoller extends React.Component {
       this.publishContext(context)
     } catch (err) {
       console.warn('could not poll context', err)
+      context.errText = JSON.stringify(err)
+      this.publishContext(context)
       console.log(JSON.stringify(err))
     }
   }

@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Menu } from 'semantic-ui-react'
+import { Menu, Loader, Button } from 'semantic-ui-react'
 
 import AddContextButton from './AddContextButton.jsx'
 
-class ContextController extends React.Component {
+class ContextMenu extends React.Component {
   state = { }
 
   onContextClick = (e, { context }) => {
@@ -13,11 +13,28 @@ class ContextController extends React.Component {
     this.props.onContextSelect(context)
   }
 
-  isActive = (context) => {
+  isActiveMenuSelection = (context) => {
     return (this.state.selectedContext
       && this.state.selectedContext.target.hostname === context.target.hostname
       && this.state.selectedContext.target.hostspec === context.target.hostspec
       && this.state.selectedContext.target.containerId === context.target.containerId)
+  }
+
+  isLoading = (context) => !(context.contextId
+      && (Object.keys(context.pmids).length > 0)
+      && context.hostname
+      && context.containerList)
+
+  menuColor = (context) => {
+    if (context.errText) {
+      return 'red'
+    } else {
+      if (this.isLoading(context)) {
+        return 'grey'
+      } else {
+        return 'green'
+      }
+    }
   }
 
   onNewContext = (target) => {
@@ -39,10 +56,15 @@ class ContextController extends React.Component {
           <Menu.Item disabled>No active connections</Menu.Item> }
 
         { this.props.contextData && this.props.contextData.length >= 1 && this.props.contextData.map((ctx, ctxidx) =>
-          <Menu.Item key={ctxidx} active={this.isActive(ctx)} onClick={this.onContextClick} context={ctx} disabled={!ctx.contextId}>
-            Hostname: {ctx.target.hostname}<br/>
-            Hostspec: {ctx.target.hostspec}<br/>
+          <Menu.Item key={ctxidx}
+            active={this.isActiveMenuSelection(ctx)}
+            onClick={this.onContextClick}
+            context={ctx}
+            disabled={this.isLoading(ctx)} >
+            {ctx.target.hostname} =&gt; {ctx.target.hostspec}<br/>
             Container: {ctx.target.containerId}
+            <Loader active={this.isLoading(ctx)} size='small' />
+            <Button size='mini' compact floated='right' color={this.menuColor(ctx)}>X</Button>
           </Menu.Item>
         )}
 
@@ -54,10 +76,10 @@ class ContextController extends React.Component {
   }
 }
 
-ContextController.propTypes = {
+ContextMenu.propTypes = {
   contextData: PropTypes.array.isRequired,
   onContextSelect: PropTypes.func.isRequired,
   onNewContext: PropTypes.func.isRequired,
 }
 
-export default ContextController
+export default ContextMenu
