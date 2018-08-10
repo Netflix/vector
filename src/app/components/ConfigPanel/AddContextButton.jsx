@@ -30,14 +30,13 @@ class AddContextButton extends React.Component {
       .query({ exclusive: 1, hostspec: this.state.hostspec, polltimeout: 5 })
     const context = res.body.context
 
-    // TODO next two fetches in parallel
-    res = await superagent
-      .get(`${pmapi}/${context}/_fetch?names=containers.name`)
-    const containers = res.body.values.length ? res.body.values[0].instances : []
-
     // need to do this second fetch and join to make sure we get genuine containers
-    res = await superagent
-      .get(`${pmapi}/${context}/_fetch?names=containers.cgroup`)
+    const promisedContainerNames = superagent.get(`${pmapi}/${context}/_fetch?names=containers.name`)
+    const promisedCgroups = superagent.get(`${pmapi}/${context}/_fetch?names=containers.cgroup`)
+
+    res = await promisedContainerNames
+    const containers = res.body.values.length ? res.body.values[0].instances : []
+    res = await promisedCgroups
     const cgroups = res.body.values.length ? res.body.values[0].instances : []
 
     // TODO refactor to a proper some()

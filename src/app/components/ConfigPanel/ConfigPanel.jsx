@@ -1,106 +1,73 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Input, Form, Dropdown, Popup, Menu } from 'semantic-ui-react'
-
+import { Segment  } from 'semantic-ui-react'
 import ChartSelector from '../ChartSelector/ChartSelector.jsx'
+import WindowIntervalSelector from './WindowIntervalSelector.jsx'
+import ContextMenu from './ContextMenu.jsx'
 
-export class ConfigPanel extends React.Component {
-  state = {
-    hostname: this.props.hostname,
-    hostspec: this.props.hostspec,
-    windowSeconds: this.props.windowSeconds,
-    intervalSeconds: this.props.intervalSeconds,
-    containerId: '_all'
+import charts from '../../charts'
+
+class ConfigPanel extends React.Component {
+  state = {}
+
+  onClearCharts = () => {
+    if (this.state.contextSelected) {
+      this.props.onClearChartsFromContext(this.state.contextSelected)
+    }
   }
 
-  createContainerList = () => {
-    const allContainer = { text: 'All', value: '_all' }
-    // containers is a list [ { instance, cgroup, containerId }, .. ]
-    const containers = this.props.containerList.map(c => ({ text: c.containerId, value: c.containerId }))
-    const containerList = [ allContainer ].concat(containers)
-    return containerList
+  onAddChart = (chart) => {
+    if (this.state.contextSelected) {
+      this.props.onAddChartToContext(this.state.contextSelected, chart)
+    }
   }
 
-  render() {
+  onContextSelect = (context) => {
+    this.setState({ contextSelected: context })
+  }
+
+  render () {
     return (
-      <div className="configpanel-container" style={{ paddingLeft: '10px' }}>
-        <Menu secondary style={{margin: '5px'}}>
-          <Popup trigger={<Menu.Item header>Connection</Menu.Item>} hoverable position='bottom left'>
-            <Form style={{ width: '400px' }}>
-              <Form.Field>
-                <label>Hostname (pmwebd)</label>
-                <Input onChange={this.handleHostnameChange} value={this.state.hostname}/>
-              </Form.Field>
-              <Form.Field>
-                <label>Hostspec (target)</label>
-                <Input onChange={this.handleHostspecChange} value={this.state.hostspec}/>
-              </Form.Field>
-              <Form.Field>
-                <label>Container ID</label>
-                <Dropdown search selection
-                  defaultValue={this.state.containerId}
-                  options={this.createContainerList()}
-                  onChange={this.handleContainerIdChange} />
-              </Form.Field>
-            </Form>
-          </Popup>
-          <Popup trigger={<Menu.Item header>Charts</Menu.Item>} hoverable flowing>
-            <ChartSelector onClearCharts={this.props.onClearCharts} onAddChart={this.props.onAddChart} charts={this.props.charts} />
-          </Popup>
-          <Menu.Item header>Window</Menu.Item>
-          { this.props.windows.map((w, idx) => (
-            <Menu.Item key={idx} active={this.state.windowSeconds === w.valueSeconds} name={w.valueSeconds.toString()} content={w.text} onClick={this.handleWindowChange}/>)) }
-          <Menu.Item header>Interval</Menu.Item>
-          { this.props.intervals.map((i, idx) => (
-            <Menu.Item key={idx} active={this.state.intervalSeconds === i.valueSeconds} name={i.valueSeconds.toString()} content={i.text} onClick={this.handleIntervalChange}/>)) }
-        </Menu>
-      </div>
+      <Segment.Group>
+        <WindowIntervalSelector
+          windows={[
+            { valueSeconds: 120, text: '2 min' },
+            { valueSeconds: 300, text: '5 min' },
+            { valueSeconds: 600, text: '10 min' },
+          ]}
+          intervals={[
+            { valueSeconds: 1, text: '1 sec' },
+            { valueSeconds: 2, text: '2 sec' },
+            { valueSeconds: 5, text: '5 sec' },
+          ]}
+          defaultWindow={120}
+          defaultInterval={2}
+          onPollIntervalSecondsChange={this.props.onPollIntervalSecondsChange}
+          onWindowSecondsChange={this.props.onWindowSecondsChange} />
+        <Segment.Group horizontal compact>
+          <ContextMenu
+            contextData={this.props.contextData}
+            onContextSelect={this.onContextSelect}
+            onNewContext={this.props.onNewContext}/>
+          <ChartSelector
+            disabled={!this.state.contextSelected}
+            charts={charts}
+            onClearCharts={this.onClearCharts}
+            onAddChart={this.onAddChart} />
+        </Segment.Group>
+      </Segment.Group>
     )
-  }
-
-  propagateHostDataChanged = () => {
-    this.props.onHostDataChanged({ hostname: this.state.hostname, hostspec: this.state.hostspec })
-  }
-
-  propagateSettingsChanged = () => {
-    this.props.onSettingsChanged({ containerId: this.state.containerId, windowSeconds: this.state.windowSeconds, intervalSeconds: this.state.intervalSeconds })
-  }
-
-  handleHostnameChange = (e) => {
-    this.setState({ hostname: e.target.value }, this.propagateHostDataChanged)
-  }
-
-  handleHostspecChange = (e) => {
-    this.setState({ hostspec: e.target.value }, this.propagateHostDataChanged)
-  }
-
-  handleContainerIdChange = (e, { value }) => {
-    this.setState({ containerId: value }, this.propagateSettingsChanged)
-  }
-
-  handleWindowChange = (e, { name }) => {
-    this.setState({ windowSeconds: parseInt(name) }, this.propagateSettingsChanged)
-  }
-
-  handleIntervalChange = (e, { name }) => {
-    this.setState({ intervalSeconds: parseInt(name) }, this.propagateSettingsChanged)
   }
 }
 
 ConfigPanel.propTypes = {
-  onHostDataChanged: PropTypes.func.isRequired,
-  onSettingsChanged: PropTypes.func.isRequired,
-  onClearCharts: PropTypes.func.isRequired,
-  onAddChart: PropTypes.func.isRequired,
-  containerList: PropTypes.array.isRequired,
-  windows: PropTypes.array.isRequired,
-  intervals: PropTypes.array.isRequired,
-  charts: PropTypes.array.isRequired,
-  hostname: PropTypes.string,
-  hostspec: PropTypes.string,
-  windowSeconds: PropTypes.number,
-  intervalSeconds: PropTypes.number,
+  contextData: PropTypes.array.isRequired,
+  onNewContext: PropTypes.func.isRequired,
+  onAddChartToContext: PropTypes.func.isRequired,
+  onClearChartsFromContext: PropTypes.func.isRequired,
+  onWindowSecondsChange: PropTypes.func.isRequired,
+  onPollIntervalSecondsChange: PropTypes.func.isRequired,
 }
 
 export default ConfigPanel

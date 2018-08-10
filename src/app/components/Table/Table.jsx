@@ -36,6 +36,13 @@ class Table extends React.Component {
       + (c.context.target.hostspec === 'localhost' ? '' : (' ' + c.context.target.hostspec))
       + (c.context.target.containerId === '_all' ? '' : (' ' + c.context.target.containerId))
 
+    const headerRow = ['Instance', 'Values']
+
+    const renderBodyRow = ({ title, data }, idx) => ({
+      key: idx,
+      cells: [ title, data.length > 0 ? data[data.length - 1].value : '' ]
+    })
+
     return (
       <Segment.Group raised>
         <Segment clearing>
@@ -73,23 +80,7 @@ class Table extends React.Component {
           <ResizableBox width={650} height={385}>
 
             { dataset && dataset.length > 0 &&
-              <SemanticTable basic='very'>
-                <SemanticTable.Header>
-                  <SemanticTable.Row>
-                    <SemanticTable.HeaderCell>Instance</SemanticTable.HeaderCell>
-                    <SemanticTable.HeaderCell>Value</SemanticTable.HeaderCell>
-                  </SemanticTable.Row>
-                </SemanticTable.Header>
-                <SemanticTable.Body>
-                  { dataset.map((mi, idx) => (
-                    <SemanticTable.Row key={idx}>
-                      <SemanticTable.Cell>{mi.title}</SemanticTable.Cell>
-                      <SemanticTable.Cell>{mi.data.length > 0 ? mi.data[mi.data.length - 1].value : ''}</SemanticTable.Cell>
-                    </SemanticTable.Row>
-                  ))}
-                </SemanticTable.Body>
-              </SemanticTable>
-
+              <SemanticTable basic='very' headerRow={headerRow} tableData={dataset} renderBodyRow={renderBodyRow} />
             }
 
             { (!dataset || dataset.length <= 0) &&

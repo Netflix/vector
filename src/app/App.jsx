@@ -6,7 +6,7 @@ import config from './config'
 import Navbar from './components/Navbar/Navbar.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import Dashboard from './components/Dashboard/Dashboard.jsx'
-import ConfigPanel from './components/ConfigPanel2/ConfigPanel.jsx'
+import ConfigPanel from './components/ConfigPanel/ConfigPanel.jsx'
 import ContextPoller from './components/ContextPoller.jsx'
 import DatasetPoller from './components/DatasetPoller.jsx'
 
