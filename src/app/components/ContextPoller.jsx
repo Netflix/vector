@@ -17,7 +17,8 @@ class ContextPoller extends React.Component {
     // an array of
     // { target: { hostname, hostspec, containerId },
     //   contextId, isContainerSet, pmids{name:pmid}, hostnameFromHost, containerList, errText }
-    contexts: []
+    contexts: [],
+    timer: null,
   }
 
   render () {
@@ -25,25 +26,29 @@ class ContextPoller extends React.Component {
   }
 
   componentDidMount = () => {
-    setTimeout(() => this.pollContexts(), this.props.pollIntervalMs)
-    this.props.onContextsUpdated(this.state.contexts)
+    if (!this.state.timer) {
+      this.setState({ timer: setInterval(() => this.pollContexts(), this.props.pollIntervalMs) })
+    }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    // each input target has a corresponding state
-    // if there was a state previously, then copy it over
-    return {
-      contexts: nextProps.targets.map(target => {
+  componentDidUpdate(prevProps, prevState) {
+    // if all the targets already existed then we can skip the state change
+    if (this.props.targets.length === prevProps.targets.length
+      && this.props.targets.every(t1 => prevProps.targets.some(t2 => targetMatches(t1, t2)))) {
+      return
+    }
+
+    this.setState({
+      contexts: this.props.targets.map(target => {
         let oldTarget = prevState.contexts.find(context => targetMatches(context.target, target))
         return oldTarget ? { ...oldTarget, target } : { target }
       })
-    }
+    }, this.pollContexts)
   }
 
   pollContexts = () => {
     this.props.onContextsUpdated(this.state.contexts)
     this.state.contexts.forEach(c => this.pollContext(c))
-    setTimeout(() => this.pollContexts(), this.props.pollIntervalMs)
   }
 
   pollContext = async (existingContext) => {
