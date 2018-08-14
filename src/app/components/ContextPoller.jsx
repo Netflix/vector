@@ -100,10 +100,13 @@ class ContextPoller extends React.Component {
       }
 
       // refresh container list
-      let res = await superagent.get(`${pmApi}/${context.contextId}/_fetch?names=containers.name`)
-      let containers = res.body.values.length ? res.body.values[0].instances : []
-      res = await superagent.get(`${pmApi}/${context.contextId}/_fetch?names=containers.cgroup`)
-      let cgroups = res.body.values.length ? res.body.values[0].instances : []
+      const promisedContainerNames = superagent.get(`${pmApi}/${context.contextId}/_fetch?names=containers.name`)
+      const promisedCgroups = superagent.get(`${pmApi}/${context.contextId}/_fetch?names=containers.cgroup`)
+
+      let res = await promisedContainerNames
+      const containers = res.body.values.length ? res.body.values[0].instances : []
+      res = await promisedCgroups
+      const cgroups = res.body.values.length ? res.body.values[0].instances : []
       context.containerList = cgroups.map(({ instance, value }) => ({
         instance,
         cgroup: value,
