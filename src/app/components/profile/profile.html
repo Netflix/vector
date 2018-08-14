@@ -1,0 +1,22 @@
+<div>
+    <i class="fa fa-line-chart fa-5x widget-icon" ng-hide="flags.contextAvailable"></i>
+    <span ng-show="flags.contextAvailable && status == ''">Polling current state...</span>
+
+    <button ng-show="status == 'stopped'" ng-click="startProfiling(-1)">Start profiling</button>
+    <button ng-show="status == 'stopped'" ng-click="startProfiling(1*60)">Start profiling for 1m</button>
+    <button ng-show="status == 'stopped'" ng-click="startProfiling(5*60)">Start profiling for 5m</button>
+
+    <span ng-show="status == 'starting'">Starting...</span>
+
+    <h2 ng-show="status == 'started' && duration_left == -1">Profiling...</h2>
+    <h2 ng-show="status == 'started' && duration_left >= 0">Profiling, {{duration_left | countdownFormat}}m left...</h2>
+    <button ng-show="status == 'started'" ng-click="stopProfiling()">Stop profiling</button>
+
+    <span ng-show="status == 'stopping'">Stopping...</span>
+    
+    <div ng-show="status == 'stopped' && data" id="{{id}}-flamegraph"></div>
+    <p ng-show="status == 'stopped' && data" class="text-right">
+        <br />
+        <a href="app/components/profile/flamegraph.html#{{flamegraph_link}}" target="_blank">Open FlameGraph in a new tab</a>
+    </p>
+</div>
