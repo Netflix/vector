@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import superagent from 'superagent'
 
 import { Button, Modal, Form } from 'semantic-ui-react'
+import debounce from 'lodash.debounce'
 
 class AddContextButton extends React.Component {
   state = {
@@ -54,6 +55,8 @@ class AddContextButton extends React.Component {
     this.setState({ containerDropdownOptions, containerId: '_all', connected: true })
   }
 
+  refreshContainerList = debounce(this.refreshContainerList, 500)
+
   handleHostnameChange = (e, { value }) => {
     this.setState({ hostname: value }, this.refreshContainerList)
   }
@@ -84,9 +87,10 @@ class AddContextButton extends React.Component {
         <Modal.Header>Add a context</Modal.Header>
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
-            <Form.Input label='Hostname' placeholder='1.2.3.4' onChange={this.handleHostnameChange} />
 
-            <Form.Input label='Hostspec' placeholder='localhost' onChange={this.handleHostspecChange} />
+            <Form.Input label='Hostname' onChange={this.handleHostnameChange} placeholder='1.2.3.4' />
+
+            <Form.Input label='Hostspec' onChange={this.handleHostspecChange} placeholder='localhost' />
 
             <Form.Dropdown label='Container' placeholder='Select container' fluid search selection
               disabled={!this.state.connected}
