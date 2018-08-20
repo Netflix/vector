@@ -119,7 +119,6 @@ class Heatmap extends React.Component {
                 axes={[
                   { orient: "left",
                     tickFormat: v => dataset.map(mi => mi.yAxisLabels)[v],
-                    ticks: 19,
                     footer: true },
                   { orient: "bottom",
                     tickFormat: ts => moment(ts).format('hh:mm:ss'),
