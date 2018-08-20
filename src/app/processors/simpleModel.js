@@ -12,6 +12,7 @@ function calculateChart(datasets, chartInfo, context) {
   if (instances.length == 0) return null
 
   // create an entry for each instance name
+  // TODO improve this is an O(n^x) loop fetching extractValueFromChartDataForInstance
   const data = instances
     .map(({ metric, instance }) => ({
       metric,
@@ -24,6 +25,7 @@ function calculateChart(datasets, chartInfo, context) {
         }))
         .filter(ds => ds.value !== null)
     }))
+  // console.log('--- done calculating data', data)
 
   const transforms = chartInfo.transforms || []
   let transformed = data

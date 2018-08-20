@@ -15,7 +15,7 @@ export default [
       'network.interface.in.drops',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       defaultTitleAndKeylabel,
       cumulativeTransform,
     ],
@@ -32,7 +32,7 @@ export default [
       'network.interface.out.drops',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       defaultTitleAndKeylabel,
       cumulativeTransform,
     ],
@@ -48,7 +48,7 @@ export default [
       'network.interface.out.drops',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       defaultTitleAndKeylabel,
       cumulativeTransform,
     ],
@@ -65,7 +65,7 @@ export default [
       'network.interface.out.packets',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       filterInstanceIncludesFilterText,
       defaultTitleAndKeylabel,
       cumulativeTransform,
@@ -113,7 +113,7 @@ export default [
       'network.interface.out.bytes',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       filterInstanceIncludesFilterText,
       defaultTitleAndKeylabel,
       cumulativeTransform,

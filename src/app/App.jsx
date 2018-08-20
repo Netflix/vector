@@ -26,6 +26,8 @@ class App extends React.Component {
     configVisible: false,
   }
 
+  // chart handling
+
   onClearChartsFromContext = (ctx) => {
     console.log('onClearChartsFromContext', ctx, this.state.chartlist)
     this.setState((oldState) => ({
@@ -35,35 +37,44 @@ class App extends React.Component {
         && chart.context.target.containerId === ctx.target.containerId))
     }))
   }
-
   onAddChartToContext = (ctx, chart) => {
     this.setState((oldState) => ({ chartlist: oldState.chartlist.concat({ ...chart, context: ctx }) }))
   }
-
   removeChartByIndex = (idx) => {
     this.setState((oldState) =>
       ({ chartlist: [ ...oldState.chartlist.slice(0, idx), ...oldState.chartlist.slice(idx + 1) ] })
     )
   }
-
   updateChartSettings = (idx, settings) => {
     this.setState((oldState) => {
       let newChart = { ...oldState.chartlist[idx], ...settings }
       return { chartlist: [ ...oldState.chartlist.slice(0, idx), newChart, ...oldState.chartlist.slice(idx + 1) ] }
     })
   }
-
   onMoveChart = (oldIndex, newIndex) => {
     this.setState((oldState) => ({
       chartlist: arrayMove(oldState.chartlist, oldIndex, newIndex)
     }))
   }
 
+  // context handling
+
   onContextsUpdated = (contexts) => this.setState({ contextData: [ ...contexts ] })
   onContextDatasetsUpdated = (ctxds) => this.setState({ contextDatasets: ctxds })
   onNewContext = (target) => this.setState((state) => ({ targets: state.targets.concat(target) }))
+  onRemoveContext = (context) => this.setState((state) => ({
+    targets: state.targets.filter(target =>
+      !(target.hostname === context.target.hostname
+        && target.hostspec === context.target.hostspec
+        && target.containerId === context.target.containerId))
+  }))
+
+  // config panel visibility
+
   toggleConfigVisible = () => this.setState((state) => ({ configVisible: !state.configVisible }))
   handleSidebarHide = () => this.setState({ configVisible: false })
+
+  // app config settings
   onWindowSecondsChange = (sec) => this.setState({ windowIntervalMs: sec * 1000 })
   onPollIntervalSecondsChange = (sec) => this.setState({ pollIntervalMs: sec * 1000 })
 
@@ -94,6 +105,7 @@ class App extends React.Component {
               <ConfigPanel
                 contextData={this.state.contextData}
                 onNewContext={this.onNewContext}
+                onRemoveContext={this.onRemoveContext}
                 onAddChartToContext={this.onAddChartToContext}
                 onClearChartsFromContext={this.onClearChartsFromContext}
                 onWindowSecondsChange={this.onWindowSecondsChange}

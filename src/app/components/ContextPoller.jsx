@@ -55,7 +55,7 @@ class ContextPoller extends React.Component {
     const context = { ...existingContext, errText: null }
     try {
       context.pmids = context.pmids || {}
-      const pmApi = `http://${context.target.hostname}:7402/pmapi`
+      const pmApi = `http://${context.target.hostname}/pmapi`
 
       const TIMEOUTS = { response: 5000, deadline: 10000 }
 

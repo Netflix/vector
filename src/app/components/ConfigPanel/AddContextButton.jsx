@@ -13,10 +13,12 @@ class AddContextButton extends React.Component {
     ],
     containerId: '_all',
     connected: false,
+    hostport: this.props.defaultPort,
+    hostspec: this.props.defaultHostspec,
   }
 
   refreshContainerList = async () => {
-    if (!this.state.hostname || !this.state.hostspec) return
+    if (!this.state.hostname || !this.state.hostport || !this.state.hostspec) return
 
     this.setState({
       containerDropdownOptions: [ { value: '_all', text: '.. connecting ..' } ],
@@ -25,7 +27,7 @@ class AddContextButton extends React.Component {
     })
 
     // set up a new context, then fetch container and cgroup details
-    const pmapi = `http://${this.state.hostname}:7402/pmapi`
+    const pmapi = `http://${this.state.hostname}:${this.state.hostport}/pmapi`
     let res = await superagent
       .get(`${pmapi}/context`)
       .query({ exclusive: 1, hostspec: this.state.hostspec, polltimeout: 5 })
@@ -61,6 +63,10 @@ class AddContextButton extends React.Component {
     this.setState({ hostname: value }, this.refreshContainerList)
   }
 
+  handleHostportChange = (e, { value }) => {
+    this.setState({ hostport: value }, this.refreshContainerList)
+  }
+
   handleHostspecChange = (e, { value }) => {
     this.setState({ hostspec: value }, this.refreshContainerList)
   }
@@ -74,7 +80,7 @@ class AddContextButton extends React.Component {
 
   handleSubmit = () => {
     this.props.onNewContext({
-      hostname: this.state.hostname,
+      hostname: this.state.hostname + ':' + this.state.hostport,
       hostspec: this.state.hostspec,
       containerId: this.state.containerId || '_all',
     })
@@ -90,7 +96,9 @@ class AddContextButton extends React.Component {
 
             <Form.Input label='Hostname' onChange={this.handleHostnameChange} placeholder='1.2.3.4' />
 
-            <Form.Input label='Hostspec' onChange={this.handleHostspecChange} placeholder='localhost' />
+            <Form.Input label='Port' onChange={this.handleHostportChange} value={this.state.hostport} />
+
+            <Form.Input label='Hostspec' onChange={this.handleHostspecChange} value={this.state.hostspec} />
 
             <Form.Dropdown label='Container' placeholder='Select container' fluid search selection
               disabled={!this.state.connected}
@@ -108,6 +116,8 @@ class AddContextButton extends React.Component {
 
 AddContextButton.propTypes = {
   onNewContext: PropTypes.func.isRequired,
+  defaultPort: PropTypes.string.isRequired,
+  defaultHostspec: PropTypes.string.isRequired,
 }
 
 export default AddContextButton

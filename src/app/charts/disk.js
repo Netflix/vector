@@ -14,7 +14,7 @@ export default [
       'disk.dev.write',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       defaultTitleAndKeylabel,
       cumulativeTransform,
     ],
@@ -33,7 +33,7 @@ export default [
       'disk.dev.write',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       defaultTitleAndKeylabel,
       cumulativeTransform
     ],
@@ -50,7 +50,7 @@ export default [
       'disk.dev.write_bytes',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       defaultTitleAndKeylabel,
       cumulativeTransform
     ],
@@ -66,7 +66,7 @@ export default [
       'disk.dev.avactive',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       defaultTitleAndKeylabel,
       divideBy(1000),
       cumulativeTransform,

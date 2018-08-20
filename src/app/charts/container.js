@@ -34,7 +34,7 @@ export default [
       'cgroup.cpuacct.usage',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       mapContainerNames([ 'cgroup.cpuacct.usage' ]),
       filterForContainerId([ 'cgroup.cpuacct.usage' ]),
       defaultTitleAndKeylabel,
@@ -53,7 +53,7 @@ export default [
       'cgroup.memory.usage',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       mapContainerNames([ 'cgroup.memory.usage' ]),
       filterForContainerId([ 'cgroup.memory.usage' ]),
       defaultTitleAndKeylabel,
@@ -76,7 +76,7 @@ export default [
     transforms: [
       // make sure that all the cgroup memory uses the same metric and then add them together
       // this sums all the values across the cgroup (map + fix are so that the cgroup size is calculated only on containers)
-      mapInstanceDomains,
+      mapInstanceDomains(),
       mapContainerNames([ 'cgroup.memory.usage' ]),
       // do not filter here, we want totals
       customTitleAndKeylabel(metric => metric),
@@ -105,7 +105,7 @@ export default [
       'mem.physmem', // kilobytes
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       mapContainerNames([ 'cgroup.memory.usage', 'cgroup.memory.limit' ]),
       filterForContainerId([ 'cgroup.memory.usage', 'cgroup.memory.limit' ]),
       divideByOnlyMetric(1024, [ 'mem.physmem' ]),
@@ -136,7 +136,7 @@ export default [
       'cgroup.blkio.all.io_serviced.write',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       mapContainerNames([ 'cgroup.blkio.all.io_serviced.read', 'cgroup.blkio.all.io_serviced.write' ]),
       filterForContainerId([ 'cgroup.blkio.all.io_serviced.read', 'cgroup.blkio.all.io_serviced.write' ]),
       cumulativeTransform,
@@ -159,7 +159,7 @@ export default [
       'cgroup.blkio.all.io_service_bytes.write',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       mapContainerNames([ 'cgroup.blkio.all.io_service_bytes.read', 'cgroup.blkio.all.io_service_bytes.write' ]),
       filterForContainerId([ 'cgroup.blkio.all.io_service_bytes.read', 'cgroup.blkio.all.io_service_bytes.write' ]),
       cumulativeTransform,
@@ -182,7 +182,7 @@ export default [
       'cgroup.blkio.all.throttle.io_serviced.write',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       mapContainerNames([ 'cgroup.blkio.all.throttle.io_serviced.read', 'cgroup.blkio.all.throttle.io_serviced.write' ]),
       filterForContainerId([ 'cgroup.blkio.all.throttle.io_serviced.read', 'cgroup.blkio.all.throttle.io_serviced.write' ]),
       cumulativeTransform,
@@ -205,7 +205,7 @@ export default [
       'cgroup.blkio.all.throttle.io_service_bytes.write',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       mapContainerNames([ 'cgroup.blkio.all.throttle.io_service_bytes.read',
         'cgroup.blkio.all.throttle.io_service_bytes.write' ]),
       filterForContainerId([ 'cgroup.blkio.all.throttle.io_service_bytes.read', 'cgroup.blkio.all.throttle.io_service_bytes.write' ]),
@@ -229,7 +229,7 @@ export default [
       'cgroup.cpusched.periods',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       mapContainerNames([ 'cgroup.cpusched.shares', 'cgroup.cpusched.periods' ]),
       filterForContainerId([ 'cgroup.cpusched.shares', 'cgroup.cpusched.periods' ]),
       renameMetric({
@@ -254,7 +254,7 @@ export default [
       'hinv.ncpu',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       mapContainerNames([ 'cgroup.cpusched.shares', 'cgroup.cpusched.periods', 'cgroup.cpuacct.usage' ]),
       filterForContainerId([ 'cgroup.cpuacct.usage', 'cgroup.cpusched.shares', 'cgroup.cpusched.periods' ]),
       cumulativeTransformOnlyMetrics([ 'cgroup.cpuacct.usage' ]),
@@ -288,7 +288,7 @@ export default [
       'cgroup.cpusched.throttled_time',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       mapContainerNames([ 'cgroup.cpusched.throttled_time' ]),
       filterForContainerId([ 'cgroup.cpusched.throttled_time' ]),
       cumulativeTransform,
@@ -307,7 +307,7 @@ export default [
       'mem.physmem',
     ],
     transforms: [
-      mapInstanceDomains,
+      mapInstanceDomains(),
       mapContainerNames([ 'cgroup.memory.usage', 'cgroup.memory.limit' ]),
       filterForContainerId([ 'cgroup.memory.usage', 'cgroup.memory.limit' ]),
       divideByOnlyMetric(1024, [ 'mem.physmem' ]),

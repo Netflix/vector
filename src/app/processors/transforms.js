@@ -98,6 +98,13 @@ export const kbToGb = mathAllValues(v => v / 1024 / 1024)
 export const divideBy = (divisor) => mathAllValues(v => v / divisor)
 
 /**
+ * Perform a Math.ceiling against all values
+ *
+ * @return {function} a transform function
+ */
+export const ceiling = mathAllValues(v => Math.ceil(v))
+
+/**
  * Perform a division of values by a constant for the given metrics
  *
  * @param {number} divisor the constant that will be the divisor
@@ -179,12 +186,18 @@ export function customTitleAndKeylabel (titleFn) {
 /**
  * Maps PCP instance domains to metric instances
  * Used to map pcp instance ids (such as 0, 1, 2, ...) to strings such as ('xvda', 'xvdb', etc)
+ *
+ * @param {string} the instance name to map as, 'instance' if not provided
+ * @return {function} a transform function
  */
-export function mapInstanceDomains (metricInstances, { instanceDomainMappings }) {
-  return metricInstances.map(mi => ({
-    ...mi,
-    instance: (instanceDomainMappings[mi.metric] && instanceDomainMappings[mi.metric][mi.instance]) || mi.instance
-  }))
+export function mapInstanceDomains (name) {
+  let tagName = name || 'instance'
+  return function _mapInstanceDomains (metricInstances, { instanceDomainMappings }) {
+    return metricInstances.map(mi => ({
+      ...mi,
+      [tagName]: (instanceDomainMappings[mi.metric] && instanceDomainMappings[mi.metric][mi.instance]) || mi.instance
+    }))
+  }
 }
 
 /**
@@ -308,4 +321,19 @@ export function filterForContainerId (metricNames) {
 export function filterInstanceIncludesFilterText (metricInstances, { chartInfo }) {
   if (!chartInfo.filter) return metricInstances
   return metricInstances.filter(mi => mi.instance ? mi.instance.includes(chartInfo.filter) : true)
+}
+
+/**
+ * Copies the data in 'data' to the 'coordinates' key to work around a bug in semiotic.
+ *
+ * A shallow copy is performed.
+ *
+ * @param {array} metricInstances the list of mis which will have their data value copied to coordinates
+ * @return {object} the input list with value in 'data' copied to 'coordinates'
+ */
+export function copyDataToCoordinatesForSemiotic (metricInstances) {
+  return metricInstances.map(mi => ({
+    ...mi,
+    coordinates: mi.data
+  }))
 }

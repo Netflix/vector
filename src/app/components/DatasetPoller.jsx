@@ -85,7 +85,7 @@ class DatasetPoller extends React.Component {
           .filter(pmid => pmid !== null).join(',')
 
         let res = await superagent
-          .get(`http://${q.hostname}:7402/pmapi/${q.contextId}/_fetch`)
+          .get(`http://${q.hostname}/pmapi/${q.contextId}/_fetch`)
           .query({ pmids })
         const oldestS = res.body.timestamp.s - (this.props.windowIntervalMs / 1000)
 
@@ -112,7 +112,7 @@ class DatasetPoller extends React.Component {
           const newMapping = {}
           try {
             let res = await superagent
-              .get(`http://${q.hostname}:7402/pmapi/${q.contextId}/_indom`)
+              .get(`http://${q.hostname}/pmapi/${q.contextId}/_indom`)
               .query({ name })
             res.body.instances.forEach(({ instance, name }) => newMapping[instance] = name)
           } catch (err) {

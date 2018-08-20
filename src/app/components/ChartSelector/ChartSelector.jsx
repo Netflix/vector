@@ -25,7 +25,7 @@ function ChartSelector({ charts, onAddChart, onClearCharts, disabled }) {
     <Menu size='tiny' borderless compact fluid>
       <div key='_clear'>
         <Menu.Item header>Charts</Menu.Item>
-        <Menu.Item content='Clear charts' onClick={onClearMenuClick}/>
+        <Menu.Item content='Clear charts' onClick={onClearMenuClick} disabled={disabled}/>
       </div>
       { groupNames.map((g, gidx) => (
         <div key={gidx}>

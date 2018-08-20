@@ -535,3 +535,43 @@ describe('untransposeTimeslices', () => {
   })
 })
 
+describe('extractValueFromChartDataForInstance', () => {
+  let datasets
+  describe('with empty dataset', () => {
+    it('does not find anything', () => {
+      expect(utils.extractValueFromChartDataForInstance({ values: [] }, 'abc.def', -1)).to.equal(null)
+    })
+  })
+
+  describe('with full datasets', () => {
+    beforeEach(() => {
+      datasets = require('../../../test/datasets.json')
+    })
+
+    describe('checking non existent metric', () => {
+      it('does not find anything', () => {
+        expect(utils.extractValueFromChartDataForInstance(datasets[0], 'abc.def', -1)).to.equal(null)
+      })
+    })
+
+    describe('checking non existent instance', () => {
+      it('does not find anything', () => {
+        expect(utils.extractValueFromChartDataForInstance(datasets[0], 'kernel.all.load', -99)).to.equal(null)
+      })
+    })
+
+    describe('checking first valid element', () => {
+      it('finds the correct value', () => {
+        expect(utils.extractValueFromChartDataForInstance(datasets[0], 'kernel.all.pswitch', -1)).to.equal(125885593597)
+      })
+    })
+
+    describe('checking last element', () => {
+      it('finds the correct value', () => {
+        expect(utils.extractValueFromChartDataForInstance(datasets[44], 'hinv.ncpu', -1)).to.equal(64)
+        expect(utils.extractValueFromChartDataForInstance(datasets[44], 'kernel.all.load', 1)).to.equal(25.32)
+        expect(utils.extractValueFromChartDataForInstance(datasets[44], 'kernel.all.load', 5)).to.equal(32.18)
+      })
+    })
+  })
+})

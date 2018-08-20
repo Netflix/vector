@@ -13,6 +13,18 @@ class ContextMenu extends React.Component {
     this.props.onContextSelect(context)
   }
 
+  onContextXClick = (e, { context }) => {
+    // prevent the context click handler
+    e.stopPropagation()
+
+    if (this.isActiveMenuSelection(context)) {
+      this.setState({ selectedContext: null })
+      this.props.onContextSelect(null)
+    }
+
+    this.props.onRemoveContext(context)
+  }
+
   isActiveMenuSelection = (context) => {
     return (this.state.selectedContext
       && this.state.selectedContext.target.hostname === context.target.hostname
@@ -64,12 +76,12 @@ class ContextMenu extends React.Component {
             {ctx.target.hostname} =&gt; {ctx.target.hostspec}<br/>
             Container: {ctx.target.containerId}
             <Loader active={this.isLoading(ctx)} size='small' />
-            <Button size='mini' compact floated='right' color={this.menuColor(ctx)}>X</Button>
+            <Button size='mini' compact floated='right' color={this.menuColor(ctx)} context={ctx} onClick={this.onContextXClick}>X</Button>
           </Menu.Item>
         )}
 
         <Menu.Item>
-          <AddContextButton onNewContext={this.onNewContext}/>
+          <AddContextButton onNewContext={this.onNewContext} defaultPort='7402' defaultHostspec='localhost'/>
         </Menu.Item>
       </Menu>
     )
@@ -80,6 +92,7 @@ ContextMenu.propTypes = {
   contextData: PropTypes.array.isRequired,
   onContextSelect: PropTypes.func.isRequired,
   onNewContext: PropTypes.func.isRequired,
+  onRemoveContext: PropTypes.func.isRequired,
 }
 
 export default ContextMenu

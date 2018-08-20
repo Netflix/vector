@@ -24,6 +24,7 @@ class ConfigPanel extends React.Component {
   }
 
   onContextSelect = (context) => {
+    console.log('selecting context', context)
     this.setState({ contextSelected: context })
   }
 
@@ -49,7 +50,8 @@ class ConfigPanel extends React.Component {
           <ContextMenu
             contextData={this.props.contextData}
             onContextSelect={this.onContextSelect}
-            onNewContext={this.props.onNewContext}/>
+            onNewContext={this.props.onNewContext}
+            onRemoveContext={this.props.onRemoveContext} />
           <ChartSelector
             disabled={!this.state.contextSelected}
             charts={charts}
@@ -68,6 +70,7 @@ ConfigPanel.propTypes = {
   onClearChartsFromContext: PropTypes.func.isRequired,
   onWindowSecondsChange: PropTypes.func.isRequired,
   onPollIntervalSecondsChange: PropTypes.func.isRequired,
+  onRemoveContext: PropTypes.func.isRequired,
 }
 
 export default ConfigPanel
