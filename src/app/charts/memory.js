@@ -13,8 +13,8 @@ export default [
       'mem.util.cached',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
-      kbToGb
+      defaultTitleAndKeylabel(),
+      kbToGb(),
     ],
     yTickFormat: integer,
   },
@@ -28,8 +28,8 @@ export default [
       'mem.util.free',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
-      kbToGb
+      defaultTitleAndKeylabel(),
+      kbToGb(),
     ],
     yTickFormat: integer,
   },
@@ -47,14 +47,14 @@ export default [
       'mem.util.bufmem',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
-      kbToGb,
+      defaultTitleAndKeylabel(),
+      kbToGb(),
       timesliceCalculations({
         'free (unused)': (slices) => ({ '-1': slices['mem.util.free']['-1'] }),
         'free (cache)': (slices) => ({ '-1': slices['mem.util.cached']['-1'] + slices['mem.util.bufmem']['-1'] }),
         'application': (slices) => ({ '-1': slices['mem.util.used']['-1'] - slices['mem.util.cached']['-1'] - slices['mem.util.bufmem']['-1'] }),
       }),
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
     ],
     yTickFormat: integer,
   },
@@ -68,8 +68,8 @@ export default [
       'mem.util.used',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
-      kbToGb
+      defaultTitleAndKeylabel(),
+      kbToGb(),
     ],
     yTickFormat: integer,
   },
@@ -85,8 +85,8 @@ export default [
       'mem.vmstat.pgmajfault',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
-      cumulativeTransform
+      defaultTitleAndKeylabel(),
+      cumulativeTransform(),
     ],
     yTickFormat: integer,
   },

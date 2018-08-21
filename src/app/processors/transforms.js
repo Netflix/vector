@@ -42,7 +42,7 @@ function cumulativeTransformSelective (shouldApplyFn) {
  *
  * @returns {function} a transform function
  */
-export const cumulativeTransform = cumulativeTransformSelective(SELECT_ALL_FN)
+export const cumulativeTransform = () => cumulativeTransformSelective(SELECT_ALL_FN)
 
 /**
  * Convert a nominal value to a interval value. Performs a derivative over time.
@@ -87,7 +87,7 @@ export const mathAllValues = (fn) => mathValuesSelective(fn, SELECT_ALL_FN)
  *
  * @return {function} a transform function
  */
-export const kbToGb = mathAllValues(v => v / 1024 / 1024)
+export const kbToGb = () => mathAllValues(v => v / 1024 / 1024)
 
 /**
  * Perform a division of all values by a constant
@@ -102,7 +102,7 @@ export const divideBy = (divisor) => mathAllValues(v => v / divisor)
  *
  * @return {function} a transform function
  */
-export const ceiling = mathAllValues(v => Math.ceil(v))
+export const ceiling = () => mathAllValues(v => Math.ceil(v))
 
 /**
  * Perform a division of values by a constant for the given metrics
@@ -155,12 +155,16 @@ export function divideBySeries (divisorMetricName) {
 
 /**
  * Adds a default title and keylabel to the metric instances
+ *
+ * @return {function} a transform function
  */
-export function defaultTitleAndKeylabel (metricInstances) {
-  return metricInstances.map(mi => {
-    const defaultTitle = (mi.instance === -1 || mi.instance === '-1') ? mi.metric : `${mi.metric} (${mi.instance})`
-    return { ...mi, title: defaultTitle, keylabel: defaultTitle }
-  })
+export function defaultTitleAndKeylabel () {
+  return function _defaultTitleAndKeylabel (metricInstances) {
+    return metricInstances.map(mi => {
+      const defaultTitle = (mi.instance === -1 || mi.instance === '-1') ? mi.metric : `${mi.metric} (${mi.instance})`
+      return { ...mi, title: defaultTitle, keylabel: defaultTitle }
+    })
+  }
 }
 
 /**
@@ -321,19 +325,4 @@ export function filterForContainerId (metricNames) {
 export function filterInstanceIncludesFilterText (metricInstances, { chartInfo }) {
   if (!chartInfo.filter) return metricInstances
   return metricInstances.filter(mi => mi.instance ? mi.instance.includes(chartInfo.filter) : true)
-}
-
-/**
- * Copies the data in 'data' to the 'coordinates' key to work around a bug in semiotic.
- *
- * A shallow copy is performed.
- *
- * @param {array} metricInstances the list of mis which will have their data value copied to coordinates
- * @return {object} the input list with value in 'data' copied to 'coordinates'
- */
-export function copyDataToCoordinatesForSemiotic (metricInstances) {
-  return metricInstances.map(mi => ({
-    ...mi,
-    coordinates: mi.data
-  }))
 }

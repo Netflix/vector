@@ -13,7 +13,7 @@ export default [
       'network.tcpconn.close_wait',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
     ],
     yTickFormat: integer,
   },
@@ -27,7 +27,7 @@ export default [
       'network.tcpconn.established',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
     ],
     yTickFormat: integer,
   },
@@ -43,7 +43,7 @@ export default [
       'network.tcpconn.close_wait',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
     ],
     yTickFormat: integer,
   },
@@ -57,7 +57,7 @@ export default [
       'network.tcpconn.time_wait',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
     ],
     yTickFormat: integer,
   }

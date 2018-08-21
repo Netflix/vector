@@ -12,6 +12,21 @@ import { SortableHandle } from 'react-sortable-hoc'
 
 const DragHandle = SortableHandle(() => <Icon name='expand arrows alternate' />)
 
+// collapse dataset into a single stream as this is what the xyframe heatmap view requires
+function extractHeatmapValuesFromDataset(dataset, yAxisLabels) {
+  const values = []
+  if (dataset) {
+    for (let d of dataset) {
+      for (let tsv of d.data) {
+        for (let weight = 0; weight < tsv.value; weight++) {
+          values.push({ ts: tsv.ts, value: d.instance + 1, label: yAxisLabels[d.instance] || '?' })
+        }
+      }
+    }
+  }
+  return values
+}
+
 class Heatmap extends React.Component {
   state = {
     modalOpen: false
@@ -30,21 +45,8 @@ class Heatmap extends React.Component {
     const dataset = datasets
       ? chartInfo.processor.calculateChart(datasets, chartInfo, { instanceDomainMappings, containerList, containerId, chartInfo })
       : []
-
-    // collapse dataset into a single stream
-    let values = []
-    if (dataset) {
-      for (let d of dataset || []) {
-        for (let tsv of d.data) {
-          for (let weight = 0; weight < tsv.value; weight++) {
-            values.push({ ts: tsv.ts, value: d.instance })
-          }
-        }
-      }
-    }
-    console.log(dataset, values)
-
-    console.log('ready to chart', dataset)
+    const yAxisLookup = (dataset && dataset.map(mi => mi.yAxisLabels)) || []
+    const heatmapValues = extractHeatmapValuesFromDataset(dataset, yAxisLookup)
 
     const HelpComponent = chartInfo.helpComponent
     const SettingsComponent = chartInfo.settingsComponent
@@ -65,10 +67,6 @@ class Heatmap extends React.Component {
     const chartSubtitle = (c) => c.context.target.hostname
       + (c.context.target.hostspec === 'localhost' ? '' : (' ' + c.context.target.hostspec))
       + (c.context.target.containerId === '_all' ? '' : (' ' + c.context.target.containerId))
-
-    // const xBins = dataset && dataset.length && dataset[0].data.length
-    // const yBins = dataset && dataset.length
-    const snapGrid = [ 20, 20 ]
 
     return (
       <Segment.Group raised>
@@ -104,28 +102,32 @@ class Heatmap extends React.Component {
           <Button circular size='tiny' basic icon='close' floated='right' onClick={onCloseClicked} />
         </Segment>
         <Segment>
-          <ResizableBox width={650} height={385} draggableOpts={{grid: snapGrid }}>
+          <ResizableBox width={650} height={385}>
             { (dataset && dataset.length > 0 && dataset.every(d => d.data.length > 0))
               ? <ResponsiveXYFrame
                 responsiveWidth={true}
                 responsiveHeight={true}
-                areas={[{ coordinates: values }]}
+                points={[{ coordinates: heatmapValues }]}
+                areas={[{ coordinates: heatmapValues }]}
                 areaType={{ type: 'heatmap', xBins: dataset[0].data.length, yBins: dataset.length }}
                 xAccessor={d => d.ts}
                 yAccessor={d => d.value}
                 areaStyle={d => ({ fill: thresholds(d.percent), stroke: 'darkgrey' })}
                 margin={{ left: 60, bottom: 70, right: 3, top: 3 }}
-                yExtent={[0, undefined]}
+                yExtent={[0, dataset.length]}
+                hoverAnnotation={true}
+                tooltipContent={dp => { return (<p>{dp.binItems.length && dp.binItems[0].label}: {dp.binItems.length}</p>) }}
                 axes={[
                   { orient: "left",
-                    tickFormat: v => dataset.map(mi => mi.yAxisLabels)[v],
+                    tickFormat: v => yAxisLookup[v - 1] || '',
                     footer: true },
                   { orient: "bottom",
-                    tickFormat: ts => moment(ts).format('hh:mm:ss'),
-                    rotate: 90,
+                    tickFormat: ts => {
+                      return (<text transform='rotate(90)'>{moment(ts).format('hh:mm:ss')}</text>)
+                    },
                     footer: true }
                 ]}
-                baseMarkProps={{ transitionDuration: 0 }} />
+                baseMarkProps={{ forceUpdate: true }} />
               : <span>No data yet</span>
             }
           </ResizableBox>

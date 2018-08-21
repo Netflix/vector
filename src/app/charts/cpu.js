@@ -1,5 +1,5 @@
 import simpleModel from '../processors/simpleModel'
-import { copyDataToCoordinatesForSemiotic, log, timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform } from '../processors/transforms'
+import { copyDataToCoordinatesForSemiotic, timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform } from '../processors/transforms'
 import { keyValueArrayToObject } from '../processors/utils'
 import { percentage, integer, number } from '../processors/formats'
 import Chart from '../components/Chart/Chart.jsx'
@@ -16,8 +16,8 @@ export default [
       'kernel.all.pswitch'
     ],
     transforms: [
-      defaultTitleAndKeylabel,
-      cumulativeTransform,
+      defaultTitleAndKeylabel(),
+      cumulativeTransform(),
     ],
     yTickFormat: integer,
   },
@@ -34,10 +34,10 @@ export default [
       'hinv.ncpu',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
       divideBySeries('hinv.ncpu'),
       divideBy(1000),
-      cumulativeTransform,
+      cumulativeTransform(),
     ],
     yTickFormat: percentage,
   },
@@ -52,10 +52,10 @@ export default [
       'hinv.ncpu',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
       divideBySeries('hinv.ncpu'),
       divideBy(1000),
-      cumulativeTransform,
+      cumulativeTransform(),
     ],
     yTickFormat: percentage,
   },
@@ -70,10 +70,10 @@ export default [
       'hinv.ncpu'
     ],
     transforms: [
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
       divideBySeries('hinv.ncpu'),
       divideBy(1000),
-      cumulativeTransform,
+      cumulativeTransform(),
     ],
     yTickFormat: percentage,
   },
@@ -87,28 +87,9 @@ export default [
       'kernel.all.load',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
     ],
     yTickFormat: number,
-  },
-
-  {
-    group: 'CPU',
-    title: 'Load Average (heatmap)',
-    processor: simpleModel,
-    visualisation: Heatmap,
-    metricNames: [
-      'kernel.all.load',
-    ],
-    transforms: [
-      defaultTitleAndKeylabel,
-      copyDataToCoordinatesForSemiotic,
-    ],
-    yTickFormat: number,
-    heatmap: {
-      thresholds: [ 0.01, 0.25, 0.5, 0.75, 0.98 ],
-      colors: [ 'none', '#fbeeec', '#f3c8c2', '#e39787', '#ce6751', '#b3331d' ],
-    },
   },
 
   {
@@ -120,7 +101,7 @@ export default [
       'kernel.all.load',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
     ],
     yTickFormat: number,
   },
@@ -136,7 +117,7 @@ export default [
     ],
     transforms: [
       divideBy(1000),
-      cumulativeTransform,
+      cumulativeTransform(),
       timesliceCalculations({
         'cpu [sys+user]': (values) => {
           let cpus = Object.keys(values['kernel.percpu.cpu.sys'])
@@ -147,7 +128,7 @@ export default [
           return utilizations.reduce(keyValueArrayToObject, {})
         }
       }),
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
     ],
     yTickFormat: percentage,
   },
@@ -162,8 +143,8 @@ export default [
     ],
     transforms: [
       divideBy(1000),
-      defaultTitleAndKeylabel,
-      cumulativeTransform,
+      defaultTitleAndKeylabel(),
+      cumulativeTransform(),
     ],
     yTickFormat: number,
   },
@@ -177,9 +158,9 @@ export default [
       'kernel.percpu.cpu.user',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
       divideBy(1000),
-      cumulativeTransform,
+      cumulativeTransform(),
     ],
     yTickFormat: number,
   },
@@ -193,7 +174,7 @@ export default [
       'kernel.all.runnable',
     ],
     transforms: [
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
     ],
     yTickFormat: integer,
   }

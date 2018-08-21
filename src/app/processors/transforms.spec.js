@@ -130,22 +130,3 @@ describe('filterForContainerId', () => {
     })
   })
 })
-
-describe('copyDataToCoordinatesForSemiotic', () => {
-  let data = [
-    { metric: 'containerram', instance: 'abc', data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
-    { metric: 'containerram', instance: 'def', data: [ { ts: new Date(1234), value: 3 } ] },
-  ]
-  it('copies values', () => {
-    let copied = transforms.copyDataToCoordinatesForSemiotic(data)
-    expect(copied.length).to.equal(2)
-    expect(copied).to.have.deep.members([
-      { metric: 'containerram', instance: 'abc',
-        data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ],
-        coordinates: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
-      { metric: 'containerram', instance: 'def',
-        data: [ { ts: new Date(1234), value: 3 } ],
-        coordinates: [ { ts: new Date(1234), value: 3 } ] },
-    ])
-  })
-})

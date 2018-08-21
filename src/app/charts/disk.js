@@ -15,8 +15,8 @@ export default [
     ],
     transforms: [
       mapInstanceDomains(),
-      defaultTitleAndKeylabel,
-      cumulativeTransform,
+      defaultTitleAndKeylabel(),
+      cumulativeTransform(),
     ],
     yTickFormat: number,
   },
@@ -34,8 +34,8 @@ export default [
     ],
     transforms: [
       mapInstanceDomains(),
-      defaultTitleAndKeylabel,
-      cumulativeTransform
+      defaultTitleAndKeylabel(),
+      cumulativeTransform(),
     ],
     yTickFormat: number,
   },
@@ -51,8 +51,8 @@ export default [
     ],
     transforms: [
       mapInstanceDomains(),
-      defaultTitleAndKeylabel,
-      cumulativeTransform
+      defaultTitleAndKeylabel(),
+      cumulativeTransform(),
     ],
     yTickFormat: integer,
   },
@@ -67,9 +67,9 @@ export default [
     ],
     transforms: [
       mapInstanceDomains(),
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
       divideBy(1000),
-      cumulativeTransform,
+      cumulativeTransform(),
     ],
     yTickFormat: percentage,
   },

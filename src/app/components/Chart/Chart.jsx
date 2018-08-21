@@ -188,7 +188,7 @@ class Chart extends React.Component {
                   { type: 'frame-hover' }, // shows the tooltip frame
                 ]}
                 tooltipContent={(d) => fetchSharedTooltipContent(d, dataset, chartInfo.yTickFormat)}
-                baseMarkProps={{ transitionDuration: 0 }} />
+                baseMarkProps={{ forceUpdate: true }} />
             }
             { (!dataset || dataset.length <= 0) &&
               <span>No data yet</span>

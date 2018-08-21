@@ -12,6 +12,10 @@ const cividis = [
   [0.941176, 'rgb(243,219,79)'], [1.000000, 'rgb(255,233,69)']
 ]
 
+// TODO remove this
+// override the first element so we get white bg
+cividis[0] = [0.0000001, 'rgb(255,255,255)']
+
 const _thresholds = cividis.map(v => v[0])
 const _colors = cividis.map(v => v[1])
 

@@ -44,9 +44,9 @@ function calculateChart(datasets, chartInfo, context) {
 function constructTransformPipeline(chartInfo) {
   // TODO move this logic into the modal (?) and then collapse customModel into simpleModel
   let transforms = []
-  transforms.push(defaultTitleAndKeylabel)
+  transforms.push(defaultTitleAndKeylabel())
   if (chartInfo.cumulative) {
-    transforms.push(cumulativeTransform)
+    transforms.push(cumulativeTransform())
   }
   if (chartInfo.converted && chartInfo.conversionFunction) {
     const conversionFunction = new Function('value', 'return ' + chartInfo.conversionFunction + ';')

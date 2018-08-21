@@ -16,8 +16,8 @@ export default [
     ],
     transforms: [
       mapInstanceDomains(),
-      defaultTitleAndKeylabel,
-      cumulativeTransform,
+      defaultTitleAndKeylabel(),
+      cumulativeTransform(),
     ],
     yTickFormat: integer,
   },
@@ -33,8 +33,8 @@ export default [
     ],
     transforms: [
       mapInstanceDomains(),
-      defaultTitleAndKeylabel,
-      cumulativeTransform,
+      defaultTitleAndKeylabel(),
+      cumulativeTransform(),
     ],
     yTickFormat: integer,
   },
@@ -49,8 +49,8 @@ export default [
     ],
     transforms: [
       mapInstanceDomains(),
-      defaultTitleAndKeylabel,
-      cumulativeTransform,
+      defaultTitleAndKeylabel(),
+      cumulativeTransform(),
     ],
     yTickFormat: integer,
   },
@@ -67,8 +67,8 @@ export default [
     transforms: [
       mapInstanceDomains(),
       filterInstanceIncludesFilterText,
-      defaultTitleAndKeylabel,
-      cumulativeTransform,
+      defaultTitleAndKeylabel(),
+      cumulativeTransform(),
     ],
     settingsComponent: FilterModal,
     filter: '',
@@ -89,7 +89,7 @@ export default [
       'network.tcp.synretrans',
     ],
     transforms: [
-      cumulativeTransform,
+      cumulativeTransform(),
       renameMetric({
         'network.tcp.retranssegs': 'retranssegs',
         'network.tcp.timeouts': 'timeouts',
@@ -98,7 +98,7 @@ export default [
         'network.tcp.slowstartretrans': 'slowstartretrans',
         'network.tcp.synretrans': 'synretrans',
       }),
-      defaultTitleAndKeylabel,
+      defaultTitleAndKeylabel(),
     ],
     yTickFormat: integer,
   },
@@ -115,8 +115,8 @@ export default [
     transforms: [
       mapInstanceDomains(),
       filterInstanceIncludesFilterText,
-      defaultTitleAndKeylabel,
-      cumulativeTransform,
+      defaultTitleAndKeylabel(),
+      cumulativeTransform(),
     ],
     settingsComponent: FilterModal,
     filter: '',
