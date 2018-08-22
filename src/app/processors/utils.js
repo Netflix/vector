@@ -7,7 +7,6 @@ function createTimestampFromDataset(dataset) {
 }
 
 function extractValueFromChartDataForInstance(dataset, metricName, instanceName) {
-  // console.log('looking for metricName:instanceName', metricName, ':', instanceName, dataset)
   // given a single pmweb fetch result, traverse the metricName -> instances -> value hierarchy to get a specific value
   const valuesForMetric = dataset.values.find(v => v.name === metricName) || { instances: [] }
   const metrics = valuesForMetric.instances.find(i => i.instance === instanceName)

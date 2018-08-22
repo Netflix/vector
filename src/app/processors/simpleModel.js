@@ -25,7 +25,6 @@ function calculateChart(datasets, chartInfo, context) {
         }))
         .filter(ds => ds.value !== null)
     }))
-  // console.log('--- done calculating data', data)
 
   const transforms = chartInfo.transforms || []
   let transformed = data

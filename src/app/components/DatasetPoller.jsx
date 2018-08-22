@@ -1,16 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import superagent from 'superagent'
-
 import { uniqueFilter } from '../processors/utils'
+
+import WorkerTimer from 'worker-loader!./DatasetPollerTimer.js'
 
 function matchesHostnameContext(hc1, hc2) {
   return hc1.hostname === hc2.hostname && hc1.contextId === hc2.contextId
 }
 
 class DatasetPoller extends React.Component {
+  workerTimer = new WorkerTimer()
+
   state = {
-    contextDatasets: [] // { hostname, contextId, datasets[], instanceDomainMappings{metric:{in->dom}} }
+    contextDatasets: [], // { hostname, contextId, datasets[], instanceDomainMappings{metric:{in->dom}} }
   }
 
   render () {
@@ -18,7 +21,14 @@ class DatasetPoller extends React.Component {
   }
 
   componentDidMount = () => {
-    setTimeout(this.pollMetrics, this.props.pollIntervalMs)
+    this.workerTimer.onmessage = this.pollMetrics
+    this.workerTimer.postMessage({ interval: `${this.props.pollIntervalMs}` })
+  }
+
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.pollIntervalMs !== this.props.pollIntervalMs) {
+      this.workerTimer.postMessage({ interval: `${this.props.pollIntervalMs}` })
+    }
   }
 
   guaranteeDatasetsInStateForQueries = (queries) => {
@@ -46,7 +56,6 @@ class DatasetPoller extends React.Component {
   pollMetrics = async () => {
     try {
       if (this.props.charts.length == 0) {
-        setTimeout(this.pollMetrics, this.props.pollIntervalMs)
         return
       }
 
@@ -134,7 +143,6 @@ class DatasetPoller extends React.Component {
     } catch (err) {
       console.warn('could not poll', err)
     }
-    setTimeout(this.pollMetrics, this.props.pollIntervalMs)
   }
 }
 

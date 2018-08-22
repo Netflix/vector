@@ -1,10 +1,9 @@
 import simpleModel from '../processors/simpleModel'
-import { copyDataToCoordinatesForSemiotic, timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform } from '../processors/transforms'
+import { onlyLatestValues, timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform } from '../processors/transforms'
 import { keyValueArrayToObject } from '../processors/utils'
 import { percentage, integer, number } from '../processors/formats'
 import Chart from '../components/Chart/Chart.jsx'
-import Table from '../components/Table/Table.jsx'
-import Heatmap from '../components/Heatmap/Heatmap.jsx'
+import SimpleTable from '../components/Table/SimpleTable.jsx'
 
 export default [
   {
@@ -96,12 +95,13 @@ export default [
     group: 'CPU',
     title: 'Load Average (table)',
     processor: simpleModel,
-    visualisation: Table,
+    visualisation: SimpleTable,
     metricNames: [
       'kernel.all.load',
     ],
     transforms: [
       defaultTitleAndKeylabel(),
+      onlyLatestValues(),
     ],
     yTickFormat: number,
   },

@@ -26,11 +26,11 @@ function cumulativeTransformSelective (shouldApplyFn) {
     }
   }
 
-  return function _cumulativeTransformSelective (instances) {
-    return instances.map(instance => {
-      return shouldApplyFn(instance)
-        ? { ...instance, data: instance.data.map(nominalTsValueToIntervalTsValue).slice(1) }
-        : instance
+  return function _cumulativeTransformSelective (metricInstances) {
+    return metricInstances.map(mi => {
+      return shouldApplyFn(mi)
+        ? { ...mi, data: mi.data.map(nominalTsValueToIntervalTsValue).slice(1) }
+        : mi
     })
   }
 }
@@ -64,11 +64,11 @@ export function cumulativeTransformOnlyMetrics (metricNames) {
  * @return {function} a transform function
  */
 export function mathValuesSelective (math, shouldApplyFn) {
-  return function _mathSomeSelective (instances) {
-    return instances.map(instance => {
-      let result = shouldApplyFn(instance)
-        ? { ...instance, data: instance.data.map(({ ts, value }) => ({ ts, value: math(value) })) }
-        : instance
+  return function _mathSomeSelective (metricInstances) {
+    return metricInstances.map(mi => {
+      let result = shouldApplyFn(mi)
+        ? { ...mi, data: mi.data.map(({ ts, value }) => ({ ts, value: math(value) })) }
+        : mi
       return result
     })
   }
@@ -122,8 +122,8 @@ export const divideByOnlyMetric = (divisor, metricNames) =>
  * @return {function} a transform function
  */
 export function combineValuesByTitle (fn) {
-  return function _combineValuesByTitle (instances) {
-    return instances.reduce(combineValuesByTitleReducer(fn), [])
+  return function _combineValuesByTitle (metricInstances) {
+    return metricInstances.reduce(combineValuesByTitleReducer(fn), [])
   }
 }
 
@@ -237,33 +237,6 @@ export function log (message) {
 }
 
 /**
- * Filters out any data from timestamps where a complete set is not available across the requested metricInstances
- *
- * @param {array} metricInstances the list of instances to scan across
- */
-
-// TODO dead code, resurrect it as a safety net for some transform pipelines
-export function filterOutPartialTimestamps (metricInstances) {
-  // from each data element, capture the timestamp only
-  const timestamps = metricInstances.map(mi =>
-    mi.data.map(({ ts }) => ts.getTime())
-  )
-
-  // filter to only include elements in both
-  const eligibleTimestamps = timestamps.reduce(
-    (acc, array) => acc.filter(ts => array.includes(ts)),
-    timestamps[0] || []) // start with a default set
-
-  // filter the data content, so that only eligible timestamps are present
-  const filteredInstances = metricInstances.map(mi => ({
-    ...mi,
-    data: mi.data.filter(tsv => eligibleTimestamps.includes(tsv.ts.getTime()))
-  }))
-
-  return filteredInstances
-}
-
-/**
  * Completely transforms an input set of data at each timepoint
  * Assumes that a time sample exists at each point
  *
@@ -325,4 +298,31 @@ export function filterForContainerId (metricNames) {
 export function filterInstanceIncludesFilterText (metricInstances, { chartInfo }) {
   if (!chartInfo.filter) return metricInstances
   return metricInstances.filter(mi => mi.instance ? mi.instance.includes(chartInfo.filter) : true)
+}
+
+/**
+ * Filter metric names so that only metrics in the referenced list will be passed through
+ *
+ * @param {string} the name of the key in which to find metric names to filter by (this will be read from chartInfo)
+ *
+ * @return {function} a transform function
+ */
+export function filterKeepSelectedMetrics (chartInfoKey) {
+  return function _filterKeepSelectedMetrics (metricInstances, { chartInfo }) {
+    const selectedMetrics = chartInfo[chartInfoKey] || []
+    return metricInstances.filter(mi => selectedMetrics.includes(mi.metric))
+  }
+}
+
+export function onlyLatestValues () {
+  function extractLatest(acc, elem) {
+    return (acc.ts.getTime() > elem.ts.getTime()) ? acc : elem
+  }
+
+  return function _onlyLatestValues (metricInstances) {
+    return metricInstances.map(mi => ({
+      ...mi,
+      data: [ mi.data.reduce(extractLatest, mi.data[0]) ],
+    }))
+  }
 }

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { ResponsiveXYFrame } from "semiotic"
 import moment from 'moment'
 
+import { uniqueFilter } from '../../processors/utils'
+
 import { scaleThreshold } from 'd3-scale'
 
 import { ResizableBox } from 'react-resizable';
@@ -12,19 +14,47 @@ import { SortableHandle } from 'react-sortable-hoc'
 
 const DragHandle = SortableHandle(() => <Icon name='expand arrows alternate' />)
 
+const tooltipContentStyle = {
+  background: 'rgba(255, 255, 255, 0.85)',
+  border: '1px double #ddd',
+  padding: '10px 20px',
+}
+
 // collapse dataset into a single stream as this is what the xyframe heatmap view requires
 function extractHeatmapValuesFromDataset(dataset, yAxisLabels) {
   const values = []
+  const summary = []
   if (dataset) {
     for (let d of dataset) {
       for (let tsv of d.data) {
+        if (tsv.value > 0) {
+          summary.push({ ts: tsv.ts, value: d.instance, label: yAxisLabels[d.instance] || '?', weight: tsv.value })
+        }
         for (let weight = 0; weight < tsv.value; weight++) {
-          values.push({ ts: tsv.ts, value: d.instance + 1, label: yAxisLabels[d.instance] || '?' })
+          values.push({ ts: tsv.ts, value: d.instance, label: yAxisLabels[d.instance] || '?' })
         }
       }
     }
   }
   return values
+}
+
+function determineThresholds(chartInfo) {
+  // works because input values are ranged [0,1], so we can just multiply out
+  // but we need to put the first value back to ensure the 0/1 transition works
+  if (chartInfo.heatmapMaxValue > 0) {
+    let newThresholds = chartInfo.heatmap.thresholds.map(e => e * chartInfo.heatmapMaxValue)
+    newThresholds[0] = chartInfo.heatmap.thresholds[0]
+
+    return scaleThreshold()
+      .domain(newThresholds)
+      .range(chartInfo.heatmap.colors)
+  }
+
+  // default scale
+  return scaleThreshold()
+    .domain(chartInfo.heatmap.thresholds)
+    .range(chartInfo.heatmap.colors)
 }
 
 class Heatmap extends React.Component {
@@ -33,9 +63,6 @@ class Heatmap extends React.Component {
   }
 
   shouldComponentUpdate(nextProps /*, nextState */) {
-    // avoid a render call if the dataset has not changed, this avoids unnecessary polls when
-    // the context data changes but the dataset itself has not changed, to do this we store a copy
-    // in state
     return (this.props.datasets !== nextProps.datasets)
   }
 
@@ -45,7 +72,7 @@ class Heatmap extends React.Component {
     const dataset = datasets
       ? chartInfo.processor.calculateChart(datasets, chartInfo, { instanceDomainMappings, containerList, containerId, chartInfo })
       : []
-    const yAxisLookup = (dataset && dataset.map(mi => mi.yAxisLabels)) || []
+    const yAxisLookup = (dataset && dataset.map(mi => mi.yAxisLabels) || []).filter(uniqueFilter)
     const heatmapValues = extractHeatmapValuesFromDataset(dataset, yAxisLookup)
 
     const HelpComponent = chartInfo.helpComponent
@@ -60,9 +87,7 @@ class Heatmap extends React.Component {
       this.setState({ modalOpen: false })
     }
 
-    const thresholds = scaleThreshold()
-      .domain(chartInfo.heatmap.thresholds)
-      .range(chartInfo.heatmap.colors)
+    const thresholds = determineThresholds(chartInfo)
 
     const chartSubtitle = (c) => c.context.target.hostname
       + (c.context.target.hostspec === 'localhost' ? '' : (' ' + c.context.target.hostspec))
@@ -103,23 +128,32 @@ class Heatmap extends React.Component {
         </Segment>
         <Segment>
           <ResizableBox width={650} height={385}>
-            { (dataset && dataset.length > 0 && dataset.every(d => d.data.length > 0))
+            { (dataset && dataset.length > 0 && dataset.every(d => d.data.length > 0) && heatmapValues.length > 0)
               ? <ResponsiveXYFrame
                 responsiveWidth={true}
                 responsiveHeight={true}
-                points={[{ coordinates: heatmapValues }]}
                 areas={[{ coordinates: heatmapValues }]}
-                areaType={{ type: 'heatmap', xBins: dataset[0].data.length, yBins: dataset.length }}
+                areaType={{ type: 'heatmap', xBins: dataset[0].data.length, yBins: yAxisLookup.length }}
                 xAccessor={d => d.ts}
                 yAccessor={d => d.value}
-                areaStyle={d => ({ fill: thresholds(d.percent), stroke: 'darkgrey' })}
+                areaStyle={d => ({
+                  fill: thresholds(chartInfo.heatmapMaxValue > 0 ? d.value : d.percent),
+                  stroke: 'lightgrey'
+                })}
                 margin={{ left: 60, bottom: 70, right: 3, top: 3 }}
-                yExtent={[0, dataset.length]}
+                yExtent={[0, yAxisLookup.length]}
                 hoverAnnotation={true}
-                tooltipContent={dp => { return (<p>{dp.binItems.length && dp.binItems[0].label}: {dp.binItems.length}</p>) }}
+                tooltipContent={dp => (
+                  dp.binItems.length
+                    ? <div style={tooltipContentStyle}>
+                      <p>{dp.binItems.length && dp.binItems[0].label}: {dp.binItems.length}</p>
+                    </div>
+                    : null
+                )}
                 axes={[
                   { orient: "left",
                     tickFormat: v => yAxisLookup[v - 1] || '',
+                    ticks: yAxisLookup && yAxisLookup.length,
                     footer: true },
                   { orient: "bottom",
                     tickFormat: ts => {

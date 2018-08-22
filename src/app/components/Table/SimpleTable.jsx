@@ -1,30 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { uniqueFilter } from '../../processors/utils'
 import 'react-resizable/css/styles.css'
 import { Modal, Popup, Icon, Button, Segment, Table as SemanticTable } from 'semantic-ui-react'
 import { SortableHandle } from 'react-sortable-hoc'
 
 const DragHandle = SortableHandle(() => <Icon name='expand arrows alternate' />)
 
-function createTableRows(dataset) {
-  if (!dataset) return []
-
-  // an array of [ pid, comm, laddr ..]
-  const headers = dataset.map(mi => mi.metric).filter(uniqueFilter)
-
-  // create a two dimensional array of arrays
-  const rows = []
-  dataset.forEach(({ metric, instance, data }) => {
-    rows[instance] = rows[instance] || [] // ensure a row exists for this instance
-    let column = headers.indexOf(metric) // determine which column to set
-    rows[instance][column] = data[0].value // set the value at the column
-  })
-  return { headers, tableData: rows }
-}
-
-class Table extends React.Component {
+class SimpleTable extends React.Component {
   state = {
     modalOpen: false
   }
@@ -51,8 +34,6 @@ class Table extends React.Component {
     const chartSubtitle = (c) => c.context.target.hostname
       + (c.context.target.hostspec === 'localhost' ? '' : (' ' + c.context.target.hostspec))
       + (c.context.target.containerId === '_all' ? '' : (' ' + c.context.target.containerId))
-
-    const { headers, tableData } = createTableRows(dataset)
 
     return (
       <Segment.Group raised>
@@ -92,15 +73,15 @@ class Table extends React.Component {
             <SemanticTable basic='very' size='small' striped>
               <SemanticTable.Header>
                 <SemanticTable.Row>
-                  { headers.map((hdr, idx) =>
-                    <SemanticTable.HeaderCell key={`hdr-${idx}`}>{hdr}</SemanticTable.HeaderCell>
-                  )}
+                  <SemanticTable.HeaderCell>Title</SemanticTable.HeaderCell>
+                  <SemanticTable.HeaderCell>Value</SemanticTable.HeaderCell>
                 </SemanticTable.Row>
               </SemanticTable.Header>
               <SemanticTable.Body>
-                { tableData.map((row, ridx) =>
-                  <SemanticTable.Row key={`row-${ridx}`}>
-                    { row.map((col, cidx) => <SemanticTable.Cell key={`row-${ridx}-cell-${cidx}`}>{col}</SemanticTable.Cell>) }
+                { dataset.map(({ title, data }, ridx) =>
+                  <SemanticTable.Row key={`mi-${ridx}`}>
+                    <SemanticTable.Cell>{title}</SemanticTable.Cell>
+                    <SemanticTable.Cell>{data[0].value}</SemanticTable.Cell>
                   </SemanticTable.Row>
                 )}
               </SemanticTable.Body>
@@ -116,7 +97,7 @@ class Table extends React.Component {
   }
 }
 
-Table.propTypes = {
+SimpleTable.propTypes = {
   chartInfo: PropTypes.object.isRequired,
   datasets: PropTypes.array.isRequired,
   onCloseClicked: PropTypes.func.isRequired,
@@ -127,4 +108,4 @@ Table.propTypes = {
   pmids: PropTypes.object.isRequired,
 }
 
-export default Table
+export default SimpleTable

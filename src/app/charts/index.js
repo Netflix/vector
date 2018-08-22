@@ -32,12 +32,11 @@ const charts = requires.map(r => r.default).reduce(flatten, [])
 
 export default charts
 
-// TODO add bcc graphs
 // TODO add flame graphs
+// TODO automatically reconnect if a context goes away, but host and port are valid
 // TODO bug why does the network packets chart explode when a container selection is made - looks like network packets filter is actually container aware
 // TODO performance improvements in dataset parser component
 // TODO allow vector to browse and collect cluster information
 // TODO set up url # parameter and parser to allow reconstruction of sharing links
 // TODO chart legends / click to show and hide
 // TODO when clicking remove, also remove all charts
-// TODO bugfix semiotic visualisations
