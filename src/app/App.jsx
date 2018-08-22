@@ -15,6 +15,13 @@ import { Sidebar } from 'semantic-ui-react'
 import { arrayMove } from 'react-sortable-hoc'
 import 'semantic-ui-css/semantic.min.css'
 
+function targetMatches(t1, t2) {
+  return t1 && t2
+    && t1.hostname === t2.hostname
+    && t1.hostspec === t2.hostspec
+    && t1.containerId === t2.containerId
+}
+
 class App extends React.Component {
   state = {
     chartlist: [],
@@ -27,14 +34,11 @@ class App extends React.Component {
   }
 
   // chart handling
-
   onClearChartsFromContext = (ctx) => {
     console.log('onClearChartsFromContext', ctx, this.state.chartlist)
     this.setState((oldState) => ({
       chartlist: oldState.chartlist.filter(chart =>
-        !(chart.context.target.hostname === ctx.target.hostname
-        && chart.context.target.hostspec === ctx.target.hostspec
-        && chart.context.target.containerId === ctx.target.containerId))
+        !(targetMatches(chart.context.target, ctx.target)))
     }))
   }
   onAddChartToContext = (ctx, chart) => {
@@ -58,15 +62,15 @@ class App extends React.Component {
   }
 
   // context handling
-
   onContextsUpdated = (contexts) => this.setState({ contextData: [ ...contexts ] })
   onContextDatasetsUpdated = (ctxds) => this.setState({ contextDatasets: ctxds })
   onNewContext = (target) => this.setState((state) => ({ targets: state.targets.concat(target) }))
   onRemoveContext = (context) => this.setState((state) => ({
+    // remove all targets, and remove all charts
     targets: state.targets.filter(target =>
-      !(target.hostname === context.target.hostname
-        && target.hostspec === context.target.hostspec
-        && target.containerId === context.target.containerId))
+      !(targetMatches(target, context.target))),
+    chartlist: state.chartlist.filter(chart =>
+      !(targetMatches(chart.context.target, context.target))),
   }))
 
   // config panel visibility

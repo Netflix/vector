@@ -305,7 +305,6 @@ export default [
       'bcc.usdt.hits',
     ],
     transforms: [
-      // TODO what is the logic in the original bccUSDThits.datamodel.factory.js doing?
       mapInstanceDomains(),
       customTitleAndKeylabel((metric, instance) => instance),
       onlyLatestValues(),
@@ -321,7 +320,6 @@ export default [
       'bcc.uprobe.hits',
     ],
     transforms: [
-      // TODO what is the logic in the original bccUprobehits.datamodel.factory.js doing?
       mapInstanceDomains(),
       customTitleAndKeylabel((metric, instance) => instance),
       onlyLatestValues(),

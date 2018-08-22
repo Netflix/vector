@@ -260,7 +260,7 @@ export default [
       cumulativeTransformOnlyMetrics([ 'cgroup.cpuacct.usage' ]),
       divideByOnlyMetric(1000 * 1000 * 1000, [ 'cgroup.cpuacct.usage' ]),
       timesliceCalculations({
-        // TODO i really don't understand why this calculation is built like this,
+        // TODO this calculation is substantially different from the old vector calculation
         // surely it should be something like: headroom = limits - utilisation
         'usage': (slice) => slice['cgroup.cpuacct.usage'] || [],
         'limit': (slice) => {

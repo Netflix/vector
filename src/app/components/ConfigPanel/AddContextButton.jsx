@@ -42,8 +42,6 @@ class AddContextButton extends React.Component {
     res = await promisedCgroups
     const cgroups = res.body.values.length ? res.body.values[0].instances : []
 
-    // TODO refactor to a proper some()
-    // containerList = list of all containers.value where container.instance is present in containerlist
     const containerList = cgroups.map(({ instance, value }) => ({
       instance,
       cgroup: value,
