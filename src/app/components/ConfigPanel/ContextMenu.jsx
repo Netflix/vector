@@ -6,7 +6,7 @@ import { Menu, Loader, Button } from 'semantic-ui-react'
 import AddContextModal from './AddContextModal.jsx'
 import { targetMatches } from '../../utils'
 
-class ContextMenu extends React.Component {
+class ContextMenu extends React.PureComponent {
   state = { }
 
   handleContextClick = (e, { context }) => {

@@ -1,9 +1,8 @@
 import simpleModel from '../processors/simpleModel'
-import { renameMetric, defaultTitleAndKeylabel, mapInstanceDomains, cumulativeTransform, filterInstanceIncludesFilterText } from '../processors/transforms'
+import { renameMetric, defaultTitleAndKeylabel, mapInstanceDomains, cumulativeTransform } from '../processors/transforms'
 import { integer } from '../processors/formats'
-import Chart from '../components/Chart/Chart.jsx'
-
-import FilterModal from '../components/FilterModal/FilterModal.jsx'
+import Chart from '../components/Charts/Chart.jsx'
+import FilterModal from '../components/SettingsModals/FilterModal.jsx'
 
 export default [
   {
@@ -67,7 +66,7 @@ export default [
     ],
     transforms: [
       mapInstanceDomains(),
-      filterInstanceIncludesFilterText,
+      FilterModal.filterInstanceIncludesFilterText(),
       defaultTitleAndKeylabel(),
       cumulativeTransform(),
     ],
@@ -115,7 +114,7 @@ export default [
     ],
     transforms: [
       mapInstanceDomains(),
-      filterInstanceIncludesFilterText,
+      FilterModal.filterInstanceIncludesFilterText(),
       defaultTitleAndKeylabel(),
       cumulativeTransform(),
     ],

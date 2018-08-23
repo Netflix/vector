@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import superagent from 'superagent'
-import { uniqueFilter } from '../processors/utils'
+import { uniqueFilter } from '../../utils'
 
 import WorkerTimer from 'worker-loader!./DatasetPollerTimer.js'
 
@@ -92,6 +92,7 @@ class DatasetPoller extends React.Component {
       for(const q of queries) {
         let pmids = q.metricNames.map(n => q.context.pmids[n] || null)
           .filter(pmid => pmid !== null).join(',')
+        // TODO should be able to alarm if we can't find any pmids to match?
 
         let res = await superagent
           .get(`http://${q.hostname}/pmapi/${q.contextId}/_fetch`)
@@ -113,6 +114,7 @@ class DatasetPoller extends React.Component {
       }
 
       // find any missing instanceDomainMappings
+      // TODO how do we poll this regularly for updates? eg: bcc tcptop, changing socket list
       for(const q of queries) {
         const idomMaps = this.state.contextDatasets.find(cds => matchesHostnameContext(cds, q)).instanceDomainMappings
         const neededNames = q.metricNames.filter(name => !(name in idomMaps))

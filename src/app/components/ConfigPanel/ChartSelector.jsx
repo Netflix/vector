@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Menu } from 'semantic-ui-react'
 
-import { flatten, uniqueFilter } from '../../processors/utils'
+import { flatten, uniqueFilter } from '../../utils'
 
 class ChartSelector extends React.PureComponent {
   handleClearMenuClick = () => this.props.onClearCharts()

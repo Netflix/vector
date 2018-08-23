@@ -10,12 +10,12 @@ import {
   cumulativeTransform,
   mathValuesSelective,
 } from '../processors/transforms'
-import Table from '../components/Table/Table.jsx'
-import SimpleTable from '../components/Table/SimpleTable.jsx'
-import Heatmap from '../components/Heatmap/Heatmap.jsx'
-import HeatmapSettingsModal from '../components/CustomSettingsModal/HeatmapSettingsModal.jsx'
-import HeatmapSettingsAndMetricSelectorModal from '../components/CustomSettingsModal/HeatmapSettingsAndMetricSelectorModal.jsx'
-import { thresholds, colors } from '../components/Heatmap/cividis.js'
+import Table from '../components/Charts/Table.jsx'
+import SimpleTable from '../components/Charts/SimpleTable.jsx'
+import Heatmap from '../components/Charts/Heatmap.jsx'
+import HeatmapSettingsModal from '../components/SettingsModals/HeatmapSettingsModal.jsx'
+import HeatmapSettingsAndMetricSelectorModal from '../components/SettingsModals/HeatmapSettingsAndMetricSelectorModal.jsx'
+import { thresholds, colors } from '../components/Charts/cividis.js'
 
 export default [
   {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ResponsiveXYFrame } from "semiotic"
 import moment from 'moment'
 
-import { uniqueFilter } from '../../processors/utils'
+import { uniqueFilter } from '../../utils'
 
 import { scaleThreshold } from 'd3-scale'
 

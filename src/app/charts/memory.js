@@ -1,7 +1,7 @@
 import simpleModel from '../processors/simpleModel'
 import { timesliceCalculations, defaultTitleAndKeylabel, cumulativeTransform, kbToGb } from '../processors/transforms'
 import { integer } from '../processors/formats'
-import Chart from '../components/Chart/Chart.jsx'
+import Chart from '../components/Charts/Chart.jsx'
 
 export default [
   {

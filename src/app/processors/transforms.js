@@ -289,18 +289,6 @@ export function filterForContainerId (metricNames) {
 }
 
 /**
- * Filter instance name by settings (basic includes)
- *
- * @param {array} metricInstances the list to filter
- * @param {object} chartInfo the chart info data from which the filter property will be fetched
- * @return {object} the input list with only values matching the filter accepted
- */
-export function filterInstanceIncludesFilterText (metricInstances, { chartInfo }) {
-  if (!chartInfo.filter) return metricInstances
-  return metricInstances.filter(mi => mi.instance ? mi.instance.includes(chartInfo.filter) : true)
-}
-
-/**
  * Filter metric names so that only metrics in the referenced list will be passed through
  *
  * @param {string} the name of the key in which to find metric names to filter by (this will be read from chartInfo)

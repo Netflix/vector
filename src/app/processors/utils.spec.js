@@ -1,19 +1,6 @@
 import * as utils from './utils'
 import { expect } from 'chai'
 
-describe('createTimestampFromDataset', () => {
-  it('creates the correct timestamp', () => {
-    const dataset = {
-      timestamp: {
-        s: 1531869878,
-        us: 882804,
-      }
-    }
-    let result = utils.createTimestampFromDataset(dataset)
-    expect(result.toISOString()).to.equal('2018-07-17T23:24:38.882Z')
-  })
-})
-
 describe('extractInstancesForMetric', () => {
   let datasets
   describe('with full datasets', () => {

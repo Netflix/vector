@@ -1,5 +1,5 @@
 import simpleModel from '../processors/simpleModel'
-import Chart from '../components/Chart/Chart.jsx'
+import Chart from '../components/Charts/Chart.jsx'
 
 import {
   renameMetric,

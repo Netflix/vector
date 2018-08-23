@@ -1,7 +1,7 @@
 import simpleModel from '../processors/simpleModel'
 import { mapInstanceDomains, defaultTitleAndKeylabel, divideBy, cumulativeTransform } from '../processors/transforms'
 import { percentage, integer, number } from '../processors/formats'
-import Chart from '../components/Chart/Chart.jsx'
+import Chart from '../components/Charts/Chart.jsx'
 
 export default [
   {

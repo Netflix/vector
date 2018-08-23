@@ -1,9 +1,9 @@
 import simpleModel from '../processors/simpleModel'
 import { onlyLatestValues, timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform } from '../processors/transforms'
-import { keyValueArrayToObject } from '../processors/utils'
+import { keyValueArrayToObject } from '../utils'
 import { percentage, integer, number } from '../processors/formats'
-import Chart from '../components/Chart/Chart.jsx'
-import SimpleTable from '../components/Table/SimpleTable.jsx'
+import Chart from '../components/Charts/Chart.jsx'
+import SimpleTable from '../components/Charts/SimpleTable.jsx'
 
 export default [
   {

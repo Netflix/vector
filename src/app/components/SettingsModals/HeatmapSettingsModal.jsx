@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Form } from 'semantic-ui-react'
 
-class HeatmapSettingsModal extends React.Component {
+class HeatmapSettingsModal extends React.PureComponent {
   state = {
     heatmapMaxValue: this.props.heatmapMaxValue,
   }
@@ -30,7 +30,6 @@ class HeatmapSettingsModal extends React.Component {
 
 HeatmapSettingsModal.propTypes = {
   heatmapMaxValue: PropTypes.number.isRequired,
-
   onNewSettings: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 }

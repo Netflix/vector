@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Modal, Form } from 'semantic-ui-react'
 import debounce from 'lodash.debounce'
 
-import { fetchContainerList } from './utils'
+import { fetchContainerList } from '../../utils'
 
 class AddContextModal extends React.PureComponent {
   state = {

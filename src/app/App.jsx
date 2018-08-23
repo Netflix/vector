@@ -13,8 +13,8 @@ import Navbar from './components/Navbar/Navbar.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import Dashboard from './components/Dashboard/Dashboard.jsx'
 import ConfigPanel from './components/ConfigPanel/ConfigPanel.jsx'
-import ContextPoller from './components/ContextPoller.jsx'
-import DatasetPoller from './components/DatasetPoller.jsx'
+import ContextPoller from './components/Pollers/ContextPoller.jsx'
+import DatasetPoller from './components/Pollers/DatasetPoller.jsx'
 
 import { Sidebar } from 'semantic-ui-react'
 

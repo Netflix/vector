@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Form, Button } from 'semantic-ui-react'
 
-class FilterModal extends React.Component {
+class FilterModal extends React.PureComponent {
   state = {
     filterText: this.props.filter
   }
@@ -27,6 +27,18 @@ FilterModal.propTypes = {
   filter: PropTypes.string.isRequired,
   onNewSettings: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+}
+
+/**
+ * Filter instance name by settings configured by modal (basic includes)
+ *
+ * @return {function} a transform function
+ */
+FilterModal.filterInstanceIncludesFilterText = function () {
+  return function _filterInstanceIncludesFilterText (metricInstances, { chartInfo }) {
+    if (!chartInfo.filter) return metricInstances
+    return metricInstances.filter(mi => mi.instance ? mi.instance.includes(chartInfo.filter) : true)
+  }
 }
 
 export default FilterModal

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { uniqueFilter } from '../../processors/utils'
+import { uniqueFilter } from '../../utils'
 import 'react-resizable/css/styles.css'
 import { Modal, Popup, Icon, Button, Segment, Table as SemanticTable } from 'semantic-ui-react'
 import { SortableHandle } from 'react-sortable-hoc'

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import superagent from 'superagent'
 
-import { targetMatches } from '../utils'
+import { targetMatches } from '../../utils'
 
 /**
  * ContextPoller accepts a poller as a set of properties, and performs polling for context data.

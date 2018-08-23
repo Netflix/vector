@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as formats from '../../processors/formats'
+import memoizeOne from 'memoize-one'
 
 import { Form } from 'semantic-ui-react'
 
-class CustomSettingsModal extends React.Component {
+class CustomSettingsModal extends React.PureComponent {
   state = {
     metricNames: this.props.metricNames,
     yTickFormat: this.props.yTickFormat,
@@ -26,15 +27,16 @@ class CustomSettingsModal extends React.Component {
     this.props.onClose()
   }
 
-  options = Object.keys(this.props.pmids).map(name => ({ text: name, value: name }))
+  getOptions = memoizeOne(pmids => Object.keys(pmids).map(name => ({ text: name, value: name })))
 
   render() {
+    const options = this.getOptions(this.props.pmids)
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Dropdown label='Select metric' placeholder='Select Metric' fluid search selection
           value={this.state.metricNames && this.state.metricNames.length && this.state.metricNames[0]}
           onChange={this.handleMetricChange}
-          options={this.options} />
+          options={options} />
 
         <Form.Checkbox label='Area' checked={this.state.lineType === 'stackedarea'} onChange={this.handleAreaChange} />
         <Form.Checkbox label='Cumulative' checked={this.state.cumulative} onChange={this.handleCumulativeChange} />
@@ -66,6 +68,7 @@ class CustomSettingsModal extends React.Component {
 
 CustomSettingsModal.propTypes = {
   pmids: PropTypes.object.isRequired,
+
   metricNames: PropTypes.array.isRequired,
   yTickFormat: PropTypes.func.isRequired,
   lineType: PropTypes.string.isRequired,

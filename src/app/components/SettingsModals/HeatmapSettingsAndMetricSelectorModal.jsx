@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form } from 'semantic-ui-react'
 
-import { uniqueFilter } from '../../processors/utils'
+import { uniqueFilter } from '../../utils'
 
-class HeatmapSettingsAndMetricSelectorModal extends React.Component {
+class HeatmapSettingsAndMetricSelectorModal extends React.PureComponent {
   state = {
     heatmapMaxValue: this.props.heatmapMaxValue,
     selectedMetrics: this.props.selectedMetrics,

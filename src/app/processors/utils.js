@@ -1,10 +1,7 @@
-const flatten = (xs, ys) => xs.concat(ys)
-const uniqueFilter = (val, index, array) => array.indexOf(val) === index
-const keyValueArrayToObject = (obj, { key, value }) => { obj[key] = value; return obj; }
-
-function createTimestampFromDataset(dataset) {
-  return new Date(dataset.timestamp.s * 1000 + dataset.timestamp.us / 1000)
-}
+import {
+  flatten,
+  keyValueArrayToObjectReducer,
+} from '../utils'
 
 function extractValueFromChartDataForInstance(dataset, metricName, instanceName) {
   // given a single pmweb fetch result, traverse the metricName -> instances -> value hierarchy to get a specific value
@@ -178,7 +175,7 @@ function applyFunctionsToTimeslices(timeslices, fns) {
           }
           return { key: fname, value: valuesOut }
         })
-        .reduce(keyValueArrayToObject, {})
+        .reduce(keyValueArrayToObjectReducer, {})
     }
   })
 }
@@ -243,10 +240,6 @@ function transformRawDataToPipelineData (datasets, chartInfo) {
 }
 
 export {
-  flatten,
-  uniqueFilter,
-  keyValueArrayToObject,
-  createTimestampFromDataset,
   extractValueFromChartDataForInstance,
   extractInstancesForMetric,
   nominalTsValueToIntervalTsValue,
