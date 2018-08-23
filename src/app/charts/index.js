@@ -33,10 +33,11 @@ const charts = requires.map(r => r.default).reduce(flatten, [])
 export default charts
 
 // TODO automatically reconnect if a context goes away, but host and port are valid
-// TODO bug why does the network packets chart explode when a container selection is made - looks like network packets filter is actually container aware
-// TODO performance improvements in dataset parser component
-// TODO enable vector to browse and collect cluster information
 // TODO set up url # parameter and parser to allow reconstruction of sharing links
-// TODO performance review with react perf tools, lots of double and triple renders
 // TODO refactor chart/heatmap/table/simpletable, shared parent component
-// TODO add flame graphs
+// TODO performance review with react perf tools, lots of double and triple renders
+// TODO stacked area chart with semiotic: datesForUnique is slow performance
+// TODO switch to a proper grid view
+// TODO plenty more tests
+// TODO add flame graphs (maybe not?)
+// TODO enable vector to browse and collect cluster information from external sources, or trigger based - needs to be pluggable, eg from k8s/titus/etc

@@ -5,36 +5,40 @@ import { Menu } from 'semantic-ui-react'
 
 import { flatten, uniqueFilter } from '../../processors/utils'
 
-function ChartSelector({ charts, onAddChart, onClearCharts, disabled }) {
+class ChartSelector extends React.PureComponent {
   // get unique group names
-  let groupNames
-  if (charts) {
-    groupNames = charts
-      .map(chart => chart.group)
-      .reduce(flatten, [])
-      .filter(uniqueFilter)
-  } else {
-    groupNames = []
-  }
+  handleClearMenuClick = () => this.props.onClearCharts()
 
-  const onClearMenuClick = () => onClearCharts()
+  handleMenuItemClick = (event, { chart }) => this.props.onAddChart(chart)
 
-  const onMenuItemClick = (event, { chart }) => onAddChart(chart)
+  render () {
+    let groupNames
+    if (this.props.charts) {
+      groupNames = this.props.charts
+        .map(chart => chart.group)
+        .reduce(flatten, [])
+        .filter(uniqueFilter)
+    } else {
+      groupNames = []
+    }
 
-  return (
-    <Menu size='tiny' borderless compact fluid>
-      <div key='_clear'>
-        <Menu.Item header>Charts</Menu.Item>
-        <Menu.Item content='Clear charts' onClick={onClearMenuClick} disabled={disabled}/>
-      </div>
-      { groupNames.map((g, gidx) => (
-        <div key={gidx}>
-          <Menu.Item header>{g}</Menu.Item>
-          { charts.filter(c => c.group === g).map((c, cidx) => <Menu.Item disabled={disabled} name={c.title} content={c.title} key={cidx} onClick={onMenuItemClick} chart={c}/>) }
+    return (
+      <Menu size='tiny' borderless compact fluid>
+        <div key='_clear'>
+          <Menu.Item header>Charts</Menu.Item>
+          <Menu.Item content='Clear charts' onClick={this.handleClearMenuClick} disabled={this.props.disabled}/>
         </div>
-      )) }
-    </Menu>
-  )
+        { groupNames.map((g, gidx) => (
+          <div key={gidx}>
+            <Menu.Item header>{g}</Menu.Item>
+            { this.props.charts.filter(c => c.group === g).map((c, cidx) =>
+              <Menu.Item disabled={this.props.disabled} name={c.title} content={c.title} key={cidx} onClick={this.handleMenuItemClick} chart={c}/>
+            )}
+          </div>
+        )) }
+      </Menu>
+    )
+  }
 }
 
 ChartSelector.defaultProps = {

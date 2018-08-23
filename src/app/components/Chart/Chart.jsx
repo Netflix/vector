@@ -91,11 +91,9 @@ class Chart extends React.Component {
     modalOpen: false
   }
 
-  shouldComponentUpdate(nextProps /*, nextState */) {
-    // avoid a render call if the dataset has not changed, this avoids unnecessary polls when
-    // the context data changes but the dataset itself has not changed, to do this we store a copy
-    // in state
-    return (this.props.datasets !== nextProps.datasets)
+  shouldComponentUpdate(nextProps, nextState) {
+    return (this.props.datasets !== nextProps.datasets
+      || this.state.modalOpen !== nextState.modalOpen)
   }
 
   render () {

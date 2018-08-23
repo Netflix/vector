@@ -1,7 +1,6 @@
 import simpleModel from '../processors/simpleModel'
 import {
   customTitleAndKeylabel,
-  log,
   divideByOnlyMetric,
   renameMetric,
   onlyLatestValues,

@@ -8,7 +8,18 @@ import ContextMenu from './ContextMenu.jsx'
 
 import charts from '../../charts'
 
-class ConfigPanel extends React.Component {
+const VALID_WINDOWS = [
+  { valueSeconds: 120, text: '2 min' },
+  { valueSeconds: 300, text: '5 min' },
+  { valueSeconds: 600, text: '10 min' },
+]
+const VALID_INTERVALS = [
+  { valueSeconds: 1, text: '1 sec' },
+  { valueSeconds: 2, text: '2 sec' },
+  { valueSeconds: 5, text: '5 sec' },
+]
+
+class ConfigPanel extends React.PureComponent {
   state = {}
 
   onClearCharts = () => {
@@ -24,7 +35,6 @@ class ConfigPanel extends React.Component {
   }
 
   onContextSelect = (context) => {
-    console.log('selecting context', context)
     this.setState({ contextSelected: context })
   }
 
@@ -32,16 +42,8 @@ class ConfigPanel extends React.Component {
     return (
       <Segment.Group>
         <WindowIntervalSelector
-          windows={[
-            { valueSeconds: 120, text: '2 min' },
-            { valueSeconds: 300, text: '5 min' },
-            { valueSeconds: 600, text: '10 min' },
-          ]}
-          intervals={[
-            { valueSeconds: 1, text: '1 sec' },
-            { valueSeconds: 2, text: '2 sec' },
-            { valueSeconds: 5, text: '5 sec' },
-          ]}
+          windows={VALID_WINDOWS}
+          intervals={VALID_INTERVALS}
           defaultWindow={120}
           defaultInterval={2}
           onPollIntervalSecondsChange={this.props.onPollIntervalSecondsChange}

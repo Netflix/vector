@@ -56,6 +56,7 @@ export default [
   },
 
   {
+    // TODO should this chart have the container aware warning?
     group: 'Network',
     title: 'Network Packets',
     processor: simpleModel,

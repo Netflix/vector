@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Menu } from 'semantic-ui-react'
 
-class WindowIntervalSelector extends React.Component {
+class WindowIntervalSelector extends React.PureComponent {
   state = {
     windowSeconds: this.props.defaultWindow,
     intervalSeconds: this.props.defaultInterval,

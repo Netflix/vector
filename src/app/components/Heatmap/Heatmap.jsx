@@ -62,8 +62,9 @@ class Heatmap extends React.Component {
     modalOpen: false
   }
 
-  shouldComponentUpdate(nextProps /*, nextState */) {
-    return (this.props.datasets !== nextProps.datasets)
+  shouldComponentUpdate(nextProps, nextState) {
+    return (this.props.datasets !== nextProps.datasets
+      || this.state.modalOpen !== nextState.modalOpen)
   }
 
   render () {

@@ -1,4 +1,10 @@
 import React from 'react'
+import process from 'process'
+import { whyDidYouUpdate } from 'why-did-you-update'
+if (process.env.NODE_ENV !== 'production') {
+  whyDidYouUpdate(React)
+}
+
 import { render } from 'react-dom'
 
 import config from './config'

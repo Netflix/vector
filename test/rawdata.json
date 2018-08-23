@@ -1,0 +1,293 @@
+[
+  {
+    "timestamp": { "s": 1534976615, "us": 285259 },
+    "values": [
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          { "instance": 1, "value": 0.1 },
+          { "instance": 5, "value": 0.039999999 },
+          { "instance": 15, "value": 0.0099999998 }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": { "s": 1534976617, "us": 275733 },
+    "values": [
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          { "instance": 1, "value": 0.1 },
+          { "instance": 5, "value": 0.039999999 },
+          { "instance": 15, "value": 0.0099999998 }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": { "s": 1534976619, "us": 278537 },
+    "values": [
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          { "instance": 1, "value": 0.090000004 },
+          { "instance": 5, "value": 0.039999999 },
+          { "instance": 15, "value": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": { "s": 1534976621, "us": 284537 },
+    "values": [
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          { "instance": 1, "value": 0.090000004 },
+          { "instance": 5, "value": 0.039999999 },
+          { "instance": 15, "value": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": { "s": 1534976623, "us": 275739 },
+    "values": [
+      {
+        "pmid": 251660288,
+        "name": "kernel.all.load",
+        "instances": [
+          { "instance": 1, "value": 0.090000004 },
+          { "instance": 5, "value": 0.039999999 },
+          { "instance": 15, "value": 0 }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": { "s": 1534976631, "us": 279162 },
+    "values": [
+      {
+        "pmid": 624955392,
+        "name": "bcc.runq.latency",
+        "instances": [
+          { "instance": 0, "value": 5583 },
+          { "instance": 1, "value": 130837 },
+          { "instance": 2, "value": 256041 },
+          { "instance": 3, "value": 107807 },
+          { "instance": 4, "value": 110856 },
+          { "instance": 5, "value": 60577 },
+          { "instance": 6, "value": 294239 },
+          { "instance": 7, "value": 29600 },
+          { "instance": 8, "value": 6820 },
+          { "instance": 9, "value": 3919 },
+          { "instance": 10, "value": 2453 },
+          { "instance": 11, "value": 3321 },
+          { "instance": 12, "value": 2064 },
+          { "instance": 13, "value": 588 },
+          { "instance": 14, "value": 209 },
+          { "instance": 15, "value": 57 },
+          { "instance": 16, "value": 19 },
+          { "instance": 17, "value": 2 }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": { "s": 1534976633, "us": 277205 },
+    "values": [
+      {
+        "pmid": 624955392,
+        "name": "bcc.runq.latency",
+        "instances": [
+          { "instance": 0, "value": 5583 },
+          { "instance": 1, "value": 130838 },
+          { "instance": 2, "value": 256049 },
+          { "instance": 3, "value": 107833 },
+          { "instance": 4, "value": 110898 },
+          { "instance": 5, "value": 60583 },
+          { "instance": 6, "value": 294242 },
+          { "instance": 7, "value": 29602 },
+          { "instance": 8, "value": 6822 },
+          { "instance": 9, "value": 3922 },
+          { "instance": 10, "value": 2454 },
+          { "instance": 11, "value": 3322 },
+          { "instance": 12, "value": 2064 },
+          { "instance": 13, "value": 588 },
+          { "instance": 14, "value": 209 },
+          { "instance": 15, "value": 57 },
+          { "instance": 16, "value": 19 },
+          { "instance": 17, "value": 2 }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": { "s": 1534976635, "us": 294204 },
+    "values": [
+      {
+        "pmid": 624955392,
+        "name": "bcc.runq.latency",
+        "instances": [
+          { "instance": 0, "value": 5583 },
+          { "instance": 1, "value": 130840 },
+          { "instance": 2, "value": 256061 },
+          { "instance": 3, "value": 107855 },
+          { "instance": 4, "value": 110937 },
+          { "instance": 5, "value": 60595 },
+          { "instance": 6, "value": 294249 },
+          { "instance": 7, "value": 29606 },
+          { "instance": 8, "value": 6827 },
+          { "instance": 9, "value": 3923 },
+          { "instance": 10, "value": 2454 },
+          { "instance": 11, "value": 3323 },
+          { "instance": 12, "value": 2064 },
+          { "instance": 13, "value": 588 },
+          { "instance": 14, "value": 209 },
+          { "instance": 15, "value": 57 },
+          { "instance": 16, "value": 19 },
+          { "instance": 17, "value": 2 }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": { "s": 1534976637, "us": 278937 },
+    "values": [
+      {
+        "pmid": 624955392,
+        "name": "bcc.runq.latency",
+        "instances": [
+          { "instance": 0, "value": 5583 },
+          { "instance": 1, "value": 130840 },
+          { "instance": 2, "value": 256063 },
+          { "instance": 3, "value": 107858 },
+          { "instance": 4, "value": 110974 },
+          { "instance": 5, "value": 60615 },
+          { "instance": 6, "value": 294255 },
+          { "instance": 7, "value": 29611 },
+          { "instance": 8, "value": 6827 },
+          { "instance": 9, "value": 3923 },
+          { "instance": 10, "value": 2457 },
+          { "instance": 11, "value": 3324 },
+          { "instance": 12, "value": 2065 },
+          { "instance": 13, "value": 588 },
+          { "instance": 14, "value": 209 },
+          { "instance": 15, "value": 57 },
+          { "instance": 16, "value": 19 },
+          { "instance": 17, "value": 2 }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": { "s": 1534976639, "us": 277099 },
+    "values": [
+      {
+        "pmid": 624955392,
+        "name": "bcc.runq.latency",
+        "instances": [
+          { "instance": 0, "value": 5583 },
+          { "instance": 1, "value": 130842 },
+          { "instance": 2, "value": 256079 },
+          { "instance": 3, "value": 107885 },
+          { "instance": 4, "value": 110997 },
+          { "instance": 5, "value": 60642 },
+          { "instance": 6, "value": 294266 },
+          { "instance": 7, "value": 29616 },
+          { "instance": 8, "value": 6829 },
+          { "instance": 9, "value": 3925 },
+          { "instance": 10, "value": 2459 },
+          { "instance": 11, "value": 3328 },
+          { "instance": 12, "value": 2066 },
+          { "instance": 13, "value": 588 },
+          { "instance": 14, "value": 209 },
+          { "instance": 15, "value": 57 },
+          { "instance": 16, "value": 19 },
+          { "instance": 17, "value": 2 }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": { "s": 1534976643, "us": 287355 },
+    "values": [
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          { "instance": -1, "value": 365600 }
+        ]
+      },
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          { "instance": -1, "value": 1 }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": { "s": 1534976645, "us": 275819 },
+    "values": [
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          { "instance": -1, "value": 365620 }
+        ]
+      },
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          { "instance": -1, "value": 1 }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": { "s": 1534976647, "us": 276417 },
+    "values": [
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          { "instance": -1, "value": 365630 }
+        ]
+      },
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          { "instance": -1, "value": 1 }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": { "s": 1534976649, "us": 276794 },
+    "values": [
+      {
+        "pmid": 251658262,
+        "name": "kernel.all.cpu.sys",
+        "instances": [
+          { "instance": -1, "value": 365640 }
+        ]
+      },
+      {
+        "pmid": 251658272,
+        "name": "hinv.ncpu",
+        "instances": [
+          { "instance": -1, "value": 1 }
+        ]
+      }
+    ]
+  }
+]

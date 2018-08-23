@@ -12,6 +12,11 @@ class SimpleTable extends React.Component {
     modalOpen: false
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return (this.props.datasets !== nextProps.datasets
+      || this.state.modalOpen !== nextState.modalOpen)
+  }
+
   render () {
     const { chartInfo, datasets, onCloseClicked, onNewSettings, containerList, instanceDomainMappings, containerId, pmids } = this.props
 

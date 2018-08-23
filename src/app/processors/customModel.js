@@ -1,7 +1,5 @@
 import {
-  extractValueFromChartDataForInstance,
-  createTimestampFromDataset,
-  extractInstancesForMetric,
+  transformRawDataToPipelineData,
 } from './utils'
 
 import {
@@ -11,26 +9,15 @@ import {
 } from './transforms'
 
 /**
- * Extracts a single metric by name from the datasets
+ * Extracts all required data for a chart from the input datasets. Constructs the
+ * transform pipeline from the chart configuration at runtime.
  */
 function calculateChart(datasets, chartInfo, context) {
-  const instances = extractInstancesForMetric(datasets, chartInfo.metricNames)
-  if (instances.length == 0) return null
-
-  // create an entry for each instance name
-  const data = instances
-    .map(({ metric, instance }) => ({
-      metric,
-      instance,
-      data: datasets
-        .map(ds => ({
-          ts: createTimestampFromDataset(ds),
-          value: extractValueFromChartDataForInstance(ds, metric, instance)
-        }))
-        .filter(ds => ds.value !== null)
-    }))
+  const data = transformRawDataToPipelineData(datasets, chartInfo)
+  if (data === null || data.length === 0) return null
 
   const transforms = constructTransformPipeline(chartInfo)
+
   let transformed = data
   transforms.forEach(fn => {
     transformed = fn(transformed, context)
@@ -42,7 +29,6 @@ function calculateChart(datasets, chartInfo, context) {
  * Creates the transform pipeline for the custom metric
  */
 function constructTransformPipeline(chartInfo) {
-  // TODO move this logic into the modal (?) and then collapse customModel into simpleModel
   let transforms = []
   transforms.push(defaultTitleAndKeylabel())
   if (chartInfo.cumulative) {
