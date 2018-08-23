@@ -3,60 +3,6 @@ import {
   keyValueArrayToObjectReducer,
 } from '../utils'
 
-function extractValueFromChartDataForInstance(dataset, metricName, instanceName) {
-  // given a single pmweb fetch result, traverse the metricName -> instances -> value hierarchy to get a specific value
-  const valuesForMetric = dataset.values.find(v => v.name === metricName) || { instances: [] }
-  const metrics = valuesForMetric.instances.find(i => i.instance === instanceName)
-  return metrics ? metrics.value : null
-}
-
-function extractInstancesForMetric(datasets, metricNames) {
-  // note: performance sensitive
-
-  // functional arrays and maps explodes the performance due to the nature of the nested loop explosion, so choose to collect
-  // this in an associative set
-
-  // collect all the metric instances
-  let metricInstances = {}
-  for (let d in datasets) {
-    for (let v in datasets[d].values) {
-      let metric = datasets[d].values[v].name
-      if (metricNames.includes(metric)) {
-        metricInstances[metric] = metricInstances[metric] || {}
-        for (let i in datasets[d].values[v].instances) {
-          let instance = datasets[d].values[v].instances[i].instance
-          metricInstances[metric][instance] = instance
-        }
-      }
-    }
-  }
-
-  // format them nicely for output
-  let output = []
-  for (let metric in metricInstances) {
-    for (let instance in metricInstances[metric]) {
-      // fetch the actual value, not the key, so we get the right type, since a key is always coerced to a string
-      output.push({ metric, instance: metricInstances[metric][instance] })
-    }
-  }
-  return output
-}
-
-/**
- * Convert a nominal value to a interval value
- * ie: convert a series that increments forever into an average over the last time period
- */
-function nominalTsValueToIntervalTsValue(elem, index, arr) {
-  if (index === 0) return []
-
-  let prev = arr[index - 1]
-
-  return {
-    ...elem, // copy everything over and replace the value with time scaled from previous
-    value: ((elem.value - prev.value) / ((elem.ts - prev.ts) / 1000))
-  }
-}
-
 /**
  * Given an array of { ts, value } tuples, combine them so that there is only
  * one ts value, using combine function
@@ -103,29 +49,6 @@ function combineValuesByTitleReducer(combiner) {
     }
     return newArray
   }
-}
-
-function findCgroupId (iname) {
-  if (typeof iname !== 'string') return iname
-
-  // plain docker: docker/<cgroup_id>
-  if (iname.includes('/docker/')) {
-    return iname.split('/')[2]
-  }
-
-  // systemd: /docker-cgroup_id.scope
-  if (iname.includes('/docker-') && iname.includes('.scope')) {
-    return iname.split('-')[1].split('.')[0]
-  }
-
-  // /container.slice/<cgroup_id> and /container.slice/???/<cgroup_id>
-  if (iname.includes('/containers.slice/')) {
-    const inameArr = iname.split('/')
-    return inameArr[inameArr.length - 1]
-  }
-
-  // not found
-  return null
 }
 
 function getAllMetricInstancesAtTs(metricInstances, ts) {
@@ -205,51 +128,11 @@ function untransposeTimeslices(timeslices) {
   return untransposed
 }
 
-function firstValueInObject(obj) {
-  return obj[Object.keys(obj)[0]]
-}
-
-function transformRawDataToPipelineData (datasets, chartInfo) {
-  // quick clean loops
-  const passMetrics = chartInfo.metricNames
-
-  let output = []
-  for(const { timestamp, values } of datasets) {
-    const ts = new Date(timestamp.s * 1000 + timestamp.us / 1000)
-
-    for (const { name, instances } of values) {
-      if (!passMetrics.includes(name)) continue
-
-      for (const { instance, value } of instances) {
-        if (value === null) continue
-
-        // ensure there is a metric inside the instance
-        let mi = output.find(e => e.metric === name && e.instance === instance)
-        if (!mi) {
-          mi = { metric: name, instance, data: [] }
-          output.push(mi)
-        }
-
-        // and put the data in there
-        mi.data.push({ ts, value })
-      }
-    }
-  }
-
-  return output
-}
-
 export {
-  extractValueFromChartDataForInstance,
-  extractInstancesForMetric,
-  nominalTsValueToIntervalTsValue,
   combineValuesAtTimestampReducer,
   combineValuesByTitleReducer,
-  findCgroupId,
   getAllMetricInstancesAtTs,
   transposeToTimeslices,
   untransposeTimeslices,
   applyFunctionsToTimeslices,
-  firstValueInObject,
-  transformRawDataToPipelineData,
 }

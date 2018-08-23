@@ -57,6 +57,8 @@ class ContextMenu extends React.PureComponent {
     }
   }
 
+  addContextButton = (showModal) => <Button onClick={showModal}>Add Context ...</Button>
+
   render () {
     return (
       <Menu vertical pointing attached='top' borderless>
@@ -97,9 +99,8 @@ class ContextMenu extends React.PureComponent {
             onNewContext={this.handleNewContext}
             defaultPort='7402'
             defaultHostspec='localhost'
-            render={
-              showModal => (<Button onClick={showModal}>Add Context ...</Button>)
-            } />
+            render={this.addContextButton} />
+
         </Menu.Item>
 
       </Menu>

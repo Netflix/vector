@@ -21,8 +21,8 @@ import { percentage, integer, number } from '../processors/formats'
 
 import {
   firstValueInObject,
-  keyValueArrayToObject,
-} from '../processors/utils'
+  keyValueArrayToObjectReducer,
+} from '../utils'
 
 export default [
   {
@@ -118,7 +118,7 @@ export default [
             key: cname,
             value: Math.min(slice['cgroup.memory.limit'][cname], slice['mem.physmem']['-1']) - slice['cgroup.memory.usage'][cname]
           }))
-          return headrooms.reduce(keyValueArrayToObject, {})
+          return headrooms.reduce(keyValueArrayToObjectReducer, {})
         }
       }),
       defaultTitleAndKeylabel(),
@@ -271,7 +271,7 @@ export default [
               ? (slice['cgroup.cpusched.shares'][cname] / slice['cgroup.cpusched.periods'][cname])
               : slice['hinv.ncpu']['-1']
           }))
-          return limits.reduce(keyValueArrayToObject, {})
+          return limits.reduce(keyValueArrayToObjectReducer, {})
         }
       }),
       defaultTitleAndKeylabel(),
@@ -321,7 +321,7 @@ export default [
               ? (slice['cgroup.memory.usage'][cname] / Math.min(slice['cgroup.memory.limit'][cname], slice['mem.physmem']['-1']))
               : (slice['cgroup.memory.usage'][cname] / slice['mem.physmem']['-1'])
           }))
-          return utilizations.reduce(keyValueArrayToObject, {})
+          return utilizations.reduce(keyValueArrayToObjectReducer, {})
         }
       }),
       defaultTitleAndKeylabel(),

@@ -1,6 +1,6 @@
 import {
   transformRawDataToPipelineData,
-} from './utils'
+} from './modelUtils'
 
 /**
  * Extracts all required data for a chart from the input datasets, and applies required transforms

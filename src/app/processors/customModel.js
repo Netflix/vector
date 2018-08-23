@@ -1,6 +1,6 @@
 import {
   transformRawDataToPipelineData,
-} from './utils'
+} from './modelUtils'
 
 import {
   defaultTitleAndKeylabel,

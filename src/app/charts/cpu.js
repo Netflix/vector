@@ -1,6 +1,6 @@
 import simpleModel from '../processors/simpleModel'
 import { onlyLatestValues, timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform } from '../processors/transforms'
-import { keyValueArrayToObject } from '../utils'
+import { keyValueArrayToObjectReducer } from '../utils'
 import { percentage, integer, number } from '../processors/formats'
 import Chart from '../components/Charts/Chart.jsx'
 import SimpleTable from '../components/Charts/SimpleTable.jsx'
@@ -125,7 +125,7 @@ export default [
             key: cpu,
             value: (values['kernel.percpu.cpu.sys'][cpu] || 0) + (values['kernel.percpu.cpu.user'][cpu] || 0)
           }))
-          return utilizations.reduce(keyValueArrayToObject, {})
+          return utilizations.reduce(keyValueArrayToObjectReducer, {})
         }
       }),
       defaultTitleAndKeylabel(),
