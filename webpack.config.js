@@ -94,7 +94,7 @@ let config = {
             { from: 'src/lib/d3-flame-graph', to: 'lib/d3-flame-graph' },
             { from: 'src/lib/d3v4.js', to: 'lib/d3v4.js' },
             { from: 'src/favicon.ico', to: 'favicon.ico' },
-            { from: 'vector.png', to: 'assets/images/vector_owl.png' }
+            { from: 'src/assets/images/vector_owl.png', to: 'assets/images/vector_owl.png' }
         ]),
         // configure jquery, needed by angular and other components that assume jQuery or other strings
         new webpack.ProvidePlugin({
