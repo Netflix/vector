@@ -91,6 +91,8 @@ let config = {
         // copy static assets
         new CopyWebpackPlugin([
             { from: 'src/lib/d3-heatmap2', to: 'lib/d3-heatmap2' },
+            { from: 'src/lib/d3-flame-graph', to: 'lib/d3-flame-graph' },
+            { from: 'src/lib/d3v4.js', to: 'lib/d3v4.js' },
             { from: 'src/favicon.ico', to: 'favicon.ico' },
             { from: 'vector.png', to: 'assets/images/vector_owl.png' }
         ]),
