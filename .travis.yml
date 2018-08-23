@@ -4,6 +4,7 @@ node_js:
 script:
   - npm run test
   - npm run build
+  - buildWithTravis.sh
 services:
   - docker
 env:
