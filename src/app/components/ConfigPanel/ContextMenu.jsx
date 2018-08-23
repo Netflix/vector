@@ -3,20 +3,23 @@ import PropTypes from 'prop-types'
 
 import { Menu, Loader, Button } from 'semantic-ui-react'
 
-import AddContextButton from './AddContextButton.jsx'
+import AddContextModal from './AddContextModal.jsx'
+import { targetMatches } from '../../utils'
 
 class ContextMenu extends React.Component {
   state = { }
 
-  onContextClick = (e, { context }) => {
+  handleContextClick = (e, { context }) => {
     this.setState({ selectedContext: context })
     this.props.onContextSelect(context)
   }
 
-  onContextXClick = (e, { context }) => {
-    // prevent the context click handler
+  handleContextXClick = (e, { context }) => {
+    // the button is inside the menu; stop propagation to prevent the
+    // x button followed by a context menu item click
     e.stopPropagation()
 
+    // deselect context if this was the one
     if (this.isActiveMenuSelection(context)) {
       this.setState({ selectedContext: null })
       this.props.onContextSelect(null)
@@ -26,10 +29,7 @@ class ContextMenu extends React.Component {
   }
 
   isActiveMenuSelection = (context) => {
-    return (this.state.selectedContext
-      && this.state.selectedContext.target.hostname === context.target.hostname
-      && this.state.selectedContext.target.hostspec === context.target.hostspec
-      && this.state.selectedContext.target.containerId === context.target.containerId)
+    return targetMatches(this.state.selectedContext && this.state.selectedContext.target, context.target)
   }
 
   isLoading = (context) => !(context.contextId
@@ -49,11 +49,8 @@ class ContextMenu extends React.Component {
     }
   }
 
-  onNewContext = (target) => {
-    if (this.props.contextData.some(c =>
-      target.hostname === c.target.hostname
-      && target.hostspec === c.target.hostspec
-      && target.containerId === c.target.containerId)) {
+  handleNewContext = (target) => {
+    if (this.props.contextData.some(c => targetMatches(target, c.target))) {
       alert('A context already exists for this target')
     } else {
       this.props.onNewContext(target)
@@ -61,28 +58,54 @@ class ContextMenu extends React.Component {
   }
 
   render () {
+    if (this.props.contextData === null || this.props.contextData.length === 0) {
+      return (
+        <Menu vertical pointing attached='top' borderless>
+          <Menu.Item disabled>No active connections</Menu.Item>
+        </Menu>
+      )
+    }
+
     return (
       <Menu vertical pointing attached='top' borderless>
 
-        { (this.props.contextData === null || this.props.contextData.length === 0) &&
-          <Menu.Item disabled>No active connections</Menu.Item> }
-
-        { this.props.contextData && this.props.contextData.length >= 1 && this.props.contextData.map((ctx, ctxidx) =>
-          <Menu.Item key={ctxidx}
+        // regular context menu selector
+        { this.props.contextData.map(ctx =>
+          <Menu.Item
+            key={`ctx-${ctx.target.hostname}-${ctx.target.hostspec}-${ctx.target.containerId}`}
             active={this.isActiveMenuSelection(ctx)}
-            onClick={this.onContextClick}
+            onClick={this.handleContextClick}
             context={ctx}
             disabled={this.isLoading(ctx)} >
+
+            // text area of menu
             {ctx.target.hostname} =&gt; {ctx.target.hostspec}<br/>
             Container: {ctx.target.containerId}
+
+            // loading spinner
             <Loader active={this.isLoading(ctx)} size='small' />
-            <Button size='mini' compact floated='right' color={this.menuColor(ctx)} context={ctx} onClick={this.onContextXClick}>X</Button>
+
+            // x button to close
+            <Button size='mini' compact floated='right'
+              color={this.menuColor(ctx)}
+              context={ctx}
+              content='X'
+              onClick={this.handleContextXClick} />
+
           </Menu.Item>
         )}
 
+        // add context button
         <Menu.Item>
-          <AddContextButton onNewContext={this.onNewContext} defaultPort='7402' defaultHostspec='localhost'/>
+          <AddContextModal
+            onNewContext={this.handleNewContext}
+            defaultPort='7402'
+            defaultHostspec='localhost'
+            render={
+              showModal => (<Button onClick={showModal}>Add Context ...</Button>)
+            } />
         </Menu.Item>
+
       </Menu>
     )
   }

@@ -6,33 +6,33 @@ import { Menu } from 'semantic-ui-react'
 import { flatten, uniqueFilter } from '../../processors/utils'
 
 class ChartSelector extends React.PureComponent {
-  // get unique group names
   handleClearMenuClick = () => this.props.onClearCharts()
 
   handleMenuItemClick = (event, { chart }) => this.props.onAddChart(chart)
 
   render () {
-    let groupNames
-    if (this.props.charts) {
-      groupNames = this.props.charts
-        .map(chart => chart.group)
-        .reduce(flatten, [])
-        .filter(uniqueFilter)
-    } else {
-      groupNames = []
-    }
+    let groupNames = (this.props.charts || [])
+      .map(chart => chart.group)
+      .reduce(flatten, [])
+      .filter(uniqueFilter)
 
     return (
       <Menu size='tiny' borderless compact fluid>
-        <div key='_clear'>
+        <div>
           <Menu.Item header>Charts</Menu.Item>
           <Menu.Item content='Clear charts' onClick={this.handleClearMenuClick} disabled={this.props.disabled}/>
         </div>
-        { groupNames.map((g, gidx) => (
-          <div key={gidx}>
+        { groupNames.map(g => (
+          <div key={`group-${g}`}>
             <Menu.Item header>{g}</Menu.Item>
-            { this.props.charts.filter(c => c.group === g).map((c, cidx) =>
-              <Menu.Item disabled={this.props.disabled} name={c.title} content={c.title} key={cidx} onClick={this.handleMenuItemClick} chart={c}/>
+            { this.props.charts.filter(c => c.group === g).map(c =>
+              <Menu.Item
+                content={c.title}
+                key={`group-${g}-chart-${c.title}`}
+                name={c.title}
+                disabled={this.props.disabled}
+                onClick={this.handleMenuItemClick}
+                chart={c}/>
             )}
           </div>
         )) }

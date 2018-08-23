@@ -22,12 +22,25 @@ class WindowIntervalSelector extends React.PureComponent {
   render () {
     return (
       <Menu style={{ marginBottom: '0px' }} borderless fluid>
+
         <Menu.Item header>Window</Menu.Item>
-        { this.props.windows.map((w, idx) => (
-          <Menu.Item key={idx} active={this.state.windowSeconds === w.valueSeconds} name={w.valueSeconds.toString()} content={w.text} onClick={this.handleWindowChange}/>)) }
+        { this.props.windows.map(w => (
+          <Menu.Item key={`window-${w.valueSeconds}`}
+            active={this.state.windowSeconds === w.valueSeconds}
+            name={w.valueSeconds.toString()}
+            content={w.text}
+            onClick={this.handleWindowChange}/>
+        ))}
+
         <Menu.Item header>Interval</Menu.Item>
-        { this.props.intervals.map((i, idx) => (
-          <Menu.Item key={idx} active={this.state.intervalSeconds === i.valueSeconds} name={i.valueSeconds.toString()} content={i.text} onClick={this.handleIntervalChange}/>)) }
+        { this.props.intervals.map(i => (
+          <Menu.Item key={`interval-${i.valueSeconds}`}
+            active={this.state.intervalSeconds === i.valueSeconds}
+            name={i.valueSeconds.toString()}
+            content={i.text}
+            onClick={this.handleIntervalChange}/>
+        ))}
+
       </Menu>
     )
   }

@@ -20,13 +20,7 @@ import { Sidebar } from 'semantic-ui-react'
 
 import { arrayMove } from 'react-sortable-hoc'
 import 'semantic-ui-css/semantic.min.css'
-
-function targetMatches(t1, t2) {
-  return t1 && t2
-    && t1.hostname === t2.hostname
-    && t1.hostspec === t2.hostspec
-    && t1.containerId === t2.containerId
-}
+import { targetMatches } from './utils'
 
 class App extends React.Component {
   state = {

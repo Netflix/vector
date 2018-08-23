@@ -3,15 +3,17 @@ import PropTypes from 'prop-types'
 
 import { Menu, Image } from 'semantic-ui-react'
 
-const Navbar = ({ embed, onClick }) => {
-  if (embed) return null;
+class Navbar extends React.PureComponent {
+  render () {
+    if (this.props.embed) return null;
 
-  return (
-    <Menu inverted={true} size={'large'} attached>
-      <Menu.Item><Image centered src='assets/images/vector_owl.png' height='20'/></Menu.Item>
-      <Menu.Item onClick={onClick} >VECTOR</Menu.Item>
-    </Menu>
-  )
+    return (
+      <Menu inverted={true} size={'large'} attached>
+        <Menu.Item><Image centered src='assets/images/vector_owl.png' height='20'/></Menu.Item>
+        <Menu.Item onClick={this.props.onClick} >VECTOR</Menu.Item>
+      </Menu>
+    )
+  }
 }
 
 Navbar.propTypes = {

@@ -41,6 +41,7 @@ class ConfigPanel extends React.PureComponent {
   render () {
     return (
       <Segment.Group>
+
         <WindowIntervalSelector
           windows={VALID_WINDOWS}
           intervals={VALID_INTERVALS}
@@ -48,17 +49,20 @@ class ConfigPanel extends React.PureComponent {
           defaultInterval={2}
           onPollIntervalSecondsChange={this.props.onPollIntervalSecondsChange}
           onWindowSecondsChange={this.props.onWindowSecondsChange} />
+
         <Segment.Group horizontal compact>
           <ContextMenu
             contextData={this.props.contextData}
             onContextSelect={this.onContextSelect}
             onNewContext={this.props.onNewContext}
             onRemoveContext={this.props.onRemoveContext} />
+
           <ChartSelector
             disabled={!this.state.contextSelected}
             charts={charts}
             onClearCharts={this.onClearCharts}
             onAddChart={this.onAddChart} />
+
         </Segment.Group>
       </Segment.Group>
     )
