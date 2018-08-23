@@ -17,6 +17,7 @@
  */
 (function () {
     'use strict';
+    var templateUrl = require('./diskioflamegraph.html')
 
     function diskioFlameGraph($rootScope, $timeout, DiskIOFlameGraphService, DashboardService) {
 
@@ -81,7 +82,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/diskioflamegraphtask/diskioflamegraph.html',
+            templateUrl: templateUrl,
             link: link
         };
     }

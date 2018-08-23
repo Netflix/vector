@@ -18,6 +18,8 @@
 (function () {
     'use strict';
 
+    var templateUrl = require('./uninlinedcpuflamegraph.html')
+
     function uninlinedCpuFlameGraph($rootScope, $timeout, UninlinedCPUFlameGraphService, DashboardService) {
 
         function link(scope) {
@@ -81,7 +83,7 @@
 
         return {
             restrict: 'A',
-            templateUrl: 'app/components/uninlinedcpuflamegraphtask/uninlinedcpuflamegraph.html',
+            templateUrl: templateUrl,
             link: link
         };
     }

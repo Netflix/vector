@@ -15,8 +15,14 @@
  *     limitations under the License.
  *
  */
+
 (function () {
     'use strict';
+
+    var mainTemplate = require('./main/main.html')
+
+    // we need this webpacked as it is loaded from main.html as an attrib template-url
+    require('./components/dashboard/dashboard.html')
 
     /**
     * @name config
@@ -24,7 +30,7 @@
     */
     function routeConfig($routeProvider) {
         $routeProvider.when('/', {
-            templateUrl: 'app/main/main.html',
+            templateUrl: mainTemplate,
             controller: 'MainController',
             controllerAs: 'vm',
             title: 'Vector',
@@ -38,7 +44,7 @@
                 }
             }
         }).when('/embed', {
-            templateUrl: 'app/main/main.html',
+            templateUrl: mainTemplate,
             controller: 'MainController',
             controllerAs: 'vm',
             title: 'Vector',
@@ -52,7 +58,7 @@
                 }
             }
         }).when('/empty', {
-            templateUrl: 'app/main/main.html',
+            templateUrl: mainTemplate,
             controller: 'MainController',
             controllerAs: 'vm',
             title: 'Vector',
@@ -66,7 +72,7 @@
                 }
             }
         }).when('/container', {
-            templateUrl: 'app/main/main.html',
+            templateUrl: mainTemplate,
             controller: 'MainController',
             controllerAs: 'vm',
             title: 'Vector',

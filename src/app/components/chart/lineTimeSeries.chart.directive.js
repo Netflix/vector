@@ -20,6 +20,7 @@
 
 (function () {
   'use strict';
+  var chartTemplate = require('./chart.html')
 
   function lineTimeSeries($rootScope, D3Service) {
 
@@ -90,7 +91,7 @@
 
     return {
       restrict: 'A',
-      templateUrl: 'app/components/chart/chart.html',
+      templateUrl: chartTemplate,
       scope: {
         data: '=',
         forcey: '=',
