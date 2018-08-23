@@ -15,7 +15,7 @@ import SimpleTable from '../components/Table/SimpleTable.jsx'
 import Heatmap from '../components/Heatmap/Heatmap.jsx'
 import HeatmapSettingsModal from '../components/CustomSettingsModal/HeatmapSettingsModal.jsx'
 import HeatmapSettingsAndMetricSelectorModal from '../components/CustomSettingsModal/HeatmapSettingsAndMetricSelectorModal.jsx'
-import { thresholds, colors } from '../components/Heatmap/Cividis.js'
+import { thresholds, colors } from '../components/Heatmap/cividis.js'
 
 export default [
   {

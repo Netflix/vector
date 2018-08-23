@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Segment  } from 'semantic-ui-react'
-import ChartSelector from '../ChartSelector/ChartSelector.jsx'
+import ChartSelector from './ChartSelector.jsx'
 import WindowIntervalSelector from './WindowIntervalSelector.jsx'
 import ContextMenu from './ContextMenu.jsx'
 

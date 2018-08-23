@@ -58,19 +58,15 @@ class ContextMenu extends React.Component {
   }
 
   render () {
-    if (this.props.contextData === null || this.props.contextData.length === 0) {
-      return (
-        <Menu vertical pointing attached='top' borderless>
-          <Menu.Item disabled>No active connections</Menu.Item>
-        </Menu>
-      )
-    }
-
     return (
       <Menu vertical pointing attached='top' borderless>
+        { /* advise if no connections */ }
+        { (this.props.contextData === null || this.props.contextData.length === 0) &&
+          <Menu.Item disabled>No active connections</Menu.Item>
+        }
 
-        // regular context menu selector
-        { this.props.contextData.map(ctx =>
+        { /* regular context menu selector */ }
+        { (this.props.contextData || []).map(ctx =>
           <Menu.Item
             key={`ctx-${ctx.target.hostname}-${ctx.target.hostspec}-${ctx.target.containerId}`}
             active={this.isActiveMenuSelection(ctx)}
@@ -78,14 +74,14 @@ class ContextMenu extends React.Component {
             context={ctx}
             disabled={this.isLoading(ctx)} >
 
-            // text area of menu
+            { /* text area of menu */ }
             {ctx.target.hostname} =&gt; {ctx.target.hostspec}<br/>
             Container: {ctx.target.containerId}
 
-            // loading spinner
+            { /* loading spinner */ }
             <Loader active={this.isLoading(ctx)} size='small' />
 
-            // x button to close
+            { /* x button to close */ }
             <Button size='mini' compact floated='right'
               color={this.menuColor(ctx)}
               context={ctx}
@@ -95,7 +91,7 @@ class ContextMenu extends React.Component {
           </Menu.Item>
         )}
 
-        // add context button
+        { /* add context modal, popped by a button */ }
         <Menu.Item>
           <AddContextModal
             onNewContext={this.handleNewContext}
