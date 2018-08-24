@@ -2,38 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import 'react-resizable/css/styles.css'
-import { Modal, Popup, Icon, Button, Segment } from 'semantic-ui-react'
+import { Segment } from 'semantic-ui-react'
+import DashHeader from './DashHeader.jsx'
 
 class DashPanel extends React.Component {
-  state = {
-    modalOpen: false
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return (this.props.datasets !== nextProps.datasets
-      || this.state.modalOpen !== nextState.modalOpen)
-  }
-
-  handleSettingsIcon = () => this.setState({ modalOpen: true })
-  handleCloseSettings = () => this.setState({ modalOpen: false })
-  handleNewSettings = (settings) => {
-    this.setState({ modalOpen: false })
-    this.props.onNewSettings(settings)
-  }
-
-  chartSubtitle = (c) => c.context.target.hostname
-    + (c.context.target.hostspec === 'localhost' ? '' : (' ' + c.context.target.hostspec))
-    + (c.context.target.containerId === '_all' ? '' : (' ' + c.context.target.containerId))
 
   render () {
-    const { chartInfo, datasets, onCloseClicked, containerList, instanceDomainMappings, containerId, pmids } = this.props
+    const { chartInfo, datasets, containerList, instanceDomainMappings, containerId } = this.props
 
     const dataset = datasets
       ? chartInfo.processor.calculateChart(datasets, chartInfo, { instanceDomainMappings, containerList, containerId, chartInfo })
       : []
 
-    const HelpComponent = chartInfo.helpComponent
-    const SettingsComponent = chartInfo.settingsComponent
     const Visualisation = chartInfo.visualisation
 
     return (
@@ -42,35 +22,13 @@ class DashPanel extends React.Component {
              will grow to fill the area */ }
 
         <Segment clearing>
-          { chartInfo.title }<br/>
-          { this.chartSubtitle(chartInfo) }
-
-          { chartInfo.settingsComponent &&
-            <Modal dimmer='inverted' open={this.state.modalOpen} onClose={this.handleCloseSettings} trigger={
-              <Icon  name='setting' circular fitted link onClick={this.handleSettingsIcon} /> }>
-              <Modal.Content>
-                <SettingsComponent {...chartInfo} pmids={pmids} onNewSettings={this.handleNewSettings} onClose={this.handleCloseSettings} />
-              </Modal.Content>
-            </Modal> }
-
-          { chartInfo.helpComponent &&
-            <Modal dimmer='inverted' trigger={
-              <Icon name='help' circular fitted link/>}>
-              <Modal.Content>
-                <HelpComponent chartInfo={chartInfo} />
-              </Modal.Content>
-            </Modal> }
-
-          { chartInfo.isHighOverhead &&
-            <Popup content='May cost high overhead, see help' trigger={
-              <Icon name='exclamation' circular fitted />} /> }
-
-          { chartInfo.isContainerAware &&
-            <Popup content='Container aware' trigger={
-              <Icon name='check' circular fitted />} /> }
-
-          <Button circular size='tiny' basic icon='close' floated='right' onClick={onCloseClicked} />
+          <DashHeader
+            chartInfo={this.props.chartInfo}
+            pmids={this.props.pmids}
+            onNewSettings={this.props.onNewSettings}
+            onCloseClicked={this.props.onCloseClicked} />
         </Segment>
+
         <Segment style={{ flex: 1 }}>
           { dataset && dataset.length > 0 &&
             <Visualisation dataset={dataset} chartInfo={chartInfo}/>

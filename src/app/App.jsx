@@ -1,11 +1,10 @@
 import React from 'react'
-/*
+
 import process from 'process'
 import { whyDidYouUpdate } from 'why-did-you-update'
 if (process.env.NODE_ENV !== 'production') {
   whyDidYouUpdate(React)
 }
-*/
 
 import { render } from 'react-dom'
 
@@ -19,6 +18,7 @@ import ContextPoller from './components/Pollers/ContextPoller.jsx'
 import DatasetPoller from './components/Pollers/DatasetPoller.jsx'
 
 import { Sidebar } from 'semantic-ui-react'
+import isEqual from 'lodash.isequal'
 
 import 'semantic-ui-css/semantic.min.css'
 import { targetMatches } from './utils'
@@ -58,7 +58,10 @@ class App extends React.Component {
   }
 
   // context handling
-  onContextsUpdated = (contexts) => this.setState({ contextData: [ ...contexts ] })
+  onContextsUpdated = (contexts) => this.setState(state =>
+    isEqual(contexts, state.contextData) ? undefined : { contextData: [ ...contexts ] }
+  )
+
   onContextDatasetsUpdated = (ctxds) => this.setState({ contextDatasets: ctxds })
   onNewContext = (target) => this.setState((state) => ({ targets: state.targets.concat(target) }))
   onRemoveContext = (context) => this.setState((state) => ({
@@ -102,6 +105,7 @@ class App extends React.Component {
               direction='top'
               visible={this.state.chartlist.length === 0 || this.state.configVisible ? true : undefined}
               onHide={this.handleSidebarHide} >
+
               <ConfigPanel
                 contextData={this.state.contextData}
                 onNewContext={this.onNewContext}
@@ -113,14 +117,18 @@ class App extends React.Component {
             </Sidebar>
 
             <Sidebar.Pusher>
+
               <Dashboard
                 chartlist={this.state.chartlist}
                 contextDatasets={this.state.contextDatasets}
                 removeChartByIndex={this.removeChartByIndex}
                 updateChartSettings={this.updateChartSettings}
                 onMoveChart={this.onMoveChart} />
+
               <Footer version={config.version}/>
+
             </Sidebar.Pusher>
+
           </Sidebar.Pushable>
         </div>
       </div>

@@ -123,7 +123,7 @@ class ContextPoller extends React.Component {
     this.setState(state => {
       const newContexts = [...state.contexts]
       const idx = newContexts.findIndex(old => targetMatches(old.target, context.target))
-      newContexts[idx] = context
+      newContexts[idx] = { ...context }
       this.props.onContextsUpdated(newContexts)
       return { contexts: newContexts }
     })

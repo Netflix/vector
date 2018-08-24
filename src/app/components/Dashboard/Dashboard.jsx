@@ -12,14 +12,20 @@ function matchesHostnameContext(hc1, hc2) {
   return hc1.hostname === hc2.hostname && hc1.contextId == hc2.contextId
 }
 
-export class Dashboard extends React.Component {
+const gridResponsiveCols = { lg: 12, sm: 6 }
+const gridStyle = { paddingLeft: '15px' }
+
+class Dashboard extends React.Component {
+  handleCloseClicked = (chartInfo) => {
+    this.props.removeChartByIndex(this.props.chartlist.indexOf(chartInfo))
+  }
+  handleNewSettings = (chartInfo, settings) => {
+    this.props.updateChartSettings(this.props.chartlist.indexOf(chartInfo), settings)
+  }
+
   render () {
     return (
-      <GridLayout
-        rowHeight={60}
-        cols={{ lg: 12, sm: 6 }}
-        style={{ paddingLeft: '15px' }}
-        className='layout'>
+      <GridLayout rowHeight={60} cols={gridResponsiveCols} style={gridStyle} className='layout'>
 
         { this.props.chartlist.map((c, idx) => {
           const ctxds = this.props.contextDatasets.find(ctxds =>
@@ -28,15 +34,15 @@ export class Dashboard extends React.Component {
           return (
             <div key={`panel-${idx}`} data-grid={{ x: 0, y: 0, w: 5, h: 6, minW: 3, minH: 3 }} style={{ overflow: 'hidden' }}>
               <DashPanel
-                index={idx}
+                chartIndex={idx}
                 chartInfo={c}
                 datasets={ctxds ? ctxds.datasets : []}
-                onCloseClicked={() => this.props.removeChartByIndex(idx)}
+                onCloseClicked={this.handleCloseClicked}
                 containerList={c.context.containerList || []}
                 instanceDomainMappings={ctxds ? ctxds.instanceDomainMappings : {}}
                 containerId={(c.context.containerId || '_all') === '_all' ? '' : c.context.containerId}
                 settings={c.settings}
-                onNewSettings={(settings) => this.props.updateChartSettings(idx, settings)}
+                onNewSettings={this.handleNewSettings}
                 pmids={c.context.pmids}/>
             </div>
           )

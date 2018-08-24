@@ -32,10 +32,12 @@ class ContextMenu extends React.PureComponent {
     return targetMatches(this.state.selectedContext && this.state.selectedContext.target, context.target)
   }
 
-  isLoading = (context) => !(context.contextId
-      && (Object.keys(context.pmids).length > 0)
+  isLoading = (context) => {
+    return !(context.contextId
+      && (Object.keys(context.pmids || {}).length > 0)
       && context.hostname
       && context.containerList)
+  }
 
   menuColor = (context) => {
     if (context.errText) {

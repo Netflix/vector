@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { ResponsiveXYFrame } from "semiotic"
 import moment from 'moment'
+import memoizeOne from 'memoize-one'
 import ColorHash from 'color-hash'
 const colorHash = new ColorHash()
 
@@ -79,11 +80,27 @@ function fetchSharedTooltipContent(passedData, dataset, formatter) {
   );
 }
 
+const generateAxes = memoizeOne(yTickFormat => ([
+  { orient: "left",
+    tickFormat: yTickFormat,
+    tickLineGenerator: horizontalTickLineGenerator },
+  { orient: "bottom",
+    tickFormat: ts => moment(ts).format('hh:mm:ss'),
+    tickLineGenerator: verticalTickLineGenerator,
+    rotate: 90,
+    ticks: 12,
+    size: [100, 100] }
+]))
+
 class Chart extends React.PureComponent {
   color = (d) => colorHash.hex(d.keylabel)
+  yExtent = [0, undefined]
+  hoverAnnotation = [{ type: 'frame-hover' }]
 
   render () {
     const { chartInfo, dataset } = this.props
+
+    const axes = generateAxes(chartInfo.yTickFormat)
 
     return (
       <ResponsiveXYFrame
@@ -98,22 +115,10 @@ class Chart extends React.PureComponent {
         margin={{ left: 60, bottom: 70, right: 3, top: 3 }}
         xAccessor={d => d.ts}
         yAccessor={d => d.value}
-        yExtent={[0, undefined]}
-        axes={[
-          { orient: "left",
-            tickFormat: chartInfo.yTickFormat,
-            tickLineGenerator: horizontalTickLineGenerator },
-          { orient: "bottom",
-            tickFormat: ts => moment(ts).format('hh:mm:ss'),
-            tickLineGenerator: verticalTickLineGenerator,
-            rotate: 90,
-            ticks: Math.min(dataset[0].data.length, 12),
-            size: [100, 100] }
-        ]}
+        yExtent={this.yExtent}
+        axes={axes}
         // line highlight
-        hoverAnnotation={[
-          { type: 'frame-hover' }, // shows the tooltip frame
-        ]}
+        hoverAnnotation={this.hoverAnnotation}
         tooltipContent={(d) => fetchSharedTooltipContent(d, dataset, chartInfo.yTickFormat)}
         baseMarkProps={{ forceUpdate: true }} />
     )
