@@ -18,7 +18,6 @@ import DatasetPoller from './components/Pollers/DatasetPoller.jsx'
 
 import { Sidebar } from 'semantic-ui-react'
 
-import { arrayMove } from 'react-sortable-hoc'
 import 'semantic-ui-css/semantic.min.css'
 import { targetMatches } from './utils'
 
@@ -54,11 +53,6 @@ class App extends React.Component {
       let newChart = { ...oldState.chartlist[idx], ...settings }
       return { chartlist: [ ...oldState.chartlist.slice(0, idx), newChart, ...oldState.chartlist.slice(idx + 1) ] }
     })
-  }
-  onMoveChart = (oldIndex, newIndex) => {
-    this.setState((oldState) => ({
-      chartlist: arrayMove(oldState.chartlist, oldIndex, newIndex)
-    }))
   }
 
   // context handling

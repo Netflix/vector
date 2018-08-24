@@ -3,11 +3,6 @@ import PropTypes from 'prop-types'
 
 import 'react-resizable/css/styles.css'
 import { Modal, Popup, Icon, Button, Segment } from 'semantic-ui-react'
-import { SortableHandle } from 'react-sortable-hoc'
-import { ResizableBox } from 'react-resizable'
-import 'react-resizable/css/styles.css'
-
-const DragHandle = SortableHandle(() => <Icon name='expand arrows alternate' />)
 
 class DashPanel extends React.Component {
   state = {
@@ -44,7 +39,6 @@ class DashPanel extends React.Component {
     return (
       <Segment.Group raised>
         <Segment clearing>
-          <DragHandle />
           { chartInfo.title }<br/>
           { this.chartSubtitle(chartInfo) }
 
@@ -75,15 +69,13 @@ class DashPanel extends React.Component {
           <Button circular size='tiny' basic icon='close' floated='right' onClick={onCloseClicked} />
         </Segment>
         <Segment>
-          <ResizableBox width={650} height={385}>
-            { dataset && dataset.length > 0 &&
-              <Visualisation dataset={dataset} chartInfo={chartInfo}/>
-            }
+          { dataset && dataset.length > 0 &&
+            <Visualisation dataset={dataset} chartInfo={chartInfo}/>
+          }
 
-            { (!dataset || dataset.length <= 0) &&
-              <span>No data yet</span>
-            }
-          </ResizableBox>
+          { (!dataset || dataset.length <= 0) &&
+            <span>No data yet</span>
+          }
         </Segment>
       </Segment.Group>
     )
