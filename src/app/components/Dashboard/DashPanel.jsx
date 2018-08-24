@@ -37,7 +37,10 @@ class DashPanel extends React.Component {
     const Visualisation = chartInfo.visualisation
 
     return (
-      <Segment.Group raised>
+      <Segment.Group raised style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        { /* height=100% to ensure it fills the card, flex so that the content part of the card
+             will grow to fill the area */ }
+
         <Segment clearing>
           { chartInfo.title }<br/>
           { this.chartSubtitle(chartInfo) }
@@ -68,7 +71,7 @@ class DashPanel extends React.Component {
 
           <Button circular size='tiny' basic icon='close' floated='right' onClick={onCloseClicked} />
         </Segment>
-        <Segment>
+        <Segment style={{ flex: 1 }}>
           { dataset && dataset.length > 0 &&
             <Visualisation dataset={dataset} chartInfo={chartInfo}/>
           }

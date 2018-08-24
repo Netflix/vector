@@ -34,10 +34,9 @@ export default charts
 
 // TODO automatically reconnect if a context goes away, but host and port are valid
 // TODO set up url # parameter and parser to allow reconstruction of sharing links
-// TODO refactor chart/heatmap/table/simpletable, shared parent component
 // TODO performance review with react perf tools, lots of double and triple renders
 // TODO stacked area chart with semiotic: datesForUnique is slow performance
-// TODO switch to a proper grid view
 // TODO plenty more tests
 // TODO add flame graphs (maybe not?)
-// TODO enable vector to browse and collect cluster information from external sources, or trigger based - needs to be pluggable, eg from k8s/titus/etc
+// TODO enable vector to browse and collect cluster and container information from external sources
+// - needs to be pluggable, eg from k8s/titus/etc
