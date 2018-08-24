@@ -10,7 +10,7 @@ import {
   cumulativeTransform,
   mathValuesSelective,
 } from '../processors/transforms'
-import Table from '../components/Charts/Table.jsx'
+import MultiTable from '../components/Charts/MultiTable.jsx'
 import SimpleTable from '../components/Charts/SimpleTable.jsx'
 import Heatmap from '../components/Charts/Heatmap.jsx'
 import HeatmapSettingsModal from '../components/SettingsModals/HeatmapSettingsModal.jsx'
@@ -142,7 +142,7 @@ export default [
     group: 'BCC/BPF',
     title: 'BCC tcplife (TCP sessions)',
     processor: simpleModel,
-    visualisation: Table,
+    visualisation: MultiTable,
     metricNames: [
       'bcc.proc.io.net.tcp.pid',
       'bcc.proc.io.net.tcp.comm',
@@ -177,7 +177,7 @@ export default [
     group: 'BCC/BPF',
     title: 'BCC execsnoop (traces new processes)',
     processor: simpleModel,
-    visualisation: Table,
+    visualisation: MultiTable,
     metricNames: [
       'bcc.proc.exec.comm',
       'bcc.proc.exec.pid',
@@ -217,7 +217,7 @@ export default [
     group: 'BCC/BPF',
     title: 'BCC biotop (block device I/O top)',
     processor: simpleModel,
-    visualisation: Table,
+    visualisation: MultiTable,
     metricNames: [
       'bcc.proc.io.perdev.pid',
       'bcc.proc.io.perdev.comm',
@@ -252,7 +252,7 @@ export default [
     group: 'BCC/BPF',
     title: 'BCC tcptop (tcp throughput)',
     processor: simpleModel,
-    visualisation: Table,
+    visualisation: MultiTable,
     metricNames: [
       'bcc.proc.io.net.tcptop.pid',
       'bcc.proc.io.net.tcptop.comm',

@@ -3,15 +3,16 @@ import PropTypes from 'prop-types'
 
 import { SortableContainer, SortableElement } from 'react-sortable-hoc'
 
+import DashPanel from './DashPanel.jsx'
+
 function matchesHostnameContext(hc1, hc2) {
   return hc1.hostname === hc2.hostname && hc1.contextId == hc2.contextId
 }
 
 const SortableChart = SortableElement(props => {
-  let Visualisation = props.visualisation
   return (
     <li style={{ listStyle: 'none', display: 'inline-block', margin: '6px 6px 6px 6px' }}>
-      <Visualisation {...props}/>
+      <DashPanel {...props}/>
     </li>
   )
 })
@@ -27,7 +28,6 @@ const SortableDashboard = SortableContainer(({ chartlist, contextDatasets, remov
           return <SortableChart
             key={`chart-${idx}`}
             index={idx}
-            visualisation={c.visualisation}
             chartInfo={c}
             datasets={ctxds ? ctxds.datasets : []}
             onCloseClicked={() => removeChartByIndex(idx)}
@@ -47,14 +47,16 @@ export class Dashboard extends React.Component {
   onSortEnd = ({ oldIndex, newIndex }) => this.props.onMoveChart(oldIndex, newIndex)
 
   render () {
-    return <SortableDashboard
-      chartlist={this.props.chartlist}
-      contextDatasets={this.props.contextDatasets}
-      removeChartByIndex={this.props.removeChartByIndex}
-      updateChartSettings={this.props.updateChartSettings}
-      onSortEnd={this.onSortEnd}
-      useDragHandle={true}
-      axis='xy'/>
+    return (
+      <SortableDashboard
+        chartlist={this.props.chartlist}
+        contextDatasets={this.props.contextDatasets}
+        removeChartByIndex={this.props.removeChartByIndex}
+        updateChartSettings={this.props.updateChartSettings}
+        onSortEnd={this.onSortEnd}
+        useDragHandle={true}
+        axis='xy'/>
+    )
   }
 }
 
