@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
 
   render () {
     return (
-      <GridLayout rowHeight={60} cols={gridResponsiveCols} style={gridStyle} className='layout'>
+      <GridLayout rowHeight={60} cols={gridResponsiveCols} style={gridStyle} className='layout' draggableCancel='.doNotDrag'>
 
         { this.props.chartlist.map((c, idx) => {
           const ctxds = this.props.contextDatasets.find(ctxds =>

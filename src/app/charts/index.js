@@ -32,10 +32,14 @@ const charts = requires.map(r => r.default).reduce(flatten, [])
 
 export default charts
 
-// TODO automatically reconnect if a context goes away, but host and port are valid
 // TODO set up url # parameter and parser to allow reconstruction of sharing links
-// TODO performance review with react perf tools, lots of double and triple renders
-// TODO stacked area chart with semiotic: datesForUnique is slow performance
+// / -> MainController, widgets:defaultWidgets, embed:false
+// /embed -> MainController, widgets:defaultWidgets, embed:true
+// /empty -> MainController, widgets:emptyWidgets, embed:false
+// /container -> MainController, widgets:containerWidgets, embed:false
+// otherwise -> /
+
+// TODO automatically reconnect if a context goes away, but host and port are valid
 // TODO plenty more tests
 // TODO add flame graphs (maybe not?)
 // TODO enable vector to browse and collect cluster and container information from external sources

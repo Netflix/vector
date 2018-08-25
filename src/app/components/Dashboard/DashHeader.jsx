@@ -57,7 +57,7 @@ class DashHeader extends React.PureComponent {
           <Popup content='Container aware' trigger={
             <Icon name='check' circular fitted />} /> }
 
-        <Button circular size='tiny' basic icon='close' floated='right' onClick={this.handleCloseClicked} />
+        <Button className='doNotDrag' circular size='tiny' basic icon='close' floated='right' onClick={this.handleCloseClicked} />
       </div>
     )
   }

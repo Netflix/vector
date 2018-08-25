@@ -73,7 +73,7 @@ class Heatmap extends React.PureComponent {
           fill: thresholds(chartInfo.heatmapMaxValue > 0 ? d.value : d.percent),
           stroke: 'lightgrey'
         })}
-        margin={{ left: 60, bottom: 70, right: 3, top: 3 }}
+        margin={{ left: 60, bottom: 30, right: 8, top: 8 }}
         yExtent={[0, yAxisLookup.length]}
         hoverAnnotation={true}
         tooltipContent={dp => (
@@ -84,15 +84,16 @@ class Heatmap extends React.PureComponent {
             : null
         )}
         axes={[
-          { orient: "left",
+          {
+            orient: "left",
             tickFormat: v => yAxisLookup[v - 1] || '',
             ticks: yAxisLookup && yAxisLookup.length,
-            footer: true },
-          { orient: "bottom",
-            tickFormat: ts => {
-              return (<text transform='rotate(90)'>{moment(ts).format('hh:mm:ss')}</text>)
-            },
-            footer: true }
+          },
+          {
+            orient: "bottom",
+            tickFormat: ts => moment(ts).format('hh:mm:ss'),
+            ticks: 4,
+          }
         ]}
         baseMarkProps={{ forceUpdate: true }} />
     )

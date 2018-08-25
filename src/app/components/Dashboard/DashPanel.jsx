@@ -29,7 +29,7 @@ class DashPanel extends React.Component {
             onCloseClicked={this.props.onCloseClicked} />
         </Segment>
 
-        <Segment style={{ flex: 1 }}>
+        <Segment style={{ flex: 1, minHeight: 0 }}>
           { dataset && dataset.length > 0 &&
             <Visualisation dataset={dataset} chartInfo={chartInfo}/>
           }

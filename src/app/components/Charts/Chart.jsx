@@ -81,15 +81,17 @@ function fetchSharedTooltipContent(passedData, dataset, formatter) {
 }
 
 const generateAxes = memoizeOne(yTickFormat => ([
-  { orient: "left",
+  {
+    orient: "left",
     tickFormat: yTickFormat,
-    tickLineGenerator: horizontalTickLineGenerator },
-  { orient: "bottom",
+    tickLineGenerator: horizontalTickLineGenerator
+  },
+  {
+    orient: "bottom",
     tickFormat: ts => moment(ts).format('hh:mm:ss'),
     tickLineGenerator: verticalTickLineGenerator,
-    rotate: 90,
-    ticks: 12,
-    size: [100, 100] }
+    ticks: 4
+  }
 ]))
 
 class Chart extends React.PureComponent {
@@ -112,7 +114,7 @@ class Chart extends React.PureComponent {
         areaStyle={d => ({ stroke: this.color(d), fill: this.color(d), fillOpacity: 0.5, strokeWidth: '2px' })}
         lineType={chartInfo.lineType || 'line'}
         defined={d => d.value !== null}
-        margin={{ left: 60, bottom: 70, right: 3, top: 3 }}
+        margin={{ left: 60, bottom: 30, right: 8, top: 8 }} // magic
         xAccessor={d => d.ts}
         yAccessor={d => d.value}
         yExtent={this.yExtent}
