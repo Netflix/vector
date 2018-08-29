@@ -1,13 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import superagent from 'superagent'
-import { uniqueFilter } from '../../utils'
+import { uniqueFilter, matchesTarget } from '../../utils'
 
 import WorkerTimer from 'worker-loader!./DatasetPollerTimer.js'
-
-function matchesHostnameContext(hc1, hc2) {
-  return hc1.hostname === hc2.hostname && hc1.contextId === hc2.contextId
-}
 
 class DatasetPoller extends React.Component {
   workerTimer = new WorkerTimer()
@@ -33,8 +29,8 @@ class DatasetPoller extends React.Component {
 
   guaranteeDatasetsInStateForQueries = (queries) => {
     this.setState(state => {
-      const missing = queries.filter(q => !state.contextDatasets.some(c => matchesHostnameContext(c, q)))
-      const newEntries = missing.map(q => ({ hostname: q.hostname, contextId: q.contextId, datasets: [], instanceDomainMappings: {} }))
+      const missing = queries.filter(q => !state.contextDatasets.some(c => matchesTarget(c.target, q.target)))
+      const newEntries = missing.map(q => ({ target: q.target, datasets: [], instanceDomainMappings: {} }))
       if (newEntries.length === 0) return null
       return { contextDatasets: state.contextDatasets.concat(newEntries) }
     })
@@ -42,8 +38,7 @@ class DatasetPoller extends React.Component {
 
   findMetricNames = (chart) => {
     // scan context data to map the pmids, return pmids[]
-    const context = this.props.contextData.find(ctx =>
-      matchesHostnameContext({ hostname: chart.context.target.hostname, contextId: chart.context.contextId }, { hostname: ctx.target.hostname, contextId: ctx.contextId }))
+    const context = this.props.contextData.find(ctx => matchesTarget(ctx.target, chart.context.target))
 
     if (!context || !context.pmids) {
       console.warn('could not find pmids for chart', chart)
@@ -61,7 +56,7 @@ class DatasetPoller extends React.Component {
 
       // collect tuples[]: { hostname, contextId, pmids[] }
       const singleQueries = this.props.charts.map(chart => ({
-        hostname: chart.context.target.hostname,
+        target: chart.context.target,
         contextId: chart.context.contextId,
         context: chart.context,
         metricNames: this.findMetricNames(chart),
@@ -69,7 +64,7 @@ class DatasetPoller extends React.Component {
 
       // merge tuple pmids, so we only run a single fetch per host
       const queries = singleQueries.reduce((acc, query) => {
-        const existingQuery = acc.find(q => matchesHostnameContext(q, query))
+        const existingQuery = acc.find(q => matchesTarget(q.target, query.target))
         if (existingQuery) {
           existingQuery.metricNames = existingQuery.metricNames
             .concat(query.metricNames)
@@ -77,7 +72,7 @@ class DatasetPoller extends React.Component {
         } else {
           // copy as this is it is mutated during later reduce iterations
           acc.push({
-            hostname: query.hostname,
+            target: query.target,
             contextId: query.contextId,
             context: query.context,
             metricNames: query.metricNames,
@@ -95,7 +90,7 @@ class DatasetPoller extends React.Component {
         // TODO should be able to alarm if we can't find any pmids to match?
 
         let res = await superagent
-          .get(`http://${q.hostname}/pmapi/${q.contextId}/_fetch`)
+          .get(`http://${q.target.hostname}/pmapi/${q.contextId}/_fetch`)
           .query({ pmids })
         const oldestS = res.body.timestamp.s - (this.props.windowIntervalMs / 1000)
 
@@ -103,7 +98,7 @@ class DatasetPoller extends React.Component {
         this.setState(state => {
           // ensure there is a place to put the data
           let newContextDatasets = [...state.contextDatasets]
-          let cdsIndex = newContextDatasets.findIndex(cds => matchesHostnameContext(cds, q))
+          let cdsIndex = newContextDatasets.findIndex(cds => matchesTarget(cds.target, q.target))
           newContextDatasets[cdsIndex].datasets = newContextDatasets[cdsIndex].datasets
             .concat(res.body)
             .filter(ds => ds.timestamp.s >= oldestS)
@@ -116,14 +111,14 @@ class DatasetPoller extends React.Component {
       // find any missing instanceDomainMappings
       // TODO how do we poll this regularly for updates? eg: bcc tcptop, changing socket list
       for(const q of queries) {
-        const idomMaps = this.state.contextDatasets.find(cds => matchesHostnameContext(cds, q)).instanceDomainMappings
+        const idomMaps = this.state.contextDatasets.find(cds => matchesTarget(cds.target, q.target)).instanceDomainMappings
         const neededNames = q.metricNames.filter(name => !(name in idomMaps))
 
         for(const name of neededNames) {
           const newMapping = {}
           try {
             let res = await superagent
-              .get(`http://${q.hostname}/pmapi/${q.contextId}/_indom`)
+              .get(`http://${q.target.hostname}/pmapi/${q.contextId}/_indom`)
               .query({ name })
             res.body.instances.forEach(({ instance, name }) => newMapping[instance] = name)
           } catch (err) {
@@ -133,7 +128,7 @@ class DatasetPoller extends React.Component {
 
           this.setState(state => {
             let newContextDatasets = [...state.contextDatasets] // copy datasets
-            let cdsIndex = newContextDatasets.findIndex(cds => matchesHostnameContext(cds, q))
+            let cdsIndex = newContextDatasets.findIndex(cds => matchesTarget(cds.target, q.target))
             newContextDatasets[cdsIndex].instanceDomainMappings = { ...newContextDatasets[cdsIndex].instanceDomainMappings, [name]: newMapping }
 
             this.props.onContextDatasetsUpdated(newContextDatasets)

@@ -1,10 +1,18 @@
-import React from 'react'
+// TODO plenty more tests
+// TODO add flame graphs (maybe not?)
+// TODO enable vector to browse and collect cluster and container information from external sources
+// - needs to be pluggable, eg from k8s/titus/etc
 
+import React from 'react'
+import PropTypes from 'prop-types'
+
+/*
 import process from 'process'
 import { whyDidYouUpdate } from 'why-did-you-update'
 if (process.env.NODE_ENV !== 'production') {
   whyDidYouUpdate(React)
 }
+*/
 
 import { render } from 'react-dom'
 
@@ -21,34 +29,47 @@ import { Sidebar } from 'semantic-ui-react'
 import isEqual from 'lodash.isequal'
 
 import 'semantic-ui-css/semantic.min.css'
-import { targetMatches } from './utils'
+import { matchesTarget, getChartsFromQueryString, pushQueryStringToHistory } from './utils'
+
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import charts from './charts'
+
+const initialChartIdlist = getChartsFromQueryString(location.search)
+const initialTargets = initialChartIdlist.targets
+const initialChartlist = initialChartIdlist.chartlist
+  .map(c => ({
+    context: { target: c.target },
+    ...charts.find(ch => c.chartId === ch.chartId)
+  }))
 
 class App extends React.Component {
   state = {
-    chartlist: [],
+    chartlist: this.props.initialChartlist,
     pollIntervalMs: 2000,
     windowIntervalMs: 120000,
     contextData: [],
     contextDatasets: [],
-    targets: [],
+    targets: this.props.initialTargets,
     configVisible: false,
+  }
+
+  refreshQueryString = () => {
+    pushQueryStringToHistory(this.state.targets, this.state.chartlist, this.props.history)
   }
 
   // chart handling
   onClearChartsFromContext = (ctx) => {
-    console.log('onClearChartsFromContext', ctx, this.state.chartlist)
     this.setState((oldState) => ({
       chartlist: oldState.chartlist.filter(chart =>
-        !(targetMatches(chart.context.target, ctx.target)))
-    }))
+        !(matchesTarget(chart.context.target, ctx.target)))
+    }), this.refreshQueryString)
   }
   onAddChartToContext = (ctx, chart) => {
-    this.setState((oldState) => ({ chartlist: oldState.chartlist.concat({ ...chart, context: ctx }) }))
+    this.setState((oldState) => ({ chartlist: oldState.chartlist.concat({ ...chart, context: ctx }) }), this.refreshQueryString)
   }
   removeChartByIndex = (idx) => {
-    this.setState((oldState) =>
-      ({ chartlist: [ ...oldState.chartlist.slice(0, idx), ...oldState.chartlist.slice(idx + 1) ] })
-    )
+    this.setState(oldState =>
+      ({ chartlist: [ ...oldState.chartlist.slice(0, idx), ...oldState.chartlist.slice(idx + 1) ] }), this.refreshQueryString)
   }
   updateChartSettings = (idx, settings) => {
     this.setState((oldState) => {
@@ -58,22 +79,36 @@ class App extends React.Component {
   }
 
   // context handling
-  onContextsUpdated = (contexts) => this.setState(state =>
-    isEqual(contexts, state.contextData) ? undefined : { contextData: [ ...contexts ] }
-  )
+  onContextsUpdated = (contexts) => {
+    this.setState(state => {
+      if (isEqual(contexts, state.contextData)) return undefined
 
-  onContextDatasetsUpdated = (ctxds) => this.setState({ contextDatasets: ctxds })
-  onNewContext = (target) => this.setState((state) => ({ targets: state.targets.concat(target) }))
+      // update any charts with the refreshed context from the chart list
+      let newChartlist = this.state.chartlist.map(c => ({
+        ...c,
+        context: contexts.find(ctx => matchesTarget(ctx.target, c.context.target))
+      }))
+      return {
+        chartlist: newChartlist,
+        contextData: [ ...contexts ],
+      }
+    })
+  }
+
+  onContextDatasetsUpdated = (ctxds) => {
+    this.setState({ contextDatasets: ctxds })
+  }
+
+  onNewContext = (target) => this.setState((state) => ({ targets: state.targets.concat(target) }), this.refreshQueryString)
   onRemoveContext = (context) => this.setState((state) => ({
     // remove all targets, and remove all charts
     targets: state.targets.filter(target =>
-      !(targetMatches(target, context.target))),
+      !(matchesTarget(target, context.target))),
     chartlist: state.chartlist.filter(chart =>
-      !(targetMatches(chart.context.target, context.target))),
-  }))
+      !(matchesTarget(chart.context.target, context.target))),
+  }), this.refreshQueryString)
 
   // config panel visibility
-
   toggleConfigVisible = () => this.setState((state) => ({ configVisible: !state.configVisible }))
   handleSidebarHide = () => this.setState({ configVisible: false })
 
@@ -85,7 +120,7 @@ class App extends React.Component {
     return (
       <div>
         <div className="col-md-12">
-          <Navbar embed={false} onClick={this.toggleConfigVisible} />
+          <Navbar embed={this.props.embed} onClick={this.toggleConfigVisible} />
 
           <ContextPoller
             pollIntervalMs={5000}
@@ -103,10 +138,13 @@ class App extends React.Component {
             <Sidebar
               animation='overlay'
               direction='top'
-              visible={this.state.chartlist.length === 0 || this.state.configVisible ? true : undefined}
+              visible={
+                !this.props.embed
+                && (this.state.chartlist.length === 0 || this.state.configVisible ? true : undefined)}
               onHide={this.handleSidebarHide} >
 
               <ConfigPanel
+                charts={charts}
                 contextData={this.state.contextData}
                 onNewContext={this.onNewContext}
                 onRemoveContext={this.onRemoveContext}
@@ -137,6 +175,38 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+  embed: PropTypes.bool.isRequired,
+  initialTargets: PropTypes.array.isRequired,
+  initialChartlist: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
-render(<App/>, document.getElementById('app'))
+class PageRouter extends React.Component {
+  AppEmbed = (props) =>
+    <App embed={true}
+      initialTargets={initialTargets}
+      initialChartlist={initialChartlist}
+      history={props.history} />
+
+  AppNormal = (props) =>
+    <App embed={false}
+      initialTargets={initialTargets}
+      initialChartlist={initialChartlist}
+      history={props.history} />
+
+  render () {
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path="/embed" render={this.AppEmbed}/>
+          <Route path="/" render={this.AppNormal}/>
+        </Switch>
+      </BrowserRouter>
+    )
+  }
+}
+
+PageRouter.propTypes = {
+}
+
+render(<PageRouter/>, document.getElementById('app'))

@@ -1,4 +1,53 @@
 import superagent from 'superagent'
+import { parse } from 'query-string'
+
+/////////////////////////////////////
+// url handling support
+
+export function pushQueryStringToHistory(targets, chartlist, history) {
+  const data = targets.map(t => ({
+    hostname: t.hostname,
+    hostspec: t.hostspec,
+    containerId: t.containerId,
+    chartIds: chartlist
+      .filter(c => matchesTarget(c.context.target, t))
+      .map(c => c.chartId)
+  }))
+  const blob = JSON.stringify(data)
+  const encoded = encodeURI(blob)
+
+  // we can kinda do this because the only way you should be able to add charts is when not in embed mode
+  history.push(`/?charts=${encoded}`)
+}
+
+export function getChartsFromQueryString(param) {
+  function uniqueTargetFilter (val, index, array) {
+    return array.findIndex(v => matchesTarget(v, val)) === index
+  }
+
+  const query = parse(param)
+  if (!query.charts) return { targets: [] }
+
+  const decoded = decodeURI(query.charts)
+  const params = JSON.parse(decoded)
+
+  const targets = params
+    .map(c => ({ hostname: c.hostname, hostspec: c.hostspec, containerId: c.containerId }))
+    .filter(uniqueTargetFilter) // should not be needed, but just in case
+
+  const chartlist = params.map(c => c.chartIds.map(chartId => ({
+    target: { hostname: c.hostname, hostspec: c.hostspec, containerId: c.containerId },
+    chartId: chartId
+  }))).reduce(flatten)
+
+  return {
+    targets,
+    chartlist,
+  }
+}
+
+/////////////////////////////////////
+// generic object functions
 
 export function flatten (xs, ys) {
   return xs.concat(ys)
@@ -19,12 +68,13 @@ export function firstValueInObject(obj) {
 }
 
 /////////////////////////////////////
-export function targetMatches (t1, t2) {
+// handling targets
+export function matchesTarget (t1, t2) {
   return t1 && t2 && t1.hostname === t2.hostname && t1.hostspec === t2.hostspec && t1.containerId === t2.containerId
 }
 
 /////////////////////////////////////
-
+// pmwebd connectivity
 const PMAPI_POLL_TIMEOUT_SECONDS = 5
 
 export async function fetchContainerList (hostname, hostport, hostspec) {

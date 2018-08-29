@@ -6,8 +6,6 @@ import ChartSelector from './ChartSelector.jsx'
 import WindowIntervalSelector from './WindowIntervalSelector.jsx'
 import ContextMenu from './ContextMenu.jsx'
 
-import charts from '../../charts'
-
 const VALID_WINDOWS = [
   { valueSeconds: 120, text: '2 min' },
   { valueSeconds: 300, text: '5 min' },
@@ -59,7 +57,7 @@ class ConfigPanel extends React.PureComponent {
 
           <ChartSelector
             disabled={!this.state.contextSelected}
-            charts={charts}
+            charts={this.props.charts}
             onClearCharts={this.onClearCharts}
             onAddChart={this.onAddChart} />
 
@@ -77,6 +75,7 @@ ConfigPanel.propTypes = {
   onWindowSecondsChange: PropTypes.func.isRequired,
   onPollIntervalSecondsChange: PropTypes.func.isRequired,
   onRemoveContext: PropTypes.func.isRequired,
+  charts: PropTypes.array.isRequired,
 }
 
 export default ConfigPanel

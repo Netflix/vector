@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Menu, Loader, Button } from 'semantic-ui-react'
 
 import AddContextModal from './AddContextModal.jsx'
-import { targetMatches } from '../../utils'
+import { matchesTarget } from '../../utils'
 
 class ContextMenu extends React.PureComponent {
   state = { }
@@ -29,7 +29,7 @@ class ContextMenu extends React.PureComponent {
   }
 
   isActiveMenuSelection = (context) => {
-    return targetMatches(this.state.selectedContext && this.state.selectedContext.target, context.target)
+    return matchesTarget(this.state.selectedContext && this.state.selectedContext.target, context.target)
   }
 
   isLoading = (context) => {
@@ -52,7 +52,7 @@ class ContextMenu extends React.PureComponent {
   }
 
   handleNewContext = (target) => {
-    if (this.props.contextData.some(c => targetMatches(target, c.target))) {
+    if (this.props.contextData.some(c => matchesTarget(target, c.target))) {
       alert('A context already exists for this target')
     } else {
       this.props.onNewContext(target)
@@ -60,6 +60,14 @@ class ContextMenu extends React.PureComponent {
   }
 
   addContextButton = (showModal) => <Button onClick={showModal}>Add Context ...</Button>
+
+  menuText = (target) => {
+    let children = [target.hostname, ' => ', target.hostspec]
+    if (target.containerId !== '_all') {
+      children = children.concat(<br key={`br-${target.hostname}-${target.hostspec}-${target.containerId}`}/>, 'Container: ', target.containerId)
+    }
+    return children
+  }
 
   render () {
     return (
@@ -79,8 +87,7 @@ class ContextMenu extends React.PureComponent {
             disabled={this.isLoading(ctx)} >
 
             { /* text area of menu */ }
-            {ctx.target.hostname} =&gt; {ctx.target.hostspec}<br/>
-            Container: {ctx.target.containerId}
+            {this.menuText(ctx.target)}
 
             { /* loading spinner */ }
             <Loader active={this.isLoading(ctx)} size='small' />

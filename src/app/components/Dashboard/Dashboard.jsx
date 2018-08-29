@@ -6,11 +6,9 @@ import { Responsive, WidthProvider } from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
-const GridLayout = WidthProvider(Responsive)
+import { matchesTarget } from '../../utils'
 
-function matchesHostnameContext(hc1, hc2) {
-  return hc1.hostname === hc2.hostname && hc1.contextId == hc2.contextId
-}
+const GridLayout = WidthProvider(Responsive)
 
 const gridResponsiveCols = { lg: 12, sm: 6 }
 const gridStyle = { paddingLeft: '15px' }
@@ -29,7 +27,7 @@ class Dashboard extends React.Component {
 
         { this.props.chartlist.map((c, idx) => {
           const ctxds = this.props.contextDatasets.find(ctxds =>
-            matchesHostnameContext(ctxds, { hostname: c.context.target.hostname, contextId: c.context.contextId })
+            matchesTarget(ctxds.target, c.context.target)
           )
           return (
             <div key={`panel-${idx}`} data-grid={{ x: 0, y: 0, w: 5, h: 6, minW: 3, minH: 3 }} style={{ overflow: 'hidden' }}>

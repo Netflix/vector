@@ -55,21 +55,3 @@ const charts = requires
   .filter(isValidChart)
 
 export default charts
-
-// TODO set up url # parameter and parser to allow reconstruction of sharing links
-// / -> MainController, widgets:defaultWidgets, embed:false
-// /embed -> MainController, widgets:defaultWidgets, embed:true
-// /empty -> MainController, widgets:emptyWidgets, embed:false
-// /container -> MainController, widgets:containerWidgets, embed:false
-// otherwise -> /
-
-// new functionality will be
-// /* to main
-// /embed to a page without the wrappers, will rely on the url to setup correctly
-
-// TODO automatically reconnect if a context goes away, but host and port are valid
-// TODO flag error if context could not be selected
-// TODO plenty more tests
-// TODO add flame graphs (maybe not?)
-// TODO enable vector to browse and collect cluster and container information from external sources
-// - needs to be pluggable, eg from k8s/titus/etc

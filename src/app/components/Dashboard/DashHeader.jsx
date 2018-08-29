@@ -65,7 +65,7 @@ class DashHeader extends React.PureComponent {
 
 DashHeader.propTypes = {
   chartInfo: PropTypes.object.isRequired,
-  pmids: PropTypes.array.isRequired,
+  pmids: PropTypes.object.isRequired,
   onNewSettings: PropTypes.func,
   onCloseClicked: PropTypes.func,
 }
