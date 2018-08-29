@@ -5,8 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackAutoInjectVersion = require('webpack-auto-inject-version')
 
-let config = {
-    mode: 'development',
+module.exports = {
     entry: {
         javascript: './src/app/App.jsx'
     },
@@ -70,7 +69,6 @@ let config = {
             }
         ]
     },
-    devtool: 'source-map',
     plugins: [
         // needs to go first to insert the file in js
         new WebpackAutoInjectVersion({
@@ -92,5 +90,3 @@ let config = {
         ])
     ]
 }
-
-module.exports = config
