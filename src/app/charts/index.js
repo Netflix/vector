@@ -27,8 +27,32 @@ function requireAll(requireContext) {
   return Array.isArray(requires) ? requires : [requires]
 }
 
+function isValidChart(chart, index, charts) {
+  let errors = []
+  if (!chart.chartId) {
+    errors.push('chart is missing chartId')
+  }
+  if (!chart.group || !chart.title) {
+    errors.push('chart is missing group or title')
+  }
+  if (!chart.processor) {
+    errors.push('chart processor is not valid')
+  }
+  if (charts.findIndex(c => c.chartId === chart.chartId) !== index) {
+    errors.push('found a duplicate chartId')
+  }
+
+  if (errors.length) {
+    console.warn('chart had errors, will not be loaded', chart, errors)
+  }
+  return !errors.length
+}
+
 const requires = requireAll(require.context('./', false, /\.js$/))
-const charts = requires.map(r => r.default).reduce(flatten, [])
+const charts = requires
+  .map(r => r.default)
+  .reduce(flatten, [])
+  .filter(isValidChart)
 
 export default charts
 
@@ -39,7 +63,12 @@ export default charts
 // /container -> MainController, widgets:containerWidgets, embed:false
 // otherwise -> /
 
+// new functionality will be
+// /* to main
+// /embed to a page without the wrappers, will rely on the url to setup correctly
+
 // TODO automatically reconnect if a context goes away, but host and port are valid
+// TODO flag error if context could not be selected
 // TODO plenty more tests
 // TODO add flame graphs (maybe not?)
 // TODO enable vector to browse and collect cluster and container information from external sources

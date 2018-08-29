@@ -5,6 +5,7 @@ import Chart from '../components/Charts/Chart.jsx'
 
 export default [
   {
+    chartId: 'memory-utilization-cached',
     group: 'Memory',
     title: 'Memory Utilization (Cached)',
     processor: simpleModel,
@@ -20,6 +21,7 @@ export default [
   },
 
   {
+    chartId: 'memory-utilization-free',
     group: 'Memory',
     title: 'Memory Utilization (Free)',
     processor: simpleModel,
@@ -35,6 +37,7 @@ export default [
   },
 
   {
+    chartId: 'memory-utilization',
     group: 'Memory',
     title: 'Memory Utilization',
     processor: simpleModel,
@@ -60,6 +63,7 @@ export default [
   },
 
   {
+    chartId: 'memory-utilization-used',
     group: 'Memory',
     title: 'Memory Utilization (Used)',
     processor: simpleModel,
@@ -75,6 +79,7 @@ export default [
   },
 
   {
+    chartId: 'memory-page-faults',
     group: 'Memory',
     title: 'Page Faults',
     processor: simpleModel,

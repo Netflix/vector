@@ -7,6 +7,7 @@ import SimpleTable from '../components/Charts/SimpleTable.jsx'
 
 export default [
   {
+    chartId: 'cpu-pswitch',
     group: 'CPU',
     title: 'Context Switches per second',
     processor: simpleModel,
@@ -22,6 +23,7 @@ export default [
   },
 
   {
+    chartId: 'cpu-utilization',
     group: 'CPU',
     title: 'CPU Utilization',
     processor: simpleModel,
@@ -42,6 +44,7 @@ export default [
   },
 
   {
+    chartId: 'cpu-utilization-sys',
     group: 'CPU',
     title: 'CPU Utilization (System)',
     processor: simpleModel,
@@ -60,6 +63,7 @@ export default [
   },
 
   {
+    chartId: 'cpu-utilization-user',
     group: 'CPU',
     title: 'CPU Utilization (user)',
     processor: simpleModel,
@@ -78,6 +82,7 @@ export default [
   },
 
   {
+    chartId: 'cpu-loadavg',
     group: 'CPU',
     title: 'Load Average',
     processor: simpleModel,
@@ -92,6 +97,7 @@ export default [
   },
 
   {
+    chartId: 'cpu-loadavg-table',
     group: 'CPU',
     title: 'Load Average (table)',
     processor: simpleModel,
@@ -107,6 +113,7 @@ export default [
   },
 
   {
+    chartId: 'cpu-percpu-utilization',
     group: 'CPU',
     title: 'Per-CPU Utilization',
     processor: simpleModel,
@@ -134,6 +141,7 @@ export default [
   },
 
   {
+    chartId: 'cpu-percpu-utilization-sys',
     group: 'CPU',
     title: 'Per-CPU Utilization (System)',
     processor: simpleModel,
@@ -150,6 +158,7 @@ export default [
   },
 
   {
+    chartId: 'cpu-percpu-utilization-user',
     group: 'CPU',
     title: 'Per-CPU Utilization (User)',
     processor: simpleModel,
@@ -166,6 +175,7 @@ export default [
   },
 
   {
+    chartId: 'cpu-runnable',
     group: 'CPU',
     title: 'Runnable',
     processor: simpleModel,

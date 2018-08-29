@@ -19,6 +19,7 @@ import { thresholds, colors } from '../components/Charts/cividis.js'
 
 export default [
   {
+    chartId: 'bcc-biolatency',
     group: 'BCC/BPF',
     title: 'BCC biolatency (block device I/O latency)',
     processor: simpleModel,
@@ -37,6 +38,7 @@ export default [
   },
 
   {
+    chartId: 'bcc-runqlat',
     group: 'BCC/BPF',
     title: 'BCC runqlat (run queue latency)',
     processor: simpleModel,
@@ -55,6 +57,7 @@ export default [
   },
 
   {
+    chartId: 'bcc-ext4lat',
     group: 'BCC/BPF',
     title: 'BCC ext4dist (ext4 operation latencies)',
     processor: simpleModel,
@@ -83,6 +86,7 @@ export default [
   },
 
   {
+    chartId: 'bcc-xfslat',
     group: 'BCC/BPF',
     title: 'BCC xfsdist (xfs operation latencies)',
     processor: simpleModel,
@@ -111,6 +115,7 @@ export default [
   },
 
   {
+    chartId: 'bcc-zfslat',
     group: 'BCC/BPF',
     title: 'BCC zfsdist (zfs operation latencies)',
     processor: simpleModel,
@@ -139,6 +144,7 @@ export default [
   },
 
   {
+    chartId: 'bcc-tcplife',
     group: 'BCC/BPF',
     title: 'BCC tcplife (TCP sessions)',
     processor: simpleModel,
@@ -174,6 +180,7 @@ export default [
   },
 
   {
+    chartId: 'bcc-execsnoop',
     group: 'BCC/BPF',
     title: 'BCC execsnoop (traces new processes)',
     processor: simpleModel,
@@ -198,6 +205,7 @@ export default [
   },
 
   {
+    chartId: 'bcc-tcpretrans',
     group: 'BCC/BPF',
     title: 'BCC tcpretrans (counts TCP retransmits)',
     processor: simpleModel,
@@ -214,6 +222,7 @@ export default [
 
   // TODO test biotop (could not get it working on my machine)
   {
+    chartId: 'bcc-biotop',
     group: 'BCC/BPF',
     title: 'BCC biotop (block device I/O top)',
     processor: simpleModel,
@@ -249,6 +258,7 @@ export default [
   },
 
   {
+    chartId: 'bcc-tcptop',
     group: 'BCC/BPF',
     title: 'BCC tcptop (tcp throughput)',
     processor: simpleModel,
@@ -281,6 +291,7 @@ export default [
   },
 
   {
+    chartId: 'bcc-tracepoint-hits',
     group: 'BCC/BPF',
     title: 'BCC tracepoint hits (kernel tracepoint hit counts)',
     processor: simpleModel,
@@ -296,6 +307,7 @@ export default [
   },
 
   {
+    chartId: 'bcc-usdt-hits',
     group: 'BCC/BPF',
     title: 'BCC USDT hits (kernel tracepoint hit counts)',
     processor: simpleModel,
@@ -311,6 +323,7 @@ export default [
   },
 
   {
+    chartId: 'bcc-uprobe-hits',
     group: 'BCC/BPF',
     title: 'BCC uprobe hits (uprobe hit count)',
     processor: simpleModel,

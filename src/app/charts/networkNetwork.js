@@ -6,6 +6,7 @@ import FilterModal from '../components/SettingsModals/FilterModal.jsx'
 
 export default [
   {
+    chartId: 'network-drops-in',
     group: 'Network',
     title: 'Network Drops (In)',
     processor: simpleModel,
@@ -22,6 +23,7 @@ export default [
   },
 
   {
+    chartId: 'network-drops-inout',
     group: 'Network',
     title: 'Network Drops (In + Out)',
     processor: simpleModel,
@@ -39,6 +41,7 @@ export default [
   },
 
   {
+    chartId: 'network-drops-out',
     group: 'Network',
     title: 'Network Drops (Out)',
     processor: simpleModel,
@@ -56,6 +59,7 @@ export default [
 
   {
     // TODO should this chart have the container aware warning?
+    chartId: 'network-packets',
     group: 'Network',
     title: 'Network Packets',
     processor: simpleModel,
@@ -76,6 +80,7 @@ export default [
   },
 
   {
+    chartId: 'network-retransmits',
     group: 'Network',
     title: 'Network Retransmits',
     processor: simpleModel,
@@ -104,6 +109,7 @@ export default [
   },
 
   {
+    chartId: 'network-throughput',
     group: 'Network',
     title: 'Network Throughput (kB)',
     processor: simpleModel,

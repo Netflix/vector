@@ -5,6 +5,7 @@ import Chart from '../components/Charts/Chart.jsx'
 
 export default [
   {
+    chartId: 'network-tcp-closewait',
     group: 'Network',
     title: 'TCP Connections (Close Wait)',
     processor: simpleModel,
@@ -19,6 +20,7 @@ export default [
   },
 
   {
+    chartId: 'network-tcp-established',
     group: 'Network',
     title: 'TCP Connections (Established)',
     processor: simpleModel,
@@ -33,6 +35,7 @@ export default [
   },
 
   {
+    chartId: 'network-tcp',
     group: 'Network',
     title: 'TCP Connections',
     processor: simpleModel,
@@ -49,6 +52,7 @@ export default [
   },
 
   {
+    chartId: 'network-tcp-timewait',
     group: 'Network',
     title: 'TCP Connections (Time Wait)',
     processor: simpleModel,

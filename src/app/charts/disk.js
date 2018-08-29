@@ -5,6 +5,7 @@ import Chart from '../components/Charts/Chart.jsx'
 
 export default [
   {
+    chartId: 'disk-iops',
     group: 'Disk',
     title: 'Disk IOPS',
     processor: simpleModel,
@@ -22,6 +23,7 @@ export default [
   },
 
   {
+    chartId: 'disk-latency',
     group: 'Disk',
     title: 'Disk Latency',
     processor: simpleModel,
@@ -41,6 +43,7 @@ export default [
   },
 
   {
+    chartId: 'disk-throughput',
     group: 'Disk',
     title: 'Disk Throughput (Bytes)',
     processor: simpleModel,
@@ -58,6 +61,7 @@ export default [
   },
 
   {
+    chartId: 'disk-utilization',
     group: 'Disk',
     title: 'Disk Utilization (%)',
     processor: simpleModel,

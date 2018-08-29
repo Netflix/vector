@@ -6,6 +6,7 @@ import CustomSettingsModal from '../components/SettingsModals/CustomSettingsModa
 
 export default [
   {
+    chartId: 'custom-chart',
     group: 'Custom',
     title: 'Custom chart',
     processor: customModel,

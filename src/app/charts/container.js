@@ -26,6 +26,7 @@ import {
 
 export default [
   {
+    chartId: 'container-percont-cpu',
     group: 'Container',
     title: 'Per-Container CPU Utilization',
     processor: simpleModel,
@@ -45,6 +46,7 @@ export default [
   },
 
   {
+    chartId: 'container-percont-mem',
     group: 'Container',
     title: 'Per-Container Memory Usage (Mb)',
     processor: simpleModel,
@@ -63,6 +65,7 @@ export default [
   },
 
   {
+    chartId: 'container-total-cont-mem',
     group: 'Container',
     title: 'Total Container Memory Usage (Mb)',
     processor: simpleModel,
@@ -95,6 +98,7 @@ export default [
   },
 
   {
+    chartId: 'container-percont-mem-headroom',
     group: 'Container',
     title: 'Per-Container Memory Headroom (Mb)',
     processor: simpleModel,
@@ -127,6 +131,7 @@ export default [
   },
 
   {
+    chartId: 'container-disk-iops',
     group: 'Container',
     title: 'Container Disk IOPS',
     processor: simpleModel,
@@ -150,6 +155,7 @@ export default [
   },
 
   {
+    chartId: 'container-disk-tput',
     group: 'Container',
     title: 'Container Disk Throughput (Bytes)',
     processor: simpleModel,
@@ -173,6 +179,7 @@ export default [
   },
 
   {
+    chartId: 'container-disk-iops-throttle',
     group: 'Container',
     title: 'Container Disk IOPS (Throttled)',
     processor: simpleModel,
@@ -196,6 +203,7 @@ export default [
   },
 
   {
+    chartId: 'container-disk-tput-throttle',
     group: 'Container',
     title: 'Container Disk Throughput (Throttled) (Bytes)',
     processor: simpleModel,
@@ -220,6 +228,7 @@ export default [
   },
 
   {
+    chartId: 'container-percont-cpu-sched',
     group: 'Container',
     title: 'Per-Container CPU Scheduler',
     processor: simpleModel,
@@ -242,6 +251,7 @@ export default [
   },
 
   {
+    chartId: 'container-percont-cpu-headroom',
     group: 'Container',
     title: 'Per-Container CPU Headroom',
     processor: simpleModel,
@@ -280,6 +290,7 @@ export default [
   },
 
   {
+    chartId: 'container-percont-cpu-throttle',
     group: 'Container',
     title: 'Per-Container Throttled CPU',
     processor: simpleModel,
@@ -297,6 +308,7 @@ export default [
   },
 
   {
+    chartId: 'container-percont-mem-util',
     group: 'Container',
     title: 'Per-Container Memory Utilization (%)',
     processor: simpleModel,
