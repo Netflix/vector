@@ -26,7 +26,7 @@ export function getChartsFromQueryString(param) {
   }
 
   const query = parse(param)
-  if (!query.charts) return { targets: [] }
+  if (!query.charts) return { targets: [], chartlist: [] }
 
   const decoded = decodeURI(query.charts)
   const params = JSON.parse(decoded)
@@ -38,7 +38,7 @@ export function getChartsFromQueryString(param) {
   const chartlist = params.map(c => c.chartIds.map(chartId => ({
     target: { hostname: c.hostname, hostspec: c.hostspec, containerId: c.containerId },
     chartId: chartId
-  }))).reduce(flatten)
+  }))).reduce(flatten, [])
 
   return {
     targets,
