@@ -49,7 +49,7 @@
       'expandHostname': false, // Automatically expand hostname input when application opens
       'disableHostnameInputContainerSelect': false, // Disable hostname and hostspec input when container is selected
       'enableCustomWidgetFeature': true, // Enable the custom widget feature to add ad-hoc widgets
-      'enableBcc': false // Enable BCC widgets (requires BCC PMDA)
+      'enableBcc': true // Enable BCC widgets (requires BCC PMDA)
 
     })
     .config(toastrConfig)

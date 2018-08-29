@@ -13,7 +13,7 @@ let config = {
     output: {
         path: path.join(__dirname, '/dist/'),
         filename: 'scripts/bundle.js',
-        publicPath: '/'
+        publicPath: ''
     },
     module: {
         rules: [
