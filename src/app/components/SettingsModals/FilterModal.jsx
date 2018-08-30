@@ -14,7 +14,7 @@ class FilterModal extends React.PureComponent {
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form className='doNotDrag' onSubmit={this.handleSubmit}>
         <Form.Input label='Filter' value={this.state.filterText} onChange={this.handleChange} />
         <Button type='submit'>Save</Button>
         <Button onClick={this.props.onClose}>Cancel</Button>

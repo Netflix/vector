@@ -208,15 +208,16 @@ export function mapInstanceDomains (name) {
  * Maps container names to the container instance id
  *
  * @param {metricNames} array the list of metric names that will have the instance tag mapped to a container
+ * @param {containerNameResolver} function callback to transform metadata to container name, will be passed { instance, cgroup, containerId }
  * @return {function} a transform function
  */
-export function mapContainerNames (metricNames) {
+export function mapContainerNames (metricNames, containerNameResolver) {
   return function _mapContainerNames (metricInstances, { containerList }) {
     return metricInstances
       .map(mi => {
         if (! metricNames.includes(mi.metric)) return mi
         let container = containerList.find(e => e.cgroup === mi.instance) || {}
-        return { ...mi, instance: container.containerId }
+        return { ...mi, instance: containerNameResolver(container) }
       })
       // make sure the instance had a valid name
       .filter(mi => !!mi.instance)

@@ -16,35 +16,36 @@
  *
  */
 export default {
-  'protocol': 'http', // PMWEBD protocol (http or https)
-  'port': 7402,  // PMWEBD port
-  'hostspec': 'localhost', // Default PMCD hostspec
-  'interval': '2', // Default update interval in seconds
-  'window': '2', // Default graph time window in minutes
-  'enableFlameGraphs': true, // Enable flame graphs (requires extra PMDA)
-  'enableBpfFlameGraphs': false, // Enable BFP extended flame graphs (requires extra PMDA)
-  'enableContainerWidgets': true, // Enable container widgets
-  'disableHostspecInput': false, // Disable hostspec input
-  'disableContainerFilter': false, // Disable container id filter input
-  'disableContainerSelect': false, // Disable container name drop down select
-  'containerSelectOverride': true, // Overrides requireContainerFilter widget option
-  'useCgroupId': false, // Use container cgroup id instead of container name
-  'expandHostname': false, // Automatically expand hostname input when application opens
-  'disableHostnameInputContainerSelect': false, // Disable hostname and hostspec input when container is selected
-  'enableCustomWidgetFeature': true, // Enable the custom widget feature to add ad-hoc widgets
-  'enableBcc': true, // Enable BCC widgets (requires BCC PMDA)
-  'version': '[AIV]{version}[/AIV]', // version number, auto loaded by webpack from package.json
+  version: '[AIV]{version}[/AIV]', // version number, auto loaded by webpack from package.json
+  protocol: 'http', // PMWEBD protocol (http or https)
 
-  windows: [
+  dataWindows: [
     { text: '2 min', valueSeconds: 2*60 },
     { text: '5 min', valueSeconds: 5*60 },
     { text: '10 min', valueSeconds: 10*60 }
   ],
-
-  intervals: [
+  pollIntervals: [
     { text: '1 sec', valueSeconds: 1 },
     { text: '2 sec', valueSeconds: 2 },
     { text: '3 sec', valueSeconds: 3 },
     { text: '5 sec', valueSeconds: 5 }
-  ]
+  ],
+  defaultWindowSeconds: 120, // Default graph time window
+  defaultIntervalSeconds: 2, // Default update interval
+
+  enableContainerWidgets: true, // Enable container widgets
+  enableCustomWidgetFeature: true, // Enable the custom widget feature to add ad-hoc widgets
+  enableBcc: true, // Enable BCC widgets (requires BCC PMDA)
+
+  defaultPort: 7402, // PMWEBD port
+  defaultHostspec: 'localhost', // Default PMCD hostspec
+  disableHostspecInput: true, // Disable hostspec input
+  disableContainerSelect: false, // Disable container name drop down select
+  useCgroupId: false, // Use container cgroup id instead of container name
+
+  // TODO use the below configuration elements
+
+  'containerSelectOverride': true, // Overrides requireContainerFilter widget option
+
+  // TODO what about container name resolver
 }

@@ -32,7 +32,7 @@ class CustomSettingsModal extends React.PureComponent {
   render() {
     const options = this.getOptions(this.props.pmids)
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form className='doNotDrag' onSubmit={this.handleSubmit}>
         <Form.Dropdown label='Select metric' placeholder='Select Metric' fluid search selection
           value={this.state.metricNames && this.state.metricNames.length && this.state.metricNames[0]}
           onChange={this.handleMetricChange}

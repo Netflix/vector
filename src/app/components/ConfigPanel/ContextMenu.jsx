@@ -4,46 +4,34 @@ import PropTypes from 'prop-types'
 import { Menu, Loader, Button } from 'semantic-ui-react'
 
 import AddContextModal from './AddContextModal.jsx'
-import { matchesTarget } from '../../utils'
+import { matchesTarget, isContextLoading } from '../../utils'
+
+const chartSelectorStyle = {
+  marginTop: '0px',
+}
 
 class ContextMenu extends React.PureComponent {
   state = { }
 
-  handleContextClick = (e, { context }) => {
-    this.setState({ selectedContext: context })
-    this.props.onContextSelect(context)
-  }
+  handleContextClick = (e, { context }) => this.props.onContextSelect(context)
 
   handleContextXClick = (e, { context }) => {
     // the button is inside the menu; stop propagation to prevent the
     // x button followed by a context menu item click
     e.stopPropagation()
 
-    // deselect context if this was the one
-    if (this.isActiveMenuSelection(context)) {
-      this.setState({ selectedContext: null })
-      this.props.onContextSelect(null)
-    }
-
     this.props.onRemoveContext(context)
   }
 
   isActiveMenuSelection = (context) => {
-    return matchesTarget(this.state.selectedContext && this.state.selectedContext.target, context.target)
-  }
-
-  isLoading = (context) => {
-    return !(context.contextId
-      && (Object.keys(context.pmids || {}).length > 0)
-      && context.hostname
-      && context.containerList)
+    return matchesTarget(this.props.selectedContext && this.props.selectedContext.target, context.target)
   }
 
   menuColor = (context) => {
     if (context.errText) {
       return 'red'
     } else {
-      if (this.isLoading(context)) {
+      if (isContextLoading(context)) {
         return 'grey'
       } else {
         return 'green'
@@ -71,7 +59,7 @@ class ContextMenu extends React.PureComponent {
 
   render () {
     return (
-      <Menu vertical pointing attached='top' borderless>
+      <Menu vertical pointing attached='top' borderless style={chartSelectorStyle}>
         { /* advise if no connections */ }
         { (this.props.contextData === null || this.props.contextData.length === 0) &&
           <Menu.Item disabled>No active connections</Menu.Item>
@@ -84,13 +72,13 @@ class ContextMenu extends React.PureComponent {
             active={this.isActiveMenuSelection(ctx)}
             onClick={this.handleContextClick}
             context={ctx}
-            disabled={this.isLoading(ctx)} >
+            disabled={isContextLoading(ctx)} >
 
             { /* text area of menu */ }
             {this.menuText(ctx.target)}
 
             { /* loading spinner */ }
-            <Loader active={this.isLoading(ctx)} size='small' />
+            <Loader active={isContextLoading(ctx)} size='small' />
 
             { /* x button to close */ }
             <Button size='mini' compact floated='right'
@@ -106,8 +94,11 @@ class ContextMenu extends React.PureComponent {
         <Menu.Item>
           <AddContextModal
             onNewContext={this.handleNewContext}
-            defaultPort='7402'
-            defaultHostspec='localhost'
+            defaultPort={this.props.config.defaultPort}
+            defaultHostspec={this.props.config.defaultHostspec}
+            disableHostspecInput={this.props.config.disableHostspecInput}
+            disableContainerSelect={this.props.config.disableContainerSelect}
+            useCgroupId={this.props.config.useCgroupId}
             render={this.addContextButton} />
 
         </Menu.Item>
@@ -118,10 +109,18 @@ class ContextMenu extends React.PureComponent {
 }
 
 ContextMenu.propTypes = {
+  config: PropTypes.shape({
+    disableHostspecInput: PropTypes.bool.isRequired,
+    disableContainerSelect: PropTypes.bool.isRequired,
+    defaultPort: PropTypes.number.isRequired,
+    defaultHostspec: PropTypes.string.isRequired,
+    useCgroupId: PropTypes.bool.isRequired,
+  }),
   contextData: PropTypes.array.isRequired,
   onContextSelect: PropTypes.func.isRequired,
   onNewContext: PropTypes.func.isRequired,
   onRemoveContext: PropTypes.func.isRequired,
+  selectedContext: PropTypes.object,
 }
 
 export default ContextMenu

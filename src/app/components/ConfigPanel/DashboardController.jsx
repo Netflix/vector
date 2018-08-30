@@ -1,9 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Menu } from 'semantic-ui-react'
+import { Menu, Icon } from 'semantic-ui-react'
 
-class WindowIntervalSelector extends React.PureComponent {
+const menuStyle = {
+  marginBottom: '0px',
+  marginTop: '0px',
+}
+
+class DashboardController extends React.PureComponent {
   state = {
     windowSeconds: this.props.defaultWindow,
     intervalSeconds: this.props.defaultInterval,
@@ -19,9 +24,18 @@ class WindowIntervalSelector extends React.PureComponent {
     this.props.onPollIntervalSecondsChange(parseInt(name))
   }
 
+  handleDashboardIcon = () => {
+    this.props.onDashboardToggle()
+  }
+
   render () {
     return (
-      <Menu style={{ marginBottom: '0px' }} borderless fluid>
+      <Menu style={menuStyle} borderless fluid>
+
+        <Menu.Item header onClick={this.handleDashboardIcon}>
+          Dashboard
+          <Icon name={this.props.isDashboardOpen ? 'chevron up' : 'chevron down'} />
+        </Menu.Item>
 
         <Menu.Item header>Window</Menu.Item>
         { this.props.windows.map(w => (
@@ -41,18 +55,33 @@ class WindowIntervalSelector extends React.PureComponent {
             onClick={this.handleIntervalChange}/>
         ))}
 
+        <Menu.Item header>Control</Menu.Item>
+        <Menu.Item active={this.props.isDashboardPlaying} onClick={this.props.onPlay}>
+          <Icon name='play' />
+          Play
+        </Menu.Item>
+        <Menu.Item active={!this.props.isDashboardPlaying} onClick={this.props.onPause}>
+          <Icon name='pause' />
+          Pause
+        </Menu.Item>
+
       </Menu>
     )
   }
 }
 
-WindowIntervalSelector.propTypes = {
+DashboardController.propTypes = {
   windows: PropTypes.array.isRequired,
   intervals: PropTypes.array.isRequired,
   defaultWindow: PropTypes.number.isRequired,
   defaultInterval: PropTypes.number.isRequired,
   onWindowSecondsChange: PropTypes.func.isRequired,
   onPollIntervalSecondsChange: PropTypes.func.isRequired,
+  onDashboardToggle: PropTypes.func.isRequired,
+  isDashboardOpen: PropTypes.bool.isRequired,
+  onPlay: PropTypes.func.isRequired,
+  onPause: PropTypes.func.isRequired,
+  isDashboardPlaying: PropTypes.bool.isRequired,
 }
 
-export default WindowIntervalSelector
+export default DashboardController

@@ -53,7 +53,7 @@ class ContextPoller extends React.Component {
   pollContext = async (existingContext) => {
     const context = { ...existingContext, errText: null }
     try {
-      const pmApi = `http://${context.target.hostname}/pmapi`
+      const pmApi = `${this.props.protocol}://${context.target.hostname}/pmapi`
 
       const TIMEOUTS = { response: 5000, deadline: 10000 }
 
@@ -145,6 +145,7 @@ class ContextPoller extends React.Component {
 }
 
 ContextPoller.propTypes = {
+  protocol: PropTypes.string.isRequired,
   targets: PropTypes.arrayOf(
     PropTypes.shape({
       // these should all be passed in as part of the connection setup

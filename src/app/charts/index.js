@@ -19,6 +19,7 @@
 /* eslint-disable */
 
 import { flatten } from '../utils'
+import config from '../config'
 
 // all the remaining components, particularly vector specific angular components
 function requireAll(requireContext) {
@@ -29,6 +30,7 @@ function requireAll(requireContext) {
 
 function isValidChart(chart, index, charts) {
   let errors = []
+
   if (!chart.chartId) {
     errors.push('chart is missing chartId')
   }
@@ -51,6 +53,7 @@ function isValidChart(chart, index, charts) {
 const requires = requireAll(require.context('./', false, /\.js$/))
 const charts = requires
   .map(r => r.default)
+  .map(r => (typeof r === 'function') ? r(config) : r) // if it is a function, call it
   .reduce(flatten, [])
   .filter(isValidChart)
 

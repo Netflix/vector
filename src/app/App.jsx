@@ -26,9 +26,11 @@ import Dashboard from './components/Dashboard/Dashboard.jsx'
 import ConfigPanel from './components/ConfigPanel/ConfigPanel.jsx'
 import ContextPoller from './components/Pollers/ContextPoller.jsx'
 import DatasetPoller from './components/Pollers/DatasetPoller.jsx'
+import DashboardController from './components/ConfigPanel/DashboardController.jsx'
 
 import { Sidebar } from 'semantic-ui-react'
 import isEqual from 'lodash.isequal'
+import cloneDeep from 'lodash.clonedeep'
 
 import 'semantic-ui-css/semantic.min.css'
 import { matchesTarget, getChartsFromQueryString, pushQueryStringToHistory } from './utils'
@@ -53,6 +55,7 @@ class App extends React.Component {
     contextDatasets: [],
     targets: this.props.initialTargets,
     configVisible: false,
+    pausedData: null,
   }
 
   refreshQueryString = () => {
@@ -118,48 +121,69 @@ class App extends React.Component {
   onWindowSecondsChange = (sec) => this.setState({ windowIntervalMs: sec * 1000 })
   onPollIntervalSecondsChange = (sec) => this.setState({ pollIntervalMs: sec * 1000 })
 
+  // to pause, we take a snapshot of the data and use this as our datasource for the dash
+  // this ensures all other components, pollers etc can keep flowing through their data cleanly
+  handlePlay = () => this.setState({ pausedData: null })
+  handlePause = () => this.setState(state => ({ pausedData: cloneDeep(state.contextDatasets) }))
+
   render () {
+    const isConfigPanelOpen = !this.props.embed && this.state.configVisible
+
     return (
       <div>
         <div className="col-md-12">
           <Navbar embed={this.props.embed} onClick={this.toggleConfigVisible} />
 
           <ContextPoller
+            protocol={config.protocol}
             pollIntervalMs={5000}
             targets={this.state.targets}
             onContextsUpdated={this.onContextsUpdated} />
 
           <DatasetPoller
+            protocol={config.protocol}
             pollIntervalMs={this.state.pollIntervalMs}
             charts={this.state.chartlist}
             windowIntervalMs={this.state.windowIntervalMs}
             contextData={this.state.contextData}
             onContextDatasetsUpdated={this.onContextDatasetsUpdated} />
 
+          <DashboardController
+            windows={config.dataWindows}
+            intervals={config.pollIntervals}
+            defaultWindow={config.defaultWindowSeconds}
+            defaultInterval={config.defaultIntervalSeconds}
+            onPollIntervalSecondsChange={this.onPollIntervalSecondsChange}
+            onWindowSecondsChange={this.onWindowSecondsChange}
+            isDashboardOpen={isConfigPanelOpen}
+            onDashboardToggle={this.toggleConfigVisible}
+            onPlay={this.handlePlay}
+            onPause={this.handlePause}
+            isDashboardPlaying={!this.state.pausedData} />
+
           <Sidebar.Pushable style={{ minHeight: '100vh' }}>
             <Sidebar
               animation='overlay'
               direction='top'
-              visible={
-                !this.props.embed
-                && (this.state.chartlist.length === 0 || this.state.configVisible ? true : undefined)}
+              visible={isConfigPanelOpen}
               onHide={this.handleSidebarHide} >
 
               <ConfigPanel
+                config={config}
                 charts={charts}
                 contextData={this.state.contextData}
                 onNewContext={this.onNewContext}
                 onRemoveContext={this.onRemoveContext}
                 onAddChartToContext={this.onAddChartToContext}
-                onClearChartsFromContext={this.onClearChartsFromContext}
-                onWindowSecondsChange={this.onWindowSecondsChange}
-                onPollIntervalSecondsChange={this.onPollIntervalSecondsChange} />
+                onClearChartsFromContext={this.onClearChartsFromContext} />
+
             </Sidebar>
 
             <Sidebar.Pusher>
 
               <Dashboard
                 chartlist={this.state.chartlist}
+                pausedContextDatasets={this.state.pausedData}
                 contextDatasets={this.state.contextDatasets}
                 removeChartByIndex={this.removeChartByIndex}
                 updateChartSettings={this.updateChartSettings}

@@ -26,9 +26,8 @@ class Dashboard extends React.Component {
       <GridLayout rowHeight={60} cols={gridResponsiveCols} style={gridStyle} className='layout' draggableCancel='.doNotDrag'>
 
         { this.props.chartlist.map((c, idx) => {
-          const ctxds = this.props.contextDatasets.find(ctxds =>
-            matchesTarget(ctxds.target, c.context.target)
-          )
+          const ctxds = (this.props.pausedContextDatasets || this.props.contextDatasets)
+            .find(ctxds => matchesTarget(ctxds.target, c.context.target))
           return (
             <div key={`panel-${idx}`} data-grid={{ x: 0, y: 0, w: 5, h: 6, minW: 3, minH: 3 }} style={{ overflow: 'hidden' }}>
               <DashPanel
@@ -41,7 +40,7 @@ class Dashboard extends React.Component {
                 containerId={(c.context.containerId || '_all') === '_all' ? '' : c.context.containerId}
                 settings={c.settings}
                 onNewSettings={this.handleNewSettings}
-                pmids={c.context.pmids}/>
+                pmids={c.context.pmids || {}}/>
             </div>
           )
         })}
@@ -53,6 +52,7 @@ class Dashboard extends React.Component {
 Dashboard.propTypes = {
   chartlist: PropTypes.array.isRequired,
   contextDatasets: PropTypes.array.isRequired,
+  pausedContextDatasets: PropTypes.array,
   removeChartByIndex: PropTypes.func.isRequired,
   updateChartSettings: PropTypes.func.isRequired,
 }

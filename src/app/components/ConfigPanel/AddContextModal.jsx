@@ -18,6 +18,8 @@ class AddContextModal extends React.PureComponent {
     hostspec: this.props.defaultHostspec,
   }
 
+  containerNameResolver = this.props.useCgroupId ? (c => c.cgroup) : (c => c.containerId)
+
   refreshContainerList = async () => {
     if (!this.state.hostname || !this.state.hostport || !this.state.hostspec) return
 
@@ -32,7 +34,7 @@ class AddContextModal extends React.PureComponent {
 
     const containerDropdownOptions = []
       .concat({ text: 'All', value: '_all' })
-      .concat(containerList.map(({ containerId }) => ({ text: containerId, value: containerId, })))
+      .concat(containerList.map(c => ({ text: this.containerNameResolver(c), value: this.containerNameResolver(c) })))
 
     this.setState({ containerDropdownOptions, containerId: '_all', connected: true })
   }
@@ -70,10 +72,10 @@ class AddContextModal extends React.PureComponent {
 
             <Form.Input label='Hostname' onChange={this.handleHostnameChange} placeholder='1.2.3.4' />
             <Form.Input label='Port' onChange={this.handleHostportChange} value={this.state.hostport} />
-            <Form.Input label='Hostspec' onChange={this.handleHostspecChange} value={this.state.hostspec} />
+            <Form.Input label='Hostspec' onChange={this.handleHostspecChange} value={this.state.hostspec} disabled={this.props.disableHostspecInput}/>
 
             <Form.Dropdown label='Container' placeholder='Select container' fluid search selection
-              disabled={!this.state.connected}
+              disabled={!this.state.connected || this.props.disableContainerSelect}
               value={this.state.containerId}
               options={this.state.containerDropdownOptions}
               onChange={this.handleContainerChange} />
@@ -90,8 +92,11 @@ class AddContextModal extends React.PureComponent {
 
 AddContextModal.propTypes = {
   onNewContext: PropTypes.func.isRequired,
-  defaultPort: PropTypes.string.isRequired,
+  defaultPort: PropTypes.number.isRequired,
   defaultHostspec: PropTypes.string.isRequired,
+  disableHostspecInput: PropTypes.bool.isRequired,
+  disableContainerSelect: PropTypes.bool.isRequired,
+  useCgroupId: PropTypes.bool.isRequired,
   render: PropTypes.func.isRequired,
 }
 

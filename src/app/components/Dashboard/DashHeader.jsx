@@ -35,7 +35,7 @@ class DashHeader extends React.PureComponent {
 
         { chartInfo.settingsComponent &&
           <Modal dimmer='inverted' open={this.state.modalOpen} onClose={this.handleCloseSettings} trigger={
-            <Icon  name='setting' circular fitted link onClick={this.handleSettingsIcon} /> }>
+            <Icon className='doNotDrag' name='setting' circular fitted link onClick={this.handleSettingsIcon} /> }>
             <Modal.Content>
               <SettingsComponent {...chartInfo} pmids={this.props.pmids} onNewSettings={this.handleNewSettings} onClose={this.handleCloseSettings} />
             </Modal.Content>
@@ -43,7 +43,7 @@ class DashHeader extends React.PureComponent {
 
         { chartInfo.helpComponent &&
           <Modal dimmer='inverted' trigger={
-            <Icon name='help' circular fitted link/>}>
+            <Icon className='doNotDrag' name='help' circular fitted link/>}>
             <Modal.Content>
               <HelpComponent chartInfo={chartInfo} />
             </Modal.Content>
@@ -51,11 +51,11 @@ class DashHeader extends React.PureComponent {
 
         { chartInfo.isHighOverhead &&
           <Popup content='May cost high overhead, see help' trigger={
-            <Icon name='exclamation' circular fitted />} /> }
+            <Icon className='doNotDrag' name='exclamation' circular fitted />} /> }
 
         { chartInfo.isContainerAware &&
           <Popup content='Container aware' trigger={
-            <Icon name='check' circular fitted />} /> }
+            <Icon className='doNotDrag' name='check' circular fitted />} /> }
 
         <Button className='doNotDrag' circular size='tiny' basic icon='close' floated='right' onClick={this.handleCloseClicked} />
       </div>

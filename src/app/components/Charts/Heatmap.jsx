@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ResponsiveXYFrame } from "semiotic"
-// import moment from 'moment'
+import moment from 'moment'
 import { scaleThreshold } from 'd3-scale'
 
 import { uniqueFilter } from '../../utils'
@@ -73,7 +73,7 @@ class Heatmap extends React.PureComponent {
           fill: thresholds(chartInfo.heatmapMaxValue > 0 ? d.value : d.percent),
           stroke: 'lightgrey'
         })}
-        margin={{ left: 60, bottom: 30, right: 8, top: 8 }}
+        margin={{ left: 90, bottom: 30, right: 8, top: 8 }}
         yExtent={[0, yAxisLookup.length]}
         hoverAnnotation={true}
         tooltipContent={dp => (
@@ -86,10 +86,14 @@ class Heatmap extends React.PureComponent {
         axes={[
           {
             orient: "left",
-            // zzzztickFormat: v => yAxisLookup[v - 1] || '',
-            // ticks: yAxisLookup && yAxisLookup.length,
-            // tickValues: yAxisLookup,
+            tickFormat: v => yAxisLookup[v - 1] || '',
+            ticks: yAxisLookup && yAxisLookup.length,
           },
+          {
+            orient: "bottom",
+            tickFormat: ts => moment(ts).format('hh:mm:ss'),
+            ticks: 4,
+          }
         ]}
         baseMarkProps={{ transitionDuration: { default: 10 } }} />
     )
@@ -102,19 +106,3 @@ Heatmap.propTypes = {
 }
 
 export default Heatmap
-
-/*
-        axesz={[
-          {
-            orient: "left",
-            zzzztickFormat: v => yAxisLookup[v - 1] || '',
-            ticks: yAxisLookup && yAxisLookup.length,
-            tickValues: yAxisLookup,
-          },
-          {
-            orient: "bottom",
-            zzzztickFormat: ts => moment(ts).format('hh:mm:ss'),
-            ticks: 4,
-          }
-        ]}
-        */

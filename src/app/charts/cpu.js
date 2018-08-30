@@ -1,3 +1,4 @@
+import React from 'react'
 import simpleModel from '../processors/simpleModel'
 import { onlyLatestValues, timesliceCalculations, defaultTitleAndKeylabel, divideBy, divideBySeries, cumulativeTransform } from '../processors/transforms'
 import { keyValueArrayToObjectReducer } from '../utils'
@@ -5,11 +6,16 @@ import { percentage, integer, number } from '../processors/formats'
 import Chart from '../components/Charts/Chart.jsx'
 import SimpleTable from '../components/Charts/SimpleTable.jsx'
 
+const PswitchHelp = () => <p>Kernel context switches per second
+  with a super long explanation</p>
+
 export default [
   {
     chartId: 'cpu-pswitch',
     group: 'CPU',
     title: 'Context Switches per second',
+    helpComponent: PswitchHelp,
+    tooltipText: 'Kernel context switches per second',
     processor: simpleModel,
     visualisation: Chart,
     metricNames: [
@@ -28,6 +34,7 @@ export default [
     title: 'CPU Utilization',
     processor: simpleModel,
     visualisation: Chart,
+    tooltipText: 'CPU utilization, both system and CPU',
     lineType: 'stackedarea',
     metricNames: [
       'kernel.all.cpu.sys',

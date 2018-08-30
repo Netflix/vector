@@ -90,7 +90,7 @@ class DatasetPoller extends React.Component {
         // TODO should be able to alarm if we can't find any pmids to match?
 
         let res = await superagent
-          .get(`http://${q.target.hostname}/pmapi/${q.contextId}/_fetch`)
+          .get(`${this.props.protocol}://${q.target.hostname}/pmapi/${q.contextId}/_fetch`)
           .query({ pmids })
         const oldestS = res.body.timestamp.s - (this.props.windowIntervalMs / 1000)
 
@@ -118,7 +118,7 @@ class DatasetPoller extends React.Component {
           const newMapping = {}
           try {
             let res = await superagent
-              .get(`http://${q.target.hostname}/pmapi/${q.contextId}/_indom`)
+              .get(`${this.props.protocol}://${q.target.hostname}/pmapi/${q.contextId}/_indom`)
               .query({ name })
             res.body.instances.forEach(({ instance, name }) => newMapping[instance] = name)
           } catch (err) {
@@ -154,6 +154,7 @@ DatasetPoller.propTypes = {
   ),
   contextData: PropTypes.array.isRequired,
   onContextDatasetsUpdated: PropTypes.func.isRequired,
+  protocol: PropTypes.string.isRequired,
 }
 
 export default DatasetPoller

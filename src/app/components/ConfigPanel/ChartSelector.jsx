@@ -1,9 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Menu } from 'semantic-ui-react'
+import { Icon, Menu, Popup } from 'semantic-ui-react'
 
 import { flatten, uniqueFilter } from '../../utils'
+
+// TODO automatically enable/disable features based on available pmdas
+// TODO automatically enable/disable container widgets if a container context is selected; see config.containerSelectOverride
 
 class ChartSelector extends React.PureComponent {
   handleClearMenuClick = () => this.props.onClearCharts()
@@ -17,7 +20,7 @@ class ChartSelector extends React.PureComponent {
       .filter(uniqueFilter)
 
     return (
-      <Menu size='tiny' borderless compact fluid>
+      <Menu size='tiny' borderless fluid>
         <div>
           <Menu.Item header>Charts</Menu.Item>
           <Menu.Item content='Clear charts' onClick={this.handleClearMenuClick} disabled={this.props.disabled}/>
@@ -25,15 +28,14 @@ class ChartSelector extends React.PureComponent {
         { groupNames.map(g => (
           <div key={`group-${g}`}>
             <Menu.Item header>{g}</Menu.Item>
-            { this.props.charts.filter(c => c.group === g).map(c =>
-              <Menu.Item
-                content={c.title}
-                key={`group-${g}-chart-${c.title}`}
-                name={c.title}
-                disabled={this.props.disabled}
-                onClick={this.handleMenuItemClick}
-                chart={c}/>
-            )}
+            { this.props.charts.filter(c => c.group === g).map(c => (
+              <Menu.Item key={`group-${g}-chart${c.title}`} name={c.title} disabled={this.props.disabled} onClick={this.handleMenuItemClick} chart={c}>
+                { c.title }
+                { c.tooltipText && <Popup content={c.tooltipText} trigger={
+                  <Icon name='help circle' />
+                } /> }
+              </Menu.Item>
+            ))}
           </div>
         )) }
       </Menu>
