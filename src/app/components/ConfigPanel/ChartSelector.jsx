@@ -8,6 +8,10 @@ import { flatten, uniqueFilter } from '../../utils'
 // TODO automatically enable/disable features based on available pmdas
 // TODO automatically enable/disable container widgets if a container context is selected; see config.containerSelectOverride
 
+const chartSelectorStyle = {
+  marginTop: '0px',
+}
+
 class ChartSelector extends React.PureComponent {
   handleClearMenuClick = () => this.props.onClearCharts()
 
@@ -20,7 +24,7 @@ class ChartSelector extends React.PureComponent {
       .filter(uniqueFilter)
 
     return (
-      <Menu size='tiny' borderless fluid>
+      <Menu size='tiny' borderless fluid style={chartSelectorStyle}>
         <div>
           <Menu.Item header>Charts</Menu.Item>
           <Menu.Item content='Clear charts' onClick={this.handleClearMenuClick} disabled={this.props.disabled}/>
