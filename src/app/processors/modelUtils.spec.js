@@ -226,3 +226,41 @@ describe('transformRawDataToPipelineData', () => {
     })
   })
 })
+
+describe('getLargestValueInDataset', () => {
+  describe('with undefined input', () => {
+    let data = undefined
+    it('returns undefined', () => {
+      expect(utils.getLargestValueInDataset(data)).to.equal(undefined)
+    })
+  })
+
+  describe('with no values', () => {
+    let data = []
+    it('returns undefined', () => {
+      expect(utils.getLargestValueInDataset(data)).to.equal(undefined)
+    })
+  })
+
+  describe('with many values', () => {
+    let rawdatasets = [
+      { "metric": "kernel.all.cpu.sys", "instance": -1,
+        "data": [
+          { "ts": new Date("2018-08-22T22:24:03.287Z"), "value": 365600 },
+          { "ts": new Date("2018-08-22T22:24:05.275Z"), "value": 365620 },
+          { "ts": new Date("2018-08-22T22:24:07.276Z"), "value": 365630 },
+          { "ts": new Date("2018-08-22T22:24:09.276Z"), "value": 365640 }
+        ] },
+      { "metric": "hinv.ncpu", "instance": -1,
+        "data": [
+          { "ts": new Date("2018-08-22T22:24:03.287Z"), "value": 1 },
+          { "ts": new Date("2018-08-22T22:24:05.275Z"), "value": 1 },
+          { "ts": new Date("2018-08-22T22:24:07.276Z"), "value": 1 },
+          { "ts": new Date("2018-08-22T22:24:09.276Z"), "value": 1 }
+        ] }
+    ]
+    it('returns the biggest', () => {
+      expect(utils.getLargestValueInDataset(rawdatasets)).to.equal(365640)
+    })
+  })
+})

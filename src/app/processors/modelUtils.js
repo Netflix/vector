@@ -27,3 +27,16 @@ export function transformRawDataToPipelineData (datasets, chartInfo) {
 
   return output
 }
+
+export function getLargestValueInDataset (dataset) {
+  let max = -Number.MAX_VALUE
+  if (!dataset) return undefined
+
+  for (let d of dataset) {
+    for (let tsv of d.data) {
+      max = Math.max(max, tsv.value)
+    }
+  }
+  return (max === -Number.MAX_VALUE) ? undefined : max
+}
+

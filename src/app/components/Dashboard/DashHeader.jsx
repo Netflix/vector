@@ -1,7 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal, Popup, Icon, Button } from 'semantic-ui-react'
+import { Modal, Popup, Button } from 'semantic-ui-react'
+import { getLargestValueInDataset } from '../../processors/modelUtils'
+
+const closeButton = {
+  // add some space beside the x button so it is harder to accidentally click
+  marginLeft: '20px',
+}
 
 class DashHeader extends React.PureComponent {
   state = {
@@ -27,37 +33,41 @@ class DashHeader extends React.PureComponent {
     const HelpComponent = this.props.chartInfo.helpComponent
     const SettingsComponent = this.props.chartInfo.settingsComponent
     const chartInfo = this.props.chartInfo
+    const chartMaxValue = getLargestValueInDataset(this.props.dataset)
 
     return (
       <div>
         { this.props.chartInfo.title }<br/>
         { this.chartSubtitle(chartInfo) }
 
-        { chartInfo.settingsComponent &&
-          <Modal dimmer='inverted' open={this.state.modalOpen} onClose={this.handleCloseSettings} trigger={
-            <Icon className='doNotDrag' name='setting' circular fitted link onClick={this.handleSettingsIcon} /> }>
-            <Modal.Content>
-              <SettingsComponent {...chartInfo} pmids={this.props.pmids} onNewSettings={this.handleNewSettings} onClose={this.handleCloseSettings} />
-            </Modal.Content>
-          </Modal> }
+        { /* these show up in reverse order since they are all floated right */ }
+        <Button style={closeButton} className='doNotDrag' circular size='tiny' basic icon='close' floated='right' onClick={this.handleCloseClicked} />
+
+        { chartInfo.isHighOverhead &&
+          <Popup content='May cost high overhead, see help' trigger={
+            <Button className='doNotDrag' circular size='exclamation' basic icon='help' floated='right' /> } /> }
+
+        { chartInfo.isContainerAware &&
+          <Popup content='Container aware' trigger={
+            <Button className='doNotDrag' circular size='check' basic icon='help' floated='right' /> } /> }
 
         { chartInfo.helpComponent &&
           <Modal dimmer='inverted' trigger={
-            <Icon className='doNotDrag' name='help' circular fitted link/>}>
+            <Button className='doNotDrag' circular size='tiny' basic icon='help' floated='right' onClick={this.handleSettingsIcon} /> } >
             <Modal.Content>
               <HelpComponent chartInfo={chartInfo} />
             </Modal.Content>
           </Modal> }
 
-        { chartInfo.isHighOverhead &&
-          <Popup content='May cost high overhead, see help' trigger={
-            <Icon className='doNotDrag' name='exclamation' circular fitted />} /> }
+        { chartInfo.settingsComponent &&
+          <Modal dimmer='inverted' open={this.state.modalOpen} onClose={this.handleCloseSettings} trigger={
+            <Button className='doNotDrag' circular size='tiny' basic icon='setting' floated='right' onClick={this.handleSettingsIcon} /> } >
+            <Modal.Content>
+              <SettingsComponent {...chartInfo} pmids={this.props.pmids} onNewSettings={this.handleNewSettings} onClose={this.handleCloseSettings}
+                chartMaxValue={chartMaxValue} />
+            </Modal.Content>
+          </Modal> }
 
-        { chartInfo.isContainerAware &&
-          <Popup content='Container aware' trigger={
-            <Icon className='doNotDrag' name='check' circular fitted />} /> }
-
-        <Button className='doNotDrag' circular size='tiny' basic icon='close' floated='right' onClick={this.handleCloseClicked} />
       </div>
     )
   }
@@ -65,6 +75,7 @@ class DashHeader extends React.PureComponent {
 
 DashHeader.propTypes = {
   chartInfo: PropTypes.object.isRequired,
+  dataset: PropTypes.array,
   pmids: PropTypes.object.isRequired,
   onNewSettings: PropTypes.func,
   onCloseClicked: PropTypes.func,

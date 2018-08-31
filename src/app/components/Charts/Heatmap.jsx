@@ -1,10 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { ResponsiveXYFrame } from "semiotic"
 import moment from 'moment'
 import { scaleThreshold } from 'd3-scale'
 
 import { uniqueFilter } from '../../utils'
+import { getLargestValueInDataset } from '../../processors/modelUtils'
+import HeatmapScale from './HeatmapScale.jsx'
 
 const tooltipContentStyle = {
   background: 'rgba(255, 255, 255, 0.85)',
@@ -31,21 +34,19 @@ function extractHeatmapValuesFromDataset(dataset, yAxisLabels) {
   return values
 }
 
-function determineThresholds(chartInfo) {
-  // works because input values are ranged [0,1], so we can just multiply out
-  // but we need to put the first value back to ensure the 0/1 transition works
-  if (chartInfo.heatmapMaxValue > 0) {
-    let newThresholds = chartInfo.heatmap.thresholds.map(e => e * chartInfo.heatmapMaxValue)
-    newThresholds[0] = chartInfo.heatmap.thresholds[0]
+function determineThresholds(chartInfo, dataset) {
+  // works because input thresholds are ranged [0,1], so we can just multiply out
+  const scaleFactor = chartInfo.heatmapMaxValue === 0
+    ? getLargestValueInDataset(dataset) || 1
+    : chartInfo.heatmapMaxValue
+  const thresholds = chartInfo.heatmap.thresholds.map(v => v * scaleFactor)
 
-    return scaleThreshold()
-      .domain(newThresholds)
-      .range(chartInfo.heatmap.colors)
-  }
+  // but we need to put the first value back to ensure the 0/1 transition works cleanly
+  // TODO potentially a bug here for super large heatmapMaxValues?
+  thresholds[0] = chartInfo.heatmap.thresholds[0]
 
-  // default scale
   return scaleThreshold()
-    .domain(chartInfo.heatmap.thresholds)
+    .domain(thresholds)
     .range(chartInfo.heatmap.colors)
 }
 
@@ -53,15 +54,16 @@ class Heatmap extends React.PureComponent {
   render () {
     const { chartInfo, dataset } = this.props
 
-    const thresholds = determineThresholds(chartInfo)
     const yAxisLookup = (dataset && dataset.map(mi => mi.yAxisLabels) || []).filter(uniqueFilter)
+    const thresholds = determineThresholds(chartInfo, dataset)
     const heatmapValues = extractHeatmapValuesFromDataset(dataset, yAxisLookup)
 
     if (! (dataset.every(d => d.data.length > 0) && heatmapValues.length > 0)) {
       return <span>Insufficient data</span>
     }
 
-    return (
+    return (<div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <HeatmapScale thresholds={thresholds} onClick={this.handleHeatmapScaleClick}/>
       <ResponsiveXYFrame
         responsiveWidth={true}
         responsiveHeight={true}
@@ -70,7 +72,7 @@ class Heatmap extends React.PureComponent {
         xAccessor={d => d.ts}
         yAccessor={d => d.value}
         areaStyle={d => ({
-          fill: thresholds(chartInfo.heatmapMaxValue > 0 ? d.value : d.percent),
+          fill: thresholds(d.value),
           stroke: 'lightgrey'
         })}
         margin={{ left: 90, bottom: 30, right: 8, top: 8 }}
@@ -96,7 +98,7 @@ class Heatmap extends React.PureComponent {
           }
         ]}
         baseMarkProps={{ transitionDuration: { default: 10 } }} />
-    )
+    </div>)
   }
 }
 

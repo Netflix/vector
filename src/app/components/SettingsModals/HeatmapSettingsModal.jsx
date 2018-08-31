@@ -18,9 +18,12 @@ class HeatmapSettingsModal extends React.PureComponent {
   render() {
     return (
       <Form className='doNotDrag' onSubmit={this.handleSubmit}>
+
         <Form.Input label='Maximum value for heatmap range (use 0 for auto range)'
           value={this.state.heatmapMaxValue}
           onChange={this.handleMaxValueChange} />
+        <label>Current auto max: {this.props.chartMaxValue}</label>
+        <br/>
 
         <Form.Button type='submit'>OK</Form.Button>
       </Form>
@@ -30,6 +33,7 @@ class HeatmapSettingsModal extends React.PureComponent {
 
 HeatmapSettingsModal.propTypes = {
   heatmapMaxValue: PropTypes.number.isRequired,
+  chartMaxValue: PropTypes.number,
   onNewSettings: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 }

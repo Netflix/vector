@@ -34,9 +34,12 @@ class HeatmapSettingsAndMetricSelectorModal extends React.PureComponent {
   render() {
     return (
       <Form className='doNotDrag' onSubmit={this.handleSubmit}>
+
         <Form.Input label='Maximum value for heatmap range (use 0 for auto range)'
           value={this.state.heatmapMaxValue}
           onChange={this.handleMaxValueChange} />
+        <label>Current auto max: {this.props.chartMaxValue}</label>
+        <br/>
 
         <Form.Group grouped>
           <label>Select metrics</label>
@@ -55,6 +58,7 @@ class HeatmapSettingsAndMetricSelectorModal extends React.PureComponent {
 
 HeatmapSettingsAndMetricSelectorModal.propTypes = {
   heatmapMaxValue: PropTypes.number.isRequired,
+  chartMaxValue: PropTypes.number,
   selectedMetrics: PropTypes.arrayOf(PropTypes.string),
   metricNames: PropTypes.arrayOf(PropTypes.string),
 

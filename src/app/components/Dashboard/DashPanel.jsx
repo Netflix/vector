@@ -24,6 +24,7 @@ class DashPanel extends React.Component {
         <Segment clearing>
           <DashHeader
             chartInfo={this.props.chartInfo}
+            dataset={dataset}
             pmids={this.props.pmids}
             onNewSettings={this.props.onNewSettings}
             onCloseClicked={this.props.onCloseClicked} />
