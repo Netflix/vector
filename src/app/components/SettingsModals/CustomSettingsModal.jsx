@@ -38,7 +38,7 @@ class CustomSettingsModal extends React.PureComponent {
           onChange={this.handleMetricChange}
           options={options} />
 
-        <Form.Checkbox label='Area' checked={this.state.lineType === 'stackedarea'} onChange={this.handleAreaChange} />
+        <Form.Checkbox label='Stacked Area' checked={this.state.lineType === 'stackedarea'} onChange={this.handleAreaChange} />
         <Form.Checkbox label='Cumulative' checked={this.state.cumulative} onChange={this.handleCumulativeChange} />
         <Form.Checkbox label='Converted' checked={this.state.converted} onChange={this.handleConvertedChange} />
 
