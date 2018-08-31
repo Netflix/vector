@@ -37,7 +37,7 @@
   "scripts": {
     "build": "webpack --display-error-details --config webpack.dev.js",
     "build-prod": "webpack --display-error-details --config webpack.prod.js",
-    "test": "jest",
+    "test": "jest --coverage",
     "serve": "http-server-spa dist index.html 3000"
   },
   "devDependencies": {
@@ -79,9 +79,6 @@
     "wrench": "~1.5.8"
   },
   "jest": {
-    "modulePathIgnorePatterns": [
-      "src/_app"
-    ],
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/test/__mocks__/styleMock.js",
       "\\.(gif|ttf|eot|svg)$": "<rootDir>/test/__mocks__/fileMock.js"
@@ -89,6 +86,9 @@
     "transform": {
       "^.+\\.jsx$": "babel-jest",
       "^.+\\.js$": "babel-jest"
-    }
+    },
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ]
   }
 }
