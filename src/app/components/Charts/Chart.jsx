@@ -114,7 +114,7 @@ class Chart extends React.PureComponent {
         areaStyle={d => ({ stroke: this.color(d), fill: this.color(d), fillOpacity: 0.5, strokeWidth: '2px' })}
         lineType={chartInfo.lineType || 'line'}
         defined={d => d.value !== null}
-        margin={{ left: 60, bottom: 30, right: 8, top: 8 }} // magic
+        margin={{ left: 60, bottom: 30, right: 8, top: 8 }}
         xAccessor={d => d.ts}
         yAccessor={d => d.value}
         yExtent={this.yExtent}

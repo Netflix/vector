@@ -1,6 +1,5 @@
 // TODO plenty more tests
 // TODO toast messages when there are issues
-// TODO lots of stuff in the config.js is ignored, clean it up
 // TODO add flame graphs (maybe not?)
 // TODO enable vector to browse and collect cluster and container information from external sources
 // - needs to be pluggable, eg from k8s/titus/etc

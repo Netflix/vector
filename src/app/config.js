@@ -43,9 +43,5 @@ export default {
   disableContainerSelect: false, // Disable container name drop down select
   useCgroupId: false, // Use container cgroup id instead of container name
 
-  // TODO use the below configuration elements
-
-  'containerSelectOverride': true, // Overrides requireContainerFilter widget option
-
   // TODO what about container name resolver
 }

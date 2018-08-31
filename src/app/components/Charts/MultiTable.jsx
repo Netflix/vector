@@ -17,6 +17,7 @@ function createTableRows(dataset) {
     let column = headers.indexOf(metric) // determine which column to set
     rows[instance][column] = data[0].value // set the value at the column
   })
+
   return { headers, tableData: rows }
 }
 
@@ -36,7 +37,8 @@ class MultiTable extends React.PureComponent {
         <Table.Body>
           { tableData.map((row, ridx) =>
             <Table.Row key={`row-${ridx}`}>
-              { row.map((col, cidx) => <Table.Cell key={`row-${ridx}-cell-${cidx}`}>{col}</Table.Cell>) }
+              { row.map((col, cidx) =>
+                <Table.Cell key={`row-${ridx}-cell-${cidx}`}>{col}</Table.Cell>) }
             </Table.Row>
           )}
         </Table.Body>
@@ -48,5 +50,7 @@ class MultiTable extends React.PureComponent {
 MultiTable.propTypes = {
   dataset: PropTypes.array.isRequired,
 }
+
+MultiTable.createTableRows = createTableRows
 
 export default MultiTable

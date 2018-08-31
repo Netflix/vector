@@ -10,6 +10,11 @@ const panelStyle = {
   marginTop: '0px',
 }
 
+function getSelectedContextPmids(contextDatas, selected) {
+  const context = contextDatas.find(cd => matchesTarget(cd.target, selected.target))
+  return contect.pmids || {}
+}
+
 class ConfigPanel extends React.PureComponent {
   state = {}
 
@@ -79,7 +84,9 @@ class ConfigPanel extends React.PureComponent {
           disabled={!this.state.selectedContext}
           charts={this.props.charts}
           onClearCharts={this.handleClearCharts}
-          onAddChart={this.handleAddChart} />
+          onAddChart={this.handleAddChart}
+          selectedPmids={getSelectedContextPmids(
+            this.props.contextData, this.state.selectedContext)} />
 
       </Segment.Group>
     )
@@ -112,5 +119,7 @@ ConfigPanel.propTypes = {
   onRemoveContext: PropTypes.func.isRequired,
   charts: PropTypes.array.isRequired,
 }
+
+ConfigPanel.getSelectedContextPmids = getSelectedContextPmids
 
 export default ConfigPanel
