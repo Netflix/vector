@@ -14,9 +14,9 @@ class ChartSelector extends React.PureComponent {
   handleMenuItemClick = (e, { chart }) => this.props.onAddChart(chart)
 
   enableChart = (chart) => {
-    !this.props.disabled
-      && (this.selectedPmids === 0
-        || chart.metricNames.every(mn => mn in this.selectedPmids))
+    return !this.props.disabled
+      && (!this.props.selectedPmids
+        || (chart.metricNames || []).every(mn => mn in this.props.selectedPmids))
   }
 
   render () {
@@ -42,7 +42,7 @@ class ChartSelector extends React.PureComponent {
 
               <Menu.Item key={`group-${g}-chart${c.title}`}
                 name={c.title}
-                disabled={this.enableChart(c)}
+                disabled={!this.enableChart(c)}
                 onClick={this.handleMenuItemClick}
                 chart={c}>
 

@@ -11,8 +11,10 @@ const panelStyle = {
 }
 
 function getSelectedContextPmids(contextDatas, selected) {
+  if (!selected) return undefined
+
   const context = contextDatas.find(cd => matchesTarget(cd.target, selected.target))
-  return contect.pmids || {}
+  return context && context.pmids
 }
 
 class ConfigPanel extends React.PureComponent {
