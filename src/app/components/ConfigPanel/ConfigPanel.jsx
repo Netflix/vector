@@ -85,8 +85,10 @@ class ConfigPanel extends React.PureComponent {
         <ChartSelector
           disabled={!this.state.selectedContext}
           charts={this.props.charts}
+          bundles={this.props.bundles}
           onClearCharts={this.handleClearCharts}
           onAddChart={this.handleAddChart}
+          onRequestClose={this.props.onRequestClose}
           selectedPmids={getSelectedContextPmids(
             this.props.contextData, this.state.selectedContext)} />
 
@@ -119,7 +121,9 @@ ConfigPanel.propTypes = {
   onAddChartToContext: PropTypes.func.isRequired,
   onClearChartsFromContext: PropTypes.func.isRequired,
   onRemoveContext: PropTypes.func.isRequired,
+  onRequestClose: PropTypes.func.isRequired,
   charts: PropTypes.array.isRequired,
+  bundles: PropTypes.array.isRequired,
 }
 
 ConfigPanel.getSelectedContextPmids = getSelectedContextPmids

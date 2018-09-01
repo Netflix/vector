@@ -8,7 +8,7 @@ import { Menu } from 'semantic-ui-react'
 
 import ChartSelector from './ChartSelector.jsx'
 
-describe('ChartSelector', () => {
+describe.skip('ChartSelector', () => {
   let component
   let props
   const create = () => {

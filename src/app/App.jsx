@@ -36,6 +36,7 @@ import { matchesTarget, getChartsFromQueryString, pushQueryStringToHistory } fro
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import charts from './charts'
+import bundles from './bundles'
 
 const initialChartIdlist = getChartsFromQueryString(location.search)
 const initialTargets = initialChartIdlist.targets
@@ -115,6 +116,7 @@ class App extends React.Component {
   // config panel visibility
   toggleConfigVisible = () => this.setState((state) => ({ configVisible: !state.configVisible }))
   handleSidebarHide = () => this.setState({ configVisible: false })
+  handleRequestClose = () => this.setState({ configVisible: false })
 
   // app config settings
   onWindowSecondsChange = (sec) => this.setState({ windowIntervalMs: sec * 1000 })
@@ -170,10 +172,12 @@ class App extends React.Component {
               <ConfigPanel
                 config={config}
                 charts={charts}
+                bundles={bundles}
                 contextData={this.state.contextData}
                 onNewContext={this.onNewContext}
                 onRemoveContext={this.onRemoveContext}
                 onAddChartToContext={this.onAddChartToContext}
+                onRequestClose={this.handleRequestClose}
                 onClearChartsFromContext={this.onClearChartsFromContext} />
 
             </Sidebar>

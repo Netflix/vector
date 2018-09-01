@@ -160,3 +160,55 @@ describe('onlyLatestValues', () => {
     })
   })
 })
+
+describe('filterAboveMaxInstanceValue', () => {
+  let data = [
+      { metric: 'containercpu', instance: 0, data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+      { metric: 'containercpu', instance: 1, data: [ { ts: new Date(1234), value: 3 } ] },
+      { metric: 'containerram', instance: 2, data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+      { metric: 'containerram', instance: 3, data: [ { ts: new Date(1234), value: 3 } ] },
+  ]
+
+  describe('with no value set', () => {
+    it('returns all values', () => {
+      let filtered = transforms.filterAboveMaxInstanceValue()(data, { chartInfo: {} })
+      expect(filtered.length).to.equal(4)
+      expect(filtered).to.have.deep.members([...data])
+    })
+  })
+
+  describe('with a 0 value set', () => {
+    it('returns all values', () => {
+      let filtered = transforms.filterAboveMaxInstanceValue()(data, { chartInfo: { maxInstanceValue: 0 } })
+      expect(filtered.length).to.equal(4)
+      expect(filtered).to.have.deep.members([...data])
+    })
+  })
+
+  describe('with a middle value set (1)', () => {
+    it('returns values for 1 and below', () => {
+      let filtered = transforms.filterAboveMaxInstanceValue()(data, { chartInfo: { maxInstanceValue: 1 } })
+      expect(filtered.length).to.equal(2)
+      expect(filtered).to.have.deep.members([
+        { metric: 'containercpu', instance: 0, data: [ { ts: new Date(1234), value: 10 }, { ts: new Date(1236), value: 30 } ] },
+        { metric: 'containercpu', instance: 1, data: [ { ts: new Date(1234), value: 3 } ] },
+      ])
+    })
+  })
+
+  describe('with a value on the upper edge', () => {
+    it('returns all values', () => {
+      let filtered = transforms.filterAboveMaxInstanceValue()(data, { chartInfo: { maxInstanceValue: 4 } })
+      expect(filtered.length).to.equal(4)
+      expect(filtered).to.have.deep.members([...data])
+    })
+  })
+
+  describe('with a super high value set', () => {
+    it('returns all values', () => {
+      let filtered = transforms.filterAboveMaxInstanceValue()(data, { chartInfo: { maxInstanceValue: 9999999 } })
+      expect(filtered.length).to.equal(4)
+      expect(filtered).to.have.deep.members([...data])
+    })
+  })
+})

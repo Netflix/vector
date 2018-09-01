@@ -315,3 +315,18 @@ export function onlyLatestValues () {
     }))
   }
 }
+
+/*
+ * Filter out data points that are above the included metric
+ *
+ * Also filter out an entire series if there are no data points that meet it
+ *
+ * @return {function} a transform function
+ */
+export function filterAboveMaxInstanceValue () {
+  return function _filterAboveMaxInstanceValue (metricInstances, { chartInfo }) {
+    return chartInfo.maxInstanceValue
+      ? metricInstances.filter(mi => (mi.instance <= chartInfo.maxInstanceValue))
+      : metricInstances
+  }
+}

@@ -23,13 +23,13 @@ class Dashboard extends React.Component {
 
   render () {
     return (
-      <GridLayout rowHeight={60} cols={gridResponsiveCols} style={gridStyle} className='layout' draggableCancel='.doNotDrag'>
+      <GridLayout rowHeight={40} cols={gridResponsiveCols} style={gridStyle} clazzName='layout' draggableCancel='.doNotDrag'>
 
         { this.props.chartlist.map((c, idx) => {
           const ctxds = (this.props.pausedContextDatasets || this.props.contextDatasets)
             .find(ctxds => matchesTarget(ctxds.target, c.context.target))
           return (
-            <div key={`panel-${idx}`} data-grid={{ x: 0, y: 0, w: 5, h: 6, minW: 3, minH: 3 }} style={{ overflow: 'hidden' }}>
+            <div key={`panel-${idx}`} data-grid={{ x: ((idx % 2) * 5), y: 0, w: 5, h: 9, minW: 3, minH: 3 }} style={{ overflow: 'hidden' }}>
               <DashPanel
                 chartIndex={idx}
                 chartInfo={c}

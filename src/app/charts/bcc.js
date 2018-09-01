@@ -9,12 +9,12 @@ import {
   ceiling,
   cumulativeTransform,
   mathValuesSelective,
+  filterAboveMaxInstanceValue,
 } from '../processors/transforms'
 import MultiTable from '../components/Charts/MultiTable.jsx'
 import SimpleTable from '../components/Charts/SimpleTable.jsx'
 import Heatmap from '../components/Charts/Heatmap.jsx'
 import HeatmapSettingsModal from '../components/SettingsModals/HeatmapSettingsModal.jsx'
-import HeatmapSettingsAndMetricSelectorModal from '../components/SettingsModals/HeatmapSettingsAndMetricSelectorModal.jsx'
 import { thresholds, colors } from '../components/Charts/cividis.js'
 
 export default function _charts(config) {
@@ -34,10 +34,10 @@ export default function _charts(config) {
         cumulativeTransform(),
         ceiling(),
         mapInstanceDomains('yAxisLabels'),
+        filterAboveMaxInstanceValue(),
       ],
       settingsComponent: HeatmapSettingsModal,
       heatmap: { thresholds, colors },
-      heatmapMaxValue: 0,
     },
 
     {
@@ -53,10 +53,10 @@ export default function _charts(config) {
         cumulativeTransform(),
         ceiling(),
         mapInstanceDomains('yAxisLabels'),
+        filterAboveMaxInstanceValue(),
       ],
       settingsComponent: HeatmapSettingsModal,
       heatmap: { thresholds, colors },
-      heatmapMaxValue: 0,
     },
 
     {
@@ -76,10 +76,10 @@ export default function _charts(config) {
         ceiling(),
         filterKeepSelectedMetrics('selectedMetrics'),
         mapInstanceDomains('yAxisLabels'),
+        filterAboveMaxInstanceValue(),
       ],
-      settingsComponent: HeatmapSettingsAndMetricSelectorModal,
+      settingsComponent: HeatmapSettingsModal,
       heatmap: { thresholds, colors },
-      heatmapMaxValue: 0,
       selectedMetrics: [
         'bcc.fs.ext4.latency.open',
         'bcc.fs.ext4.latency.read',
@@ -105,10 +105,10 @@ export default function _charts(config) {
         ceiling(),
         filterKeepSelectedMetrics('selectedMetrics'),
         mapInstanceDomains('yAxisLabels'),
+        filterAboveMaxInstanceValue(),
       ],
-      settingsComponent: HeatmapSettingsAndMetricSelectorModal,
+      settingsComponent: HeatmapSettingsModal,
       heatmap: { thresholds, colors },
-      heatmapMaxValue: 0,
       selectedMetrics: [
         'bcc.fs.xfs.latency.open',
         'bcc.fs.xfs.latency.read',
@@ -134,10 +134,10 @@ export default function _charts(config) {
         ceiling(),
         filterKeepSelectedMetrics('selectedMetrics'),
         mapInstanceDomains('yAxisLabels'),
+        filterAboveMaxInstanceValue(),
       ],
-      settingsComponent: HeatmapSettingsAndMetricSelectorModal,
+      settingsComponent: HeatmapSettingsModal,
       heatmap: { thresholds, colors },
-      heatmapMaxValue: 0,
       selectedMetrics: [
         'bcc.fs.zfs.latency.open',
         'bcc.fs.zfs.latency.read',

@@ -11,7 +11,6 @@ const svgStyle = {
 }
 
 class HeatmapScale extends React.PureComponent {
-
   componentDidMount() {
     this.createHeatmap()
   }

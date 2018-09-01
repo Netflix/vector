@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Modal, Popup, Button } from 'semantic-ui-react'
-import { getLargestValueInDataset } from '../../processors/modelUtils'
 
 const closeButton = {
   // add some space beside the x button so it is harder to accidentally click
@@ -33,7 +32,6 @@ class DashHeader extends React.PureComponent {
     const HelpComponent = this.props.chartInfo.helpComponent
     const SettingsComponent = this.props.chartInfo.settingsComponent
     const chartInfo = this.props.chartInfo
-    const chartMaxValue = getLargestValueInDataset(this.props.dataset)
 
     return (
       <div>
@@ -63,8 +61,13 @@ class DashHeader extends React.PureComponent {
           <Modal dimmer='inverted' open={this.state.modalOpen} onClose={this.handleCloseSettings} trigger={
             <Button className='doNotDrag' circular size='tiny' basic icon='setting' floated='right' onClick={this.handleSettingsIcon} /> } >
             <Modal.Content>
-              <SettingsComponent {...chartInfo} pmids={this.props.pmids} onNewSettings={this.handleNewSettings} onClose={this.handleCloseSettings}
-                chartMaxValue={chartMaxValue} />
+
+              <SettingsComponent {...chartInfo}
+                pmids={this.props.pmids}
+                onNewSettings={this.handleNewSettings}
+                onClose={this.handleCloseSettings}
+                dataset={this.props.dataset} />
+
             </Modal.Content>
           </Modal> }
 

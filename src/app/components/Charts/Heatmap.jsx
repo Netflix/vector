@@ -36,9 +36,7 @@ function extractHeatmapValuesFromDataset(dataset, yAxisLabels) {
 
 function determineThresholds(chartInfo, dataset) {
   // works because input thresholds are ranged [0,1], so we can just multiply out
-  const scaleFactor = chartInfo.heatmapMaxValue === 0
-    ? getLargestValueInDataset(dataset) || 1
-    : chartInfo.heatmapMaxValue
+  const scaleFactor = chartInfo.heatmapMaxValue || getLargestValueInDataset(dataset) || 1
   const thresholds = chartInfo.heatmap.thresholds.map(v => v * scaleFactor)
 
   // but we need to put the first value back to ensure the 0/1 transition works cleanly

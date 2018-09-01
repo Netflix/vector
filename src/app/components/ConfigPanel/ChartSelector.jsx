@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Icon, Menu, Popup } from 'semantic-ui-react'
+import { Button, Segment, Icon, Menu, Popup } from 'semantic-ui-react'
 
 import { flatten, uniqueFilter } from '../../utils'
 
@@ -9,9 +9,22 @@ const chartSelectorStyle = {
   marginTop: '0px',
 }
 
+// TODO add a search widget
 class ChartSelector extends React.PureComponent {
+  state = {
+    activeTab: 'simple',
+  }
+
   handleClearMenuClick = () => this.props.onClearCharts()
   handleMenuItemClick = (e, { chart }) => this.props.onAddChart(chart)
+  handleTabClick = (e, { name }) => this.setState({ activeTab: name })
+  handleSimpleButtonClick = (e, { bundle }) => {
+    // all we have to do is look up all the matching charts and then add them
+    bundle.chartIds
+      .map(chartId => this.props.charts.find(c => chartId === c.chartId))
+      .forEach(chart => this.props.onAddChart(chart))
+    this.props.onRequestClose()
+  }
 
   enableChart = (chart) => {
     return !this.props.disabled
@@ -25,40 +38,68 @@ class ChartSelector extends React.PureComponent {
       .reduce(flatten, [])
       .filter(uniqueFilter)
 
-    return (
-      <Menu size='tiny' borderless fluid style={chartSelectorStyle}>
+    const { activeTab } = this.state
+    const { bundles } = this.props
 
-        <div>
-          <Menu.Item header>Charts</Menu.Item>
-          <Menu.Item content='Clear charts'
-            onClick={this.handleClearMenuClick}
-            disabled={this.props.disabled}/>
-        </div>
-
-        { groupNames.map(g => (
-          <div key={`group-${g}`}>
-            <Menu.Item header>{g}</Menu.Item>
-            { this.props.charts.filter(c => c.group === g).map(c => (
-
-              <Menu.Item key={`group-${g}-chart${c.title}`}
-                name={c.title}
-                disabled={!this.enableChart(c)}
-                onClick={this.handleMenuItemClick}
-                chart={c}>
-
-                { c.title }
-                { c.tooltipText &&
-                    <Popup content={c.tooltipText} trigger={<Icon name='help circle' />} />
-                }
-
-              </Menu.Item>
-
-            ))}
-          </div>
-        )) }
-
+    return (<div>
+      <Menu attached='top' tabular>
+        <Menu.Item name='simple' active={activeTab === 'simple'} onClick={this.handleTabClick} />
+        <Menu.Item name='complex' active={activeTab === 'complex'} onClick={this.handleTabClick} />
       </Menu>
-    )
+
+      { activeTab === 'simple' &&
+        <Segment attached='bottom'>
+
+          <Button size='massive' icon='remove' content='Clear'
+            disabled={this.props.disabled}
+            onClick={this.handleClearMenuClick}/>
+
+          { bundles.map(b => (
+            <Popup key={b.name} content={b.description} position='bottom center' trigger={
+              <Button
+                size='massive' icon={b.iconName} content={b.name}
+                bundle={b}
+                disabled={this.props.disabled}
+                onClick={this.handleSimpleButtonClick}/>} />
+          ))}
+
+        </Segment>
+      }
+
+      { activeTab === 'complex' &&
+        <Menu attached='bottom' size='tiny' borderless fluid style={chartSelectorStyle}>
+          <div>
+            <Menu.Item header>Charts</Menu.Item>
+            <Menu.Item content='Clear charts'
+              onClick={this.handleClearMenuClick}
+              disabled={this.props.disabled}/>
+          </div>
+
+          { groupNames.map(g => (
+            <div key={`group-${g}`}>
+              <Menu.Item header>{g}</Menu.Item>
+              { this.props.charts.filter(c => c.group === g).map(c => (
+
+                <Menu.Item key={`group-${g}-chart${c.title}`}
+                  name={c.title}
+                  disabled={!this.enableChart(c)}
+                  onClick={this.handleMenuItemClick}
+                  chart={c}>
+
+                  { c.title }
+                  { c.tooltipText &&
+                      <Popup content={c.tooltipText} trigger={<Icon name='help circle' />} />
+                  }
+
+                </Menu.Item>
+
+              ))}
+            </div>
+          )) }
+
+        </Menu>
+      }
+    </div>)
   }
 }
 
@@ -68,8 +109,10 @@ ChartSelector.defaultProps = {
 
 ChartSelector.propTypes = {
   charts: PropTypes.array.isRequired,
+  bundles: PropTypes.array.isRequired,
   onClearCharts: PropTypes.func.isRequired,
   onAddChart: PropTypes.func.isRequired,
+  onRequestClose: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   selectedPmids: PropTypes.object,
 }
