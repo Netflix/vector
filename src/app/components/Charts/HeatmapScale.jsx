@@ -19,8 +19,10 @@ class HeatmapScale extends React.PureComponent {
     this.createHeatmap()
   }
 
+  setNode = (node) => this.node = node
+
   render () {
-    return <svg ref={node => this.node = node} style={svgStyle} viewBox='-30 0 800 70' />
+    return <svg ref={this.setNode} style={svgStyle} viewBox='-30 0 800 70' />
   }
 
   filterLabels = ({ i, genLength, generatedLabels }) => {
