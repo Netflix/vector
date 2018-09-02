@@ -44,7 +44,7 @@ class ChartSelector extends React.PureComponent {
     return (<div>
       <Menu attached='top' tabular>
         <Menu.Item name='simple' active={activeTab === 'simple'} onClick={this.handleTabClick} />
-        <Menu.Item name='complex' active={activeTab === 'complex'} onClick={this.handleTabClick} />
+        <Menu.Item name='custom' active={activeTab === 'custom'} onClick={this.handleTabClick} />
       </Menu>
 
       { activeTab === 'simple' &&
@@ -66,7 +66,7 @@ class ChartSelector extends React.PureComponent {
         </Segment>
       }
 
-      { activeTab === 'complex' &&
+      { activeTab === 'custom' &&
         <Menu attached='bottom' size='tiny' borderless fluid style={chartSelectorStyle}>
           <div>
             <Menu.Item header>Charts</Menu.Item>
