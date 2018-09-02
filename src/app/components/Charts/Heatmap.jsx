@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { ResponsiveXYFrame } from "semiotic"
 import moment from 'moment'
 import { scaleThreshold } from 'd3-scale'
+import isEqual from 'lodash.isequal'
+import memoizeOne from 'memoize-one'
 
 import { uniqueFilter } from '../../utils'
 import { getLargestValueInDataset } from '../../processors/modelUtils'
@@ -30,6 +32,16 @@ function extractHeatmapValuesFromDataset(dataset, yAxisLabels) {
   return values
 }
 
+
+function createScale(thresholds, colors) {
+  return scaleThreshold()
+    .domain(thresholds)
+    .range(colors)
+}
+
+// cache the scale; avoid unnecessary redrawing the heatmap which is actually quite expensive
+const memoizedCreateScale = memoizeOne(createScale, isEqual)
+
 function determineThresholds(chartInfo, dataset) {
   // works because input thresholds are ranged [0,1], so we can just multiply out
   const scaleFactor = chartInfo.heatmapMaxValue || getLargestValueInDataset(dataset) || 1
@@ -39,9 +51,7 @@ function determineThresholds(chartInfo, dataset) {
   // TODO potentially a bug here for super large heatmapMaxValues?
   thresholds[0] = chartInfo.heatmap.thresholds[0]
 
-  return scaleThreshold()
-    .domain(thresholds)
-    .range(chartInfo.heatmap.colors)
+  return memoizedCreateScale(thresholds, chartInfo.heatmap.colors)
 }
 
 class Heatmap extends React.PureComponent {
