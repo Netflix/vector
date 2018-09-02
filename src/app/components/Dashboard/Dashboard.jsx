@@ -10,7 +10,7 @@ import { matchesTarget } from '../../utils'
 
 const GridLayout = WidthProvider(Responsive)
 
-const gridResponsiveCols = { lg: 12, sm: 6 }
+const gridResponsiveCols = { lg: 12, md: 10, sm: 8, xs: 6 }
 const gridStyle = { paddingLeft: '15px' }
 
 class Dashboard extends React.Component {
