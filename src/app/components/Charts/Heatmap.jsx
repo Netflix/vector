@@ -18,13 +18,9 @@ const tooltipContentStyle = {
 // collapse dataset into a single stream as this is what the xyframe heatmap view requires
 function extractHeatmapValuesFromDataset(dataset, yAxisLabels) {
   const values = []
-  const summary = []
   if (dataset) {
     for (let d of dataset) {
       for (let tsv of d.data) {
-        if (tsv.value > 0) {
-          summary.push({ ts: tsv.ts, value: d.instance, label: yAxisLabels[d.instance] || '?', weight: tsv.value })
-        }
         for (let weight = 0; weight < tsv.value; weight++) {
           values.push({ ts: tsv.ts, value: d.instance, label: yAxisLabels[d.instance] || '?' })
         }
@@ -67,6 +63,7 @@ class Heatmap extends React.PureComponent {
         responsiveHeight={true}
         areas={[{ coordinates: heatmapValues }]}
         areaType={{ type: 'heatmap', xBins: dataset[0].data.length, yBins: yAxisLookup.length }}
+        useAreasAsInteractionLayer={true}
         xAccessor={d => d.ts}
         yAccessor={d => d.value}
         areaStyle={d => ({
@@ -95,7 +92,7 @@ class Heatmap extends React.PureComponent {
             ticks: 4,
           }
         ]}
-        baseMarkProps={{ transitionDuration: { default: 10 } }} />
+        baseMarkProps={{ forceUpdate: true }} />
     </div>)
   }
 }
