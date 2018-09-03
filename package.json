@@ -69,7 +69,6 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^23.3.0",
     "less": "^3.0.4",
-    "node-sass": "^4.9.1",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "uglify-save-license": "~0.4.1",
