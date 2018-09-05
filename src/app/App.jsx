@@ -54,7 +54,7 @@ class App extends React.Component {
     contextData: [],
     contextDatasets: [],
     targets: this.props.initialTargets,
-    configVisible: false,
+    configVisible: this.props.initialConfigPanelOpen,
     pausedData: null,
   }
 
@@ -115,7 +115,6 @@ class App extends React.Component {
 
   // config panel visibility
   toggleConfigVisible = () => this.setState((state) => ({ configVisible: !state.configVisible }))
-  handleSidebarHide = () => this.setState({ configVisible: false })
   handleRequestClose = () => this.setState({ configVisible: false })
 
   // app config settings
@@ -164,10 +163,9 @@ class App extends React.Component {
 
           <Sidebar.Pushable style={{ minHeight: '100vh' }}>
             <Sidebar
-              animation='overlay'
+              animation='push' // push > scale down > overlay > slide along > uncover
               direction='top'
-              visible={isConfigPanelOpen}
-              onHide={this.handleSidebarHide} >
+              visible={isConfigPanelOpen} >
 
               <ConfigPanel
                 config={config}
@@ -178,6 +176,7 @@ class App extends React.Component {
                 onRemoveContext={this.onRemoveContext}
                 onAddChartToContext={this.onAddChartToContext}
                 onRequestClose={this.handleRequestClose}
+                initialAddContext={this.props.initialConfigPanelOpen && this.props.initialAddContext}
                 onClearChartsFromContext={this.onClearChartsFromContext} />
 
             </Sidebar>
@@ -207,6 +206,8 @@ App.propTypes = {
   embed: PropTypes.bool.isRequired,
   initialTargets: PropTypes.array.isRequired,
   initialChartlist: PropTypes.array.isRequired,
+  initialConfigPanelOpen: PropTypes.bool.isRequired,
+  initialAddContext: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 }
 
@@ -215,12 +216,16 @@ class PageRouter extends React.Component {
     <App embed={true}
       initialTargets={initialTargets}
       initialChartlist={initialChartlist}
+      initialConfigPanelOpen={false}
+      initialAddContext={false}
       history={props.history} />
 
   AppNormal = (props) =>
     <App embed={false}
       initialTargets={initialTargets}
       initialChartlist={initialChartlist}
+      initialConfigPanelOpen={initialChartlist.length === 0}
+      initialAddContext={initialTargets.length === 0}
       history={props.history} />
 
   render () {

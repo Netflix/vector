@@ -8,7 +8,7 @@ import { fetchContainerList } from '../../utils'
 
 class AddContextModal extends React.PureComponent {
   state = {
-    modalOpen: false,
+    modalOpen: !!this.props.initiallyOpen,
     containerDropdownOptions: [
       { text: 'N/A', value: '_all' }
     ],
@@ -98,6 +98,7 @@ AddContextModal.propTypes = {
   disableContainerSelect: PropTypes.bool.isRequired,
   useCgroupId: PropTypes.bool.isRequired,
   render: PropTypes.func.isRequired,
+  initiallyOpen: PropTypes.bool,
 }
 
 export default AddContextModal

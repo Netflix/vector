@@ -99,6 +99,7 @@ class ContextMenu extends React.PureComponent {
             disableHostspecInput={this.props.config.disableHostspecInput}
             disableContainerSelect={this.props.config.disableContainerSelect}
             useCgroupId={this.props.config.useCgroupId}
+            initiallyOpen={this.props.initialAddContext}
             render={this.addContextButton} />
 
         </Menu.Item>
@@ -121,6 +122,7 @@ ContextMenu.propTypes = {
   onNewContext: PropTypes.func.isRequired,
   onRemoveContext: PropTypes.func.isRequired,
   selectedContext: PropTypes.object,
+  initialAddContext: PropTypes.bool,
 }
 
 export default ContextMenu

@@ -80,6 +80,7 @@ class ConfigPanel extends React.PureComponent {
           selectedContext={this.state.selectedContext}
           onContextSelect={this.handleContextSelect}
           onNewContext={this.handleNewContext}
+          initialAddContext={this.props.initialAddContext}
           onRemoveContext={this.handleRemoveContext} />
 
         <ChartSelector
@@ -124,6 +125,7 @@ ConfigPanel.propTypes = {
   onRequestClose: PropTypes.func.isRequired,
   charts: PropTypes.array.isRequired,
   bundles: PropTypes.array.isRequired,
+  initialAddContext: PropTypes.bool.isRequired,
 }
 
 ConfigPanel.getSelectedContextPmids = getSelectedContextPmids
