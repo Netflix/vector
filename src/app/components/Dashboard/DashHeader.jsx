@@ -35,7 +35,7 @@ class DashHeader extends React.PureComponent {
 
     return (
       <div>
-        { this.props.chartInfo.title }<br/>
+        { this.props.chartInfo.group + ': ' + this.props.chartInfo.title }<br/>
         { this.chartSubtitle(chartInfo) }
 
         { /* these show up in reverse order since they are all floated right */ }

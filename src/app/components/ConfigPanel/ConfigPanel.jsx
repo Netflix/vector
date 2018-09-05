@@ -86,6 +86,7 @@ class ConfigPanel extends React.PureComponent {
         <ChartSelector
           disabled={!this.state.selectedContext}
           charts={this.props.charts}
+          selectedTarget={this.state.selectedContext && this.state.selectedContext.target}
           bundles={this.props.bundles}
           onClearCharts={this.handleClearCharts}
           onAddChart={this.handleAddChart}

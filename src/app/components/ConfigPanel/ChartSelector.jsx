@@ -48,13 +48,13 @@ class ChartSelector extends React.PureComponent {
   }
 
   render () {
-    let groupNames = (this.props.charts || [])
+    const groupNames = (this.props.charts || [])
       .map(chart => chart.group)
       .reduce(flatten, [])
       .filter(uniqueFilter)
 
     const { activeTab } = this.state
-    const { bundles } = this.props
+    const { charts, bundles, selectedTarget, disabled } = this.props
 
     return (<div>
       <Menu attached='top' tabular>
@@ -66,7 +66,7 @@ class ChartSelector extends React.PureComponent {
         <Segment attached='bottom'>
 
           <Button size='massive' icon='remove' content='Clear'
-            disabled={this.props.disabled}
+            disabled={disabled}
             onClick={this.handleClearMenuClick}/>
 
           { bundles.map(b => (
@@ -74,7 +74,7 @@ class ChartSelector extends React.PureComponent {
               <Button
                 size='massive' icon={b.iconName} content={b.name}
                 bundle={b}
-                disabled={this.props.disabled}
+                disabled={disabled || selectedTarget && !b.shouldEnable(selectedTarget)}
                 onClick={this.handleSimpleButtonClick}/>} />
           ))}
 
@@ -87,13 +87,13 @@ class ChartSelector extends React.PureComponent {
             <Menu.Item header>Charts</Menu.Item>
             <Menu.Item content='Clear charts'
               onClick={this.handleClearMenuClick}
-              disabled={this.props.disabled}/>
+              disabled={disabled}/>
           </div>
 
           { groupNames.map(g => (
             <div key={`group-${g}`}>
               <Menu.Item header>{g}</Menu.Item>
-              { this.props.charts.filter(c => c.group === g).map(c => (
+              { charts.filter(c => c.group === g).map(c => (
 
                 <Menu.Item key={`group-${g}-chart${c.title}`}
                   name={c.title}
@@ -130,6 +130,7 @@ ChartSelector.propTypes = {
   onRequestClose: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   selectedPmids: PropTypes.object,
+  selectedTarget: PropTypes.object,
 }
 
 export default ChartSelector

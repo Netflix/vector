@@ -36,6 +36,7 @@ export default {
   enableContainerWidgets: true, // Enable container widgets
   enableCustomWidgetFeature: true, // Enable the custom widget feature to add ad-hoc widgets
   enableBcc: true, // Enable BCC widgets (requires BCC PMDA)
+  enableFlamegraphs: true, // Enable Flamegraph widgets (requires custom PMDA)
 
   defaultPort: 7402, // PMWEBD port
   defaultHostspec: 'localhost', // Default PMCD hostspec
