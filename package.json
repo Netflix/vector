@@ -28,7 +28,7 @@
     "react-router-dom": "^4.3.1",
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-react": "^0.82.0",
-    "semiotic": "^1.13.8",
+    "semiotic": "^1.14.2",
     "superagent": "^3.8.3",
     "webpack-merge": "^4.1.4",
     "why-did-you-update": "^0.1.1"
