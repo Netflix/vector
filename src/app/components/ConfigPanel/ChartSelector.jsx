@@ -29,9 +29,14 @@ class ChartSelector extends React.PureComponent {
   handleMenuItemClick = (e, { chart }) => this.props.onAddChart(chart)
   handleTabClick = (e, { name }) => this.setState({ activeTab: name })
   handleSimpleButtonClick = (e, { bundle }) => {
-    // all we have to do is look up all the matching charts and then add them
-    bundle.chartIds
-      .map(chartId => this.props.charts.find(c => chartId === c.chartId))
+    bundle.chartTemplates
+      // pull all the properties from the default chart entry by chartId
+      // and override with any values from our custom template
+      .map(template => ({
+        ...this.props.charts.find(c => template.chartId === c.chartId),
+        ...template,
+      }))
+      // and then add the charts
       .forEach(chart => this.props.onAddChart(chart))
     this.props.onRequestClose()
   }

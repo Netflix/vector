@@ -3,19 +3,39 @@ const bundles = [
     name: 'Utilisation',
     iconName: 'computer',
     description: 'Quick overview of system utilization',
-    chartIds: [ 'cpu-utilization', 'disk-latency', 'memory-utilization', 'network-throughput' ],
+    chartTemplates: [
+      { chartId: 'cpu-utilization' },
+      { chartId: 'disk-latency' },
+      { chartId: 'memory-utilization' },
+      { chartId: 'network-throughput' },
+    ]
   },
   {
     name: 'Disk',
     iconName: 'disk',
     description: 'Key disk metrics',
-    chartIds: [ 'disk-iops', 'disk-latency', 'disk-throughput', 'disk-utilization' ],
+    chartTemplates: [
+      { chartId: 'disk-iops' },
+      { chartId: 'disk-latency' },
+      { chartId: 'disk-throughput' },
+      { chartId: 'disk-utilization' }
+    ],
   },
   {
     name: 'BCC demo',
-    iconName: undefined,
+    iconName: 'magnify',
     description: 'BCC view of the world',
-    chartIds: [ 'bcc-biolatency', 'bcc-runqlat', 'bcc-tcptop', 'bcc-tracepoint-hits', 'bcc-usdt-hits' ],
+    chartTemplates: [
+      {
+        chartId: 'text-label',
+        content: 'The default BCC widgets. To enable more widgets, on the target host, check the BCC PMDA configuration file and run ./Install to reload',
+      },
+      { chartId: 'bcc-tcptop' },
+      { chartId: 'bcc-runqlat' },
+      { chartId: 'bcc-biolatency' },
+      { chartId: 'bcc-tracepoint-hits' },
+      { chartId: 'bcc-usdt-hits' },
+    ]
   }
 ]
 
