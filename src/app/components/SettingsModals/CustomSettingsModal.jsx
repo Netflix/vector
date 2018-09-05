@@ -5,7 +5,7 @@ import memoizeOne from 'memoize-one'
 
 import { Form } from 'semantic-ui-react'
 
-class CustomSettingsModal extends React.PureComponent {
+class CustomChartSettingsModal extends React.PureComponent {
   state = {
     metricNames: this.props.metricNames,
     yTickFormat: this.props.yTickFormat,
@@ -66,7 +66,7 @@ class CustomSettingsModal extends React.PureComponent {
   }
 }
 
-CustomSettingsModal.propTypes = {
+CustomChartSettingsModal.propTypes = {
   pmids: PropTypes.object.isRequired,
 
   metricNames: PropTypes.array.isRequired,
@@ -80,4 +80,4 @@ CustomSettingsModal.propTypes = {
   onClose: PropTypes.func.isRequired,
 }
 
-export default CustomSettingsModal
+export default CustomChartSettingsModal

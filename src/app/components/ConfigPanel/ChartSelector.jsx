@@ -9,6 +9,16 @@ const chartSelectorStyle = {
   marginTop: '0px',
 }
 
+const iconStyle = {
+  float: 'right',
+}
+
+const titleLinkStyle = {
+  marginBottom: '0px',
+  width: '100%',
+  display: 'block'
+}
+
 // TODO add a search widget
 class ChartSelector extends React.PureComponent {
   state = {
@@ -86,9 +96,9 @@ class ChartSelector extends React.PureComponent {
                   onClick={this.handleMenuItemClick}
                   chart={c}>
 
-                  { c.title }
+                  <p style={titleLinkStyle}>{ c.title }</p>
                   { c.tooltipText &&
-                      <Popup content={c.tooltipText} trigger={<Icon name='help circle' />} />
+                      <Popup content={c.tooltipText} trigger={<Icon name='help circle' style={iconStyle}/>} />
                   }
 
                 </Menu.Item>

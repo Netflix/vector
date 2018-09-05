@@ -24,7 +24,8 @@ export default function _charts(config) {
     {
       chartId: 'bcc-biolatency',
       group: 'BCC/BPF',
-      title: 'BCC biolatency (block device I/O latency)',
+      title: 'biolatency',
+      tooltipText: 'block device I/O latency heatmap',
       processor: simpleModel,
       visualisation: Heatmap,
       metricNames: [
@@ -43,7 +44,8 @@ export default function _charts(config) {
     {
       chartId: 'bcc-runqlat',
       group: 'BCC/BPF',
-      title: 'BCC runqlat (run queue latency)',
+      title: 'runqlat',
+      tooltipText: 'run queue latency heatmap',
       processor: simpleModel,
       visualisation: Heatmap,
       metricNames: [
@@ -62,7 +64,8 @@ export default function _charts(config) {
     {
       chartId: 'bcc-ext4lat',
       group: 'BCC/BPF',
-      title: 'BCC ext4dist (ext4 operation latencies)',
+      title: 'ext4dist',
+      tooltipText: 'ext4 operation latencies (open, read, write, fsync)',
       processor: simpleModel,
       visualisation: Heatmap,
       metricNames: [
@@ -91,7 +94,8 @@ export default function _charts(config) {
     {
       chartId: 'bcc-xfslat',
       group: 'BCC/BPF',
-      title: 'BCC xfsdist (xfs operation latencies)',
+      title: 'xfsdist',
+      tooltipText: 'xfs operation latencies (open, read, write, fsync)',
       processor: simpleModel,
       visualisation: Heatmap,
       metricNames: [
@@ -120,7 +124,8 @@ export default function _charts(config) {
     {
       chartId: 'bcc-zfslat',
       group: 'BCC/BPF',
-      title: 'BCC zfsdist (zfs operation latencies)',
+      title: 'zfsdist',
+      tooltipText: 'zfs operation latencies (open, read, write, fsync)',
       processor: simpleModel,
       visualisation: Heatmap,
       metricNames: [
@@ -149,7 +154,8 @@ export default function _charts(config) {
     {
       chartId: 'bcc-tcplife',
       group: 'BCC/BPF',
-      title: 'BCC tcplife (TCP sessions)',
+      title: 'tcplife',
+      tooltipText: 'TCP session life and data rates',
       processor: simpleModel,
       visualisation: MultiTable,
       metricNames: [
@@ -185,7 +191,8 @@ export default function _charts(config) {
     {
       chartId: 'bcc-execsnoop',
       group: 'BCC/BPF',
-      title: 'BCC execsnoop (traces new processes)',
+      title: 'execsnoop',
+      tooltipText: 'trace new process launches',
       processor: simpleModel,
       visualisation: MultiTable,
       metricNames: [
@@ -210,7 +217,8 @@ export default function _charts(config) {
     {
       chartId: 'bcc-tcpretrans',
       group: 'BCC/BPF',
-      title: 'BCC tcpretrans (counts TCP retransmits)',
+      title: 'tcpretrans',
+      tooltipText: 'TCP retransmit counts',
       processor: simpleModel,
       visualisation: SimpleTable,
       metricNames: [
@@ -227,7 +235,8 @@ export default function _charts(config) {
     {
       chartId: 'bcc-biotop',
       group: 'BCC/BPF',
-      title: 'BCC biotop (block device I/O top)',
+      title: 'biotop',
+      tooltipText: 'block device I/O "top"',
       processor: simpleModel,
       visualisation: MultiTable,
       metricNames: [
@@ -263,7 +272,8 @@ export default function _charts(config) {
     {
       chartId: 'bcc-tcptop',
       group: 'BCC/BPF',
-      title: 'BCC tcptop (tcp throughput)',
+      title: 'tcptop',
+      tooltipText: 'tcp throughput "top"',
       processor: simpleModel,
       visualisation: MultiTable,
       metricNames: [
@@ -296,7 +306,8 @@ export default function _charts(config) {
     {
       chartId: 'bcc-tracepoint-hits',
       group: 'BCC/BPF',
-      title: 'BCC tracepoint hits (kernel tracepoint hit counts)',
+      title: 'tracepoint hits',
+      tooltipText: 'kernel tracepoint hit counts',
       processor: simpleModel,
       visualisation: SimpleTable,
       metricNames: [
@@ -312,7 +323,8 @@ export default function _charts(config) {
     {
       chartId: 'bcc-usdt-hits',
       group: 'BCC/BPF',
-      title: 'BCC USDT hits (kernel tracepoint hit counts)',
+      title: 'USDT hits',
+      tooltipText: 'user-level statically defined tracepoint hit counts',
       processor: simpleModel,
       visualisation: SimpleTable,
       metricNames: [
@@ -328,7 +340,8 @@ export default function _charts(config) {
     {
       chartId: 'bcc-uprobe-hits',
       group: 'BCC/BPF',
-      title: 'BCC uprobe hits (uprobe hit count)',
+      title: 'uprobe hits',
+      tooltipText: 'uprobe hit counts',
       processor: simpleModel,
       visualisation: SimpleTable,
       metricNames: [
