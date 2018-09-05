@@ -29,7 +29,7 @@ class Dashboard extends React.Component {
           const ctxds = (this.props.pausedContextDatasets || this.props.contextDatasets)
             .find(ctxds => matchesTarget(ctxds.target, c.context.target))
           return (
-            <div key={`panel-${idx}`} data-grid={{ x: ((idx % 2) * 5), y: 0, w: 5, h: 9, minW: 3, minH: 3 }} style={{ overflow: 'hidden' }}>
+            <div key={`panel-${c.chartId}`} data-grid={{ x: ((idx % 2) * 5), y: 0, w: 5, h: 9, minW: 3, minH: 3 }} style={{ overflow: 'hidden' }}>
               <DashPanel
                 chartIndex={idx}
                 chartInfo={c}
