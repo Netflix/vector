@@ -1,7 +1,16 @@
-import nullModel from '../processors/nullModel'
+import simpleModel from '../processors/simpleModel'
 import Flamegraph from '../components/Charts/Flamegraph.jsx'
+import { onlyLatestValues } from '../processors/transforms'
 
-import FlamegraphHelp from '../help/Flamegraph.jsx'
+import CpuFlamegraphHelp from '../help/CpuFlamegraphHelp.jsx'
+import PackagenameCpuFlamegraphHelp from '../help/PackagenameCpuFlamegraphHelp.jsx'
+import UninlinedCpuFlamegraphHelp from '../help/UninlinedCpuFlamegraphHelp.jsx'
+import PagefaultFlamegraphHelp from '../help/PagefaultFlamegraphHelp.jsx'
+import DiskioFlamegraphHelp from '../help/DiskioFlamegraphHelp.jsx'
+import IpcFlamegraphHelp from '../help/IpcFlamegraphHelp.jsx'
+import CswFlamegraphHelp from '../help/CswFlamegraphHelp.jsx'
+import OffcpuFlamegraphHelp from '../help/OffcpuFlamegraphHelp.jsx'
+import OffwakeFlamegraphHelp from '../help/OffwakeFlamegraphHelp.jsx'
 
 export default function _charts(config) {
   if (!config.enableFlamegraphs) return []
@@ -11,16 +20,156 @@ export default function _charts(config) {
       chartId: 'fg-cpu',
       group: 'Flamegraphs',
       title: 'CPU',
-      helpComponent: FlamegraphHelp,
+      helpComponent: CpuFlamegraphHelp,
       tooltipText: 'Flamegraph of process time on CPU',
-      processor: nullModel,
+      isContainerAware: true,
+      processor: simpleModel,
       visualisation: Flamegraph,
       metricNames: [
-        // does not fetch via model, but use to enable/disable
         'vector.task.cpuflamegraph',
       ],
       transforms: [
+        onlyLatestValues(),
       ],
+    },
+
+    {
+      chartId: 'fg-pname-cpu',
+      group: 'Flamegraphs',
+      title: 'Package name CPU',
+      helpComponent: PackagenameCpuFlamegraphHelp,
+      tooltipText: 'Flamegraph of process time on CPU, collapsed Java frames to package level',
+      isContainerAware: true,
+      processor: simpleModel,
+      visualisation: Flamegraph,
+      metricNames: [
+        'vector.task.pnamecpuflamegraph',
+      ],
+      transforms: [
+        onlyLatestValues(),
+      ],
+    },
+
+    {
+      chartId: 'fg-uninlined-cpu',
+      group: 'Flamegraphs',
+      title: 'Uninlined CPU',
+      helpComponent: UninlinedCpuFlamegraphHelp,
+      tooltipText: 'Flamegraph of process time on CPU, without inlining',
+      isContainerAware: true,
+      processor: simpleModel,
+      visualisation: Flamegraph,
+      metricNames: [
+        'vector.task.uninlinedcpuflamegraph',
+      ],
+      transforms: [
+        onlyLatestValues(),
+      ],
+    },
+
+    {
+      chartId: 'fg-pagefault',
+      group: 'Flamegraphs',
+      title: 'Page faults',
+      helpComponent: PagefaultFlamegraphHelp,
+      tooltipText: 'Show call stacks on CPU during page faults',
+      isContainerAware: true,
+      processor: simpleModel,
+      visualisation: Flamegraph,
+      metricNames: [
+        'vector.task.pagefaultflamegraph',
+      ],
+      transforms: [
+        onlyLatestValues(),
+      ],
+    },
+
+    {
+      chartId: 'fg-diskio',
+      group: 'Flamegraphs',
+      title: 'Disk I/O',
+      helpComponent: DiskioFlamegraphHelp,
+      tooltipText: 'Show disk I/O',
+      isContainerAware: true,
+      processor: simpleModel,
+      visualisation: Flamegraph,
+      metricNames: [
+        'vector.task.diskioflamegraph',
+      ],
+      transforms: [
+        onlyLatestValues(),
+      ],
+    },
+
+    {
+      chartId: 'fg-ipc',
+      group: 'Flamegraphs',
+      title: 'IPC',
+      helpComponent: IpcFlamegraphHelp,
+      tooltipText: 'Inter-process call flame graph',
+      isContainerAware: true,
+      processor: simpleModel,
+      visualisation: Flamegraph,
+      metricNames: [
+        'vector.task.ipcflamegraph',
+      ],
+      transforms: [
+        onlyLatestValues(),
+      ],
+    },
+
+    {
+      chartId: 'fg-csw',
+      group: 'Flamegraphs',
+      title: 'CSW',
+      helpComponent: CswFlamegraphHelp,
+      tooltipText: 'Context switch flame graph',
+      isContainerAware: true,
+      processor: simpleModel,
+      visualisation: Flamegraph,
+      metricNames: [
+        'vector.task.cswflamegraph',
+      ],
+      transforms: [
+        onlyLatestValues(),
+      ],
+      isHighOverhead: true,
+    },
+
+    {
+      chartId: 'fg-offcpu',
+      group: 'Flamegraphs',
+      title: 'Off CPU time',
+      helpComponent: OffcpuFlamegraphHelp,
+      tooltipText: 'Off CPU time flame graph',
+      isContainerAware: true,
+      processor: simpleModel,
+      visualisation: Flamegraph,
+      metricNames: [
+        'vector.task.offcpuflamegraph',
+      ],
+      transforms: [
+        onlyLatestValues(),
+      ],
+      isHighOverhead: true,
+    },
+
+    {
+      chartId: 'fg-offwake',
+      group: 'Flamegraphs',
+      title: 'Off wake time',
+      helpComponent: OffwakeFlamegraphHelp,
+      tooltipText: 'Off wake time flame graph',
+      isContainerAware: true,
+      processor: simpleModel,
+      visualisation: Flamegraph,
+      metricNames: [
+        'vector.task.offwakeflamegraph',
+      ],
+      transforms: [
+        onlyLatestValues(),
+      ],
+      isHighOverhead: true,
     },
   ]
 }

@@ -39,6 +39,24 @@ const bundles = [
     ],
   },
   {
+    name: 'Flamegraphs',
+    iconName: 'hotjar',
+    shouldEnable: () => true,
+    description: 'Flame graphs',
+    chartTemplates: [
+      {
+        chartId: 'text-label',
+        content: 'All available flame graphs. Please also check out http://flamecommander.test.netflix.net/ to look at our new tool.',
+      },
+      { chartId: 'fg-cpu' },
+      { chartId: 'fg-pname-cpu' },
+      { chartId: 'fg-uninlined-cpu' },
+      { chartId: 'fg-pagefault' },
+      { chartId: 'fg-diskio' },
+      { chartId: 'fg-ipc' },
+    ]
+  },
+  {
     name: 'BCC demo',
     iconName: 'microchip',
     shouldEnable: () => true,

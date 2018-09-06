@@ -43,11 +43,11 @@ class DashHeader extends React.PureComponent {
 
         { chartInfo.isHighOverhead &&
           <Popup content='May cost high overhead, see help' trigger={
-            <Button className='doNotDrag' circular size='exclamation' basic icon='help' floated='right' /> } /> }
+            <Button className='doNotDrag' circular size='tiny' basic icon='exclamation' floated='right' /> } /> }
 
         { chartInfo.isContainerAware &&
           <Popup content='Container aware' trigger={
-            <Button className='doNotDrag' circular size='check' basic icon='help' floated='right' /> } /> }
+            <Button className='doNotDrag' circular size='tiny' basic icon='clone' floated='right' /> } /> }
 
         { chartInfo.helpComponent &&
           <Modal dimmer='inverted' trigger={
