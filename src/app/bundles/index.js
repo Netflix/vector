@@ -1,9 +1,18 @@
+import React from 'react'
+
 const bundles = [
   {
     name: 'Utilisation',
     iconName: 'computer',
-    shouldEnable: () => true,
-    description: 'Quick overview of host utilization',
+    description: (<div>
+      Quick overview of host utilization:
+      <ul>
+        <li>CPU utilisation</li>
+        <li>Disk latency</li>
+        <li>Memory utilisation</li>
+        <li>Network throughput</li>
+      </ul>
+    </div>),
     chartTemplates: [
       { chartId: 'cpu-utilization' },
       { chartId: 'disk-latency' },
@@ -14,8 +23,16 @@ const bundles = [
   {
     name: 'Container app',
     iconName: 'clone',
-    shouldEnable: ({ containerId }) => containerId && containerId !== '_all',
-    description: 'A set of metrics for monitoring performance of your container',
+    description: (<div>
+      A set of metrics for monitoring performance of your container
+      <ul>
+        <li>Container CPU</li>
+        <li>Container MEM usage (MB & %)</li>
+        <li>Container Disk IOPS</li>
+        <li>Container Disk IOPS throttled</li>
+        <li>Container CPU throttled</li>
+      </ul>
+    </div>),
     chartTemplates: [
       { chartId: 'text-label', content: 'Default container metrics for your instance' },
       { chartId: 'container-percont-cpu' },
@@ -29,8 +46,15 @@ const bundles = [
   {
     name: 'Disk',
     iconName: 'disk',
-    shouldEnable: () => true,
-    description: 'Key disk metrics',
+    description: (<div>
+      Key disk metrics
+      <ul>
+        <li>IOPS</li>
+        <li>Latency</li>
+        <li>Throughput</li>
+        <li>Utilisation</li>
+      </ul>
+    </div>),
     chartTemplates: [
       { chartId: 'disk-iops' },
       { chartId: 'disk-latency' },
@@ -41,12 +65,11 @@ const bundles = [
   {
     name: 'Flamegraphs',
     iconName: 'hotjar',
-    shouldEnable: () => true,
     description: 'Flame graphs',
     chartTemplates: [
       {
         chartId: 'text-label',
-        content: 'All available flame graphs. Please also check out http://flamecommander.test.netflix.net/ to look at our new tool.',
+        content: 'All available flame graphs. Please also check out Flamecommander',
       },
       { chartId: 'fg-cpu' },
       { chartId: 'fg-pname-cpu' },
@@ -59,12 +82,11 @@ const bundles = [
   {
     name: 'BCC demo',
     iconName: 'microchip',
-    shouldEnable: () => true,
-    description: 'BCC view of the world',
+    description: 'A collection showing the default configured BCC PMDA metrics, make sure you have the BCC PMDA installed.',
     chartTemplates: [
       {
         chartId: 'text-label',
-        content: 'The default BCC widgets. To enable more widgets, on the target host, check the BCC PMDA configuration file and run ./Install to reload',
+        content: 'The default BCC widgets. To enable more widgets, on the target host, check the BCC PMDA configuration file and run ./Install to reload.',
       },
       { chartId: 'bcc-tcptop' },
       { chartId: 'bcc-runqlat' },

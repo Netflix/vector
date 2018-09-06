@@ -6,14 +6,14 @@ configure({ adapter: new Adapter() });
 
 import { Menu } from 'semantic-ui-react'
 
-import ChartSelector from './ChartSelector.jsx'
+import CustomChartSelector from './CustomChartSelector.jsx'
 
-describe.skip('ChartSelector', () => {
+describe('CustomChartSelector', () => {
   let component
   let props
   const create = () => {
     if (!component) {
-      component = shallow(<ChartSelector {...props} />)
+      component = shallow(<CustomChartSelector {...props} />)
     }
     return component
   }
