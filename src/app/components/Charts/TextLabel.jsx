@@ -7,7 +7,7 @@ class TextLabel extends React.PureComponent {
     const { size, content } = this.props.chartInfo
 
     return (
-      <Header size={size} content={content} />
+      <Header className='doNotDrag' size={size} content={content} />
     )
   }
 }

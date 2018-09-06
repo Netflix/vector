@@ -10,7 +10,7 @@ class DashPanel extends React.Component {
   render () {
     const { chartInfo, datasets, containerList, instanceDomainMappings, containerId } = this.props
 
-    const dataset = datasets
+    const dataset = datasets && chartInfo.processor
       ? chartInfo.processor.calculateChart(datasets, chartInfo, { instanceDomainMappings, containerList, containerId, chartInfo })
       : []
 
