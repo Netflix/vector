@@ -13,6 +13,8 @@ const GridLayout = WidthProvider(Responsive)
 const gridResponsiveCols = { lg: 12, md: 10, sm: 8, xs: 6 }
 const gridStyle = { paddingLeft: '15px' }
 
+const dashPanelDivStyle = { overflow: 'hidden' }
+
 class Dashboard extends React.Component {
   handleCloseClicked = (chartInfo) => {
     this.props.removeChartByIndex(this.props.chartlist.indexOf(chartInfo))
@@ -22,14 +24,16 @@ class Dashboard extends React.Component {
   }
 
   render () {
+    const { chartlist, pausedContextDatasets, contextDatasets } = this.props
+    const datasets = pausedContextDatasets || contextDatasets
+
     return (
       <GridLayout rowHeight={40} cols={gridResponsiveCols} style={gridStyle} clazzName='layout' draggableCancel='.doNotDrag'>
-
-        { this.props.chartlist.map((c, idx) => {
-          const ctxds = (this.props.pausedContextDatasets || this.props.contextDatasets)
-            .find(ctxds => matchesTarget(ctxds.target, c.context.target))
+        { chartlist.map((c, idx) => {
+          const ctxds = datasets.find(ctxds => matchesTarget(ctxds.target, c.context.target))
           return (
-            <div key={`panel-${c.chartId}`} data-grid={{ x: ((idx % 2) * 5), y: 0, w: 5, h: 9, minW: 3, minH: 3 }} style={{ overflow: 'hidden' }}>
+            // TODO this layout calculation is a bit clunky
+            <div key={`panel-${c.chartId}`} data-grid={{ x: ((idx % 2) * 5), y: 0, w: 5, h: 9, minW: 3, minH: 3 }} style={dashPanelDivStyle}>
               <DashPanel
                 chartIndex={idx}
                 chartInfo={c}

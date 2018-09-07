@@ -29,38 +29,40 @@ class DashboardController extends React.PureComponent {
   }
 
   render () {
+    const { isDashboardOpen, windows, intervals, isDashboardPlaying, onPlay, onPause } = this.props
+    const { windowSeconds, intervalSeconds } = this.state
+
     return (
       <Menu style={menuStyle} borderless fluid>
-
         <Menu.Item header onClick={this.handleDashboardIcon}>
           Dashboard
-          <Icon name={this.props.isDashboardOpen ? 'chevron up' : 'chevron down'} />
+          <Icon name={isDashboardOpen ? 'chevron up' : 'chevron down'} />
         </Menu.Item>
 
         <Menu.Item header>Window</Menu.Item>
-        { this.props.windows.map(w => (
+        { windows.map(w => (
           <Menu.Item key={`window-${w.valueSeconds}`}
-            active={this.state.windowSeconds === w.valueSeconds}
+            active={windowSeconds === w.valueSeconds}
             name={w.valueSeconds.toString()}
             content={w.text}
             onClick={this.handleWindowChange}/>
         ))}
 
         <Menu.Item header>Interval</Menu.Item>
-        { this.props.intervals.map(i => (
+        { intervals.map(i => (
           <Menu.Item key={`interval-${i.valueSeconds}`}
-            active={this.state.intervalSeconds === i.valueSeconds}
+            active={intervalSeconds === i.valueSeconds}
             name={i.valueSeconds.toString()}
             content={i.text}
             onClick={this.handleIntervalChange}/>
         ))}
 
         <Menu.Item header>Control</Menu.Item>
-        <Menu.Item active={this.props.isDashboardPlaying} onClick={this.props.onPlay}>
+        <Menu.Item active={isDashboardPlaying} onClick={onPlay}>
           <Icon name='play' />
           Play
         </Menu.Item>
-        <Menu.Item active={!this.props.isDashboardPlaying} onClick={this.props.onPause}>
+        <Menu.Item active={!isDashboardPlaying} onClick={onPause}>
           <Icon name='pause' />
           Pause
         </Menu.Item>

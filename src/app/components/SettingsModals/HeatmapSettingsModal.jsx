@@ -35,8 +35,11 @@ class HeatmapSettingsModal extends React.PureComponent {
   }
 
   render() {
-    const chartMaxValue = getLargestValueInDataset(this.props.dataset)
-    const yAxisOptions = (this.props.dataset || [])
+    const { dataset = [], selectedMetrics, metricNames } = this.props
+    const { heatmapMaxValue = 0, maxInstanceValue = 0 } = this.state
+
+    const chartMaxValue = getLargestValueInDataset(dataset)
+    const yAxisOptions = dataset
       .map(mi => mi.yAxisLabels)
       .filter(uniqueFilter)
       .map((label, index) => ({ text: label, value: index }))
@@ -47,23 +50,23 @@ class HeatmapSettingsModal extends React.PureComponent {
       <Form className='doNotDrag' onSubmit={this.handleSubmit}>
 
         <Form.Input label='Maximum value for heatmap range (use 0 for auto range)'
-          value={this.state.heatmapMaxValue || 0}
+          value={heatmapMaxValue || 0}
           onChange={this.handleMaxValueChange} />
-        <label>Current auto max: {chartMaxValue}</label>
-        <br/>
+
+        <label>Current auto max: {chartMaxValue}</label><br/>
 
         <Form.Select label='Maximum value for Y axis (or select Auto)'
           options={yAxisOptions}
-          value={this.state.maxInstanceValue || 0}
+          value={maxInstanceValue || 0}
           onChange={this.handleMaxYValueChange} />
 
-        { this.props.selectedMetrics &&
+        { selectedMetrics &&
           <Form.Group grouped>
             <label>Select metrics</label>
-            { this.props.metricNames.map((m) =>
+            { metricNames.map((m) =>
               <Form.Checkbox key={m} label={m}
                 onChange={this.handleSelectedMetricChange}
-                checked={this.state.selectedMetrics.includes(m)} />
+                checked={selectedMetrics.includes(m)} />
             )}
           </Form.Group>}
 

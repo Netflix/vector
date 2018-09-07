@@ -6,6 +6,8 @@ import memoizeOne from 'memoize-one'
 import ColorHash from 'color-hash'
 const colorHash = new ColorHash()
 
+// most of these styles etc are modelled on the semiotic examples
+
 const tooltipStyles = {
   header: {fontWeight: 'bold', borderBottom: 'thin solid black', marginBottom: '10px', textAlign: 'center'},
   lineItem: {position: 'relative', display: 'block', textAlign: 'left'},
@@ -14,7 +16,6 @@ const tooltipStyles = {
   wrapper: {background:"rgba(255,255,255,0.8)", minWidth: "max-content", whiteSpace: "nowrap"}
 }
 
-// Search the lines for a similar x value for vertical shared tooltip
 function fetchCoincidentPoints(passedData, dataset) {
   return dataset
     .map((point) => ({
@@ -32,52 +33,40 @@ function fetchCoincidentPoints(passedData, dataset) {
 const verticalTickLineGenerator = (axisData) => {
   const { xy } = axisData
   const style = `M${xy.x1},${xy.y1}L${xy.x1},${xy.y2}Z`
-  // cheat the key value by using the style text since it should be unique
   return <path key={style} style={{ stroke: "lightgrey" }} d={style} />
 }
 
 const horizontalTickLineGenerator = (axisData) => {
   const { xy } = axisData
   const style = `M${xy.x1},${xy.y1}L${xy.x2},${xy.y1}Z`
-  // cheat the key value by using the style text since it should be unique
   return <path key={style} style={{ stroke: "lightgrey" }} d={style} />
 }
 
-function fetchSharedTooltipContent(passedData, dataset, formatter) {
-  const points = fetchCoincidentPoints(passedData, dataset)
+function generateSharedTooltipContent(dataset, format) {
+  return function _generateSharedTooltipContent(passedData) {
+    const points = fetchCoincidentPoints(passedData, dataset)
 
-  const returnArray = [
-    <div key={'header_multi'} style={tooltipStyles.header} >
-      {moment(new Date(passedData.ts)).format('HH:mm:ss')}
-    </div>
-  ];
-
-  // provide a default formatter if none was input
-  const format = formatter || ((val) => val)
-
-  points.forEach((point, i) => {
-    returnArray.push([
-      <div key={`tooltip_line_${i}`} style={tooltipStyles.lineItem} >
-        <p key={`tooltip_color_${i}`}
-          style={{
-            width: '10px', height: '10px',
-            backgroundColor: point.color,
-            display: 'inline-block', position: 'absolute',
-            top: '8px',
-            left: '0',
-            margin: '0'
-          }} />
-        <p key={`tooltip_p_${i}`} style={tooltipStyles.title}>{point.keylabel}</p>
-        <p key={`tooltip_p_val_${i}`} style={tooltipStyles.value}>{format(point.value && point.value.value)}</p>
+    const returnArray = [
+      <div key={'header_multi'} style={tooltipStyles.header} >
+        {moment(new Date(passedData.ts)).format('HH:mm:ss')}
       </div>
-    ]);
-  });
+    ];
 
-  return (
-    <div style={tooltipStyles.wrapper} >
-      {returnArray}
-    </div>
-  );
+    points.forEach((point, i) => {
+      returnArray.push([
+        <div key={`tooltip_line_${i}`} style={tooltipStyles.lineItem} >
+          <p style={tooltipStyles.title}>{point.keylabel}</p>
+          <p style={tooltipStyles.value}>{format(point.value && point.value.value)}</p>
+        </div>
+      ]);
+    });
+
+    return (
+      <div style={tooltipStyles.wrapper} >
+        {returnArray}
+      </div>
+    );
+  }
 }
 
 const generateAxes = memoizeOne(yTickFormat => ([
@@ -94,13 +83,20 @@ const generateAxes = memoizeOne(yTickFormat => ([
   }
 ]))
 
+const colorForElement = (d) => colorHash.hex(d.keylabel)
+const lineStyle = (d) => ({ stroke: colorForElement(d), fill: colorForElement(d), fillOpacity: 0.5 })
+const areaStyle = (d) => ({ stroke: colorForElement(d), fill: colorForElement(d), fillOpacity: 0.5, strokeWidth: '2px' })
+const valueIsDefined = (d) => d.value !== null
+
 class Chart extends React.PureComponent {
-  color = (d) => colorHash.hex(d.keylabel)
   yExtent = [0, undefined]
   hoverAnnotation = [{ type: 'frame-hover' }]
+  frameMargin = { left: 60, bottom: 60, right: 8, top: 8 }
+  baseMarkProps = { forceUpdate: true }
 
   render () {
     const { chartInfo, dataset } = this.props
+    const lineType = chartInfo.lineType || 'line'
 
     const axes = generateAxes(chartInfo.yTickFormat)
 
@@ -109,20 +105,20 @@ class Chart extends React.PureComponent {
         responsiveWidth={true}
         responsiveHeight={true}
         lines={dataset}
-        lineDataAccessor={d => d.data}
-        lineStyle={d => ({ stroke: this.color(d), fill: this.color(d), fillOpacity: 0.5 })}
-        areaStyle={d => ({ stroke: this.color(d), fill: this.color(d), fillOpacity: 0.5, strokeWidth: '2px' })}
-        lineType={chartInfo.lineType || 'line'}
-        defined={d => d.value !== null}
-        margin={{ left: 60, bottom: 30, right: 8, top: 8 }}
-        xAccessor={d => d.ts}
-        yAccessor={d => d.value}
+        lineDataAccessor={'data'}
+        lineStyle={lineStyle}
+        areaStyle={areaStyle}
+        lineType={lineType}
+        defined={valueIsDefined}
+        margin={this.frameMargin}
+        xAccessor={'ts'}
+        yAccessor={'value'}
         yExtent={this.yExtent}
         axes={axes}
         // line highlight
         hoverAnnotation={this.hoverAnnotation}
-        tooltipContent={(d) => fetchSharedTooltipContent(d, dataset, chartInfo.yTickFormat)}
-        baseMarkProps={{ forceUpdate: true }} />
+        tooltipContent={generateSharedTooltipContent(dataset, chartInfo.yTickFormat)}
+        baseMarkProps={this.baseMarkProps} />
     )
   }
 }

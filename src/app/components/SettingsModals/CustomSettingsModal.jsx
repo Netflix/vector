@@ -31,32 +31,34 @@ class CustomChartSettingsModal extends React.PureComponent {
 
   render() {
     const options = this.getOptions(this.props.pmids)
+    const { metricNames, cumulative, converted, conversionFunction, lineType, yTickFormat } = this.state
+
     return (
       <Form className='doNotDrag' onSubmit={this.handleSubmit}>
         <Form.Dropdown label='Select metric' placeholder='Select Metric' fluid search selection
-          value={this.state.metricNames && this.state.metricNames.length && this.state.metricNames[0]}
+          value={metricNames && metricNames.length && metricNames[0]}
           onChange={this.handleMetricChange}
           options={options} />
 
-        <Form.Checkbox label='Stacked Area' checked={this.state.lineType === 'stackedarea'} onChange={this.handleAreaChange} />
-        <Form.Checkbox label='Cumulative' checked={this.state.cumulative} onChange={this.handleCumulativeChange} />
-        <Form.Checkbox label='Converted' checked={this.state.converted} onChange={this.handleConvertedChange} />
+        <Form.Checkbox label='Stacked Area' checked={lineType === 'stackedarea'} onChange={this.handleAreaChange} />
+        <Form.Checkbox label='Cumulative' checked={cumulative} onChange={this.handleCumulativeChange} />
+        <Form.Checkbox label='Converted' checked={converted} onChange={this.handleConvertedChange} />
 
         <Form.Input label='Conversion Function (use "value" as the variable)'
-          disabled={!this.state.converted}
-          value={this.state.converted ? this.state.conversionFunction: ''}
+          disabled={!converted}
+          value={converted ? conversionFunction: ''}
           onChange={this.handleConversionFunctionChange} />
 
         <Form.Group inline>
           <label>Format</label>
           <Form.Radio label='Number' name='yTickFormat' value='number'
-            checked={this.state.yTickFormat === formats.number}
+            checked={yTickFormat === formats.number}
             onChange={this.handleYTickFormatChange} />
           <Form.Radio label='Integer' name='yTickFormat' value='integer'
-            checked={this.state.yTickFormat === formats.integer}
+            checked={yTickFormat === formats.integer}
             onChange={this.handleYTickFormatChange} />
           <Form.Radio label='Percentage' name='yTickFormat' value='percentage'
-            checked={this.state.yTickFormat === formats.percentage}
+            checked={yTickFormat === formats.percentage}
             onChange={this.handleYTickFormatChange} />
         </Form.Group>
 

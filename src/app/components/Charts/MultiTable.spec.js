@@ -5,9 +5,13 @@ describe('createTableRows', () => {
   describe('with a missing dataset', () => {
     let dataset = null
     let result = MultiTable.createTableRows(dataset)
-    it('returns an empty array', () => {
-      expect(Array.isArray(result)).to.equal(true)
-      expect(result.length).to.equal(0)
+    it('returns an empty headers result', () => {
+      expect(Array.isArray(result.headers)).to.equal(true)
+      expect(result.headers.length).to.equal(0)
+    })
+    it('returns an empty tableData result', () => {
+      expect(Array.isArray(result.tableData)).to.equal(true)
+      expect(result.tableData.length).to.equal(0)
     })
   })
 

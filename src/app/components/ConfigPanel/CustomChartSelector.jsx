@@ -24,18 +24,21 @@ class CustomChartSelector extends React.PureComponent {
   handleMenuItemClick = (e, { chart }) => this.props.onAddChart(chart)
 
   enableChart = (chart) => {
-    return !this.props.disabled
-      && (!this.props.selectedPmids
-        || (chart.metricNames || []).every(mn => mn in this.props.selectedPmids))
+    const { disabled, selectedPmids } = this.props
+    return !disabled
+      && (!selectedPmids
+        || (chart.metricNames || []).every(mn => mn in selectedPmids))
   }
 
   render () {
-    const { charts, disabled } = this.props
+    const { charts = [], disabled } = this.props
 
-    const groupNames = (charts || [])
+    const groupNames = charts
       .map(chart => chart.group)
       .reduce(flatten, [])
       .filter(uniqueFilter)
+
+    const helpIcon = <Icon name='question circle outline' style={iconStyle}/>
 
     return (
       <Menu attached='bottom' size='tiny' borderless fluid style={chartSelectorStyle}>
@@ -49,25 +52,24 @@ class CustomChartSelector extends React.PureComponent {
         { groupNames.map(g => (
           <div key={`group-${g}`}>
             <Menu.Item header>{g}</Menu.Item>
-            { charts.filter(c => c.group === g).map(c => (
 
+            { charts.filter(c => c.group === g).map(c => (
               <Menu.Item key={`group-${g}-chart${c.title}`}
                 name={c.title}
                 disabled={!this.enableChart(c)}
                 onClick={this.handleMenuItemClick}
                 chart={c}>
 
-                <p style={titleLinkStyle}>{ c.title }</p>
-                { c.tooltipText &&
-                    <Popup content={c.tooltipText} trigger={<Icon name='help circle' style={iconStyle}/>} />
-                }
+                <p style={titleLinkStyle}>{c.title}</p>
 
+                { c.tooltipText &&
+                    <Popup content={c.tooltipText} trigger={helpIcon} />
+                }
               </Menu.Item>
 
             ))}
           </div>
         )) }
-
       </Menu>
     )
   }

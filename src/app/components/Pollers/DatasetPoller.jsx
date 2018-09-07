@@ -29,16 +29,18 @@ class DatasetPoller extends React.Component {
 
   guaranteeDatasetsInStateForQueries = (queries) => {
     this.setState(state => {
-      const missing = queries.filter(q => !state.contextDatasets.some(c => matchesTarget(c.target, q.target)))
+      const { contextDatasets } = state
+      const missing = queries.filter(q => !contextDatasets.some(c => matchesTarget(c.target, q.target)))
       const newEntries = missing.map(q => ({ target: q.target, datasets: [], instanceDomainMappings: {} }))
       if (newEntries.length === 0) return null
-      return { contextDatasets: state.contextDatasets.concat(newEntries) }
+      return { contextDatasets: contextDatasets.concat(newEntries) }
     })
   }
 
   findMetricNames = (chart) => {
+    const { contextData } = this.props
     // scan context data to map the pmids, return pmids[]
-    const context = this.props.contextData.find(ctx => matchesTarget(ctx.target, chart.context.target))
+    const context = contextData.find(ctx => matchesTarget(ctx.target, chart.context.target))
 
     if (!context || !context.pmids) {
       console.warn('could not find pmids for chart', chart)
@@ -49,13 +51,15 @@ class DatasetPoller extends React.Component {
   }
 
   pollMetrics = async () => {
+    const { charts, protocol, windowIntervalMs, onContextDatasetsUpdated } = this.props
+    const { contextDatasets } = this.state
     try {
-      if (this.props.charts.length == 0) {
+      if (charts.length == 0) {
         return
       }
 
       // collect tuples[]: { hostname, contextId, pmids[] }
-      const singleQueries = this.props.charts.map(chart => ({
+      const singleQueries = charts.map(chart => ({
         target: chart.context.target,
         contextId: chart.context.contextId,
         context: chart.context,
@@ -86,13 +90,14 @@ class DatasetPoller extends React.Component {
       // connect to hostname&context, query pmids
       for(const q of queries) {
         let pmids = q.metricNames.map(n => q.context.pmids[n] || null)
-          .filter(pmid => pmid !== null).join(',')
+          .filter(pmid => pmid !== null)
+          .join(',')
         // TODO should be able to alarm if we can't find any pmids to match?
 
         let res = await superagent
-          .get(`${this.props.protocol}://${q.target.hostname}/pmapi/${q.contextId}/_fetch`)
+          .get(`${protocol}://${q.target.hostname}/pmapi/${q.contextId}/_fetch`)
           .query({ pmids })
-        const oldestS = res.body.timestamp.s - (this.props.windowIntervalMs / 1000)
+        const oldestS = res.body.timestamp.s - (windowIntervalMs / 1000)
 
         // use setState to stick the data into state and then publish up the completed dataset
         this.setState(state => {
@@ -103,7 +108,7 @@ class DatasetPoller extends React.Component {
             .concat(res.body)
             .filter(ds => ds.timestamp.s >= oldestS)
 
-          this.props.onContextDatasetsUpdated(newContextDatasets)
+          onContextDatasetsUpdated(newContextDatasets)
           return { contextDatasets: newContextDatasets }
         })
       }
@@ -111,14 +116,14 @@ class DatasetPoller extends React.Component {
       // find any missing instanceDomainMappings
       // TODO how do we poll this regularly for updates? eg: bcc tcptop, changing socket list
       for(const q of queries) {
-        const idomMaps = this.state.contextDatasets.find(cds => matchesTarget(cds.target, q.target)).instanceDomainMappings
+        const idomMaps = contextDatasets.find(cds => matchesTarget(cds.target, q.target)).instanceDomainMappings
         const neededNames = q.metricNames.filter(name => !(name in idomMaps))
 
         for(const name of neededNames) {
           const newMapping = {}
           try {
             let res = await superagent
-              .get(`${this.props.protocol}://${q.target.hostname}/pmapi/${q.contextId}/_indom`)
+              .get(`${protocol}://${q.target.hostname}/pmapi/${q.contextId}/_indom`)
               .query({ name })
             res.body.instances.forEach(({ instance, name }) => newMapping[instance] = name)
           } catch (err) {
@@ -129,9 +134,12 @@ class DatasetPoller extends React.Component {
           this.setState(state => {
             let newContextDatasets = [...state.contextDatasets] // copy datasets
             let cdsIndex = newContextDatasets.findIndex(cds => matchesTarget(cds.target, q.target))
-            newContextDatasets[cdsIndex].instanceDomainMappings = { ...newContextDatasets[cdsIndex].instanceDomainMappings, [name]: newMapping }
+            newContextDatasets[cdsIndex].instanceDomainMappings = {
+              ...newContextDatasets[cdsIndex].instanceDomainMappings,
+              [name]: newMapping
+            }
 
-            this.props.onContextDatasetsUpdated(newContextDatasets)
+            onContextDatasetsUpdated(newContextDatasets)
             return { contextDatasets: newContextDatasets }
           })
         }

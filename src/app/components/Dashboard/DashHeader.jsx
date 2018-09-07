@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Modal, Popup, Button } from 'semantic-ui-react'
+import { Modal, Popup } from 'semantic-ui-react'
+import DashHeaderButton from './DashHeaderButton.jsx'
 
 const closeButton = {
   // add some space beside the x button so it is harder to accidentally click
@@ -13,8 +14,8 @@ class DashHeader extends React.PureComponent {
     modalOpen: false
   }
 
-  handleSettingsIcon = () => this.setState({ modalOpen: true })
-  handleCloseSettings = () => this.setState({ modalOpen: false })
+  handleModalIcon = () => this.setState({ modalOpen: true })
+  handleModalClose= () => this.setState({ modalOpen: false })
   handleNewSettings = (settings) => {
     this.setState({ modalOpen: false })
     this.props.onNewSettings(this.props.chartInfo, settings)
@@ -35,31 +36,31 @@ class DashHeader extends React.PureComponent {
 
     return (
       <div>
-        { this.props.chartInfo.group + ': ' + this.props.chartInfo.title }<br/>
+        { chartInfo.group + ': ' + chartInfo.title }<br/>
         { this.chartSubtitle(chartInfo) }
 
         { /* these show up in reverse order since they are all floated right */ }
-        <Button style={closeButton} className='doNotDrag' circular size='tiny' basic icon='close' floated='right' onClick={this.handleCloseClicked} />
+        <DashHeaderButton icon='close' style={closeButton} onClick={this.handleCloseClicked} />
 
         { chartInfo.isHighOverhead &&
           <Popup content='May cost high overhead, see help' trigger={
-            <Button className='doNotDrag' circular size='tiny' basic icon='exclamation' floated='right' /> } /> }
+            <DashHeaderButton icon='exclamation' /> } /> }
 
         { chartInfo.isContainerAware &&
           <Popup content='Container aware' trigger={
-            <Button className='doNotDrag' circular size='tiny' basic icon='clone' floated='right' /> } /> }
+            <DashHeaderButton icon='clone' /> } /> }
 
         { chartInfo.helpComponent &&
           <Modal dimmer='inverted' trigger={
-            <Button className='doNotDrag' circular size='tiny' basic icon='help' floated='right' onClick={this.handleSettingsIcon} /> } >
+            <DashHeaderButton icon='help' onClick={this.handleModalIcon} /> } >
             <Modal.Content>
               <HelpComponent chartInfo={chartInfo} />
             </Modal.Content>
           </Modal> }
 
         { chartInfo.settingsComponent &&
-          <Modal dimmer='inverted' open={this.state.modalOpen} onClose={this.handleCloseSettings} trigger={
-            <Button className='doNotDrag' circular size='tiny' basic icon='setting' floated='right' onClick={this.handleSettingsIcon} /> } >
+          <Modal dimmer='inverted' open={this.state.modalOpen} onClose={this.handleModalClose} trigger={
+            <DashHeaderButton icon='setting' onClick={this.handleModalIcon} /> } >
             <Modal.Content>
 
               <SettingsComponent {...chartInfo}

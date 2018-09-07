@@ -5,7 +5,7 @@ import { Table } from 'semantic-ui-react'
 import { uniqueFilter } from '../../utils'
 
 function createTableRows(dataset) {
-  if (!dataset) return []
+  if (!dataset) return { headers: [], tableData: [] }
 
   // an array of [ pid, comm, laddr ..]
   const headers = dataset.map(mi => mi.metric).filter(uniqueFilter)

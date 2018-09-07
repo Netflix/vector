@@ -21,16 +21,18 @@ class AddContextModal extends React.PureComponent {
   containerNameResolver = this.props.useCgroupId ? (c => c.cgroup) : (c => c.containerId)
 
   refreshContainerList = async () => {
-    if (!this.state.hostname || !this.state.hostport || !this.state.hostspec) return
+    const { hostname, hostport, hostspec } = this.state
+    if (!hostname || !hostport || !hostspec) return
 
     this.setState({
-      containerDropdownOptions: [ { value: '_all', text: '.. connecting ..' } ],
+      containerDropdownOptions: [
+        { value: '_all', text: '.. connecting ..' }
+      ],
       containerId: '_all',
       connected: false,
     })
 
-    const containerList = await fetchContainerList(
-      this.state.hostname, this.state.hostport, this.state.hostspec)
+    const containerList = await fetchContainerList(hostname, hostport, hostspec)
 
     const containerDropdownOptions = []
       .concat({ text: 'All', value: '_all' })
@@ -38,7 +40,6 @@ class AddContextModal extends React.PureComponent {
 
     this.setState({ containerDropdownOptions, containerId: '_all', connected: true })
   }
-
   refreshContainerList = debounce(this.refreshContainerList, 500)
 
   handleHostnameChange = (e, { value }) => this.setState({ hostname: value }, this.refreshContainerList)
@@ -49,21 +50,26 @@ class AddContextModal extends React.PureComponent {
   handleOpen = () => this.setState({ modalOpen: true })
 
   handleSubmit = () => {
-    this.props.onNewContext({
-      hostname: this.state.hostname + ':' + this.state.hostport,
-      hostspec: this.state.hostspec,
-      containerId: this.state.containerId || '_all',
+    const { hostname, hostport, hostspec, containerId } = this.state
+    const { onNewContext } = this.props
+    onNewContext({
+      hostname: hostname + ':' + hostport,
+      hostspec: hostspec,
+      containerId: containerId || '_all',
     })
     this.setState({ modalOpen: false })
   }
 
   render () {
+    const { modalOpen, hostport, hostspec, connected, containerId, containerDropdownOptions } = this.state
+    const { render, disableHostspecInput, disableContainerSelect } = this.props
+
     return (
       <Modal
-        open={this.state.modalOpen}
+        open={modalOpen}
         closeIcon={true}
         onClose={this.handleClose}
-        trigger={this.props.render(this.handleOpen)}>
+        trigger={render(this.handleOpen)}>
 
         <Modal.Header>Add a context</Modal.Header>
 
@@ -71,13 +77,13 @@ class AddContextModal extends React.PureComponent {
           <Form onSubmit={this.handleSubmit}>
 
             <Form.Input label='Hostname' onChange={this.handleHostnameChange} placeholder='1.2.3.4' />
-            <Form.Input label='Port' onChange={this.handleHostportChange} value={this.state.hostport} />
-            <Form.Input label='Hostspec' onChange={this.handleHostspecChange} value={this.state.hostspec} disabled={this.props.disableHostspecInput}/>
+            <Form.Input label='Port' onChange={this.handleHostportChange} value={hostport} />
+            <Form.Input label='Hostspec' onChange={this.handleHostspecChange} value={hostspec} disabled={disableHostspecInput}/>
 
             <Form.Dropdown label='Container' placeholder='Select container' fluid search selection
-              disabled={!this.state.connected || this.props.disableContainerSelect}
-              value={this.state.containerId}
-              options={this.state.containerDropdownOptions}
+              disabled={!connected || disableContainerSelect}
+              value={containerId}
+              options={containerDropdownOptions}
               onChange={this.handleContainerChange} />
 
             <Form.Button type='submit'>Add</Form.Button>

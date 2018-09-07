@@ -16,7 +16,7 @@ const FG_DURATIONS = [ 5, 10, 20, 60 ]
 class Flamegraph extends React.PureComponent {
   state = {
     durationSeconds: FG_DURATIONS[0],
-    fetchUrl: null,
+    fetchFile: null,
   }
 
   static getDerivedStateFromProps(newProps) {
@@ -42,6 +42,7 @@ class Flamegraph extends React.PureComponent {
         .timeout(TIMEOUTS)
         .query({ name: fgtype, value: seconds })
     } catch (err) {
+      // TODO would be better to show the error
       console.log('flamegraph trigger failed', err)
       console.error(err)
     }
@@ -52,6 +53,7 @@ class Flamegraph extends React.PureComponent {
     const dataset = this.props.dataset
     const status = getStatusFromDataset(dataset)
     const isIdle = ['IDLE', 'ERROR'].includes(status.split(' ')[0])
+    const { durationSeconds, fetchFile } = this.state
 
     return (
       <div>
@@ -61,7 +63,7 @@ class Flamegraph extends React.PureComponent {
 
         <Form.Dropdown
           className='doNotDrag'
-          value={this.state.durationSeconds}
+          value={durationSeconds}
           options={FG_DURATIONS.map(sec => ({ text: `${sec} sec`, value: sec }))}
           onChange={this.handleDurationChange} />
 
@@ -69,10 +71,10 @@ class Flamegraph extends React.PureComponent {
 
         <Button primary className='doNotDrag' content='Start capture' onClick={this.requestGenerate} disabled={!isIdle} />
 
-        { this.state.fetchFile &&
+        { fetchFile &&
           <div>
-            <p className='doNotDrag'>Fetch url: {this.state.fetchFile}</p>
-            <a className='doNoTDrag' href={`http://${hostname}/${this.state.fetchFile}`}
+            <p className='doNotDrag'>Fetch url: {fetchFile}</p>
+            <a className='doNoTDrag' href={`http://${hostname}/${fetchFile}`}
               rel='noopener noreferrer' target='_blank' >View / download</a>
           </div> }
 

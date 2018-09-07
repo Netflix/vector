@@ -1,10 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+const footerStyle = {
+  paddingLeft: '15px'
+}
+
 class Footer extends React.PureComponent {
   render () {
+    const { version } = this.props
+
     return (
-      <div style={{ paddingLeft: '15px' }}>Version: {this.props.version}</div>
+      <div style={footerStyle}>Version: {version}</div>
     )
   }
 }

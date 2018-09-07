@@ -32,7 +32,6 @@ function extractHeatmapValuesFromDataset(dataset, yAxisLabels) {
   return values
 }
 
-
 function createScale(thresholds, colors) {
   return scaleThreshold()
     .domain(thresholds)
@@ -55,6 +54,10 @@ function determineThresholds(chartInfo, dataset) {
 }
 
 class Heatmap extends React.PureComponent {
+  heatmapDivStyle = { height: '100%', display: 'flex', flexDirection: 'column' }
+  margin = { left: 90, bottom: 30, right: 8, top: 8 }
+  baseMarkProps = { forceUpdate: true }
+
   render () {
     const { chartInfo, dataset } = this.props
 
@@ -66,21 +69,28 @@ class Heatmap extends React.PureComponent {
       return <span>Insufficient data</span>
     }
 
-    return (<div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <HeatmapScale thresholds={thresholds} onClick={this.handleHeatmapScaleClick}/>
+    const areas = [{ coordinates: heatmapValues }]
+    const areaType = { type: 'heatmap', xBins: dataset[0].data.length, yBins: yAxisLookup.length }
+
+    return (<div style={this.heatmapDivStyle}>
+
+      <HeatmapScale
+        thresholds={thresholds}
+        onClick={this.handleHeatmapScaleClick}/>
+
       <ResponsiveXYFrame
         responsiveWidth={true}
         responsiveHeight={true}
-        areas={[{ coordinates: heatmapValues }]}
-        areaType={{ type: 'heatmap', xBins: dataset[0].data.length, yBins: yAxisLookup.length }}
+        areas={areas}
+        areaType={areaType}
         useAreasAsInteractionLayer={true}
-        xAccessor={d => d.ts}
-        yAccessor={d => d.value}
+        xAccessor={'ts'}
+        yAccessor={'value'}
         areaStyle={d => ({
           fill: thresholds(d.value),
           stroke: 'lightgrey'
         })}
-        margin={{ left: 90, bottom: 30, right: 8, top: 8 }}
+        margin={this.margin}
         yExtent={[0, yAxisLookup.length]}
         hoverAnnotation={true}
         tooltipContent={dp => (
@@ -102,7 +112,7 @@ class Heatmap extends React.PureComponent {
             ticks: 4,
           }
         ]}
-        baseMarkProps={{ forceUpdate: true }} />
+        baseMarkProps={this.baseMarkProps} />
     </div>)
   }
 }

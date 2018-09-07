@@ -24,21 +24,26 @@ class ContextPoller extends React.Component {
   }
 
   componentDidMount = () => {
-    if (!this.state.timer) {
-      this.setState({ timer: setInterval(() => this.pollContexts(), this.props.pollIntervalMs) })
+    const { timer } = this.state
+    const { pollIntervalMs } = this.props
+
+    if (!timer) {
+      this.setState({ timer: setInterval(() => this.pollContexts(), pollIntervalMs) })
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { contexts } = this.state
+    const { targets = [] } = this.props
     // if all the targets already existed then we can skip the state change
     // also check if contexts is null; if contexts is not defined it means we've never set them up (first load)
-    if (this.state.contexts !== null && this.props.targets.length === prevProps.targets.length
-      && this.props.targets.every(t1 => prevProps.targets.some(t2 => matchesTarget(t1, t2)))) {
+    if (contexts !== null && targets.length === prevProps.targets.length
+      && targets.every(t1 => prevProps.targets.some(t2 => matchesTarget(t1, t2)))) {
       return
     }
 
     this.setState({
-      contexts: (this.props.targets || []).map(target => {
+      contexts: targets.map(target => {
         let oldTarget = (prevState.contexts || []).find(context => matchesTarget(context.target, target))
         return oldTarget ? { ...oldTarget, target } : { target }
       })
@@ -46,8 +51,10 @@ class ContextPoller extends React.Component {
   }
 
   pollContexts = () => {
-    this.props.onContextsUpdated(this.state.contexts);
-    (this.state.contexts || []).forEach(c => this.pollContext(c))
+    const { onContextsUpdated } = this.props
+    const { contexts = [] } = this.state
+    onContextsUpdated(contexts);
+    contexts.forEach(c => this.pollContext(c))
   }
 
   pollContext = async (existingContext) => {

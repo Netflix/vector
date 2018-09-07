@@ -51,11 +51,14 @@ class ConfigPanel extends React.PureComponent {
   }
 
   componentDidUpdate = () => {
-    let validContexts = this.props.contextData.filter(cd => !isContextLoading(cd))
+    const { contextData } = this.props
+    const { selectedContext } = this.state
+
+    let validContexts = contextData.filter(cd => !isContextLoading(cd))
 
     // it is valid if we have a selection, and there is some context that matches our selection
-    let validSelection = this.state.selectedContext &&
-      validContexts.some(cd => matchesTarget(cd.target, this.state.selectedContext.target))
+    let validSelection = selectedContext &&
+      validContexts.some(cd => matchesTarget(cd.target, selectedContext.target))
 
     // early exit
     if (validSelection) return
@@ -66,33 +69,35 @@ class ConfigPanel extends React.PureComponent {
     }
 
     // if not, then clear out our state
-    if (this.state.selectedContext && validContexts.length === 0) {
+    if (selectedContext && validContexts.length === 0) {
       this.setState({ selectedContext: null })
     }
   }
 
   render () {
+    const { config, contextData, initialAddContext, charts, bundles, onRequestClose } = this.props
+    const { selectedContext } = this.state
+
     return (
       <Segment.Group horizontal compact style={panelStyle}>
         <ContextMenu
-          config={this.props.config}
-          contextData={this.props.contextData}
-          selectedContext={this.state.selectedContext}
+          config={config}
+          contextData={contextData}
+          selectedContext={selectedContext}
           onContextSelect={this.handleContextSelect}
           onNewContext={this.handleNewContext}
-          initialAddContext={this.props.initialAddContext}
+          initialAddContext={initialAddContext}
           onRemoveContext={this.handleRemoveContext} />
 
         <ChartSelector
-          disabled={!this.state.selectedContext}
-          charts={this.props.charts}
-          selectedTarget={this.state.selectedContext && this.state.selectedContext.target}
-          bundles={this.props.bundles}
+          disabled={!selectedContext}
+          charts={charts}
+          selectedTarget={selectedContext && selectedContext.target}
+          bundles={bundles}
           onClearCharts={this.handleClearCharts}
           onAddChart={this.handleAddChart}
-          onRequestClose={this.props.onRequestClose}
-          selectedPmids={getSelectedContextPmids(
-            this.props.contextData, this.state.selectedContext)} />
+          onRequestClose={onRequestClose}
+          selectedPmids={getSelectedContextPmids(contextData, selectedContext)} />
 
       </Segment.Group>
     )

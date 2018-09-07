@@ -5,8 +5,20 @@ import 'react-resizable/css/styles.css'
 import { Segment } from 'semantic-ui-react'
 import DashHeader from './DashHeader.jsx'
 
-class DashPanel extends React.Component {
+const panelStyle = {
+  // height=100% to ensure it fills the card, flex so that the content part of
+  // the card will grow to fill the area
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+}
 
+const panelContentStyle = {
+  flex: 1,
+  minHeight: 0,
+}
+
+class DashPanel extends React.Component {
   render () {
     const { chartInfo, datasets, containerList, instanceDomainMappings, containerId } = this.props
 
@@ -17,9 +29,7 @@ class DashPanel extends React.Component {
     const Visualisation = chartInfo.visualisation
 
     return (
-      <Segment.Group raised style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-        { /* height=100% to ensure it fills the card, flex so that the content part of the card
-             will grow to fill the area */ }
+      <Segment.Group raised style={panelStyle}>
 
         <Segment clearing>
           <DashHeader
@@ -30,7 +40,7 @@ class DashPanel extends React.Component {
             onCloseClicked={this.props.onCloseClicked} />
         </Segment>
 
-        <Segment style={{ flex: 1, minHeight: 0 }}>
+        <Segment style={panelContentStyle}>
           { dataset && dataset.length > 0 &&
             <Visualisation dataset={dataset} chartInfo={chartInfo}/>
           }

@@ -9,15 +9,17 @@ class FilterModal extends React.PureComponent {
   }
 
   handleSubmit = () => this.props.onNewSettings({ filter: this.state.filterText })
-
   handleChange = (e, { value }) => this.setState({ filterText: value })
+  handleCancelClick = () => this.props.onClose()
 
   render() {
+    const { filterText } = this.state
+
     return (
       <Form className='doNotDrag' onSubmit={this.handleSubmit}>
-        <Form.Input label='Filter' value={this.state.filterText} onChange={this.handleChange} />
+        <Form.Input label='Filter' value={filterText} onChange={this.handleChange} />
         <Button type='submit'>Save</Button>
-        <Button onClick={this.props.onClose}>Cancel</Button>
+        <Button onClick={this.handleCancelClick}>Cancel</Button>
       </Form>
     )
   }
