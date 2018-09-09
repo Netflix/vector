@@ -52,7 +52,7 @@ class DatasetPoller extends React.Component {
 
   pollMetrics = async () => {
     const { charts, protocol, windowIntervalMs, onContextDatasetsUpdated } = this.props
-    const { contextDatasets } = this.state
+    const { contextDatasets = [] } = this.state
     try {
       if (charts.length == 0) {
         return
@@ -116,7 +116,13 @@ class DatasetPoller extends React.Component {
       // find any missing instanceDomainMappings
       // TODO how do we poll this regularly for updates? eg: bcc tcptop, changing socket list
       for(const q of queries) {
-        const idomMaps = contextDatasets.find(cds => matchesTarget(cds.target, q.target)).instanceDomainMappings
+        const context = contextDatasets.find(cds => matchesTarget(cds.target, q.target))
+        // make sure we have a context that is valid
+        if (!context) {
+          continue;
+        }
+
+        const idomMaps = context.instanceDomainMappings
         const neededNames = q.metricNames.filter(name => !(name in idomMaps))
 
         for(const name of neededNames) {
