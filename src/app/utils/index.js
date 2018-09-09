@@ -20,12 +20,32 @@ export function pushQueryStringToHistory(targets, chartlist, history) {
   history.push(`/?charts=${encoded}`)
 }
 
-export function getChartsFromQueryString(param) {
+export function getChartsFromQueryString(theLocation) {
+  const query = parse(theLocation.search)
+
+  // check for old world urls
+  // the links in from spinnaker are via host= and container=
+  // TODO should this be pluggable?
+  if (!query.charts) {
+    const queryHash = parse(theLocation.hash)
+    const hostname = queryHash['/?host']
+    const containerId = queryHash.container
+    return {
+      isLegacy: true,
+      targets: [{
+        hostname,
+        hostspec: 'localhost',
+        containerId,
+      }],
+      chartlist: []
+    }
+  }
+
+  // the new world version
   function uniqueTargetFilter (val, index, array) {
     return array.findIndex(v => matchesTarget(v, val)) === index
   }
 
-  const query = parse(param)
   if (!query.charts) return { targets: [], chartlist: [] }
 
   const decoded = decodeURI(query.charts)

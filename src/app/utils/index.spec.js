@@ -4,7 +4,7 @@ import { expect } from 'chai'
 describe('getChartsFromQueryString', () => {
   describe('with full length string', () => {
     const string = '?charts=[{"hostname":"192.168.251.133:44323","hostspec":"localhost","containerId":"_all","chartIds":["cpu-pswitch"]},{"hostname":"1.2.3.4:7402","hostspec":"localhost","containerId":"_all","chartIds":[]},{"hostname":"192.168.251.133:44323","hostspec":"localhost","containerId":"hopeful_dijkstra","chartIds":["container-percont-cpu","container-percont-mem","container-total-cont-mem"]}]'
-    const result = utils.getChartsFromQueryString(string)
+    const result = utils.getChartsFromQueryString({ search: string })
     it('finds three targets', () => {
       expect(result.targets.length).to.equal(3)
       expect(result.targets).to.have.deep.members([

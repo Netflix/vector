@@ -1,6 +1,5 @@
 // TODO plenty more tests
 // TODO toast messages when there are issues
-// TODO add flame graphs (maybe not?)
 // TODO enable vector to browse and collect cluster and container information from external sources
 // - needs to be pluggable, eg from k8s/titus/etc
 
@@ -38,7 +37,10 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import charts from './charts'
 import bundles from './bundles'
 
-const initialChartIdlist = getChartsFromQueryString(location.search)
+const initialChartIdlist = getChartsFromQueryString(location)
+if (initialChartIdlist && initialChartIdlist.isLegacy) {
+  initialChartIdlist.targets[0].hostname = initialChartIdlist.targets[0].hostname + ':' + config.defaultPort
+}
 const initialTargets = initialChartIdlist.targets
 const initialChartlist = initialChartIdlist.chartlist
   .map(c => ({
