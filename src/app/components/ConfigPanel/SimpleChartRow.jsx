@@ -12,7 +12,7 @@ class SimpleChartRow extends React.PureComponent {
         <Grid.Column width={4}>
           <Button
             style={{ width: '220px', height: '120px' }}
-            size='massive'
+            size='huge'
             bundle={bundle}
             icon={icon}
             content={buttonLabel}
