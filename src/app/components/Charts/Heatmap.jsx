@@ -10,12 +10,7 @@ import memoizeOne from 'memoize-one'
 import { uniqueFilter } from '../../utils'
 import { getLargestValueInDataset } from '../../processors/modelUtils'
 import HeatmapScale from './HeatmapScale.jsx'
-
-const tooltipContentStyle = {
-  background: 'rgba(255, 255, 255, 0.85)',
-  border: '1px double #ddd',
-  padding: '10px 20px',
-}
+import HeatmapTooltip from './HeatmapTooltip.jsx'
 
 // collapse dataset into a single stream as this is what the xyframe heatmap view requires
 function extractHeatmapValuesFromDataset(dataset, yAxisLabels) {
@@ -93,13 +88,9 @@ class Heatmap extends React.PureComponent {
         margin={this.margin}
         yExtent={[0, yAxisLookup.length]}
         hoverAnnotation={true}
-        tooltipContent={dp => (
-          dp.binItems.length
-            ? <div style={tooltipContentStyle}>
-              <p>{dp.binItems.length && dp.binItems[0].label}: {dp.binItems.length}</p>
-            </div>
-            : null
-        )}
+        tooltipContent={dp => dp.binItems.length > 0
+          && <HeatmapTooltip label={dp.binItems[0].label} count={dp.binItems.length} />
+        }
         axes={[
           {
             orient: "left",
