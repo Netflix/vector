@@ -55,6 +55,15 @@ function generateSharedTooltipContent(dataset, format) {
     points.forEach((point, i) => {
       returnArray.push([
         <div key={`tooltip_line_${i}`} style={tooltipStyles.lineItem} >
+          <p key={`tooltip_color_${i}`}
+            style={{
+              width: '10px', height: '10px',
+              backgroundColor: point.color,
+              display: 'inline-block', position: 'absolute',
+              top: '8px',
+              left: '0',
+              margin: '0'
+            }} />
           <p style={tooltipStyles.title}>{point.keylabel}</p>
           <p style={tooltipStyles.value}>{format(point.value && point.value.value)}</p>
         </div>
