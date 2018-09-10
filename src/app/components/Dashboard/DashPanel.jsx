@@ -47,7 +47,8 @@ class DashPanel extends React.Component {
 
         <Segment style={panelContentStyle}>
           { hasError &&
-            <span>Caught error with this component: { error && error.message }</span> }
+            <span>Caught error with this component: { error && error.message }</span>
+          }
 
           { !hasError && dataset && dataset.length > 0 &&
             <Visualisation dataset={dataset} chartInfo={chartInfo}/>
