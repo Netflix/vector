@@ -10,6 +10,7 @@ const tooltipContentStyle = {
 class HeatmapTooltip extends React.PureComponent {
   render () {
     const { label, count } = this.props
+
     return (
       <div style={tooltipContentStyle}>
         <p>{label}: {count}</p>

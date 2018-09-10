@@ -1,5 +1,6 @@
 import superagent from 'superagent'
 import { parse } from 'query-string'
+import config from '../config'
 
 /////////////////////////////////////
 // url handling support
@@ -20,16 +21,18 @@ export function pushQueryStringToHistory(targets, chartlist, history) {
   history.push(`/?charts=${encoded}`)
 }
 
-export function getChartsFromQueryString(theLocation) {
-  const query = parse(theLocation.search)
+export function getChartsFromLocation({ search, hash }) {
+  if (!search && !hash) {
+    return { chartlist: [], targets: [] }
+  }
 
   // check for old world urls
-  // the links in from spinnaker are via host= and container=
-  // TODO should this be pluggable?
-  if (!query.charts) {
-    const queryHash = parse(theLocation.hash)
-    const hostname = queryHash['/?host']
-    const containerId = queryHash.container
+  // the links in from legacy are via host= and container=,
+  // ignore the charts specifically (too bad)
+  if (hash) {
+    const queryHash = parse(hash)
+    const hostname = queryHash['/?host'] + ':' + config.defaultPort
+    const containerId = queryHash.container || '_all'
     return {
       isLegacy: true,
       targets: [{
@@ -41,28 +44,29 @@ export function getChartsFromQueryString(theLocation) {
     }
   }
 
-  // the new world version
   function uniqueTargetFilter (val, index, array) {
     return array.findIndex(v => matchesTarget(v, val)) === index
   }
 
-  if (!query.charts) return { targets: [], chartlist: [] }
+  if (search) {
+    const query = parse(search)
 
-  const decoded = decodeURI(query.charts)
-  const params = JSON.parse(decoded)
+    const decoded = decodeURI(query['charts'])
+    const params = JSON.parse(decoded)
 
-  const targets = params
-    .map(c => ({ hostname: c.hostname, hostspec: c.hostspec, containerId: c.containerId }))
-    .filter(uniqueTargetFilter) // should not be needed, but just in case
+    const targets = params
+      .map(c => ({ hostname: c.hostname, hostspec: c.hostspec, containerId: c.containerId }))
+      .filter(uniqueTargetFilter) // should not be needed, but just in case
 
-  const chartlist = params.map(c => c.chartIds.map(chartId => ({
-    target: { hostname: c.hostname, hostspec: c.hostspec, containerId: c.containerId },
-    chartId: chartId
-  }))).reduce(flatten, [])
+    const chartlist = params.map(c => c.chartIds.map(chartId => ({
+      target: { hostname: c.hostname, hostspec: c.hostspec, containerId: c.containerId },
+      chartId: chartId
+    }))).reduce(flatten, [])
 
-  return {
-    targets,
-    chartlist,
+    return {
+      targets,
+      chartlist,
+    }
   }
 }
 

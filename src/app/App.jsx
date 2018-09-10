@@ -31,13 +31,13 @@ import isEqual from 'lodash.isequal'
 import cloneDeep from 'lodash.clonedeep'
 
 import 'semantic-ui-css/semantic.min.css'
-import { matchesTarget, getChartsFromQueryString, pushQueryStringToHistory } from './utils'
+import { matchesTarget, getChartsFromUrl, pushQueryStringToHistory } from './utils'
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import charts from './charts'
 import bundles from './bundles'
 
-const initialChartIdlist = getChartsFromQueryString(location)
+const initialChartIdlist = getChartsFromUrl(location.url)
 if (initialChartIdlist && initialChartIdlist.isLegacy) {
   initialChartIdlist.targets[0].hostname = initialChartIdlist.targets[0].hostname + ':' + config.defaultPort
 }
