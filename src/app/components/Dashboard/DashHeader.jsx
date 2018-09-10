@@ -66,7 +66,7 @@ class DashHeader extends React.PureComponent {
               <SettingsComponent {...chartInfo}
                 pmids={this.props.pmids}
                 onNewSettings={this.handleNewSettings}
-                onClose={this.handleCloseSettings}
+                onClose={this.handleCloseClicked}
                 dataset={this.props.dataset} />
 
             </Modal.Content>

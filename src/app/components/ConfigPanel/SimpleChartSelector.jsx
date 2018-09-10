@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Button, Segment, Popup } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
+
+import SimpleChartRow from './SimpleChartRow.jsx'
 
 class SimpleChartSelector extends React.PureComponent {
   handleClearMenuClick = () => this.props.onClearCharts()
@@ -24,22 +26,20 @@ class SimpleChartSelector extends React.PureComponent {
     const { disabled, bundles } = this.props
 
     return (
-      <Segment attached='bottom'>
-
-        <Button size='massive' icon='remove' content='Clear'
-          disabled={disabled}
-          onClick={this.handleClearMenuClick}/>
+      <Grid celled width={5}>
+        <SimpleChartRow
+          icon='remove' buttonLabel='clear' disabled={disabled}
+          onClick={this.handleClearMenuClick}
+          description='Clear all charts' />
 
         { bundles.map(b => (
-          <Popup key={b.name} content={b.description} position='bottom center' trigger={
-            <Button
-              size='massive' icon={b.iconName} content={b.name}
-              bundle={b}
-              disabled={disabled}
-              onClick={this.handleSimpleButtonClick}/>} />
+          <SimpleChartRow key={b.name}
+            icon={b.iconName} buttonLabel={b.name} disabled={disabled}
+            onClick={this.handleSimpleButtonClick}
+            description={b.description}
+            bundle={b} />
         ))}
-
-      </Segment>
+      </Grid>
     )
   }
 }
