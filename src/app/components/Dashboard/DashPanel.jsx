@@ -19,8 +19,17 @@ const panelContentStyle = {
 }
 
 class DashPanel extends React.Component {
+  state = {}
+
+  componentDidCatch(error, info) {
+    console.log('caught an error', error, info)
+    this.setState({ hasError: true, error, info })
+  }
+
   render () {
     const { chartInfo, datasets, containerList, instanceDomainMappings, containerId } = this.props
+    const { hasError, error } = this.state
+    const { pmids, onNewSettings, onCloseClicked } = this.props
 
     const dataset = datasets && chartInfo.processor
       ? chartInfo.processor.calculateChart(datasets, chartInfo, { instanceDomainMappings, containerList, containerId, chartInfo })
@@ -32,20 +41,19 @@ class DashPanel extends React.Component {
       <Segment.Group raised style={panelStyle}>
 
         <Segment clearing>
-          <DashHeader
-            chartInfo={this.props.chartInfo}
-            dataset={dataset}
-            pmids={this.props.pmids}
-            onNewSettings={this.props.onNewSettings}
-            onCloseClicked={this.props.onCloseClicked} />
+          <DashHeader chartInfo={chartInfo} dataset={dataset} pmids={pmids}
+            onNewSettings={onNewSettings} onCloseClicked={onCloseClicked} />
         </Segment>
 
         <Segment style={panelContentStyle}>
-          { dataset && dataset.length > 0 &&
+          { hasError &&
+            <span>Caught error with this component: { error && error.message }</span> }
+
+          { !hasError && dataset && dataset.length > 0 &&
             <Visualisation dataset={dataset} chartInfo={chartInfo}/>
           }
 
-          { (!dataset || dataset.length <= 0) &&
+          { !hasError && (!dataset || dataset.length <= 0) &&
             <span>No data yet</span>
           }
         </Segment>
