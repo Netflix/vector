@@ -41,6 +41,10 @@ class ChartTooltip extends React.PureComponent {
   }
 }
 
+ChartTooltip.defaultProps = {
+  format: (v) => v, // if no format provided, use identity
+}
+
 ChartTooltip.propTypes = {
   header: PropTypes.string.isRequired,
   points: PropTypes.array.isRequired,
