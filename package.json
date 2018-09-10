@@ -24,6 +24,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-error-boundary": "^1.2.3",
     "react-grid-layout": "^0.16.6",
     "react-router-dom": "^4.3.1",
     "semantic-ui-css": "^2.3.3",

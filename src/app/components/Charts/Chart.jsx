@@ -5,7 +5,9 @@ import moment from 'moment'
 import memoizeOne from 'memoize-one'
 import ColorHash from 'color-hash'
 const colorHash = new ColorHash()
+import ErrorBoundary from 'react-error-boundary'
 
+import ErrorPanel from '../ErrorPanel.jsx'
 import ChartTooltip from './ChartTooltip.jsx'
 
 // most of this is modelled on the semiotic examples
@@ -85,10 +87,12 @@ class Chart extends React.PureComponent {
         // line highlight
         hoverAnnotation={this.hoverAnnotation}
         tooltipContent={(passedData) =>
-          <ChartTooltip
-            points={fetchCoincidentPoints(passedData, dataset)}
-            format={chartInfo.yTickFormat}
-            header={moment(new Date(passedData.ts)).format('HH:mm:ss')} />
+          <ErrorBoundary FallbackComponent={ErrorPanel}>
+            <ChartTooltip
+              points={fetchCoincidentPoints(passedData, dataset)}
+              format={chartInfo.yTickFormat}
+              header={moment(new Date(passedData.ts)).format('HH:mm:ss')} />
+          </ErrorBoundary>
         }
         baseMarkProps={this.baseMarkProps} />
     )

@@ -2,9 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import DashPanel from './DashPanel.jsx'
+import ErrorPanel from '../ErrorPanel.jsx'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
+import ErrorBoundary from 'react-error-boundary'
 
 import { matchesTarget } from '../../utils'
 
@@ -34,17 +36,19 @@ class Dashboard extends React.Component {
           return (
             // TODO this layout calculation is a bit clunky
             <div key={`panel-${c.chartId}`} data-grid={{ x: ((idx % 2) * 5), y: 0, w: 5, h: 9, minW: 3, minH: 3 }} style={dashPanelDivStyle}>
-              <DashPanel
-                chartIndex={idx}
-                chartInfo={c}
-                datasets={ctxds ? ctxds.datasets : []}
-                onCloseClicked={this.handleCloseClicked}
-                containerList={c.context.containerList || []}
-                instanceDomainMappings={ctxds ? ctxds.instanceDomainMappings : {}}
-                containerId={(c.context.containerId || '_all') === '_all' ? '' : c.context.containerId}
-                settings={c.settings}
-                onNewSettings={this.handleNewSettings}
-                pmids={c.context.pmids || {}}/>
+              <ErrorBoundary FallbackComponent={ErrorPanel}>
+                <DashPanel
+                  chartIndex={idx}
+                  chartInfo={c}
+                  datasets={ctxds ? ctxds.datasets : []}
+                  onCloseClicked={this.handleCloseClicked}
+                  containerList={c.context.containerList || []}
+                  instanceDomainMappings={ctxds ? ctxds.instanceDomainMappings : {}}
+                  containerId={(c.context.containerId || '_all') === '_all' ? '' : c.context.containerId}
+                  settings={c.settings}
+                  onNewSettings={this.handleNewSettings}
+                  pmids={c.context.pmids || {}}/>
+              </ErrorBoundary>
             </div>
           )
         })}

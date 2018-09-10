@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 
 import 'react-resizable/css/styles.css'
 import { Segment } from 'semantic-ui-react'
+import ErrorBoundary from 'react-error-boundary'
+
 import DashHeader from './DashHeader.jsx'
+import ErrorPanel from '../ErrorPanel.jsx'
 
 const panelStyle = {
   // height=100% to ensure it fills the card, flex so that the content part of
@@ -19,16 +22,8 @@ const panelContentStyle = {
 }
 
 class DashPanel extends React.Component {
-  state = {}
-
-  componentDidCatch(error, info) {
-    console.log('caught an error', error, info)
-    this.setState({ hasError: true, error, info })
-  }
-
   render () {
     const { chartInfo, datasets, containerList, instanceDomainMappings, containerId } = this.props
-    const { hasError, error } = this.state
     const { pmids, onNewSettings, onCloseClicked } = this.props
 
     const dataset = datasets && chartInfo.processor
@@ -46,17 +41,15 @@ class DashPanel extends React.Component {
         </Segment>
 
         <Segment style={panelContentStyle}>
-          { hasError &&
-            <span>Caught error with this component: { error && error.message }</span>
-          }
+          <ErrorBoundary FallbackComponent={ErrorPanel}>
+            { dataset && dataset.length > 0 &&
+              <Visualisation dataset={dataset} chartInfo={chartInfo}/>
+            }
 
-          { !hasError && dataset && dataset.length > 0 &&
-            <Visualisation dataset={dataset} chartInfo={chartInfo}/>
-          }
-
-          { !hasError && (!dataset || dataset.length <= 0) &&
-            <span>No data yet</span>
-          }
+            { (!dataset || dataset.length <= 0) &&
+              <span>No data yet</span>
+            }
+          </ErrorBoundary>
         </Segment>
       </Segment.Group>
     )
