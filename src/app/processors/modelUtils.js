@@ -6,6 +6,7 @@ export function transformRawDataToPipelineData (datasets, chartInfo) {
   for(const { timestamp, values } of datasets) {
     const ts = new Date(timestamp.s * 1000 + timestamp.us / 1000)
 
+    // TODO this is a hot loop, some different data access especially output.find() will probably improve things greatly
     for (const { name, instances } of values) {
       if (!passMetrics.includes(name)) continue
 
