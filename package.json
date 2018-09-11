@@ -1,8 +1,8 @@
 {
   "name": "vector",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Vector is an Instance-Level, On-Demand, High-Resolution Monitoring Framework. It's a web-base UI that leverages Performance Co-Pilot (PCP) in the backend.",
-  "author": "Martin Spier <mspier@netflix.com>",
+  "author": "Jason Koch <jkoch@netflix.com>",
   "main": "src/app/index.html",
   "repository": "https://github.com/Netflix/vector",
   "license": "Apache-2.0",
