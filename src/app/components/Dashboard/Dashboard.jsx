@@ -21,8 +21,8 @@ class Dashboard extends React.Component {
   handleCloseClicked = ({ chartIndex }) => {
     this.props.removeChartByIndex(chartIndex)
   }
-  handleNewSettings = (chartInfo, settings) => {
-    this.props.updateChartSettings(this.props.chartlist.indexOf(chartInfo), settings)
+  handleNewSettings = ({ chartIndex }, settings) => {
+    this.props.updateChartSettings(chartIndex, settings)
   }
 
   calculateGridForIndex = (idx) => {
