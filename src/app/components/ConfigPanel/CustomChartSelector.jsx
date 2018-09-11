@@ -5,23 +5,19 @@ import { Icon, Menu, Popup } from 'semantic-ui-react'
 
 import { flatten, uniqueFilter } from '../../utils'
 
-const chartSelectorStyle = {
-  marginTop: '0px',
-}
-
-const iconStyle = {
-  float: 'right',
-}
-
-const titleLinkStyle = {
-  marginBottom: '0px',
-  width: '100%',
-  display: 'block'
-}
+const titleLinkStyle = { marginBottom: '0px', width: '100%', display: 'block', }
+const chartSelectorStyle = { marginTop: '0px', }
+const iconStyle = { float: 'right', }
+const selectedItemStyle = { backgroundClip: 'padding-box', backgroundColor: 'rgb(186,243,194)' }
+const unselectedItemStyle = {}
 
 class CustomChartSelector extends React.PureComponent {
   handleClearMenuClick = () => this.props.onClearCharts()
-  handleMenuItemClick = (e, { chart }) => this.props.onAddChart(chart)
+  handleMenuItemClick = (e, { chart }) => {
+    if (! this.props.selectedChartIds.includes(chart.chartId)) {
+      this.props.onAddChart(chart)
+    }
+  }
 
   enableChart = (chart) => {
     const { disabled, selectedPmids } = this.props
@@ -31,7 +27,7 @@ class CustomChartSelector extends React.PureComponent {
   }
 
   render () {
-    const { charts = [], disabled } = this.props
+    const { charts = [], disabled, selectedChartIds = [] } = this.props
 
     const groupNames = charts
       .map(chart => chart.group)
@@ -56,6 +52,7 @@ class CustomChartSelector extends React.PureComponent {
             { charts.filter(c => c.group === g).map(c => (
               <Menu.Item key={`group-${g}-chart${c.title}`}
                 name={c.title}
+                style={selectedChartIds.includes(c.chartId) ? selectedItemStyle : unselectedItemStyle }
                 disabled={!this.enableChart(c)}
                 onClick={this.handleMenuItemClick}
                 chart={c}>
@@ -85,6 +82,7 @@ CustomChartSelector.propTypes = {
   onAddChart: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   selectedPmids: PropTypes.object,
+  selectedChartIds: PropTypes.arrayOf(PropTypes.string),
 }
 
 export default CustomChartSelector

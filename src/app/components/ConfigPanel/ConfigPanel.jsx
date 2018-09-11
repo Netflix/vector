@@ -75,8 +75,12 @@ class ConfigPanel extends React.PureComponent {
   }
 
   render () {
-    const { config, contextData, initialAddContext, charts, bundles, onRequestClose } = this.props
+    const { config, contextData, initialAddContext, charts, bundles, onRequestClose, chartlist } = this.props
     const { selectedContext } = this.state
+
+    // given a selected context, find all charts in the chartlist that match, and return their ids
+    const selectedCharts = chartlist.filter(c => matchesTarget(c.context.target, selectedContext && selectedContext.target))
+    const selectedChartIds = selectedCharts.map(c => c.chartId)
 
     return (
       <Segment.Group horizontal compact style={panelStyle}>
@@ -93,6 +97,7 @@ class ConfigPanel extends React.PureComponent {
           disabled={!selectedContext}
           charts={charts}
           selectedTarget={selectedContext && selectedContext.target}
+          selectedChartIds={selectedChartIds}
           bundles={bundles}
           onClearCharts={this.handleClearCharts}
           onAddChart={this.handleAddChart}
@@ -132,6 +137,7 @@ ConfigPanel.propTypes = {
   charts: PropTypes.array.isRequired,
   bundles: PropTypes.array.isRequired,
   initialAddContext: PropTypes.bool.isRequired,
+  chartlist: PropTypes.array.isRequired,
 }
 
 ConfigPanel.getSelectedContextPmids = getSelectedContextPmids

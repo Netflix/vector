@@ -14,7 +14,7 @@ class ChartSelector extends React.PureComponent {
 
   render () {
     const { activeTab } = this.state
-    const { charts, bundles, disabled, selectedPmids } = this.props
+    const { charts, bundles, disabled, selectedPmids, selectedChartIds } = this.props
     const { onClearCharts, onAddChart, onRequestClose } = this.props
 
     return (<div>
@@ -38,7 +38,9 @@ class ChartSelector extends React.PureComponent {
           onClearCharts={onClearCharts}
           onAddChart={onAddChart}
           disabled={disabled}
-          selectedPmids={selectedPmids} /> }
+          selectedPmids={selectedPmids}
+          selectedChartIds={selectedChartIds} /> }
+
     </div>)
   }
 }
@@ -55,6 +57,7 @@ ChartSelector.propTypes = {
   onRequestClose: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   selectedPmids: PropTypes.object,
+  selectedChartIds: PropTypes.array,
 }
 
 export default ChartSelector

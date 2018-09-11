@@ -170,6 +170,7 @@ class App extends React.Component {
                 config={config}
                 charts={charts}
                 bundles={bundles}
+                chartlist={this.state.chartlist}
                 contextData={this.state.contextData}
                 onNewContext={this.onNewContext}
                 onRemoveContext={this.onRemoveContext}
