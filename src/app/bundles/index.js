@@ -34,7 +34,6 @@ const bundles = [
       </ul>
     </div>),
     chartTemplates: [
-      { chartId: 'text-label', content: 'Default container metrics for your instance' },
       { chartId: 'container-percont-cpu' },
       { chartId: 'container-percont-mem' },
       { chartId: 'container-disk-iops' },
@@ -67,10 +66,6 @@ const bundles = [
     iconName: 'hotjar',
     description: 'Flame graphs',
     chartTemplates: [
-      {
-        chartId: 'text-label',
-        content: 'All available flame graphs. Please also check out Flamecommander',
-      },
       { chartId: 'fg-cpu' },
       { chartId: 'fg-pname-cpu' },
       { chartId: 'fg-uninlined-cpu' },
