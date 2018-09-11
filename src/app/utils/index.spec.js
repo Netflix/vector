@@ -4,7 +4,7 @@ import { expect } from 'chai'
 
 describe('getChartsFromLocation', () => {
   describe('with new style search string', () => {
-    const search = '?charts=[{"hostname":"192.168.251.133:44323","hostspec":"localhost","containerId":"_all","chartIds":["cpu-pswitch"]},{"hostname":"1.2.3.4:7402","hostspec":"localhost","containerId":"_all","chartIds":[]},{"hostname":"192.168.251.133:44323","hostspec":"localhost","containerId":"hopeful_dijkstra","chartIds":["container-percont-cpu","container-percont-mem","container-total-cont-mem"]}]'
+    const search = '?q=[{"h":"192.168.251.133:44323","hs":"localhost","ci":"_all","cl":["cpu-pswitch"]},{"h":"1.2.3.4:7402","hs":"localhost","ci":"_all","cl":[]},{"h":"192.168.251.133:44323","hs":"localhost","ci":"hopeful_dijkstra","cl":["container-percont-cpu","container-percont-mem","container-total-cont-mem"]}]'
     const result = utils.getChartsFromLocation({ search, hash: null })
     it('finds three targets', () => {
       expect(result.targets.length).to.equal(3)

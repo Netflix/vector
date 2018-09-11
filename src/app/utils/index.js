@@ -7,10 +7,10 @@ import config from '../config'
 
 export function pushQueryStringToHistory(targets, chartlist, history) {
   const data = targets.map(t => ({
-    hostname: t.hostname,
-    hostspec: t.hostspec,
-    containerId: t.containerId,
-    chartIds: chartlist
+    h: t.hostname,
+    hs: t.hostspec,
+    ci: t.containerId,
+    cl: chartlist
       .filter(c => matchesTarget(c.context.target, t))
       .map(c => c.chartId)
   }))
@@ -18,7 +18,7 @@ export function pushQueryStringToHistory(targets, chartlist, history) {
   const encoded = encodeURI(blob)
 
   // we can kinda do this because the only way you should be able to add charts is when not in embed mode
-  history.push(`/?charts=${encoded}`)
+  history.push(`/?q=${encoded}`)
 }
 
 export function getChartsFromLocation({ search, hash }) {
@@ -51,17 +51,19 @@ export function getChartsFromLocation({ search, hash }) {
   if (search) {
     const query = parse(search)
 
-    const decoded = decodeURI(query['charts'])
+    const decoded = decodeURI(query['q'])
     const params = JSON.parse(decoded)
 
     const targets = params
-      .map(c => ({ hostname: c.hostname, hostspec: c.hostspec, containerId: c.containerId }))
+      .map(c => ({ hostname: c.h, hostspec: c.hs, containerId: c.ci }))
       .filter(uniqueTargetFilter) // should not be needed, but just in case
 
-    const chartlist = params.map(c => c.chartIds.map(chartId => ({
-      target: { hostname: c.hostname, hostspec: c.hostspec, containerId: c.containerId },
-      chartId: chartId
-    }))).reduce(flatten, [])
+    const chartlist = params.map(c =>
+      c.cl.map(chartId => ({
+        target: { hostname: c.h, hostspec: c.hs, containerId: c.ci },
+        chartId: chartId
+      }))
+    ).reduce(flatten, [])
 
     return {
       targets,
