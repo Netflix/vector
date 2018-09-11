@@ -25,17 +25,31 @@ class Dashboard extends React.Component {
     this.props.updateChartSettings(this.props.chartlist.indexOf(chartInfo), settings)
   }
 
+  calculateGridForIndex = (idx) => {
+    return {
+      x: (idx % 2) * 5,
+      y: idx,
+      w: 5,
+      h: 9,
+      minW: 3,
+      minH: 3
+    }
+  }
+
   render () {
     const { chartlist, pausedContextDatasets, contextDatasets } = this.props
     const datasets = pausedContextDatasets || contextDatasets
+    const chartlistWithGrid = chartlist.map((c, idx) => ({ ...c, dataGrid: this.calculateGridForIndex(idx) }))
+    // order the chartlist for render by the order of the grid
+    // need it reverse ordered so that popups will appear with the right z-index
+    const chartlistOrderedForRender = chartlistWithGrid.sort((a, b) => (b.dataGrid.y - a.dataGrid.y))
 
     return (
       <GridLayout rowHeight={40} cols={gridResponsiveCols} style={gridStyle} clazzName='layout' draggableCancel='.doNotDrag'>
-        { chartlist.map((c, idx) => {
+        { chartlistOrderedForRender.map((c, idx) => {
           const ctxds = datasets.find(ctxds => matchesTarget(ctxds.target, c.context.target))
           return (
-            // TODO this layout calculation is a bit clunky
-            <div key={`panel-${c.chartId}`} data-grid={{ x: ((idx % 2) * 5), y: 0, w: 5, h: 9, minW: 3, minH: 3 }} style={dashPanelDivStyle}>
+            <div key={`panel-${c.chartId}`} data-grid={c.dataGrid} style={dashPanelDivStyle}>
               <ErrorBoundary FallbackComponent={ErrorPanel}>
                 <DashPanel
                   chartIndex={idx}
