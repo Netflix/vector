@@ -6,6 +6,9 @@ import { Button, Form } from 'semantic-ui-react'
 
 const TIMEOUTS = { response: 5000, deadline: 10000 }
 
+// TODO ugh how do we get this cleanly
+import config from '../../config'
+
 function getStatusFromDataset(dataset) {
   // oh for the ?. operator
   return dataset && dataset[0] && dataset[0].data && dataset[0].data[0] && dataset[0].data[0].value || '?'
@@ -13,6 +16,15 @@ function getStatusFromDataset(dataset) {
 
 const FG_DURATIONS = [ 5, 10, 20, 60 ]
 
+/**
+ * Takes over a chart panel to allow generation of a flamegraph
+ *
+ * Directly calls the pmapi to submit requests, and then waits for the response
+ * to come in via normal datasets.
+ *
+ * It is expected that the metricNames[] field in the chart record contains the correct
+ * metric name to poll for a flamegraph
+ */
 class Flamegraph extends React.PureComponent {
   state = {
     durationSeconds: FG_DURATIONS[0],
@@ -32,28 +44,32 @@ class Flamegraph extends React.PureComponent {
   handleDurationChange = (e, { value }) => this.setState({ durationSeconds: value })
 
   requestGenerate = async () => {
-    const hostname = this.props.chartInfo.context.target.hostname
-    const contextId = this.props.chartInfo.context.contextId
-    const seconds = this.state.durationSeconds
-    const fgtype = this.props.chartInfo.metricNames[0]
+    const { chartInfo } = this.props
+    const { durationSeconds } = this.state
+
+    const hostname = chartInfo.context.target.hostname
+    const contextId = chartInfo.context.contextId
+    const fgtype = chartInfo.metricNames[0]
 
     try {
-      await superagent.get(`http://${hostname}/pmapi/${contextId}/_store`)
+      this.setState({ fetchFile: null })
+      await superagent.get(`${config.protocol}://${hostname}/pmapi/${contextId}/_store`)
         .timeout(TIMEOUTS)
-        .query({ name: fgtype, value: seconds })
+        .query({ name: fgtype, value: durationSeconds })
     } catch (err) {
-      // TODO would be better to show the error
       console.log('flamegraph trigger failed', err)
       console.error(err)
     }
   }
 
   render () {
+    const { durationSeconds, fetchFile } = this.state
+    const { dataset } = this.props
+
     const hostname = this.props.chartInfo.context.target.hostname
-    const dataset = this.props.dataset
     const status = getStatusFromDataset(dataset)
     const isIdle = ['IDLE', 'ERROR'].includes(status.split(' ')[0])
-    const { durationSeconds, fetchFile } = this.state
+    const durationOptions = FG_DURATIONS.map(sec => ({ text: `${sec} sec`, value: sec }))
 
     return (
       <div>
@@ -61,20 +77,22 @@ class Flamegraph extends React.PureComponent {
 
         <p>Profile duration:</p>
 
-        <Form.Dropdown
-          className='doNotDrag'
+        <Form.Dropdown className='doNotDrag'
           value={durationSeconds}
-          options={FG_DURATIONS.map(sec => ({ text: `${sec} sec`, value: sec }))}
+          options={durationOptions}
           onChange={this.handleDurationChange} />
 
         <p />
 
-        <Button primary className='doNotDrag' content='Start capture' onClick={this.requestGenerate} disabled={!isIdle} />
+        <Button primary className='doNotDrag'
+          content='Start capture'
+          onClick={this.requestGenerate}
+          disabled={!isIdle} />
 
         { fetchFile &&
-          <div>
-            <p className='doNotDrag'>Fetch url: {fetchFile}</p>
-            <a className='doNoTDrag' href={`http://${hostname}/${fetchFile}`}
+          <div className='doNotDrag'>
+            <p>Fetch url: {fetchFile}</p>
+            <a href={`${config.protocol}://${hostname}/${fetchFile}`}
               rel='noopener noreferrer' target='_blank' >View / download</a>
           </div> }
 
