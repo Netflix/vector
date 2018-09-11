@@ -21,7 +21,7 @@ class ContextMenu extends React.PureComponent {
     }
   }
 
-  addContextButton = (showModal) => <Button onClick={showModal}>Add Context ...</Button>
+  addContextButton = (showModal) => <Button primary onClick={showModal}>Add Connection</Button>
 
   render () {
     const { contextData, config, initialAddContext, onRemoveContext, onContextSelect, selectedContext } = this.props

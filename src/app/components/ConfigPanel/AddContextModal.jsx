@@ -71,7 +71,7 @@ class AddContextModal extends React.PureComponent {
         onClose={this.handleClose}
         trigger={render(this.handleOpen)}>
 
-        <Modal.Header>Add a context</Modal.Header>
+        <Modal.Header>Add connection</Modal.Header>
 
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
