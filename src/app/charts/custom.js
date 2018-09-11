@@ -1,13 +1,10 @@
 import customChartModel from '../processors/customChartModel'
 import customTableModel from '../processors/customTableModel'
-import nullModel from '../processors/nullModel'
 import { number } from '../processors/formats'
 import Chart from '../components/Charts/Chart.jsx'
-import TextLabel from '../components/Charts/TextLabel.jsx'
 import SimpleTable from '../components/Charts/SimpleTable.jsx'
 
 import CustomSettingsModal from '../components/SettingsModals/CustomSettingsModal.jsx'
-import TextLabelModal from '../components/SettingsModals/TextLabelModal.jsx'
 
 export default function _charts(config) {
   if (!config.enableCustomWidgetFeature) return []
@@ -47,6 +44,9 @@ export default function _charts(config) {
       settingsComponent: CustomSettingsModal,
       yTickFormat: number,
     },
+    /*
+     * TODO add this when url can handle full serialisation
+     * otherwise this is only really useful for bundles, as it cannot be 'persisted'
     {
       chartId: 'text-label',
       group: 'Custom',
@@ -58,5 +58,6 @@ export default function _charts(config) {
       content: '<click settings to edit>',
       size: 'medium',
     },
+    */
   ]
 }
