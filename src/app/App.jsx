@@ -68,9 +68,11 @@ class App extends React.Component {
         !(matchesTarget(chart.context.target, ctx.target)))
     }), this.refreshQueryString)
   }
+
   onAddChartToContext = (ctx, chart) => {
     this.setState((oldState) => ({ chartlist: oldState.chartlist.concat({ ...chart, context: ctx }) }), this.refreshQueryString)
   }
+
   removeChartByIndex = (idx) => {
     this.setState(oldState =>
       ({ chartlist: [ ...oldState.chartlist.slice(0, idx), ...oldState.chartlist.slice(idx + 1) ] }), this.refreshQueryString)

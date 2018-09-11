@@ -8,7 +8,10 @@ import SimpleChartRow from './SimpleChartRow.jsx'
 class SimpleChartSelector extends React.PureComponent {
   handleClearMenuClick = () => this.props.onClearCharts()
   handleSimpleButtonClick = (e, { bundle }) => {
-    const { charts, onAddChart, onRequestClose } = this.props
+    const { charts, onAddChart, onRequestClose, onClearCharts } = this.props
+
+    // clear charts before going ahead
+    onClearCharts()
 
     bundle.chartTemplates
       // pull all the properties from the default chart entry by chartId
@@ -28,7 +31,7 @@ class SimpleChartSelector extends React.PureComponent {
     return (
       <Grid celled width={5}>
         <SimpleChartRow
-          icon='remove' buttonLabel='clear' disabled={disabled}
+          icon='remove' buttonLabel='Clear' disabled={disabled}
           onClick={this.handleClearMenuClick}
           description='Clear all charts' />
 
