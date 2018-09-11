@@ -2,14 +2,14 @@ import React from 'react'
 
 const bundles = [
   {
-    name: 'Utilisation',
+    name: 'Utilization',
     iconName: 'computer',
     description: (<div>
       Quick overview of host utilization:
       <ul>
-        <li>CPU utilisation</li>
+        <li>CPU utilization</li>
         <li>Disk latency</li>
-        <li>Memory utilisation</li>
+        <li>Memory utilization</li>
         <li>Network throughput</li>
       </ul>
     </div>),
@@ -52,7 +52,7 @@ const bundles = [
         <li>IOPS</li>
         <li>Latency</li>
         <li>Throughput</li>
-        <li>Utilisation</li>
+        <li>Utilization</li>
       </ul>
     </div>),
     chartTemplates: [
