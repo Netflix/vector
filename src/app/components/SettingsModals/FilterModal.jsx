@@ -39,7 +39,7 @@ FilterModal.propTypes = {
 FilterModal.filterInstanceIncludesFilterText = function () {
   return function _filterInstanceIncludesFilterText (metricInstances, { chartInfo }) {
     if (!chartInfo.filter) return metricInstances
-    return metricInstances.filter(mi => mi.instance ? mi.instance.includes(chartInfo.filter) : true)
+    return metricInstances.filter(mi => (mi.instance && mi.instance.includes) ? mi.instance.includes(chartInfo.filter) : true)
   }
 }
 
