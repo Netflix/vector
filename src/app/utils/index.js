@@ -3,9 +3,11 @@ import { parse } from 'query-string'
 import config from '../config'
 
 /////////////////////////////////////
-// url handling support
+// window.location handling support
 
 export function pushQueryStringToHistory(targets, chartlist, history) {
+  console.log(chartlist)
+
   const data = targets.map(t => ({
     h: t.hostname,
     hs: t.hostspec,

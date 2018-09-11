@@ -57,6 +57,10 @@ class App extends React.Component {
     pausedData: null,
   }
 
+  // TODO this call block is a big ball of mud
+  // can it be pushed off to somewhere else
+  // or should we just switch it across to redux?
+
   refreshQueryString = () => {
     pushQueryStringToHistory(this.state.targets, this.state.chartlist, this.props.history)
   }

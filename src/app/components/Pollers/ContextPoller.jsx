@@ -111,6 +111,7 @@ class ContextPoller extends React.Component {
       }
 
       // refresh container list
+      // this runs every time
       const promisedContainerNames = superagent.get(`${pmApi}/${context.contextId}/_fetch?names=containers.name`)
       const promisedCgroups = superagent.get(`${pmApi}/${context.contextId}/_fetch?names=containers.cgroup`)
 
