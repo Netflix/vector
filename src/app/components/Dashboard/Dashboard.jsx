@@ -15,7 +15,7 @@ const GridLayout = WidthProvider(Responsive)
 const gridResponsiveCols = { lg: 12, md: 10, sm: 8, xs: 6 }
 const gridStyle = { paddingLeft: '15px' }
 
-const dashPanelDivStyle = { overflow: 'hidden' }
+const dashPanelDivStyle = { position: 'absolute' }
 
 class Dashboard extends React.Component {
   handleCloseClicked = (chartInfo) => {

@@ -33,7 +33,7 @@ class DashPanel extends React.Component {
     const Visualisation = chartInfo.visualisation
 
     return (
-      <Segment.Group raised style={panelStyle}>
+      <Segment.Group style={panelStyle}>
 
         <Segment clearing>
           <DashHeader chartInfo={chartInfo} dataset={dataset} pmids={pmids}
