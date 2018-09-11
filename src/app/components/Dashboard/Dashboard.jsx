@@ -18,8 +18,8 @@ const gridStyle = { paddingLeft: '15px' }
 const dashPanelDivStyle = { position: 'absolute' }
 
 class Dashboard extends React.Component {
-  handleCloseClicked = (chartInfo) => {
-    this.props.removeChartByIndex(this.props.chartlist.indexOf(chartInfo))
+  handleCloseClicked = ({ chartIndex }) => {
+    this.props.removeChartByIndex(chartIndex)
   }
   handleNewSettings = (chartInfo, settings) => {
     this.props.updateChartSettings(this.props.chartlist.indexOf(chartInfo), settings)
@@ -39,20 +39,20 @@ class Dashboard extends React.Component {
   render () {
     const { chartlist, pausedContextDatasets, contextDatasets } = this.props
     const datasets = pausedContextDatasets || contextDatasets
-    const chartlistWithGrid = chartlist.map((c, idx) => ({ ...c, dataGrid: this.calculateGridForIndex(idx) }))
+    const chartlistWithGrid = chartlist.map((c, idx) => ({ ...c, chartIndex: idx, dataGrid: this.calculateGridForIndex(idx) }))
     // order the chartlist for render by the order of the grid
     // need it reverse ordered so that popups will appear with the right z-index
     const chartlistOrderedForRender = chartlistWithGrid.sort((a, b) => (b.dataGrid.y - a.dataGrid.y))
 
     return (
       <GridLayout rowHeight={40} cols={gridResponsiveCols} style={gridStyle} clazzName='layout' draggableCancel='.doNotDrag'>
-        { chartlistOrderedForRender.map((c, idx) => {
+        { chartlistOrderedForRender.map((c) => {
           const ctxds = datasets.find(ctxds => matchesTarget(ctxds.target, c.context.target))
           return (
             <div key={`panel-${c.chartId}`} data-grid={c.dataGrid} style={dashPanelDivStyle}>
               <ErrorBoundary FallbackComponent={ErrorPanel}>
                 <DashPanel
-                  chartIndex={idx}
+                  chartIndex={c.chartIndex}
                   chartInfo={c}
                   datasets={ctxds ? ctxds.datasets : []}
                   onCloseClicked={this.handleCloseClicked}
