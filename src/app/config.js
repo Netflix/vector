@@ -1,6 +1,6 @@
 /**!
  *
- *  Copyright 2015 Netflix, Inc.
+ *  Copyright 2018 Netflix, Inc.
  *
  *     Licensed under the Apache License, Version 2.0 (the "License");
  *     you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  *     limitations under the License.
  *
  */
+
 export default {
   version: '[AIV]{version}[/AIV]', // version number, auto loaded by webpack from package.json
   protocol: 'http', // PMWEBD protocol (http or https)
