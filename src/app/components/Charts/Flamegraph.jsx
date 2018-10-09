@@ -32,7 +32,7 @@ function getStatusFromDataset(dataset) {
   return dataset && dataset[0] && dataset[0].data && dataset[0].data[0] && dataset[0].data[0].value || '?'
 }
 
-const FG_DURATIONS = [ 5, 10, 20, 60 ]
+const FG_DURATIONS = [ 5, 10, 20, 60, 120 ]
 
 /**
  * Takes over a chart panel to allow generation of a flamegraph
