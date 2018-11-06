@@ -47,7 +47,7 @@ const bundles = [
         <li>Container CPU</li>
         <li>Container MEM usage (MB & %)</li>
         <li>Container Disk IOPS</li>
-        <li>Container Disk IOPS throttled</li>
+        <li>Container Disk Throughput</li>
         <li>Container CPU throttled</li>
       </ul>
     </div>),
@@ -55,7 +55,7 @@ const bundles = [
       { chartId: 'container-percont-cpu' },
       { chartId: 'container-percont-mem' },
       { chartId: 'container-disk-iops' },
-      { chartId: 'container-disk-iops-throttle' },
+      { chartId: 'container-disk-tput' },
       { chartId: 'container-percont-cpu-throttle' },
       { chartId: 'container-percont-mem-util', },
     ],
