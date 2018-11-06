@@ -153,6 +153,12 @@ export default function _charts(config) {
       yTickFormat: integer,
     },
 
+    /*
+     * This is not used at netflix, this is for proportional IO blkio cgroup controller
+     * Is it needed by anyone?
+     */
+
+    /*
     {
       chartId: 'container-disk-iops',
       group: 'Container',
@@ -200,11 +206,19 @@ export default function _charts(config) {
       ],
       yTickFormat: integer,
     },
+    */
 
+    /* https://www.kernel.org/doc/Documentation/cgroup-v1/blkio-controller.txt
+     * 	- Number of IOs (bio) issued to the disk by the group. These
+     * 	are further divided by the type of operation - read or write, sync
+     * 	or async. First two fields specify the major and minor number of the
+     * 	device, third field specifies the operation type and the fourth field
+     * 	specifies the number of IOs.
+     */
     {
-      chartId: 'container-disk-iops-throttle',
+      chartId: 'container-disk-iops',
       group: 'Container',
-      title: 'Container Disk IOPS (Throttled)',
+      title: 'Container Disk IOPS',
       processor: simpleModel,
       visualisation: Chart,
       metricNames: [
@@ -226,9 +240,9 @@ export default function _charts(config) {
     },
 
     {
-      chartId: 'container-disk-tput-throttle',
+      chartId: 'container-disk-tput',
       group: 'Container',
-      title: 'Container Disk Throughput (Throttled) (Bytes)',
+      title: 'Container Disk Throughput (Bytes)',
       processor: simpleModel,
       visualisation: Chart,
       metricNames: [
