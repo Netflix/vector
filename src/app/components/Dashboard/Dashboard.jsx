@@ -57,7 +57,12 @@ class Dashboard extends React.Component {
   render () {
     const { chartlist, pausedContextDatasets, contextDatasets } = this.props
     const datasets = pausedContextDatasets || contextDatasets
-    const chartlistWithGrid = chartlist.map((c, idx) => ({ ...c, chartIndex: idx, dataGrid: this.calculateGridForIndex(idx) }))
+    const chartlistWithGrid = chartlist.map((c, idx) => ({
+      ...c,
+      chartIndex: idx,
+      dataGrid: this.calculateGridForIndex(idx),
+      chartKey: `panel-${c.chartId}-${c.context.hostname}-${c.context.contextId}`,
+    }))
     // order the chartlist for render by the order of the grid
     // need it reverse ordered so that popups will appear with the right z-index
     const chartlistOrderedForRender = chartlistWithGrid.sort((a, b) => (b.dataGrid.y - a.dataGrid.y))
@@ -67,7 +72,7 @@ class Dashboard extends React.Component {
         { chartlistOrderedForRender.map((c) => {
           const ctxds = datasets.find(ctxds => matchesTarget(ctxds.target, c.context.target))
           return (
-            <div key={`panel-${c.chartId}`} data-grid={c.dataGrid} style={dashPanelDivStyle}>
+            <div key={c.chartKey} data-grid={c.dataGrid} style={dashPanelDivStyle}>
               <ErrorBoundary FallbackComponent={ErrorPanel}>
                 <DashPanel
                   chartIndex={c.chartIndex}
