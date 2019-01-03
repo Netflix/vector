@@ -46,7 +46,7 @@ class Dashboard extends React.Component {
   calculateGridForIndex = (idx) => {
     return {
       x: (idx % 2) * 5,
-      y: idx,
+      y: Math.floor(idx / 2),
       w: 5,
       h: 9,
       minW: 3,
@@ -66,6 +66,8 @@ class Dashboard extends React.Component {
     // order the chartlist for render by the order of the grid
     // need it reverse ordered so that popups will appear with the right z-index
     const chartlistOrderedForRender = chartlistWithGrid.sort((a, b) => (b.dataGrid.y - a.dataGrid.y))
+
+    console.log(chartlistOrderedForRender)
 
     return (
       <GridLayout rowHeight={40} cols={gridResponsiveCols} style={gridStyle} clazzName='layout' draggableCancel='.doNotDrag'>
