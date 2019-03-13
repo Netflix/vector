@@ -14,6 +14,8 @@
 
 FROM node:8-alpine as nodebuilder
 
+RUN apk add --update git
+
 COPY . src/
 WORKDIR /src
 RUN npm install
