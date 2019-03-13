@@ -12,10 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+FROM node:8-alpine as nodebuilder
+
+COPY . src/
+WORKDIR /src
+RUN npm install
+RUN npm run build-prod
+
+#########################
+
 FROM alpine:latest
 
 RUN mkdir -p /usr/share/nginx/html
-COPY /dist /usr/share/nginx/html
+COPY --from=nodebuilder /src/dist /usr/share/nginx/html
 RUN apk add --update curl && \
     curl --silent --show-error --fail --location \
       --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" -o - \
@@ -23,10 +32,10 @@ RUN apk add --update curl && \
       | tar --no-same-owner -C /usr/bin/ -xz caddy && \
     chmod 0755 /usr/bin/caddy && \
     /usr/bin/caddy -version && \
-    apk del curl && \    
+    apk del curl && \
     rm -rf /root/.cache /root/.config /root/.local /root/.ash_history \
-      /usr/share/man /var/cache/apk/* 
-          
+      /usr/share/man /var/cache/apk/*
+
 EXPOSE 80
 CMD ["/usr/bin/caddy", "-root", "/usr/share/nginx/html", "-port", "80"]
 VOLUME ["/usr/share/nginx/html"]
