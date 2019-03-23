@@ -69,7 +69,7 @@ class DatasetPoller extends React.Component {
   }
 
   pollMetrics = async () => {
-    const { charts, protocol, windowIntervalMs, onContextDatasetsUpdated } = this.props
+    const { charts, windowIntervalMs, onContextDatasetsUpdated } = this.props
     const { contextDatasets = [] } = this.state
     try {
       if (charts.length == 0) {
@@ -113,7 +113,7 @@ class DatasetPoller extends React.Component {
         // TODO should be able to alarm if we can't find any pmids to match?
 
         let res = await superagent
-          .get(`${protocol}://${q.target.hostname}/pmapi/${q.contextId}/_fetch`)
+          .get(`${q.target.protocol}://${q.target.hostname}/pmapi/${q.contextId}/_fetch`)
           .query({ pmids })
         const oldestS = res.body.timestamp.s - (windowIntervalMs / 1000)
 
@@ -147,7 +147,7 @@ class DatasetPoller extends React.Component {
           const newMapping = {}
           try {
             let res = await superagent
-              .get(`${protocol}://${q.target.hostname}/pmapi/${q.contextId}/_indom`)
+              .get(`${q.target.protocol}://${q.target.hostname}/pmapi/${q.contextId}/_indom`)
               .query({ name })
             res.body.instances.forEach(({ instance, name }) => newMapping[instance] = name)
           } catch (err) {
@@ -186,7 +186,6 @@ DatasetPoller.propTypes = {
   ),
   contextData: PropTypes.array.isRequired,
   onContextDatasetsUpdated: PropTypes.func.isRequired,
-  protocol: PropTypes.string.isRequired,
 }
 
 export default DatasetPoller

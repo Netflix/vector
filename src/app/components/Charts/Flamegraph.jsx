@@ -24,9 +24,6 @@ import { Button, Form } from 'semantic-ui-react'
 
 const TIMEOUTS = { response: 5000, deadline: 10000 }
 
-// TODO ugh how do we get this cleanly
-import config from '../../config'
-
 function getStatusFromDataset(dataset) {
   // oh for the ?. operator
   return dataset && dataset[0] && dataset[0].data && dataset[0].data[0] && dataset[0].data[0].value || '?'
@@ -65,13 +62,14 @@ class Flamegraph extends React.PureComponent {
     const { chartInfo } = this.props
     const { durationSeconds } = this.state
 
+    const protocol = chartInfo.context.target.protocol
     const hostname = chartInfo.context.target.hostname
     const contextId = chartInfo.context.contextId
     const fgtype = chartInfo.metricNames[0]
 
     try {
       this.setState({ fetchFile: null })
-      await superagent.get(`${config.protocol}://${hostname}/pmapi/${contextId}/_store`)
+      await superagent.get(`${protocol}://${hostname}/pmapi/${contextId}/_store`)
         .timeout(TIMEOUTS)
         .query({ name: fgtype, value: durationSeconds })
     } catch (err) {
@@ -84,6 +82,7 @@ class Flamegraph extends React.PureComponent {
     const { durationSeconds, fetchFile } = this.state
     const { dataset } = this.props
 
+    const protocol = this.props.chartInfo.context.target.protocol
     const hostname = this.props.chartInfo.context.target.hostname
     const status = getStatusFromDataset(dataset)
     const isIdle = ['IDLE', 'ERROR'].includes(status.split(' ')[0])
@@ -110,7 +109,7 @@ class Flamegraph extends React.PureComponent {
         { fetchFile &&
           <div className='doNotDrag'>
             <p>Fetch url: {fetchFile}</p>
-            <a href={`${config.protocol}://${hostname}/${fetchFile}`}
+            <a href={`${protocol}://${hostname}/${fetchFile}`}
               rel='noopener noreferrer' target='_blank' >View / download</a>
           </div> }
 

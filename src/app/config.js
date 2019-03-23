@@ -18,7 +18,6 @@
 
 export default {
   version: '[AIV]{version}[/AIV]', // version number, auto loaded by webpack from package.json
-  protocol: 'http', // PMWEBD protocol (http or https)
 
   dataWindows: [
     { text: '2 min', valueSeconds: 2*60 },
@@ -39,6 +38,7 @@ export default {
   enableBcc: true, // Enable BCC widgets (requires BCC PMDA)
   enableFlamegraphs: true, // Enable Flamegraph widgets (requires custom PMDA)
 
+  defaultProtocol: 'http', // PMWEBD protocol
   defaultPort: 7402, // PMWEBD port
   defaultHostspec: 'localhost', // Default PMCD hostspec
   disableHostspecInput: true, // Disable hostspec input

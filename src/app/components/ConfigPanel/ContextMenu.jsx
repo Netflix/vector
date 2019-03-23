@@ -43,7 +43,7 @@ class ContextMenu extends React.PureComponent {
 
   render () {
     const { contextData, config, initialAddContext, onRemoveContext, onContextSelect, selectedContext } = this.props
-    const { defaultPort, defaultHostspec, disableHostspecInput, disableContainerSelect, useCgroupId } = config
+    const { defaultProtocol, defaultPort, defaultHostspec, disableHostspecInput, disableContainerSelect, useCgroupId } = config
 
     return (
       <Menu vertical pointing attached='top' borderless style={chartSelectorStyle}>
@@ -66,6 +66,7 @@ class ContextMenu extends React.PureComponent {
         <Menu.Item>
           <AddContextModal
             onNewContext={this.handleNewContext}
+            defaultProtocol={defaultProtocol}
             defaultPort={defaultPort}
             defaultHostspec={defaultHostspec}
             disableHostspecInput={disableHostspecInput}

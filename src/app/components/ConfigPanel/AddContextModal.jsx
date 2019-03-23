@@ -27,11 +27,16 @@ import { fetchContainerList } from '../../utils'
 class AddContextModal extends React.PureComponent {
   state = {
     modalOpen: !!this.props.initiallyOpen,
+    protocolDropdownOptions: [
+      { text: 'HTTP', value: 'http' },
+      { text: 'HTTPS', value: 'https' }
+    ],
     containerDropdownOptions: [
       { text: 'N/A', value: '_all' }
     ],
     containerId: '_all',
     connected: false,
+    protocol: this.props.defaultProtocol,
     hostport: this.props.defaultPort,
     hostspec: this.props.defaultHostspec,
   }
@@ -39,8 +44,8 @@ class AddContextModal extends React.PureComponent {
   containerNameResolver = this.props.useCgroupId ? (c => c.cgroup) : (c => c.containerId)
 
   refreshContainerList = async () => {
-    const { hostname, hostport, hostspec } = this.state
-    if (!hostname || !hostport || !hostspec) return
+    const { protocol, hostname, hostport, hostspec } = this.state
+    if (!protocol || !hostname || !hostport || !hostspec) return
 
     this.setState({
       containerDropdownOptions: [
@@ -50,7 +55,7 @@ class AddContextModal extends React.PureComponent {
       connected: false,
     })
 
-    const containerList = await fetchContainerList(hostname, hostport, hostspec)
+    const containerList = await fetchContainerList(protocol, hostname, hostport, hostspec)
 
     const containerDropdownOptions = []
       .concat({ text: 'All', value: '_all' })
@@ -60,6 +65,7 @@ class AddContextModal extends React.PureComponent {
   }
   refreshContainerList = debounce(this.refreshContainerList, 500)
 
+  handleProtocolChange = (e, { value }) => this.setState({ protocol: value }, this.refreshContainerList)
   handleHostnameChange = (e, { value }) => this.setState({ hostname: value }, this.refreshContainerList)
   handleHostportChange = (e, { value }) => this.setState({ hostport: value }, this.refreshContainerList)
   handleHostspecChange = (e, { value }) => this.setState({ hostspec: value }, this.refreshContainerList)
@@ -68,9 +74,10 @@ class AddContextModal extends React.PureComponent {
   handleOpen = () => this.setState({ modalOpen: true })
 
   handleSubmit = () => {
-    const { hostname, hostport, hostspec, containerId } = this.state
+    const { protocol, hostname, hostport, hostspec, containerId } = this.state
     const { onNewContext } = this.props
     onNewContext({
+      protocol: protocol,
       hostname: hostname + ':' + hostport,
       hostspec: hostspec,
       containerId: containerId || '_all',
@@ -79,7 +86,7 @@ class AddContextModal extends React.PureComponent {
   }
 
   render () {
-    const { modalOpen, hostport, hostspec, connected, containerId, containerDropdownOptions } = this.state
+    const { modalOpen, protocolDropdownOptions, protocol, hostport, hostspec, connected, containerId, containerDropdownOptions } = this.state
     const { render, disableHostspecInput, disableContainerSelect } = this.props
 
     return (
@@ -94,6 +101,7 @@ class AddContextModal extends React.PureComponent {
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
 
+            <Form.Dropdown label='Protocol' fluid selection value={protocol} options={protocolDropdownOptions} onChange={this.handleProtocolChange} />
             <Form.Input label='Hostname' onChange={this.handleHostnameChange} placeholder='1.2.3.4' />
             <Form.Input label='Port' onChange={this.handleHostportChange} value={hostport} />
             <Form.Input label='Hostspec' onChange={this.handleHostspecChange} value={hostspec} disabled={disableHostspecInput}/>
@@ -116,6 +124,7 @@ class AddContextModal extends React.PureComponent {
 
 AddContextModal.propTypes = {
   onNewContext: PropTypes.func.isRequired,
+  defaultProtocol: PropTypes.string.isRequired,
   defaultPort: PropTypes.number.isRequired,
   defaultHostspec: PropTypes.string.isRequired,
   disableHostspecInput: PropTypes.bool.isRequired,

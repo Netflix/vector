@@ -27,6 +27,7 @@ export function pushQueryStringToHistory(targets, chartlist, history) {
   console.log(chartlist)
 
   const data = targets.map(t => ({
+    p: t.protocol,
     h: t.hostname,
     hs: t.hostspec,
     ci: t.containerId,
@@ -56,6 +57,7 @@ export function getChartsFromLocation({ search, hash }) {
     return {
       isLegacy: true,
       targets: [{
+        protocol: config.defaultProtocol,
         hostname,
         hostspec: 'localhost',
         containerId,
@@ -75,12 +77,22 @@ export function getChartsFromLocation({ search, hash }) {
     const params = JSON.parse(decoded)
 
     const targets = params
-      .map(c => ({ hostname: c.h, hostspec: c.hs, containerId: c.ci }))
+      .map(c => ({
+        protocol: 'p' in c ? c.p : config.defaultProtocol,
+        hostname: c.h,
+        hostspec: c.hs,
+        containerId: c.ci
+      }))
       .filter(uniqueTargetFilter) // should not be needed, but just in case
 
     const chartlist = params.map(c =>
       c.cl.map(chartId => ({
-        target: { hostname: c.h, hostspec: c.hs, containerId: c.ci },
+        target: {
+          protocol: 'p' in c ? c.p : config.defaultProtocol,
+          hostname: c.h,
+          hostspec: c.hs,
+          containerId: c.ci
+        },
         chartId: chartId
       }))
     ).reduce(flatten, [])
@@ -130,9 +142,9 @@ export function isContextLoading (context) {
 // pmwebd connectivity
 const PMAPI_POLL_TIMEOUT_SECONDS = 5
 
-export async function fetchContainerList (hostname, hostport, hostspec) {
+export async function fetchContainerList (protocol, hostname, hostport, hostspec) {
   // set up a new context, then fetch container and cgroup details
-  const pmapi = `http://${hostname}:${hostport}/pmapi`
+  const pmapi = `${protocol}://${hostname}:${hostport}/pmapi`
 
   let res = await superagent
     .get(`${pmapi}/context`)
