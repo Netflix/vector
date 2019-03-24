@@ -17,30 +17,44 @@
  */
 
 import * as utils from './'
-import url from 'url'
 import { expect } from 'chai'
+import config from '../config'
 
 describe('getChartsFromLocation', () => {
   describe('with new style search string', () => {
-    const search = '?q=[{"h":"192.168.251.133:44323","hs":"localhost","ci":"_all","cl":["cpu-pswitch"]},{"h":"1.2.3.4:7402","hs":"localhost","ci":"_all","cl":[]},{"h":"192.168.251.133:44323","hs":"localhost","ci":"hopeful_dijkstra","cl":["container-percont-cpu","container-percont-mem","container-total-cont-mem"]}]'
+    const search = '?q=[{"p":"http","h":"192.168.251.133:44323","hs":"localhost","ci":"_all","cl":["cpu-pswitch"]},{"p":"http","h":"1.2.3.4:7402","hs":"localhost","ci":"_all","cl":[]},{"p":"https","h":"192.168.251.133:44323","hs":"localhost","ci":"hopeful_dijkstra","cl":["container-percont-cpu","container-percont-mem","container-total-cont-mem"]}]'
     const result = utils.getChartsFromLocation({ search, hash: null })
     it('finds three targets', () => {
       expect(result.targets.length).to.equal(3)
       expect(result.targets).to.have.deep.members([
-        { hostname: '192.168.251.133:44323', hostspec: 'localhost', containerId: '_all' },
-        { hostname: '192.168.251.133:44323', hostspec: 'localhost', containerId: 'hopeful_dijkstra' },
-        { hostname: '1.2.3.4:7402', hostspec: 'localhost', containerId: '_all' },
+        { protocol: 'http', hostname: '192.168.251.133:44323', hostspec: 'localhost', containerId: '_all' },
+        { protocol: 'https', hostname: '192.168.251.133:44323', hostspec: 'localhost', containerId: 'hopeful_dijkstra' },
+        { protocol: 'http', hostname: '1.2.3.4:7402', hostspec: 'localhost', containerId: '_all' },
       ])
     })
 
     it('finds four charts in the chartlist', () => {
       expect(result.chartlist.length).to.equal(4)
       expect(result.chartlist).to.have.deep.members([
-        { target: { hostname: '192.168.251.133:44323', hostspec: 'localhost', containerId: '_all' }, chartId: 'cpu-pswitch' },
-        { target: { hostname: '192.168.251.133:44323', hostspec: 'localhost', containerId: 'hopeful_dijkstra' }, chartId: 'container-percont-cpu' },
-        { target: { hostname: '192.168.251.133:44323', hostspec: 'localhost', containerId: 'hopeful_dijkstra' }, chartId: 'container-percont-mem' },
-        { target: { hostname: '192.168.251.133:44323', hostspec: 'localhost', containerId: 'hopeful_dijkstra' }, chartId: 'container-total-cont-mem' },
+        { target: { protocol: 'http', hostname: '192.168.251.133:44323', hostspec: 'localhost', containerId: '_all' }, chartId: 'cpu-pswitch' },
+        { target: { protocol: 'https', hostname: '192.168.251.133:44323', hostspec: 'localhost', containerId: 'hopeful_dijkstra' }, chartId: 'container-percont-cpu' },
+        { target: { protocol: 'https', hostname: '192.168.251.133:44323', hostspec: 'localhost', containerId: 'hopeful_dijkstra' }, chartId: 'container-percont-mem' },
+        { target: { protocol: 'https', hostname: '192.168.251.133:44323', hostspec: 'localhost', containerId: 'hopeful_dijkstra' }, chartId: 'container-total-cont-mem' },
       ])
+    })
+  })
+
+  describe('with new style search string, no protocol specified', () => {
+    const search = '?q=[{"h":"192.168.251.133:44323","hs":"localhost","ci":"_all","cl":["cpu-pswitch"]},{"h":"1.2.3.4:7402","hs":"localhost","ci":"_all","cl":[]},{"h":"192.168.251.133:44323","hs":"localhost","ci":"hopeful_dijkstra","cl":["container-percont-cpu","container-percont-mem","container-total-cont-mem"]}]'
+    const result = utils.getChartsFromLocation({ search, hash: null })
+    it('finds three targets, all with the default protocol', () => {
+      expect(result.targets.length).to.equal(3)
+      result.targets.forEach(i => expect(i.protocol).to.equal(config.defaultProtocol))
+    })
+
+    it('finds four charts in the chartlist, all with targets having the default protocol', () => {
+      expect(result.chartlist.length).to.equal(4)
+      result.chartlist.forEach(i => expect(i.target.protocol).to.equal(config.defaultProtocol))
     })
   })
 
@@ -51,7 +65,7 @@ describe('getChartsFromLocation', () => {
       it('finds a single target with a container', () => {
         expect(result.targets.length).to.equal(1)
         expect(result.targets).to.have.deep.members([
-          { hostname: '100.65.15.127:7402', hostspec: 'localhost', containerId: '09fb4cae-8987-49bc-a208-1115aa0443e1' }
+          { protocol: 'http', hostname: '100.65.15.127:7402', hostspec: 'localhost', containerId: '09fb4cae-8987-49bc-a208-1115aa0443e1' }
         ])
       })
       it('finds a single chart attached to that container', () => {
@@ -65,7 +79,7 @@ describe('getChartsFromLocation', () => {
       it('finds a single target connected to _all container', () => {
         expect(result.targets.length).to.equal(1)
         expect(result.targets).to.have.deep.members([
-          { hostname: '100.82.47.121:7402', hostspec: 'localhost', containerId: '_all' }
+          { protocol: 'http', hostname: '100.82.47.121:7402', hostspec: 'localhost', containerId: '_all' }
         ])
       })
       it('does not find any charts', () => {
