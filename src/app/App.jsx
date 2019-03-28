@@ -158,13 +158,11 @@ class App extends React.Component {
           <Navbar embed={this.props.embed} onClick={this.toggleConfigVisible} />
 
           <ContextPoller
-            protocol={config.protocol}
             pollIntervalMs={5000}
             targets={this.state.targets}
             onContextsUpdated={this.onContextsUpdated} />
 
           <DatasetPoller
-            protocol={config.protocol}
             pollIntervalMs={this.state.pollIntervalMs}
             charts={this.state.chartlist}
             windowIntervalMs={this.state.windowIntervalMs}
