@@ -18,7 +18,7 @@
 
 import superagent from 'superagent'
 import { parse } from 'query-string'
-import config from '../config'
+import config from 'config'
 
 /////////////////////////////////////
 // window.location handling support

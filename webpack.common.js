@@ -14,6 +14,9 @@ module.exports = {
         filename: 'scripts/bundle.js',
         publicPath: ''
     },
+    externals: {
+        config: 'config'
+    },
     module: {
         rules: [
             {
@@ -85,6 +88,7 @@ module.exports = {
         }),
         // copy static assets
         new CopyWebpackPlugin([
+            { from: 'src/config.js', to: 'config.js' },
             { from: 'src/favicon.ico', to: 'favicon.ico' },
             { from: 'src/assets/images/vector_owl.png', to: 'assets/images/vector_owl.png' }
         ])

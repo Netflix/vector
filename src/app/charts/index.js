@@ -19,7 +19,7 @@
 /* eslint-disable */
 
 import { flatten } from '../utils'
-import config from '../config'
+import config from 'config'
 
 // all the remaining components, particularly vector specific angular components
 function requireAll(requireContext) {
