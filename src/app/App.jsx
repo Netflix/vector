@@ -34,7 +34,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 import { render } from 'react-dom'
 
-import config from './config'
+import config from 'config'
 
 import Navbar from './components/Navbar/Navbar.jsx'
 import Footer from './components/Footer/Footer.jsx'
@@ -213,7 +213,7 @@ class App extends React.Component {
                 updateChartSettings={this.updateChartSettings}
                 onMoveChart={this.onMoveChart} />
 
-              <Footer version={config.version}/>
+              <Footer version='[AIV]{version}[/AIV]'/>
 
             </Sidebar.Pusher>
 
@@ -252,7 +252,7 @@ class PageRouter extends React.Component {
 
   render () {
     return (
-      <BrowserRouter>
+      <BrowserRouter basename={config.basename}>
         <Switch>
           <Route path="/embed" render={this.AppEmbed}/>
           <Route path="/" render={this.AppNormal}/>

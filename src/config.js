@@ -16,8 +16,8 @@
  *
  */
 
-export default {
-  version: '[AIV]{version}[/AIV]', // version number, auto loaded by webpack from package.json
+const config = {
+  basename: '/',
 
   dataWindows: [
     { text: '2 min', valueSeconds: 2*60 },
@@ -46,4 +46,8 @@ export default {
   useCgroupId: false, // Use container cgroup id instead of container name
 
   // TODO what about container name resolver
+}
+
+if (typeof module !== 'undefined') {
+  module.exports = config;
 }
