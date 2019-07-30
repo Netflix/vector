@@ -29,9 +29,9 @@ module.exports = {
             },
             {
                 test: /\.(js|jsx)$/,
-                exclude: [ /node_modules/, /src\/\_app/ ],
+                exclude: [ /node_modules/ ],
                 use: [
-                  { loader: 'babel-loader', options: { babelrc: true }}
+                  { loader: 'babel-loader', options: { babelrc: true } }
                 ]
             },
             {

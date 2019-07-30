@@ -6,6 +6,6 @@ stdenv.mkDerivation {
   name = "grafana-pcp-live";
 
   buildInputs = [
-    nodejs-10_x
+    nodejs-8_x
   ];
 }
