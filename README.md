@@ -17,6 +17,31 @@ Vector is under development and new features are added constantly. Bugs and issu
 
 See the [Getting Started Guide](http://getvector.io/docs/getting-started.html) for documentation on how to get started.
 
+## Developing
+
+Specific configuration for your environment can be set up at the following locations:
+```
+src/config.js               # app-wide configuration
+src/charts/*                # set up chart widgets
+src/bundles/*               # configure the high level groups
+help/*                      # and the help panels for the charts
+```
+
+After you are set up, standard npm package.json commands can be used:
+```
+nvm use
+npm install
+npm run build
+npm run serve
+```
+
+At a high level, the remaining directories contain:
+```
+src/components/*            # all of the React components that compose the page
+src/components/Pollers/*    # the React components that talk to the PCP backend
+processors/*                # pcp to graph data fetch and transform components
+```
+
 ## Issues
 
 For bugs, questions and discussions please use the [GitHub Issues](https://github.com/Netflix/vector/issues).
