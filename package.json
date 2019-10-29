@@ -18,7 +18,7 @@
     "font-awesome": "4.6.1",
     "font-awesome-webpack-4": "git+https://github.com/tapz/font-awesome-webpack#da547ed91064b408500131f837f17f423ce89411",
     "http-server-spa": "^1.3.0",
-    "lodash-es": "^4.17.10",
+    "lodash-es": "^4.17.14",
     "lodash.clonedeep": "^4.5.0",
     "lodash.debounce": "^4.0.8",
     "lodash.isequal": "^4.5.0",
