@@ -1,10 +1,25 @@
 ![Vector](vector.png)
 
-[![TravisCI](https://img.shields.io/travis/Netflix/vector.svg)](https://travis-ci.org/Netflix/vector)
+## Project Status
+
+https://groups.google.com/d/msg/vector-users/MWF8nnj1WHw/1EelNPOBAwAJ
+
+> Today we are sharing with the community that we have contributed our latest developments in this space to the PCP project and are retiring Vector as a standalone web application. Specifically, we have contributed a data source for Grafana as well as some template dashboards that we use internally. This has been picked up by the PCP team and wrapped into a formal product. This splits what Vector is and how it is used into two pieces. The bulk of the monitoring moves into a more familiar stack with Grafana, which also includes the components to collect and display performance data including BCC-based flame graphs. Additional Netflix-specific flame-graphs and related functionality has been pulled into a new internal tool called FlameCommander.
+> 
+> We have decided to lean into the Grafana stack. Grafana is widely used, well supported, and has an extensible framework for developing visualisations and including new sources of data for processing.
+> 
+> 
+> Specifically in terms of the community around Vector, we will transition it as follows:
+> 
+> - Code will remain up and online in Github. Issues and support will be best effort.
+> - The vector slack and mailing lists will disappear over time. We encourage users to move across to the PCP support channels listed at https://pcp.io/community.html.
+> - For slack, you’ll want to be sure to hop in to the #grafana channel on the PCP slack.
+> - Vector.io will stay up for a period and then be decommissioned.
+
+
+
 [![Slack Status](http://slack.getvector.io/badge.svg)](http://slack.getvector.io/)
-[![NetflixOSS Lifecycle](https://img.shields.io/osslifecycle/Netflix/vector.svg)]()
 [![License](https://img.shields.io/github/license/Netflix/vector.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Docker Pulls](https://img.shields.io/docker/pulls/netflixoss/vector.svg)](https://hub.docker.com/r/netflixoss/vector/)
 
 
 Vector is an open source on-host performance monitoring framework which exposes hand picked high resolution system and application metrics to every engineer’s browser. Having the right metrics available on-demand and at a high resolution is key to understand how a system behaves and correctly troubleshoot performance issues.
