@@ -24,10 +24,6 @@ https://groups.google.com/d/msg/vector-users/MWF8nnj1WHw/1EelNPOBAwAJ
 
 Vector is an open source on-host performance monitoring framework which exposes hand picked high resolution system and application metrics to every engineer’s browser. Having the right metrics available on-demand and at a high resolution is key to understand how a system behaves and correctly troubleshoot performance issues.
 
-## Disclaimer
-
-Vector is under development and new features are added constantly. Bugs and issues are expected. We count on your support to find and report them! **Use releases for stable code.**
-
 ## Getting Started
 
 See the [Getting Started Guide](http://getvector.io/docs/getting-started.html) for documentation on how to get started.
