@@ -18,7 +18,6 @@ https://groups.google.com/d/msg/vector-users/MWF8nnj1WHw/1EelNPOBAwAJ
 
 
 
-[![Slack Status](http://slack.getvector.io/badge.svg)](http://slack.getvector.io/)
 [![License](https://img.shields.io/github/license/Netflix/vector.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 
